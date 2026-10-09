@@ -107,6 +107,10 @@ public final class IntegrationDocumentBuilder {
         if (ico.generatedFrom() != null) {
             facts.add(text(l.get("int.generatedFrom") + ": " + ico.generatedFrom()));
         }
+        if (ico.dynamicRouting() != null) {
+            facts.add(line(new Doc.Text(l.get("int.dynamicRouting") + ": "), new Doc.Code(ico.dynamicRouting()
+                    .mappings().stream().map(IntegrationDocumentBuilder::name).collect(Collectors.joining(", ")))));
+        }
         if (ico.noReceiverBehaviour() != null) {
             facts.add(text(l.get("int.noReceiver") + ": " + ico.noReceiverBehaviour()));
         }
@@ -212,6 +216,40 @@ public final class IntegrationDocumentBuilder {
                 heading(4, name(lib.id()) + " | " + nz(ns(lib.id())) + " (" + nz(lib.id().swc()) + ")");
                 paragraph(lib.description());
                 functionStorage(lib);
+            }
+        }
+        if (!esr.importedArchives().isEmpty()) {
+            heading(3, l.get("int.importedArchives"));
+            for (var a : esr.importedArchives()) {
+                heading(4, name(a.id()) + " | " + nz(ns(a.id())) + (a.fileName() == null ? "" : " (" + a.fileName() + ")"));
+                paragraph(a.description());
+                List<List<Doc.Inline>> facts = new ArrayList<>();
+                if (a.maven() != null) {
+                    facts.add(line(new Doc.Text("Maven: "), new Doc.Code(a.maven())));
+                }
+                if (!a.sapApis().isEmpty()) {
+                    facts.add(text(l.get("int.sapApis") + ": " + String.join(", ", a.sapApis())));
+                }
+                if (!a.packages().isEmpty()) {
+                    facts.add(text(l.get("int.packages") + ": " + a.packages().entrySet().stream()
+                            .map(e -> e.getKey() + " (" + e.getValue() + ")").collect(Collectors.joining(", "))));
+                }
+                if (!facts.isEmpty()) {
+                    bulletList(facts);
+                }
+                Doc.TableBuilder t = new Doc.TableBuilder(l.get("col.program"), l.get("col.kind"),
+                        l.get("col.mappingApi"), l.get("int.sapApis"));
+                for (var p : a.programs()) {
+                    t.row(code(p.className() == null ? p.path() : p.className()), text(p.kind()),
+                            text(p.mappingApi()), text(String.join(", ", p.sapApis())));
+                }
+                table(t);
+                for (var p : a.programs()) {
+                    if (p.text() != null) {
+                        paragraph(line(new Doc.Strong(p.path())));
+                        out.add(new Doc.CodeBlock("xslt".equals(p.kind()) ? "xml" : "java", p.text()));
+                    }
+                }
             }
         }
         if (!esr.messageTypes().isEmpty()) {

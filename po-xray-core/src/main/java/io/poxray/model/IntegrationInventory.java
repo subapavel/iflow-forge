@@ -70,9 +70,18 @@ public record IntegrationInventory(
             String generatedFrom,
             Endpoint sender,
             List<Receiver> receivers,
+            DynamicRouting dynamicRouting,
             String noReceiverBehaviour,
             String modifiedBy,
             String modifiedAt) {
+    }
+
+    /**
+     * Extended (dynamic) receiver determination: an operation mapping computes the receivers at runtime
+     * ({@code DynamicalRouting}, link role {@code RoutingProgram}); the receivers listed in the ICO are then the
+     * possible receivers. {@code operationSpecific}: one mapping per sender operation (not yet seen on real data).
+     */
+    public record DynamicRouting(boolean operationSpecific, List<ObjRef> mappings) {
     }
 
     /** Sender: interface, the operations covered by the ICO and the sender channel. */
@@ -142,7 +151,43 @@ public record IntegrationInventory(
             List<DataType> dataTypes,
             List<ExternalDefinition> externalDefinitions,
             List<ObjRef> mappingPrograms,
-            List<FunctionLibrary> functionLibraries) {
+            List<FunctionLibrary> functionLibraries,
+            List<ImportedArchive> importedArchives) {
+    }
+
+    /**
+     * Imported archive ({@code TRAFO_JAR}): Java mapping programs and other classes using SAP APIs (read from the
+     * byte code, not decompiled), XSLT and Java sources with their text; library classes only counted per package.
+     *
+     * @param fileName   uploaded file name
+     * @param maven      groupId:artifactId:version from META-INF/maven (if packaged)
+     * @param programs   mapping classes, classes using SAP APIs, XSLT and Java sources
+     * @param packages   package → number of classes
+     * @param otherFiles other files (resources), at most 200
+     * @param sapApis    SAP / platform APIs used anywhere in the archive
+     */
+    public record ImportedArchive(ObjRef id, String fileName, String maven, List<ArchiveProgram> programs,
+            Map<String, Integer> packages, List<String> otherFiles, List<String> sapApis, String description) {
+    }
+
+    /**
+     * Program in an imported archive. {@code kind}: javaMapping | class | xslt | javaSource; {@code mappingApi}:
+     * AbstractTransformation (PI 7.1+ API) or StreamTransformation (XI 3.0 API) for Java mappings, also when
+     * inherited from a class of the same archive; {@code text}: XSLT / Java source.
+     */
+    public record ArchiveProgram(String path, String kind, String className, String superclass,
+            List<String> interfaces, String mappingApi, List<String> sapApis, String text) {
+    }
+
+    /**
+     * Value mapping group (Integration Directory {@code ValueMapping}) with its representations as stored:
+     * {@code system}, {@code objectTypeName}, {@code value} (element names of the content XML). Values of entries
+     * whose system or name looks like a secret (password, secret, token, ...) are masked.
+     */
+    public record ValueMappingGroup(String groupId, String groupName, List<ValueMappingEntry> entries) {
+    }
+
+    public record ValueMappingEntry(String system, String objectTypeName, String value) {
     }
 
     /** {@code category}: I inbound | O outbound | A abstract; {@code pattern}: interface pattern (L = stateless). */

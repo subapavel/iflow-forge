@@ -39,6 +39,23 @@ public final class XiBlob {
         return data;
     }
 
+    /**
+     * The file stored in a blob as is (e.g. the jar of an imported archive): base64 decoded, unwrapped once when
+     * {@code zipped="true"}; null if empty.
+     */
+    public static byte[] file(Element blob) {
+        String text = blob == null ? null : blob.getTextContent().strip();
+        if (text == null || text.isEmpty()) {
+            return null;
+        }
+        if (text.startsWith("!")) {
+            int end = text.indexOf('!', 1);
+            text = end < 0 ? text : text.substring(end + 1);
+        }
+        byte[] data = Base64.getMimeDecoder().decode(text);
+        return "true".equals(blob.getAttribute("zipped")) ? firstEntry(data) : data;
+    }
+
     private static boolean isZip(byte[] data) {
         return data.length > 3 && data[0] == 'P' && data[1] == 'K' && data[2] == 3 && data[3] == 4;
     }

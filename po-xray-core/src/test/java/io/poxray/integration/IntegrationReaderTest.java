@@ -102,7 +102,7 @@ class IntegrationReaderTest {
                     <LEXTRACTOR><TRD_EXTRACTOR><TYPE>XP</TYPE><VALUE>/Order/Status</VALUE></TRD_EXTRACTOR></LEXTRACTOR>
                     <REXTRACTOR><TRD_EXTRACTOR><TYPE>KO</TYPE><VALUE>X</VALUE></TRD_EXTRACTOR></REXTRACTOR></CONDLINE>
                 </RDS_CONDSHORT>
-              </Conditions></AllInOne></p1:content></p1:xiObj>
+              </Conditions><DynamicalRouting version="1" isOpSpecific="false" counter="5000"/></AllInOne></p1:content></p1:xiObj>
             """.formatted(String.join("\n",
             link("senderOperation", 0, "S", "ifmoper", "Order_Out.Change", "urn:a"),
             link("senderOperation", 1, "S", "ifmoper", "Order_Out.Create", "urn:a"),
@@ -112,7 +112,8 @@ class IntegrationReaderTest {
             link("IIF0$0", 1, "S", "ifmmessif", "Order_In", "urn:a"),
             link("IIF0$1", 0, "S", "ifmmessif", "Order_In", "urn:a"),
             link("PAR0_0_LOOKUP", 0, "D", "Channel", "", "RCV", "RFC_LOOKUP"),
-            link("receiverChannel", 12345, "D", "Channel", "", "RCV", "SOAP_RCV")));
+            link("receiverChannel", 12345, "D", "Channel", "", "RCV", "SOAP_RCV"),
+            link("RoutingProgram", 5000, "S", "MAPPING", "OM_ReceiverDetermination", "urn:a")));
 
     private static String link(String role, int kpos, String vcType, String type, String... key) {
         String vc = "S".equals(vcType) ? "<p1:vc vcType=\"S\" swcGuid=\"aaaa\"/>" : "<p1:vc vcType=\"D\"/>";
@@ -132,6 +133,11 @@ class IntegrationReaderTest {
         Ico ico = reader.icos(java.util.List.of(io.poxray.xi.XiObjectParser.parse(MULTI_ICO, "multi"))).getFirst();
 
         assertThat(ico.sender().operations()).containsExactly("Change", "Create");
+        assertThat(ico.dynamicRouting()).isNotNull().satisfies(d -> {
+            assertThat(d.operationSpecific()).isFalse();
+            assertThat(d.mappings()).extracting(IntegrationInventory.ObjRef::name)
+                    .containsExactly("OM_ReceiverDetermination");
+        });
         assertThat(ico.receivers()).singleElement().satisfies(r -> {
             assertThat(r.component()).isEqualTo("RCV");
             assertThat(r.qualityOfService()).isEqualTo("EO");

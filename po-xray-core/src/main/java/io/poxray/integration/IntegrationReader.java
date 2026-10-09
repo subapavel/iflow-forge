@@ -52,9 +52,6 @@ import org.w3c.dom.Element;
 public final class IntegrationReader {
 
     private static final Pattern GENERATED_FROM = Pattern.compile("Generated for dir://IFLOW/\\S+ '([^']*)'");
-    /** Attribute / parameter names whose values are masked (PO does not export passwords, this is a safety net). */
-    private static final Pattern SECRET =
-            Pattern.compile("(?i).*(password|passwd|pwd|secret|token|credential|privatekey|apikey).*");
 
     private final XiObjectSource source;
     private final IssueLog issues;
@@ -68,6 +65,7 @@ public final class IntegrationReader {
     private final Map<String, ExternalDefinition> externalDefinitions = new LinkedHashMap<>();
     private final Map<String, ObjRef> mappingPrograms = new LinkedHashMap<>();
     private final Map<String, FunctionLibrary> functionLibraries = new LinkedHashMap<>();
+    private final Map<String, IntegrationInventory.ImportedArchive> importedArchives = new LinkedHashMap<>();
 
     public IntegrationReader(XiObjectSource source, IssueLog issues) {
         this.source = source;
@@ -123,6 +121,11 @@ public final class IntegrationReader {
                 yield externalDefinitions.get(k);
             }
             case "FUNC_LIB" -> functionLibrary(ref);
+            case "TRAFO_JAR" -> {
+                importedArchive(ref);
+                yield importedArchives.get(k);
+            }
+            case "ValueMapping" -> resolve(ref).map(ArchiveReader::valueMapping).orElse(null);
             case "Channel" -> {
                 channel(ref);
                 yield channels.get("Channel|" + ref.keyString());
@@ -140,7 +143,8 @@ public final class IntegrationReader {
         return new IntegrationInventory.Esr(List.copyOf(interfaces.values()), List.copyOf(operationMappings.values()),
                 List.copyOf(messageMappings.values()), List.copyOf(messageTypes.values()),
                 List.copyOf(dataTypes.values()), List.copyOf(externalDefinitions.values()),
-                List.copyOf(mappingPrograms.values()), List.copyOf(functionLibraries.values()));
+                List.copyOf(mappingPrograms.values()), List.copyOf(functionLibraries.values()),
+                List.copyOf(importedArchives.values()));
     }
 
     // ------------------------------------------------------------------------------------------ ICO
@@ -183,8 +187,24 @@ public final class IntegrationReader {
             String code = XmlDocs.childText(nrb, "IfNoReceiverFound");
             noReceiver = "0".equals(code) ? "error" : code;
         }
-        return new Ico(id.oid(), o.description(), generatedFrom, sender, receivers, noReceiver, o.modifiedBy(),
-                o.modifiedAt());
+        IntegrationInventory.DynamicRouting dynamic = null;
+        Element dr = content == null ? null : XmlDocs.child(content, "DynamicalRouting");
+        List<XiLink> routingPrograms = o.links("RoutingProgram");
+        if (dr != null || !routingPrograms.isEmpty()) {
+            List<ObjRef> mappings = new ArrayList<>();
+            for (XiLink l : routingPrograms) {
+                operationMapping(l.target());
+                mappings.add(objRef(l.target()));
+            }
+            boolean opSpecific = dr != null && "true".equals(dr.getAttribute("isOpSpecific"));
+            if (opSpecific) {
+                issues.info("DYNAMIC_ROUTING", "ICO " + id.label() + " has operation-specific dynamic receiver"
+                        + " determination; the assignment of mappings to operations is not interpreted yet", null, null);
+            }
+            dynamic = new IntegrationInventory.DynamicRouting(opSpecific, List.copyOf(mappings));
+        }
+        return new Ico(id.oid(), o.description(), generatedFrom, sender, receivers, dynamic, noReceiver,
+                o.modifiedBy(), o.modifiedAt());
     }
 
     /**
@@ -323,7 +343,7 @@ public final class IntegrationReader {
                     String name = XmlDocs.childText(a, "Name");
                     String value = XmlDocs.childText(a, "Value");
                     if (name != null && value != null) {
-                        attributes.put(name, SECRET.matcher(name).matches() ? "<hidden>" : value);
+                        attributes.put(name, Secrets.mask(name, value));
                     }
                 }
             }
@@ -346,7 +366,7 @@ public final class IntegrationReader {
                 if (name != null) {
                     String value = XmlDocs.childText(mc, "ParamValue");
                     params.computeIfAbsent(String.valueOf(XmlDocs.childText(mc, "ModuleNs")), k -> new LinkedHashMap<>())
-                            .put(name, SECRET.matcher(name).matches() ? "<hidden>" : value == null ? "" : value);
+                            .put(name, value == null ? "" : Secrets.mask(name, value));
                 }
             }
         }
@@ -431,6 +451,10 @@ public final class IntegrationReader {
             messageMapping(ref);
         } else {
             mappingPrograms.putIfAbsent(key(ref), r);
+            if ("MAP_ARCHIVE_PRG".equals(ref.typeId())) { // archive|namespace|class or xsl|path
+                importedArchive(new XiRef(ref.vcType(), ref.swcGuid(), ref.swcCaption(), "TRAFO_JAR", null,
+                        List.of(ref.key(0), ref.key(1))));
+            }
         }
         return r;
     }
@@ -474,7 +498,7 @@ public final class IntegrationReader {
             }, msg -> issues.warn("MAPPING_LOGIC", o.id().label() + ": " + msg, IssueLog.at(null, null, at, null),
                     null));
             if (logic != null && logic.localFunctions() != null) {
-                archives(logic.localFunctions());
+                archives(logic.localFunctions(), o.id());
             }
             return logic;
         } catch (IllegalArgumentException e) {
@@ -484,10 +508,28 @@ public final class IntegrationReader {
         }
     }
 
-    private void archives(FunctionLibrary lib) {
+    /** Archives on the class path of UDFs, read in the SWCV context of the library / mapping using them. */
+    private void archives(FunctionLibrary lib, XiRef context) {
         for (ObjRef archive : lib.archives()) {
             mappingPrograms.putIfAbsent(archive.type() + "|" + archive.name() + "|" + archive.namespace(), archive);
+            importedArchive(new XiRef(XiRef.ESR, context.swcGuid(), context.swcCaption(), "TRAFO_JAR", archive.oid(),
+                    List.of(archive.name(), archive.namespace())));
         }
+    }
+
+    /** Imported archive with its Java mapping classes, XSLT and sources. */
+    private void importedArchive(XiRef ref) {
+        if (!visited.add(key(ref))) {
+            return;
+        }
+        resolve(ref).ifPresent(o -> {
+            try {
+                importedArchives.put(key(ref), ArchiveReader.archive(o, objRef(o.id())));
+            } catch (IllegalArgumentException e) {
+                issues.warn("ARCHIVE_UNREADABLE", "Imported archive " + o.id().label() + " cannot be read: "
+                        + e.getMessage(), IssueLog.at(null, null, new Ref(o.id().oid(), o.id().label()), null), null);
+            }
+        });
     }
 
     /** Function library ({@code FUNC_LIB}) with its user-defined functions; imported archives are listed as programs. */
@@ -508,7 +550,7 @@ public final class IntegrationReader {
                 throw new IllegalArgumentException("no <functionstorage> in MetaData");
             }
             FunctionLibrary lib = MappingLogicReader.functionStorage(root, objRef(o.id()), o.description());
-            archives(lib);
+            archives(lib, o.id());
             functionLibraries.put(k, lib);
             return lib;
         } catch (IllegalArgumentException e) {

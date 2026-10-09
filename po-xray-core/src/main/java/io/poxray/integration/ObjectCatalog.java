@@ -237,7 +237,7 @@ public final class ObjectCatalog {
         return source.resolve(hit.ref()).map(o -> detail(o, keyNames.get(o.typeId()))).orElse(null);
     }
 
-    /** Generic view: summary, links by role and the content as XML. */
+    /** Generic view: summary, links by role and the content as XML (values that look like secrets masked). */
     public static ObjectDetail detail(XiObject o, List<String> keyNames) {
         List<ObjectLink> links = new ArrayList<>();
         for (XiLink l : o.links()) {
@@ -247,7 +247,13 @@ public final class ObjectCatalog {
         XiRef id = o.id();
         ObjectSummary s = new ObjectSummary(id.typeId(), id.isDirectory() ? "dir" : "rep", keys(id, keyNames),
                 id.swcCaption(), id.swcGuid(), id.oid(), o.vid(), o.modifiedAt(), o.modifiedBy(), o.description());
-        return new ObjectDetail(s, List.copyOf(links), o.content() == null ? null : serialize(o.content()));
+        String content = null;
+        if (o.content() != null) {
+            Element copy = (Element) o.content().cloneNode(true);
+            Secrets.mask(copy);
+            content = serialize(copy);
+        }
+        return new ObjectDetail(s, List.copyOf(links), content);
     }
 
     // ------------------------------------------------------------------------------------------ where-used

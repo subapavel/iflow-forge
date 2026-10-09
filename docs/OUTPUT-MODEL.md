@@ -418,6 +418,8 @@ use. Read online (SimpleQuery + `read/ext`, snapshot cache) or from TPZ exports;
                                      { "iface": { "name": "Application_In" }, "multiplicity": "0..1" } ],   // 1:n mapping
                         "parameters": { "RFCCHANNEL": { "component": "CD1CLNT300", "name": "RFC_RCV" } } } ],
       "channels": [ { "component": "V3S_D", "name": "SOAP_RCV_LoopBack" } ] } ],
+    "dynamicRouting": { "operationSpecific": false,                 // extended receiver determination (link RoutingProgram)
+                        "mappings": [ { "type": "MAPPING", "name": "Response_to_ReceiverDetermination" } ] },
     "noReceiverBehaviour": "error" } ],
   "classicConfiguration": [ {                  // receiver / interface determinations, agreements (no ICO)
       "id": { "type": "RoutingRelation", "area": "dir",
@@ -453,7 +455,14 @@ use. Read online (SimpleQuery + `read/ext`, snapshot cache) or from TPZ exports;
                                               "arguments": [ { "name": "inputXml", "kind": "input|result|parameter", "javaType": "String" } ],
                                               "code": "…java…", "sapApis": [ "LookupService", "DynamicConfiguration" ] } ],
                              "archives": [ { "type": "TRAFO_JAR", "name": "Java_V3SXmlValidation", "namespace": "urn:…" } ],
-                             "sapApis": [ "LookupService" ] } ]
+                             "sapApis": [ "LookupService" ] } ],
+    "importedArchives": [ { "id": { … }, "fileName": "ote-routing-mapping.jar", "maven": "cz.ppas:ote-routing-mapping:1.0.0",
+                            "programs": [ { "path": "cz/…/OteRoutingMapping.class", "kind": "javaMapping|class|xslt|javaSource",
+                                            "className": "cz.….OteRoutingMapping", "superclass": "…", "interfaces": [ … ],
+                                            "mappingApi": "AbstractTransformation|StreamTransformation",
+                                            "sapApis": [ "Trace", "MessageHeader" ], "text": "<xsl:stylesheet …> (xslt / javaSource only)" } ],
+                            "packages": { "cz.ppas.ote.routing.mapping": 12 }, "otherFiles": [ … ],
+                            "sapApis": [ "Trace", "MessageHeader", "JNDI" ] } ]
   },
   "issues": [ … ]   // UNRESOLVED_OBJECT, OBJECT_NOT_READABLE (with the server's reason)
 }
@@ -476,6 +485,18 @@ Facts verified on xipod (PO 7.50 SP28):
   pins then (0), if (1), else (2); the expression shows them as `iF(if: …, then: …, else: …)`. UDF argument `tp`:
   0 input, 1 result, 2 parameter; `cacheType` 0/1/2 = single values / context / queue. Channel parameters
   (`typetype DCOMCHAN`) point to a link `p_<name>` → adapter metadata (e.g. RFC).
+- Imported archives (`TRAFO_JAR`): `Archive/blob type="jar" zipped="false"` = the uploaded jar / zip itself, plus
+  `Encoding` (of Java sources) and link `FILE_NAME`. Classes are read from the byte code (constant pool), not
+  decompiled: Java mappings extend `AbstractTransformation` or implement `StreamTransformation` (also through classes of
+  the same archive); SAP / platform API use comes from class names in the constant pool (LookupService,
+  DynamicConfiguration, Trace, ValueMapping, MessageHeader, MappingParameters, Attachments, AdapterFramework, JDBC,
+  JNDI, HTTP, FileSystem). Archives are read for operation mapping steps (`MAP_ARCHIVE_PRG`
+  `archive|namespace|class or xsl|path`) and UDF class paths.
+- Extended receiver determination: ICO content `DynamicalRouting isOpSpecific counter` + link `RoutingProgram`
+  (kpos = counter) to the operation mapping computing the receivers (31 of 260 ICOs on xipod).
+- Value mapping groups (`show -t valueMapping`): `Valuemapping groupName groupid` with `Representation`
+  (`system`, `objectTypeName`, `value`). Secrets are stored there in plain text (a client secret on xipod):
+  values whose name looks like a secret are masked, here and in every raw content returned.
 - Operation mapping roles `*_OUT_MES` / `*_IN_MES` are not consistent for faults: source/target of a step come from
   the message mapping (`SOURCE_IFR_MESS` / `TARGET_IFR_MESS`).
 - Object search (`search` / `search_objects`) returns `ObjectSummary` (type, area, key elements by name from the
