@@ -11,6 +11,7 @@ import io.poxray.model.Expression;
 import io.poxray.model.Flow;
 import io.poxray.model.Function;
 import io.poxray.model.FunctionCall;
+import io.poxray.model.IntegrationInventory;
 import io.poxray.model.Interface;
 import io.poxray.model.Issue;
 import io.poxray.model.Mapping;
@@ -46,7 +47,16 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
             Issue.class, Issue.Location.class, UnmappedElement.class, Ref.class, QNameRef.class,
             EjbModule.class, EjbModule.Bean.class, EjbModule.Interfaces.class, EjbModule.WebService.class,
             EjbModule.Usage.class, EjbModule.SourceRef.class, EjbModule.JavaClass.class, EjbModule.JpaEntity.class,
-            EjbModule.PersistenceUnit.class, EjbModule.JobDefinition.class
+            EjbModule.PersistenceUnit.class, EjbModule.JobDefinition.class,
+            IntegrationInventory.class, IntegrationInventory.Source.class, IntegrationInventory.Query.class,
+            IntegrationInventory.Component.class, IntegrationInventory.ObjRef.class, IntegrationInventory.DirRef.class,
+            IntegrationInventory.Ico.class, IntegrationInventory.Endpoint.class, IntegrationInventory.Receiver.class,
+            IntegrationInventory.InterfaceAssignment.class, IntegrationInventory.Channel.class,
+            IntegrationInventory.Module.class, IntegrationInventory.Esr.class, IntegrationInventory.ServiceInterface.class,
+            IntegrationInventory.Operation.class, IntegrationInventory.OperationMapping.class,
+            IntegrationInventory.MappingStep.class, IntegrationInventory.MessageMapping.class,
+            IntegrationInventory.MessageType.class, IntegrationInventory.DataType.class,
+            IntegrationInventory.ExternalDefinition.class
         },
         classNames = {
             "io.poxray.bpm.BuiltinFunctionCatalog$Data",
