@@ -13,6 +13,8 @@ Status: **accepted** (2026-10-09), BPM part implemented first, EJB part follows.
 6. Built-in function names: static table (verified IDs) + inference from `stringExpression`
    (pre-order of FunctionInvocations ↔ order of `name(` tokens); conflicts/unknowns → issues.
 7. Service group per service reference comes from the deployed `.composite` (SDA) and the `mc` logical system.
+8. All graph references (`flows.source/target/via`, node `scope`/`lane`, data object `scope`) are `{ref, name}`.
+9. Mapping parts without an expression (structural nodes) are not emitted.
 
 ## Principles
 
@@ -114,7 +116,7 @@ One process = one `src/bpmn/*.bpmn` partition (Collaboration → Pool).
 ```jsonc
 {
   "id": "…", "name": "DO_CreateEnvelopeInput", "kind": "dataObject|textVariable",
-  "scope": "<scope id>", "documentation": "…",
+  "scope": { "ref": "<scope id>", "name": "…" }, "documentation": "…",
   "type": { "ref": "<XsdElementDeclaration id>", "name": "EON_MT_CreateEnvelopeInput", "namespace": "urn:…" },
   "initialValue": Expression                   // only when an init mapping exists (ViewContainsMapping)
 }
@@ -124,6 +126,7 @@ One process = one `src/bpmn/*.bpmn` partition (Collaboration → Pool).
 
 Common fields + kind-specific fields. `kind` values for phase 1 (seen in DigiSign):
 `startEvent`, `endEvent`, `boundaryEvent`, `automatedActivity`, `mappingActivity`,
+`notificationActivity` (Galaxy.ProcessSupplements.NotificationActivity, seen in PPAS_OTE),
 `exclusiveGateway` (ExclusiveDataSplitGateway), `joinGateway` (UncontrolledJoinGateway, non-artificial),
 `embeddedSubprocess` (EmbeddedScope).
 Not yet seen → added when samples arrive: `humanActivity`, `parallelGateway`, `intermediateEvent` (timer/message), `subProcessCall`.
@@ -132,7 +135,7 @@ Unknown metaclass → `kind: "unknown"` + `metaclass` + `attributes` + issue `UN
 ```jsonc
 // common
 { "id": "…", "kind": "automatedActivity", "name": "Send Envelope", "documentation": "…",
-  "scope": "<scope id>", "lane": "<lane id>" }
+  "scope": { "ref": "<scope id>", "name": "…" }, "lane": { "ref": "<lane id>", "name": "Default" } }
 
 // automatedActivity
 {
@@ -149,9 +152,12 @@ Unknown metaclass → `kind: "unknown"` + `metaclass` + `attributes` + issue `UN
 // mappingActivity
 { "inputMapping": Mapping, "outputMapping": Mapping }
 
+// notificationActivity (e-mail); operation = generated per-activity NotificationInterface
+{ "subject": "…({0})!", "body": "…", "operation": { … }, "inputMapping": Mapping, "outputMapping": Mapping }
+
 // startEvent
 { "trigger": { "kind": "message", "eventDefinition": { "ref": "…", "name": "CreateEnvelopeInputMessage" } },
-  "condition": Expression, "outputMapping": Mapping }
+  "condition": Expression, "outputMapping": Mapping }       // trivial condition "true" omitted
 
 // endEvent
 { "terminate": true, "throws": { "ref": "<eventdef id>", "name": "DigiSignApplicationEscalation" },
@@ -172,11 +178,13 @@ Unknown metaclass → `kind: "unknown"` + `metaclass` + `attributes` + issue `UN
 
 ```jsonc
 {
-  "id": "<connector MOF id>", "source": "<node id>", "target": "<node id>",
-  "name": "…",
+  "id": "<connector MOF id>",
+  "source": { "ref": "<node id>", "name": "Signer only?" },
+  "target": { "ref": "<node id>", "name": "Download audit log" },
+  "name": "Yes",
   "condition": Expression,                     // ConditionalSequenceConnector only
   "isDefault": true,
-  "via": [ "<artificial join id>" ]            // present only if contracted
+  "via": [ { "ref": "<artificial join id>", "name": "Artificial Uncontrolled Join (…)" } ]   // only if contracted
 }
 ```
 
@@ -192,8 +200,12 @@ expressions, the original editor text in attribute `stringExpression` (finding o
   "functions": [ "isSet" ]                     // built-in names or catalog function names
 }
 ```
-- `text` = `stringExpression`; if missing, rendered from the tree (and `"rendered": true`).
-- The tree is always rendered as well; if it differs from `stringExpression` (normalised whitespace) → issue `EXPRESSION_TEXT_MISMATCH`.
+- `text` = `stringExpression`; if missing or empty, rendered from the tree (and `"rendered": true`).
+- Editor-generated expressions (`#generated=true#<text>`) → prefix stripped, `"generated": true`.
+- Infix operators are rendered as in the editor (`DO_TagsIndex < DO_TagsCount`).
+- A Reference without QName right after an invocation is the implicit function result (not rendered).
+- The tree is always rendered as well; if it differs from `stringExpression` (ignoring whitespace and namespace
+  prefixes like `dm0:`) → issue `EXPRESSION_TEXT_MISMATCH` (info).
 - `reads` / `functions` enable data lineage ("where is DO_X used") without parsing text.
 - The full step tree is **not** emitted in v0.1 (available in the raw partition); can be added if needed.
 
@@ -213,7 +225,7 @@ Hierarchical MappingParts are flattened into target paths.
   ]
 }
 ```
-- Only parts with an expression (or non-default `category`/`transformer`/`expander`/`enabled`) are emitted.
+- Only parts with a non-empty expression are emitted (structural parts are implied by the target paths).
 - Defaults omitted: `mode` (`category`) = `set`, `transformer` = `getValue`, `expander` = `currentNode`, `enabled` = `true`.
 
 ### Catalog objects
@@ -226,7 +238,7 @@ Hierarchical MappingParts are flattened into target paths.
                     "input":  { "name": "EON_MT_SendEnvelope", "namespace": "…" },
                     "output": { "name": "…", "namespace": "…" },
                     "faults": [ { "id": "…", "name": "EON_MT_Fault", "element": { "name": "…", "namespace": "…" } } ] } ],
-  "usedBy": [ { "process": "…", "node": { "ref": "…", "name": "Send Envelope" }, "role": "outbound|start|intermediate" } ] }
+  "usedBy": [ { "process": "…", "node": { "ref": "…", "name": "Send Envelope" }, "role": "outbound|start|notification" } ] }
 
 // ServiceReference (mc/META-INF/servicereferences.servicerefs)
 { "id": "…", "uuid": "0ba7e7fb-…", "type": "WS", "bindingType": "XI",
@@ -241,8 +253,8 @@ Hierarchical MappingParts are flattened into target paths.
   "lookupName": "eon.com/bpm~digisignfunctionsea/LOCAL/GetRecipientIdIndex/com.eon.digisign.bpm.functions.GetRecipientIdIndexLocal",
   "ejb": { "application": "eon.com/bpm~digisignfunctionsea", "bean": "GetRecipientIdIndex",
            "interface": "com.eon.digisign.bpm.functions.GetRecipientIdIndexLocal" },   // parsed from lookupName; links to ejb[].beans
-  "parameters": [ { "name": "recipientId", "type": "string" }, { "name": "recipientIds", "type": "string", "many": true } ],
-  "result": { "type": "long" } }
+  "parameters": [ { "name": "recipientId", "type": "xsd:string" }, { "name": "recipientIds", "type": "…" } ],
+  "result": { "name": "result", "type": "…" } }
 
 // EventDefinition (src/triggers/*.eventdef)
 { "id": "…", "name": "DigiSignTechnicalEscacaltion", "kind": "error|message",
@@ -251,7 +263,7 @@ Hierarchical MappingParts are flattened into target paths.
   "interface": { "ref": "…" } }                // message triggers: the inbound interface/operation
 
 // DataType (XSD element declarations used by data objects / messages)
-{ "id": "…", "name": "EON_MT_CreateEnvelopeInput", "namespace": "…",
+{ "id": "…", "name": "EON_MT_CreateEnvelopeInput", "namespace": "…", "type": "<named type, if any>",
   "fields": [ { "path": "Request/orgId", "type": "xsd:string", "min": 1, "max": 1 },
               { "path": "Recipients/recipient", "type": "…", "min": 0, "max": "unbounded" } ] }
 ```
@@ -305,8 +317,11 @@ Codes in v0.1 (automatically detected):
 | `UNKNOWN_BUILTIN_FUNCTION` | built-in function ID missing from the lookup table |
 | `UNKNOWN_NODE_TYPE` / `UNKNOWN_ELEMENT_TYPE` | metaclass not handled → also in `unmapped[]` |
 | `EXPRESSION_TEXT_MISMATCH` | `stringExpression` differs from the rendered tree |
+| `BUILTIN_FUNCTION_CONFLICT` | learned built-in name contradicts the static table / another expression |
+| `UNEXPECTED_STRUCTURE` | graph shape the reader does not expect (e.g. artificial join with ≠ 1 outgoing flow) |
+| `DUPLICATE_ID` | MOF ID declared in more than one partition |
 | `SUSPICIOUS_MAPPING` | heuristic: same source expression assigned to two sibling targets in one mapping |
-| `UNUSED_OBJECT` | catalog object (interface, function, eventdef, data object) not referenced by any process |
+| `UNUSED_OBJECT` | interface, service reference, function, eventdef or data object not used by any process (SAP system data objects excluded) |
 | `MISSING_SOURCE` | `.function` lookupName points to an EJB not found in the SCA |
 
 Manually confirmed findings (typos, logic bugs in Java) are **not** auto-detected in v0.1; they belong to the
