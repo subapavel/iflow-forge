@@ -1,0 +1,35 @@
+# Confidential client test data - never commit
+testdata/
+
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+release.properties
+dependency-reduced-pom.xml
+.mvn/wrapper/maven-wrapper.jar
+
+# Java
+*.class
+*.log
+hs_err_pid*
+
+# IntelliJ
+.idea/
+*.iml
+out/
+
+# Eclipse / VS Code
+.classpath
+.project
+.settings/
+.vscode/
+
+# Python (prototypes)
+__pycache__/
+*.pyc
+
+# OS
+.DS_Store
+Thumbs.db
