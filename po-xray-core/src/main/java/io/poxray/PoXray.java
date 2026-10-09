@@ -1,8 +1,11 @@
 package io.poxray;
 
 import io.poxray.bpm.BpmReader;
+import io.poxray.ejb.BpmFunctionLinks;
+import io.poxray.ejb.EjbReader;
 import io.poxray.model.BpmComponent;
 import io.poxray.model.DevelopmentComponent;
+import io.poxray.model.EjbModule;
 import io.poxray.model.ScaInventory;
 import io.poxray.model.UnmappedElement;
 import io.poxray.sca.SapManifest;
@@ -36,17 +39,28 @@ public final class PoXray {
         List<UnmappedElement> unmapped = new ArrayList<>();
         List<DevelopmentComponent> dcs = new ArrayList<>();
         List<BpmComponent> bpm = new ArrayList<>();
+        List<EjbModule> ejb = new ArrayList<>();
 
-        for (ScaArchive.DcSource dc : sca.developmentComponents()) {
+        List<ScaArchive.DcSource> sources = sca.developmentComponents();
+        for (ScaArchive.DcSource dc : sources) {
             var def = dc.definition();
             dcs.add(new DevelopmentComponent(def.name(), def.vendor(), def.caption(), def.type(),
                     new DevelopmentComponent.Archives(dc.sourceEntry(), dc.deployEntry()),
                     def.dependencies(),
-                    dc.deployEntry() == null ? List.of() : sca.manifest().deployDependencies(dc.deployEntry())));
+                    dc.deployEntry() == null ? List.of() : sca.manifest().deployDependencies(dc.deployEntry()),
+                    dc.sources().entries().keySet().stream().filter(k -> k.endsWith(".jar")).toList()));
             if (BpmReader.isBpm(dc)) {
                 bpm.add(BpmReader.read(sca, dc, issues, unmapped));
             }
         }
+        // EJB modules after BPM: beans are linked to the BPM functions that call them
+        BpmFunctionLinks links = new BpmFunctionLinks(bpm);
+        for (ScaArchive.DcSource dc : sources) {
+            if (EjbReader.isEjbModule(dc)) {
+                ejb.add(EjbReader.read(sca, dc, sources, links, issues));
+            }
+        }
+        links.reportMissing(issues);
 
         SapManifest mf = sca.manifest();
         return new ScaInventory(
@@ -56,7 +70,7 @@ public final class PoXray {
                         new ScaInventory.SoftwareComponent(mf.main("keyname"), mf.main("keyvendor"),
                                 mf.main("pr_release"), mf.main("pr_servicelevel"), mf.main("pr_patchlevel"),
                                 mf.main("pr_updateversion"), mf.main("keylocation"))),
-                dcs, bpm, issues.issues(), unmapped);
+                dcs, bpm, ejb, issues.issues(), unmapped);
     }
 
     static String sha256(Path file) {

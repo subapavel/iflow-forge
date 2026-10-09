@@ -9,6 +9,7 @@ public record ScaInventory(
         ScaSource source,
         List<DevelopmentComponent> developmentComponents,
         List<BpmComponent> bpm,
+        List<EjbModule> ejb,
         List<Issue> issues,
         List<UnmappedElement> unmapped) {
 

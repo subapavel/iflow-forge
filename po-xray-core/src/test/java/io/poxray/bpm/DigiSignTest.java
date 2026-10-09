@@ -6,6 +6,7 @@ import io.poxray.PoXray;
 import io.poxray.TestData;
 import io.poxray.json.Json;
 import io.poxray.model.BpmComponent;
+import io.poxray.model.EjbModule;
 import io.poxray.model.Flow;
 import io.poxray.model.Issue;
 import io.poxray.model.Node;
@@ -170,6 +171,43 @@ class DigiSignTest {
     }
 
     @Test
+    void readsEjbModulesAndLinksBpmFunctions() {
+        assertThat(inventory.ejb()).extracting(EjbModule::dc).containsExactlyInAnyOrder(
+                "eon.com/bpm/digisignfunctionseb", "eon.com/applications/digisignvalidationeb");
+
+        EjbModule functions = ejb("eon.com/bpm/digisignfunctionseb");
+        assertThat(functions.ear()).isEqualTo("eon.com/bpm/digisignfunctionsea");
+        assertThat(functions.application()).isEqualTo("eon.com/bpm~digisignfunctionsea");
+        assertThat(functions.beans()).hasSize(4).allSatisfy(b -> {
+            assertThat(b.roles()).containsExactly("bpmFunction");
+            assertThat(b.usedBy()).singleElement().satisfies(u -> {
+                assertThat(u.dc()).isEqualTo("eon.com/bpm/digisign");
+                assertThat(u.function().name()).isEqualToIgnoringCase(b.name());
+            });
+            assertThat(b.interfaces().local()).containsExactly(b.className() + "Local");
+            assertThat(b.source().path()).startsWith("SOURCEARCHIVES/eon.com~bpm~digisignfunctionseb~.dcsa!/ejbModule/");
+        });
+
+        EjbModule validation = ejb("eon.com/applications/digisignvalidationeb");
+        assertThat(validation.beans()).singleElement().satisfies(b -> {
+            assertThat(b.name()).isEqualTo("ValidateCreateEnvelopeInput");
+            assertThat(b.roles()).containsExactly("adapterModule");
+            assertThat(b.jndiName()).isEqualTo("ValidateCreateEnvelopeInput");
+            assertThat(b.moduleParameters())
+                    .containsExactly("showAudit", "faultInterface", "faultNamespace", "faultService", "senderId");
+            assertThat(b.interfaces().local()).containsExactly("com.sap.aii.af.lib.mp.module.ModuleLocal");
+            assertThat(b.interfaces().remote()).containsExactly("com.sap.aii.af.lib.mp.module.ModuleRemote");
+        });
+        // class name typo in source is kept as is (docs/HANDOFF.md §5)
+        assertThat(validation.classes()).extracting(EjbModule.JavaClass::className)
+                .contains("com.eon.digisign.po.ValiadtionMessage");
+
+        assertThat(issues("MISSING_SOURCE")).isEmpty();
+        assertThat(issues("EJB_INTERFACE_MISMATCH")).isEmpty();
+        assertThat(issues("DEPLOYED_SOURCE_DIFFERS")).isEmpty();
+    }
+
+    @Test
     void jsonIsValidAndOmitsEmptyValues() {
         String json = Json.write(inventory);
         var tree = Json.mapper().readTree(json);
@@ -177,6 +215,10 @@ class DigiSignTest {
         assertThat(json).doesNotContain(": null").doesNotContain("[ ]").doesNotContain("{ }");
         // declaration order, not alphabetical
         assertThat(json.indexOf("\"schemaVersion\"")).isLessThan(json.indexOf("\"generator\""));
+    }
+
+    private static EjbModule ejb(String dc) {
+        return inventory.ejb().stream().filter(m -> m.dc().equals(dc)).findFirst().orElseThrow();
     }
 
     private static BpmComponent bpm() {

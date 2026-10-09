@@ -1,7 +1,7 @@
 # po-xray — JSON output model (v0.1)
 
 Scope: phase 1 — BPM processes (NW BPM Galaxy) + EJB inventory, read from one NWDI SCA.
-Status: **accepted** (2026-10-09), BPM part implemented first, EJB part follows.
+Status: **accepted** (2026-10-09), BPM and EJB parts implemented.
 
 ## Decisions
 
@@ -43,7 +43,7 @@ Status: **accepted** (2026-10-09), BPM part implemented first, EJB part follows.
   },
   "developmentComponents": [ /* DevelopmentComponent */ ],
   "bpm":   [ /* BpmComponent — one per Process Composer DC */ ],
-  "ejb":   [ /* EjbModule — one per EJB DC */ ],
+  "ejb":   [ /* EjbModule — one per EJB module DC */ ],
   "issues": [ /* Issue */ ],
   "unmapped": [ /* UnmappedElement */ ]
 }
@@ -60,7 +60,8 @@ Status: **accepted** (2026-10-09), BPM part implemented first, EJB part follows.
     "deploy": "DEPLOYARCHIVES/eon.com~bpm~digisign~eon.com~bpm~digisign.sda"
   },
   "dependencies": [ { "vendor": "sap.com", "name": "tc/bpem/bi/bp/buildtool" } ],   // from .dcdef
-  "deployDependencies": [ { "vendor": "sap.com", "name": "com.sap.aii.af.lib.facade" } ] // from SAP_MANIFEST dependencylist
+  "deployDependencies": [ { "vendor": "sap.com", "name": "com.sap.aii.af.lib.facade" } ], // from SAP_MANIFEST dependencylist
+  "libraries": [ "libraries/mvel2-2.5.2.Final.jar" ]    // External Library DC: jar files (third-party / custom code)
 }
 ```
 
@@ -270,33 +271,53 @@ Hierarchical MappingParts are flattened into target paths.
 
 ## EJB inventory
 
+One `EjbModule` per EJB module DC (`.dcdef` sub-type `EJBModule`). Sources come from the DC source archive;
+the sources deployed in the EAR (`src.zip` → `<vendor>~<name>~ejbjar_srcarchive.zip`) are compared with them
+(`DEPLOYED_SOURCE_DIFFERS`) and used as fallback when the source archive has no Java files.
+
 ```jsonc
 {
   "dc": "eon.com/applications/digisignvalidationeb",
-  "ear": "eon.com/applications/digisignvalidationea",           // EAR DC wrapping this module
+  "ear": "eon.com/applications/digisignvalidationea",           // EAR DC whose .dcdef depends on this module
+  "application": "eon.com/applications~digisignvalidationea",   // deployed name, as in BPM function lookup names
   "beans": [
     {
-      "name": "ValidateCreateEnvelopeInput",
+      "name": "ValidateCreateEnvelopeInput",                    // bean annotation name, else simple class name
       "class": "com.eon.digisign.po.ValidateCreateEnvelopeInput",
       "type": "stateless",                     // stateless | stateful | singleton | messageDriven
-      "jndiName": "ValidateCreateEnvelopeInput",
+      "jndiName": "ValidateCreateEnvelopeInput",                // META-INF/ejb-j2ee-engine.xml
       "interfaces": { "local": [ "com.sap.aii.af.lib.mp.module.ModuleLocal" ], "remote": [ "…ModuleRemote" ] },
-      "roles": [ "adapterModule" ],            // bpmFunction | adapterModule | xiProxyProvider | schedulerJob | other
-      "moduleParameters": [ "showAudit", "faultInterface", "faultNamespace", "faultService", "senderId" ],  // adapterModule: getContextData("…") literals
-      "usedBy": [ { "kind": "bpmFunction", "function": { "ref": "…", "name": "getRecipientIdIndex" } } ],     // bpmFunction only
-      "source": { "path": "…!/ejbModule/com/eon/digisign/po/ValidateCreateEnvelopeInput.java", "sha256": "…" }
+      "roles": [ "adapterModule" ],            // bpmFunction | adapterModule | xiProxyProvider | webService | schedulerJob | other
+      "technologies": [ "xiMessaging", "adapterFramework" ],    // from imports (jco, jpa, jdbc, jms, jaxws, http, mvel, …)
+      "moduleParameters": [ "showAudit", "faultInterface", "faultNamespace", "faultService", "senderId" ],
+      "webService": { "serviceName": "…", "portName": "…", "endpointInterface": "…", "targetNamespace": "…", "wsdlLocation": "…" },
+      "job": { "name": "ZideOteMsgRefDeleteOldJob", "description": "…" },       // schedulerJob (job-definition.xml)
+      "activationConfig": { "messageSelector": "JobDefinition='…' AND …" },     // messageDriven
+      "properties": { "destination-name": "JobQueue" },                         // bean-props (ejb-j2ee-engine.xml)
+      "rfcFunctions": [ "Z_ISU_INT_UI_DETERMINE_RFC" ],                          // jco: getFunction("…")
+      "jcoDestinations": [ "SAPISU" ],                                          // jco: getDestination(…), constants resolved
+      "injects": [ "ZideOteRoutingBean" ],                                      // @EJB fields resolved to bean names
+      "persistenceUnit": "zide_ide_ote_routing",                                // @PersistenceContext
+      "usedBy": [ { "kind": "bpmFunction", "dc": "eon.com/bpm/digisign",
+                    "function": { "ref": "…", "name": "getRecipientIdIndex" } } ],
+      "source": { "path": "SOURCEARCHIVES/…dcsa!/ejbModule/com/eon/digisign/po/ValidateCreateEnvelopeInput.java", "sha256": "…" }
     }
   ],
-  "classes": [ { "class": "com.eon.digisign.po.ValiadtionMessage", "source": { "path": "…" } } ],  // non-bean classes
-  "technologies": [ "jco", "jpa" ],            // only when detected
-  "jpaEntities": [ ]
+  "classes": [ { "class": "com.eon.digisign.po.ValiadtionMessage", "kind": "class", "source": { … } } ],  // non-bean types
+  "jpaEntities": [ { "class": "cz.ppas.ote.sappo.db.ZideOteRouting", "table": "ZIDE_OTE_ROUTING" } ],
+  "persistenceUnits": [ { "name": "zide_ide_ote_routing", "dataSource": "PODB", "classes": [ "…" ] } ],
+  "jobDefinitions": [ { "name": "ZideOteMsgRefDeleteOldJob", "description": "…" } ],
+  "technologies": [ "jpa", "jco", "scheduler" ]   // union over the module
 }
 ```
-Classification (from source, regex/lightweight parse — no compilation):
-- `bpmFunction` — implements an interface with `invokeSdo(DataObject, InvocationContext)` **or** referenced by a `.function` lookupName.
-- `adapterModule` — `implements Module` (com.sap.aii.af.lib.mp.module).
-- `xiProxyProvider` — `@WebService` + `@XIEnabled`.
-- `schedulerJob` — MDB extending `MDBJobImplementation`.
+Classification (lightweight source parsing, comments stripped, no compilation):
+- `bpmFunction` — has `invokeSdo(...)` or is referenced by a `.function` lookup name.
+- `adapterModule` — implements `com.sap.aii.af.lib.mp.module.Module`; parameters = `getContextData("…")` arguments.
+- `xiProxyProvider` — `@WebService` + `@XIEnabled` (plain `@WebService` → `webService`).
+- `schedulerJob` — extends `MDBJobImplementation`; job matched via `JobDefinition='…'` in the message selector.
+- Business interfaces: `@Local`/`@Remote` on the bean or on the implemented interface; a single unannotated
+  interface is local (EJB 3 default).
+- BPM link: function `lookupName` `<application>/LOCAL|REMOTE/<bean>/<interface>` ↔ (`application`, bean `name`).
 
 ## Issues
 
@@ -323,6 +344,10 @@ Codes in v0.1 (automatically detected):
 | `SUSPICIOUS_MAPPING` | heuristic: same source expression assigned to two sibling targets in one mapping |
 | `UNUSED_OBJECT` | interface, service reference, function, eventdef or data object not used by any process (SAP system data objects excluded) |
 | `MISSING_SOURCE` | `.function` lookupName points to an EJB not found in the SCA |
+| `EJB_INTERFACE_MISMATCH` | function looks up an interface the bean does not declare as business interface |
+| `DEPLOYED_SOURCE_DIFFERS` | Java sources deployed in the EAR differ from the DC source archive |
+| `SOURCE_FROM_DEPLOYMENT` | DC source archive has no Java sources, EAR sources used (info) |
+| `UNSUPPORTED_DESCRIPTOR` | `ejb-jar.xml` present but not interpreted (EJB 2.x beans would be missing) |
 
 Manually confirmed findings (typos, logic bugs in Java) are **not** auto-detected in v0.1; they belong to the
 documentation, optionally via a `knownIssues` input file later.
