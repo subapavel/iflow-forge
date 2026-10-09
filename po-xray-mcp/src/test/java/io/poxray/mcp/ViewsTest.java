@@ -5,10 +5,13 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import io.poxray.PoXray;
 import io.poxray.SyntheticSca;
+import io.poxray.TestData;
+import io.poxray.json.Json;
 import io.poxray.model.IntegrationInventory;
 import io.poxray.model.IntegrationInventory.Channel;
 import io.poxray.model.IntegrationInventory.DirRef;
 import io.poxray.model.IntegrationInventory.ObjRef;
+import io.poxray.model.Node;
 import io.poxray.model.ScaInventory;
 import java.nio.file.Path;
 import java.util.List;
@@ -71,5 +74,20 @@ class ViewsTest {
         String dc = o.ejbModules().getFirst().dc();
         assertThat(Views.find(inv, "ejbModule", dc)).hasSize(1);
         assertThat(Views.find(inv, "process", "none")).isEmpty();
+    }
+
+    @Test
+    void processOutlineLeavesMappingsToSteps() {
+        ScaInventory inv = PoXray.read(TestData.require("EONBPMDIGI00_0.sca"));
+
+        Object outline = Views.find(inv, "process", "digisign_envelope").getFirst();
+        String json = Json.mapper().writer().without(tools.jackson.databind.SerializationFeature.INDENT_OUTPUT)
+                .writeValueAsString(outline);
+
+        assertThat(json).doesNotContain("\"inputMapping\":{").contains("\"mappings\":[\"inputMapping\"");
+        assertThat(json.length()).isLessThan(60_000);
+        assertThat(Views.find(inv, "step", "digisign_envelope/Create envelope recipient")).singleElement()
+                .isInstanceOfSatisfying(Node.class, n -> assertThat(n.inputMapping()).isNotNull());
+        assertThat(Views.find(inv, "processData", "digisign_envelope")).hasSize(1);
     }
 }

@@ -116,6 +116,21 @@ public final class PoClient {
         return body;
     }
 
+    /** First non-empty message in the cause chain with its exception type (some I/O errors have no message). */
+    static String describe(Throwable e) {
+        for (Throwable t = e; t != null; t = t.getCause()) {
+            if (t.getMessage() != null && !t.getMessage().isBlank()) {
+                return t.getClass().getSimpleName() + ": " + t.getMessage();
+            }
+        }
+        Throwable root = e;
+        while (root.getCause() != null && root.getCause() != root) {
+            root = root.getCause();
+        }
+        return root == e || root.getClass() == e.getClass() ? e.getClass().getSimpleName()
+                : e.getClass().getSimpleName() + " / " + root.getClass().getSimpleName();
+    }
+
     public XiObject read(XiRef ref) {
         return XiObjectParser.parse(readRaw(ref), ref.label());
     }
@@ -124,8 +139,11 @@ public final class PoClient {
         HttpResponse<String> resp;
         try {
             resp = http.send(req, HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
+        } catch (java.net.ConnectException | java.net.http.HttpConnectTimeoutException e) {
+            throw new PoException(what + " failed: cannot connect to " + req.uri().getHost() + " (" + describe(e)
+                    + "; network / VPN?)", e);
         } catch (IOException e) {
-            throw new PoException(what + " failed: " + e.getMessage(), e);
+            throw new PoException(what + " failed: " + describe(e), e);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             throw new PoException(what + " interrupted", e);

@@ -1,6 +1,7 @@
 package io.poxray.mcp;
 
 import io.poxray.integration.XsdFields;
+import io.poxray.json.Json;
 import io.poxray.model.BpmComponent;
 import io.poxray.model.DataType;
 import io.poxray.model.EjbModule;
@@ -12,6 +13,7 @@ import io.poxray.model.IntegrationInventory.Ico;
 import io.poxray.model.IntegrationInventory.ObjRef;
 import io.poxray.model.IntegrationInventory.Query;
 import io.poxray.model.Issue;
+import io.poxray.model.Process;
 import io.poxray.model.ScaInventory;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -20,6 +22,9 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.node.ArrayNode;
+import tools.jackson.databind.node.ObjectNode;
 
 /**
  * Agent-sized views of the inventories: an overview first, single objects on request (MCP clients truncate large
@@ -31,7 +36,8 @@ final class Views {
     static final List<String> INTEGRATION_KINDS = List.of("ico", "channel", "serviceInterface", "operationMapping",
             "messageMapping", "messageType", "dataType", "externalDefinition", "functionLibrary");
     /** Kinds accepted by {@code get_sca_object}. */
-    static final List<String> SCA_KINDS = List.of("process", "catalog", "ejbModule", "developmentComponent", "issues");
+    static final List<String> SCA_KINDS = List.of("process", "step", "processData", "catalog", "ejbModule",
+            "developmentComponent", "issues");
 
     private Views() {
     }
@@ -132,16 +138,26 @@ final class Views {
         return new ScaOverview(inv.source(), inv.developmentComponents().stream().map(d -> d.name()).toList(),
                 processes, catalogs, ejb, issues,
                 "Details: get_sca_object(kind, name) with kind one of " + String.join(", ", SCA_KINDS)
-                        + " (process by name or id, catalog / developmentComponent / ejbModule by DC name, issues: name = severity"
-                        + " or empty).");
+                        + " (process / processData by process name or id; step as '<process>/<step name or id>' with"
+                        + " its input / output mappings; catalog / developmentComponent / ejbModule by DC name;"
+                        + " issues: name = severity or empty).");
     }
 
     static List<Object> find(ScaInventory inv, String kind, String name) {
         String n = name == null ? "" : name.strip().toLowerCase(Locale.ROOT);
         List<Object> out = new ArrayList<>();
         switch (kind) {
-            case "process" -> inv.bpm().stream().flatMap(b -> b.processes().stream())
-                    .filter(p -> eq(p.name(), n) || eq(p.id(), n)).forEach(out::add);
+            case "process" -> processes(inv, n).forEach(p -> out.add(outline(p)));
+            case "processData" -> processes(inv, n).forEach(p -> out.add(new ProcessData(p.name(), p.dataObjects(),
+                    p.roles())));
+            case "step" -> {
+                int slash = n.lastIndexOf('/');
+                String step = slash < 0 ? n : n.substring(slash + 1);
+                List<Process> scope = slash < 0 ? inv.bpm().stream().flatMap(b -> b.processes().stream()).toList()
+                        : processes(inv, n.substring(0, slash));
+                scope.stream().flatMap(p -> p.nodes().stream())
+                        .filter(node -> eq(node.name(), step) || eq(node.id(), step)).forEach(out::add);
+            }
             case "catalog" -> inv.bpm().stream().filter(b -> eq(b.dc(), n) && b.catalog() != null)
                     .map(BpmComponent::catalog).forEach(out::add);
             case "ejbModule" -> inv.ejb().stream().filter((EjbModule m) -> eq(m.dc(), n) || eq(m.application(), n))
@@ -153,6 +169,50 @@ final class Views {
                     + String.join(", ", SCA_KINDS));
         }
         return out;
+    }
+
+    /** Data objects and roles of a process (kept out of the outline). */
+    record ProcessData(String process, Object dataObjects, Object roles) {
+    }
+
+    private static List<Process> processes(ScaInventory inv, String lowerName) {
+        return inv.bpm().stream().flatMap(b -> b.processes().stream())
+                .filter(p -> eq(p.name(), lowerName) || eq(p.id(), lowerName)).toList();
+    }
+
+    /**
+     * Process without the bulky parts: step mappings are replaced by the list of their kinds
+     * ({@code "mappings": ["inputMapping", ...]}, fetch with kind step), data objects and roles by their names
+     * (kind processData).
+     */
+    static JsonNode outline(Process p) {
+        ObjectNode o = Json.mapper().valueToTree(p);
+        JsonNode nodes = o.get("nodes");
+        if (nodes != null) {
+            for (JsonNode node : nodes) {
+                ObjectNode n = (ObjectNode) node;
+                List<String> mappings = new ArrayList<>();
+                for (String field : List.copyOf(n.propertyNames())) {
+                    if (field.endsWith("Mapping") || field.endsWith("Mappings")) {
+                        mappings.add(field);
+                        n.remove(field);
+                    }
+                }
+                if (!mappings.isEmpty()) {
+                    ArrayNode a = n.putArray("mappings");
+                    mappings.forEach(a::add);
+                }
+            }
+        }
+        for (String field : List.of("dataObjects", "roles")) {
+            JsonNode items = o.get(field);
+            if (items != null && items.isArray()) {
+                ArrayNode names = Json.mapper().createArrayNode();
+                items.forEach(i -> names.add(i.path("name").asString(i.path("id").asString(""))));
+                o.set(field, names);
+            }
+        }
+        return o;
     }
 
     // ------------------------------------------------------------------------------------------ helpers

@@ -30,8 +30,14 @@ public class Inventories {
     private final Map<String, IntegrationInventory> integration = new ConcurrentHashMap<>();
     private final Map<String, ScaInventory> sca = new ConcurrentHashMap<>();
 
-    List<Component> components(String system, String pattern) {
-        return query(system, false).components(pattern);
+    /** Components matching the pattern; {@code warnings} when served from the offline snapshot. */
+    record Components(List<Component> components, List<String> warnings) {
+    }
+
+    Components components(String system, String pattern) {
+        IntegrationQuery q = query(system, false);
+        List<Component> found = q.components(pattern);
+        return new Components(found, q.offlineNotes());
     }
 
     IntegrationInventory icos(String system, String component, String direction, boolean refresh) {

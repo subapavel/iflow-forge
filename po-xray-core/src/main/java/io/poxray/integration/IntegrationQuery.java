@@ -8,6 +8,7 @@ import io.poxray.model.IntegrationInventory.Ico;
 import io.poxray.model.ScaInventory;
 import io.poxray.po.Area;
 import io.poxray.po.PoClient;
+import io.poxray.po.PoException;
 import io.poxray.po.QueryRequest;
 import io.poxray.xi.XiObject;
 import io.poxray.xi.XiObjectSource;
@@ -39,6 +40,7 @@ public final class IntegrationQuery {
 
     private final PoClient client;
     private final XiObjectSource source;
+    private final List<String> notes = new ArrayList<>();
 
     public IntegrationQuery(PoClient client, XiObjectSource source) {
         this.client = client;
@@ -52,7 +54,16 @@ public final class IntegrationQuery {
     public List<Component> components(String pattern) {
         Pattern p = pattern == null || pattern.isBlank() ? null : glob(pattern, true);
         List<Component> out = new ArrayList<>();
-        for (XiRef ref : list("Service")) {
+        List<XiRef> services;
+        try {
+            services = list("Service");
+        } catch (PoException e) {
+            if (e.getMessage() != null && e.getMessage().contains("authentication failed")) {
+                throw e;
+            }
+            return componentsOfIcos(p, e);
+        }
+        for (XiRef ref : services) {
             String party = blank(ref.key(0));
             String name = ref.key(ref.key().size() > 1 ? 1 : 0);
             if (p == null || p.matcher(name).matches() || (party != null && p.matcher(party).matches())) {
@@ -101,6 +112,9 @@ public final class IntegrationQuery {
             }
         }
         List<Ico> icos = reader.icos(selected);
+        for (String note : source.offlineNotes()) {
+            issues.warn("OFFLINE_SNAPSHOT", note, null, null);
+        }
         List<Component> components = matchedComponents.stream().map(c -> new Component(null, c, null)).toList();
         return new IntegrationInventory(
                 ScaInventory.SCHEMA_VERSION,
@@ -115,7 +129,30 @@ public final class IntegrationQuery {
     private List<XiRef> list(String type) {
         QueryRequest all = new QueryRequest(Area.DIRECTORY, List.of(type), "MODIFYUSER", "*", "LIKE", false,
                 List.of("RA_XILINK"));
-        return client.query(all).rows().stream().map(r -> r.xiLink()).filter(r -> r != null).toList();
+        return source.list(type,
+                () -> client.query(all).rows().stream().map(r -> r.xiLink()).filter(r -> r != null).toList());
+    }
+
+    /** Notes when results came from the offline snapshot because the PO system could not be reached. */
+    public List<String> offlineNotes() {
+        List<String> out = new ArrayList<>(source.offlineNotes());
+        out.addAll(notes);
+        return List.copyOf(out);
+    }
+
+    /** Offline fallback: components occurring as sender or receiver of the ICOs in the snapshot. */
+    private List<Component> componentsOfIcos(Pattern p, PoException cause) {
+        Set<String> names = new java.util.TreeSet<>(String.CASE_INSENSITIVE_ORDER);
+        for (XiRef ref : list("AllInOne")) {
+            source.resolve(ref).ifPresent(ico -> {
+                names.add(ico.id().key(1));
+                names.addAll(receivers(ico));
+            });
+        }
+        notes.add(cause.getMessage() + " - components derived from the ICOs in the snapshot (components without"
+                + " ICO are missing)");
+        return names.stream().filter(n -> !n.isBlank() && (p == null || p.matcher(n).matches()))
+                .map(n -> new Component(null, n, null)).toList();
     }
 
     /** Receiver components of an ICO: receiver configurations (constant extractors) and the optional key part. */

@@ -1,5 +1,6 @@
 package io.poxray.cli;
 
+import io.poxray.integration.IntegrationQuery;
 import io.poxray.json.Json;
 import io.poxray.model.IntegrationInventory.Component;
 import jakarta.inject.Inject;
@@ -35,7 +36,9 @@ public class ComponentsCommand implements Command<CommandInvocation> {
     @Override
     public CommandResult execute(CommandInvocation invocation) {
         return service.run(() -> {
-            List<Component> components = po.query(system, null, false).components(name);
+            IntegrationQuery query = po.query(system, null, false);
+            List<Component> components = query.components(name);
+            query.offlineNotes().forEach(n -> System.err.println("Warning: " + n));
             if (json) {
                 invocation.println(Json.write(components).stripTrailing());
             } else {

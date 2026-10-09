@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.Callable;
+import tools.jackson.databind.SerializationFeature;
 
 /**
  * MCP tools over the po-xray readers. Integration (ESR / Integration Directory of a live PO system): find the
@@ -40,7 +41,7 @@ public class PoXrayTools {
     String findComponents(@ToolArg(description = SYSTEM) String system,
             @ToolArg(description = "Part of the component name (substring) or * ? pattern; empty = all",
                     defaultValue = "") String name) {
-        return call(() -> Json.write(inventories.components(system, name)));
+        return call(() -> json(inventories.components(system, name)));
     }
 
     @Tool(name = "list_icos", description = "Integrated configurations (ICOs) to and/or from a component: sender, "
@@ -53,7 +54,7 @@ public class PoXrayTools {
             @ToolArg(description = DIRECTION, defaultValue = "both") String direction,
             @ToolArg(description = "Re-read objects from the PO system instead of the local snapshot",
                     defaultValue = "false") boolean refresh) {
-        return call(() -> Json.write(Views.overview(inventories.icos(system, component, direction, refresh))));
+        return call(() -> json(Views.overview(inventories.icos(system, component, direction, refresh))));
     }
 
     @Tool(name = "get_object", description = "One object from the ICO inventory of a component (as listed by "
@@ -74,7 +75,7 @@ public class PoXrayTools {
                 throw new IllegalArgumentException("No " + kind + " named '" + name + "' in the ICO inventory of "
                         + component + "; see list_icos for the names");
             }
-            return Json.write(found.size() == 1 ? found.getFirst() : found);
+            return json(found.size() == 1 ? found.getFirst() : found);
         });
     }
 
@@ -102,7 +103,7 @@ public class PoXrayTools {
                             Documentation.render(inv, f, Locale.forLanguageTag(lang))));
                 }
             }
-            return Json.write(written);
+            return json(written);
         });
     }
 
@@ -111,25 +112,28 @@ public class PoXrayTools {
             + "Fetch details with get_sca_object.",
             annotations = @Tool.Annotations(readOnlyHint = true, openWorldHint = false))
     String readSca(@ToolArg(description = "Path to the .sca file") String path) {
-        return call(() -> Json.write(Views.overview(inventories.sca(path))));
+        return call(() -> json(Views.overview(inventories.sca(path))));
     }
 
-    @Tool(name = "get_sca_object", description = "One part of an SCA inventory: process (steps, gateways, "
-            + "mappings with resolved functions, events, data objects), catalog (interfaces, service references, "
-            + "functions, data types of a BPM DC), ejbModule (beans, roles, web services, JPA), "
+    @Tool(name = "get_sca_object", description = "One part of an SCA inventory: process (steps, gateways, flows "
+            + "with conditions, events; mappings only listed), step (one step with its input / output mappings and "
+            + "resolved functions), processData (data objects with types, roles), catalog (interfaces, service "
+            + "references, functions, data types of a BPM DC), ejbModule (beans, roles, web services, JPA), "
             + "developmentComponent, issues.",
             annotations = @Tool.Annotations(readOnlyHint = true, openWorldHint = false))
     String getScaObject(@ToolArg(description = "Path to the .sca file") String path,
-            @ToolArg(description = "process, catalog, ejbModule, developmentComponent or issues") String kind,
-            @ToolArg(description = "Process name or id; DC name for catalog, ejbModule, developmentComponent; "
-                    + "severity (error, warning, info) or empty for issues", defaultValue = "") String name) {
+            @ToolArg(description = "process, step, processData, catalog, ejbModule, developmentComponent or issues")
+            String kind,
+            @ToolArg(description = "Process name or id (process, processData); '<process>/<step name or id>' "
+                    + "(step); DC name (catalog, ejbModule, developmentComponent); severity (error, warning, info) or "
+                    + "empty (issues)", defaultValue = "") String name) {
         return call(() -> {
             List<Object> found = Views.find(inventories.sca(path), kind, name);
             if (found.isEmpty() && !"issues".equals(kind)) {
                 throw new IllegalArgumentException("No " + kind + " named '" + name + "' in " + path
                         + "; see read_sca for the names");
             }
-            return Json.write("issues".equals(kind) || found.size() > 1 ? found : found.getFirst());
+            return json("issues".equals(kind) || found.size() > 1 ? found : found.getFirst());
         });
     }
 
@@ -156,11 +160,16 @@ public class PoXrayTools {
                             Documentation.render(inv, f, Locale.forLanguageTag(lang))));
                 }
             }
-            return Json.write(written);
+            return json(written);
         });
     }
 
     // ------------------------------------------------------------------------------------------ helpers
+
+    /** Compact JSON for tool results (indentation would cost the agent tokens). */
+    private static String json(Object value) {
+        return Json.mapper().writer().without(SerializationFeature.INDENT_OUTPUT).writeValueAsString(value);
+    }
 
     private static boolean wants(String format, String f) {
         String v = format == null || format.isBlank() ? "all" : format.strip().toLowerCase(Locale.ROOT);

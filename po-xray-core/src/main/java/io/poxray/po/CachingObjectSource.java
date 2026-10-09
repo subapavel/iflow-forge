@@ -11,15 +11,26 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.HexFormat;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.function.Supplier;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.node.ArrayNode;
+import tools.jackson.databind.node.ObjectNode;
 
 /**
  * Objects read online ({@code read/ext}) and kept as raw {@code xiObj} XML in a local snapshot directory, so that
  * repeated queries (e.g. by an agent) do not hit the PO system and work offline. Layout:
- * {@code <dir>/<rep|dir>/<typeId>/<hash of SWCV + key>.xml}. {@code refresh} re-reads cached objects.
+ * {@code <dir>/<rep|dir>/<typeId>/<hash of SWCV + key>.xml}, listings (SimpleQuery) as
+ * {@code <dir>/lists/<typeId>.json}. {@code refresh} re-reads cached objects. When the PO system cannot be reached,
+ * listings come from the snapshot and {@link #offlineNotes()} says so.
  */
 public final class CachingObjectSource implements XiObjectSource {
 
@@ -27,6 +38,7 @@ public final class CachingObjectSource implements XiObjectSource {
     private final Path directory;
     private final boolean refresh;
     private final Map<Path, String> failures = new ConcurrentHashMap<>();
+    private final List<String> offlineNotes = new CopyOnWriteArrayList<>();
 
     public CachingObjectSource(PoClient client, Path directory, boolean refresh) {
         this.client = client;
@@ -56,12 +68,109 @@ public final class CachingObjectSource implements XiObjectSource {
         } catch (IOException e) {
             throw new UncheckedIOException("Cannot access snapshot " + file, e);
         } catch (PoException e) {
-            if (e.getMessage() != null && e.getMessage().contains("authentication failed")) {
+            if (isAuthentication(e)) {
                 throw e;
             }
             failures.put(file, e.getMessage());
             return Optional.empty(); // deleted or not renderable: reported by the caller with this reason
         }
+    }
+
+    @Override
+    public List<XiRef> list(String typeId, Supplier<List<XiRef>> online) {
+        Path file = directory.resolve("lists").resolve(typeId + ".json");
+        List<XiRef> refs;
+        try {
+            refs = online.get();
+        } catch (PoException e) {
+            if (isAuthentication(e)) {
+                throw e;
+            }
+            if (!Files.isRegularFile(file)) {
+                List<XiRef> cached = cachedObjects(typeId);
+                if (cached.isEmpty()) {
+                    throw e;
+                }
+                offlineNotes.add(e.getMessage() + " - " + typeId + " listed from the " + cached.size()
+                        + " objects in the snapshot (may be incomplete)");
+                return cached;
+            }
+            try {
+                Instant at = Files.getLastModifiedTime(file).toInstant().truncatedTo(ChronoUnit.SECONDS);
+                offlineNotes.add(e.getMessage() + " - using the snapshot of " + typeId + " from " + at
+                        + " (objects not in the snapshot cannot be read)");
+                return readList(Files.readString(file, StandardCharsets.UTF_8));
+            } catch (IOException io) {
+                throw new UncheckedIOException("Cannot read snapshot " + file, io);
+            }
+        }
+        try {
+            Files.createDirectories(file.getParent());
+            Files.writeString(file, writeList(refs), StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            throw new UncheckedIOException("Cannot write snapshot " + file, e);
+        }
+        return refs;
+    }
+
+    @Override
+    public List<String> offlineNotes() {
+        return List.copyOf(offlineNotes);
+    }
+
+    /** References of the snapshot objects of a type (fallback for snapshots taken before listings were kept). */
+    private List<XiRef> cachedObjects(String typeId) {
+        List<XiRef> out = new ArrayList<>();
+        for (Area area : Area.values()) {
+            Path dir = directory.resolve(area.path()).resolve(typeId);
+            if (!Files.isDirectory(dir)) {
+                continue;
+            }
+            try (var files = Files.list(dir)) {
+                for (Path f : files.filter(p -> p.toString().endsWith(".xml")).sorted().toList()) {
+                    out.add(XiObjectParser.parse(Files.readString(f, StandardCharsets.UTF_8), f.toString()).id());
+                }
+            } catch (IOException e) {
+                throw new UncheckedIOException("Cannot read snapshot " + dir, e);
+            }
+        }
+        return out;
+    }
+
+    private static boolean isAuthentication(PoException e) {
+        return e.getMessage() != null && e.getMessage().contains("authentication failed");
+    }
+
+    /** Listing as a JSON tree (no reflection, works in native images). */
+    static String writeList(List<XiRef> refs) {
+        ArrayNode array = io.poxray.json.Json.mapper().createArrayNode();
+        for (XiRef r : refs) {
+            ObjectNode o = array.addObject();
+            o.put("vcType", r.vcType());
+            o.put("swcGuid", r.swcGuid());
+            o.put("swcCaption", r.swcCaption());
+            o.put("typeId", r.typeId());
+            o.put("oid", r.oid());
+            ArrayNode key = o.putArray("key");
+            r.key().forEach(key::add);
+        }
+        return io.poxray.json.Json.mapper().writeValueAsString(array);
+    }
+
+    static List<XiRef> readList(String json) {
+        List<XiRef> out = new ArrayList<>();
+        for (JsonNode o : io.poxray.json.Json.mapper().readTree(json)) {
+            List<String> key = new ArrayList<>();
+            o.path("key").forEach(k -> key.add(k.asString()));
+            out.add(new XiRef(text(o, "vcType"), text(o, "swcGuid"), text(o, "swcCaption"), text(o, "typeId"),
+                    text(o, "oid"), List.copyOf(key)));
+        }
+        return out;
+    }
+
+    private static String text(JsonNode o, String field) {
+        JsonNode n = o.get(field);
+        return n == null || n.isNull() ? null : n.asString();
     }
 
     @Override

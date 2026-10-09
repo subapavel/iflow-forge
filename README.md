@@ -94,10 +94,12 @@ registered for reflection in `po-xray-cli` (`NativeReflection`, guarded by a tes
 | `list_icos` | ICOs to / from a component: routing conditions, interface determinations, channels, names of ESR objects |
 | `get_object` | one object of that inventory: ICO, channel, service interface, operation / message mapping (field logic, UDFs), function library, message / data type |
 | `write_integration_documentation` | Markdown / Jira / JSON files of the ICO inventory |
-| `read_sca`, `get_sca_object` | overview of an SCA, then single BPM processes, catalogs, EJB modules, issues |
+| `read_sca`, `get_sca_object` | overview of an SCA, then a process outline, single steps with their mappings, process data, catalogs, EJB modules, issues |
 | `write_sca_documentation` | Markdown / Jira / JSON files of an SCA |
 
-Results are deliberately small (overview first, details on request): MCP clients truncate large tool results.
+Results are deliberately small (compact JSON, overview first, details on request): MCP clients truncate large tool
+results. When the PO system cannot be reached (network / VPN), listings come from the snapshot and the result carries
+a warning (`OFFLINE_SNAPSHOT` issue, `warnings` of `find_components`).
 PO systems are the ones configured in `~/.po-xray/systems/<name>.properties` (see CLI); the snapshot cache is shared
 with the CLI.
 
