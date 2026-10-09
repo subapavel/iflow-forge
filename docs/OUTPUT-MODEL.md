@@ -10,11 +10,12 @@ Status: **accepted** (2026-10-09), BPM and EJB parts implemented.
 3. EJB sources are referenced (path + sha256), not embedded.
 4. `dataTypes.fields` only for types referenced by processes, flattened to paths with cardinality.
 5. Process identity = `Galaxy.Workflow.Collaboration`; the active (orchestration) pool is in `pool`.
-6. Built-in function names: static table (verified IDs) + inference from `stringExpression`
-   (pre-order of FunctionInvocations ↔ order of `name(` tokens); conflicts/unknowns → issues.
+6. Functions in expressions are resolved by MOF ID: first DC functions (`.function`), then the SAP built-in
+   catalog (`docs/BPM-BUILTIN-FUNCTIONS.md`, never by name). Unknown IDs are kept and reported.
 7. Service group per service reference comes from the deployed `.composite` (SDA) and the `mc` logical system.
 8. All graph references (`flows.source/target/via`, node `scope`/`lane`, data object `scope`) are `{ref, name}`.
-9. Mapping parts without an expression (structural nodes) are not emitted.
+9. Every MappingPart is emitted with `category` / `expander` / `transformer` (also structural parts and
+   function parameters); the expression step tree itself is still not emitted (decision 2).
 
 ## Principles
 
@@ -76,7 +77,8 @@ Status: **accepted** (2026-10-09), BPM and EJB parts implemented.
   "catalog": {                                 // shared, DC-level objects referenced from processes
     "interfaces":        [ /* Interface */ ],
     "serviceReferences": [ /* ServiceReference */ ],
-    "functions":         [ /* Function */ ],
+    "functions":         [ /* Function — DC functions (.function) */ ],
+    "builtinFunctions":  [ /* BuiltinFunction — SAP built-ins called by the processes */ ],
     "eventDefinitions":  [ /* EventDefinition */ ],
     "dataTypes":         [ /* DataType */ ]
   }
@@ -166,8 +168,9 @@ Unknown metaclass → `kind: "unknown"` + `metaclass` + `attributes` + issue `UN
 
 // boundaryEvent
 { "attachedTo": { "ref": "…", "name": "Send Envelope" },
-  "trigger": { "kind": "error", "eventDefinition": { "ref": "…", "name": "EON_MT_Fault" },
-               "builtin": "TECHNICAL_ERROR" },          // SAP built-in trigger not present in DC → static table
+  "trigger": { "kind": "error", "eventDefinition": { "ref": "…", "name": "EON_MT_Fault" } },
+  // SAP standard trigger (not in the DC): { "kind": "error", "eventDefinition": { "ref": "…", "name": "TechnicalError" },
+  //                                         "builtin": "TechnicalError" }
   "condition": Expression, "outputMapping": Mapping }
 
 // exclusiveGateway: conditions live on outgoing flows; nothing extra
@@ -198,12 +201,19 @@ expressions, the original editor text in attribute `stringExpression` (finding o
 {
   "text": "if(isSet(DO_CreateEnvelopeInput/Envelope/extId)) then DO_CreateEnvelopeInput/Envelope/extId else DO_CreateEnvelopeInput/Request/requestId",
   "reads": [ "DO_CreateEnvelopeInput/Envelope/extId", "DO_CreateEnvelopeInput/Request/requestId" ],  // data paths, from the tree
-  "functions": [ "isSet" ]                     // built-in names or catalog function names
+  "functions": [                               // every invocation, pre-order (= text order)
+    { "id": "492D235E1CAE0460BBA411DDA2350019991C7C01", "name": "isSet", "category": "generic", "source": "builtin",
+      "arguments": [                           // parameter mapping parts, ordered by the formal parameters
+        { "parameter": "arg", "text": "DO_CreateEnvelopeInput/Envelope/extId",
+          "category": "merge", "expander": "currentNode", "transformer": "getValue" } ] }
+  ]                                            // source: builtin | dc-function | unknown (id kept, name null)
 }
 ```
 - `text` = `stringExpression`; if missing or empty, rendered from the tree (and `"rendered": true`).
 - Editor-generated expressions (`#generated=true#<text>`) → prefix stripped, `"generated": true`.
-- Infix operators are rendered as in the editor (`DO_TagsIndex < DO_TagsCount`).
+- Rendering from the tree: arguments ordered by the formal parameters (catalog / `.function`), functional notation
+  (`numeric-less-than(a, b)`); when the editor text is known, an operator uses its catalog symbol (`a < b`) if the
+  editor text does (the catalog's `infix` flag is false for all functions, so notation follows the editor text).
 - A Reference without QName right after an invocation is the implicit function result (not rendered).
 - The tree is always rendered as well; if it differs from `stringExpression` (ignoring whitespace and namespace
   prefixes like `dm0:`) → issue `EXPRESSION_TEXT_MISMATCH` (info).
@@ -218,18 +228,34 @@ Hierarchical MappingParts are flattened into target paths.
 {
   "id": "…", "name": "Send Envelope_InputMapping",
   "assignments": [                             // target = full path incl. root (message element / data object)
+    { "target": "EON_MT_SendEnvelope", "category": "merge", "expander": "currentNode", "transformer": "discardValue" },
     { "target": "EON_MT_SendEnvelope/Request/oauth_token",
+      "category": "set", "expander": "currentNode", "transformer": "getValue",
       "expr": { "text": "DO_CreateEnvelopeInput/Request/oauth_token", "reads": [ "…" ] } },
-    { "target": "Recipients/recipient", "mode": "append", "expander": "moveCorresponding",
-      "expr": { … } },
-    { "target": "Request/note", "enabled": false, "expr": { … } }
+    { "target": "EON_MT_SendEnvelope/Envelope", "category": "set", "expander": "moveCorresponding",
+      "transformer": "getValue", "expr": { "text": "DO_Envelope", … } },
+    { "target": "EON_MT_SendEnvelope/Request/note", "category": "set", "expander": "currentNode",
+      "transformer": "getValue", "enabled": false, "expr": { … } }
   ]
 }
 ```
-- Only parts with a non-empty expression are emitted (structural parts are implied by the target paths).
-- Defaults omitted: `mode` (`category`) = `set`, `transformer` = `getValue`, `expander` = `currentNode`, `enabled` = `true`.
+- Every MappingPart is emitted, in tree order (parent before children). Covers input/output mappings of
+  activities, events, embedded scopes, mapping and notification activities, role/text variable views; function
+  parameter mapping parts are in `expr.functions[].arguments`.
+- `category` (set | merge | append), `expander` (currentNode | moveCorresponding) and `transformer`
+  (getValue | discardValue) are always present. `moveCorresponding` = fields with equal names are copied
+  automatically; documentation must show it explicitly.
+- `enabled` only when `false`; `expr` absent for structural parts without an expression.
 
 ### Catalog objects
+
+```jsonc
+// BuiltinFunction (from the NW BPM built-in function catalog; only those called by the DC's processes)
+{ "id": "481F3B2E935578A21AC311DDCA830018717335EB", "name": "numeric-less-than", "category": "finite-integer",
+  "symbol": "<", "parameters": [ { "name": "left", "type": "xsd:long" }, { "name": "right", "type": "xsd:long" } ],
+  "result": "xsd:boolean", "documentation": "Returns true if and only if left is less than right. …",
+  "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.finiteinteger.…" }
+```
 
 ```jsonc
 // Interface (rep/wsdl/*.services)
@@ -335,10 +361,9 @@ Codes in v0.1 (automatically detected):
 | Code | Meaning |
 |---|---|
 | `UNRESOLVED_REF` | reference to an ID not found in DC nor in static built-in tables |
-| `UNKNOWN_BUILTIN_FUNCTION` | built-in function ID missing from the lookup table |
+| `UNKNOWN_BUILTIN_FUNCTION` | function ID neither in the DC nor in the built-in function catalog |
 | `UNKNOWN_NODE_TYPE` / `UNKNOWN_ELEMENT_TYPE` | metaclass not handled → also in `unmapped[]` |
 | `EXPRESSION_TEXT_MISMATCH` | `stringExpression` differs from the rendered tree |
-| `BUILTIN_FUNCTION_CONFLICT` | learned built-in name contradicts the static table / another expression |
 | `UNEXPECTED_STRUCTURE` | graph shape the reader does not expect (e.g. artificial join with ≠ 1 outgoing flow) |
 | `DUPLICATE_ID` | MOF ID declared in more than one partition |
 | `SUSPICIOUS_MAPPING` | heuristic: same source expression assigned to two sibling targets in one mapping |

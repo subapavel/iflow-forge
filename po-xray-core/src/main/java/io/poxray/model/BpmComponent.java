@@ -9,6 +9,7 @@ public record BpmComponent(String dc, List<Process> processes, Catalog catalog) 
             List<Interface> interfaces,
             List<ServiceReference> serviceReferences,
             List<Function> functions,
+            List<BuiltinFunction> builtinFunctions,
             List<EventDefinition> eventDefinitions,
             List<DataType> dataTypes) {
     }

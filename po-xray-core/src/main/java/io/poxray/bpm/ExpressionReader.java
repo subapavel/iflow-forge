@@ -1,12 +1,13 @@
 package io.poxray.bpm;
 
 import io.poxray.model.Expression;
+import io.poxray.model.FunctionCall;
 import io.poxray.moin.MoinElement;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -15,9 +16,12 @@ import java.util.stream.Collectors;
  * Converts a Galaxy {@code Rule.Expression} into {@link Expression}.
  * <p>
  * Rendering rules (docs/HANDOFF.md §2.2): consecutive Reference steps form a path {@code DO_X/a/b};
- * a FunctionInvocation renders {@code name(arg, ...)} with its parameter mapping parts as positional arguments;
- * a step after an invocation continues the path on its result (the implicit {@code result} segment is skipped);
- * a Condition renders {@code if(c) then p else n}.
+ * a FunctionInvocation renders {@code name(arg, ...)} with its parameter mapping parts as arguments, ordered by
+ * the function's formal parameters (catalog / .function); a step after an invocation continues the path on its
+ * result (the implicit {@code result} segment is skipped); a Condition renders {@code if(c) then p else n}.
+ * <p>
+ * Notation: functional by default (unambiguous). When the editor text is known, an operator is rendered with
+ * its symbol ({@code a < b}) if the editor text uses that notation; names and operands always come from the tree.
  */
 final class ExpressionReader {
 
@@ -25,13 +29,21 @@ final class ExpressionReader {
     private static final String RESULT_SEGMENT = "result";
     private static final String GENERATED_PREFIX = "#generated=true#";
     private static final Pattern NS_PREFIX = Pattern.compile("(?<![A-Za-z0-9_\"])[A-Za-z_][A-Za-z0-9_]*:(?=[A-Za-z_])");
+    private static final Set<String> BINARY_OPERATORS =
+            Set.of("=", "!=", "<", "<=", ">", ">=", "+", "-", "*", "div", "mod", "and", "or");
+    private static final Set<String> UNARY_OPERATORS = Set.of("!");
+    private static final Pattern PRINCIPALS = Pattern.compile("getPrincipals\\(\"([^\"]*)\"\\)");
+    private static final Set<String> QUOTED_TYPES = Set.of("xsd:string", "xsd:normalizedString", "xsd:token",
+            "xsd:anyURI", "xsd:language", "xsd:Name", "xsd:NCName", "xsd:NMTOKEN", "xsd:ID", "xsd:IDREF", "xsd:QName");
 
     private final BpmContext ctx;
-    private final FunctionNames functions;
+    private final FunctionResolver functions;
+    private final BuiltinFunctionCatalog catalog;
 
-    ExpressionReader(BpmContext ctx, FunctionNames functions) {
+    ExpressionReader(BpmContext ctx, FunctionResolver functions, BuiltinFunctionCatalog catalog) {
         this.ctx = ctx;
         this.functions = functions;
+        this.catalog = catalog;
     }
 
     /** Reads the expression with the given ID; null if the ID is null. */
@@ -44,14 +56,10 @@ final class ExpressionReader {
             ctx.issues.warn("UNRESOLVED_REF", "Expression " + exprId + " not found", ctx.at(process, null, null), null);
             return null;
         }
-        Render r = new Render(process);
+        String text = editorText(e);
+        Boolean generated = text != null && e.attr("stringExpression").startsWith(GENERATED_PREFIX) ? Boolean.TRUE : null;
+        Render r = new Render(process, text == null || text.isBlank() ? null : normalize(text));
         String rendered = render(exprId, r, 0);
-        String text = e.attr("stringExpression");
-        Boolean generated = null;
-        if (text != null && text.startsWith(GENERATED_PREFIX)) {
-            text = text.substring(GENERATED_PREFIX.length());
-            generated = Boolean.TRUE;
-        }
         Boolean wasRendered = null;
         if (text == null || text.isBlank()) {
             text = rendered;
@@ -64,8 +72,19 @@ final class ExpressionReader {
         return new Expression(text, wasRendered, generated, List.copyOf(r.reads), List.copyOf(r.functions));
     }
 
-    Optional<Expression> readOptional(Optional<String> exprId, String process) {
-        return exprId.map(id -> read(id, process));
+    /**
+     * Renders the expression tree only (names and operands from the tree and the function catalogs), with the
+     * notation adapted to the editor text where present. For validation against BPMN 2.0 exports.
+     */
+    String renderTree(String exprId) {
+        String text = ctx.index.get(exprId).map(ExpressionReader::editorText).orElse(null);
+        return render(exprId, new Render(null, text == null || text.isBlank() ? null : normalize(text)), 0);
+    }
+
+    /** Editor text without the {@code #generated=true#} marker; null if none. */
+    private static String editorText(MoinElement e) {
+        String text = e.attr("stringExpression");
+        return text != null && text.startsWith(GENERATED_PREFIX) ? text.substring(GENERATED_PREFIX.length()) : text;
     }
 
     /**
@@ -78,6 +97,11 @@ final class ExpressionReader {
         if (t.equals(r)) {
             return true;
         }
+        // role assignment: the editor shows getPrincipals("<uniqueName>") as "<uniqueName>#<displayName>"
+        java.util.regex.Matcher p = PRINCIPALS.matcher(rendered.strip());
+        if (p.matches() && text.strip().startsWith(p.group(1) + "#")) {
+            return true;
+        }
         if (!r.contains("?")) {
             return false;
         }
@@ -86,7 +110,7 @@ final class ExpressionReader {
         return t.matches(regex);
     }
 
-    private static String normalize(String s) {
+    static String normalize(String s) {
         return NS_PREFIX.matcher(s.replaceAll("\\s+", "")).replaceAll("");
     }
 
@@ -176,29 +200,74 @@ final class ExpressionReader {
 
     private String invocation(MoinElement step, Render r, int depth) {
         String fid = ctx.index.first(Galaxy.INVOCATION_FUNCTION, step.id()).orElse(null);
-        String name = fid == null ? null : functions.resolve(fid);
-        if (name == null) {
+        FunctionResolver.Resolved f = functions.resolve(fid);
+        if (f == null) {
             functions.reportUnknown(fid, r.process, step);
-            name = "unknown:" + fid;
         }
-        r.functions.add(name);
-        List<String> args = new ArrayList<>();
+        String name = f == null ? "unknown:" + fid : f.name();
+        int slot = r.functions.size(); // pre-order: the call precedes calls in its arguments
+        r.functions.add(null);
+        List<FunctionCall.Argument> arguments = arguments(step, f, r, depth);
+        r.functions.set(slot, f == null
+                ? new FunctionCall(fid, null, null, "unknown", arguments)
+                : new FunctionCall(fid, f.name(), f.category(), f.source(), arguments));
+        List<String> args = arguments.stream().map(FunctionCall.Argument::text).toList();
+        String functional = name + "(" + String.join(", ", args) + ")";
+        String symbolic = f == null || r.hint == null ? null : symbolic(f.symbol(), args, r.hint);
+        return symbolic != null && !r.hint.contains(normalize(functional)) ? symbolic : functional;
+    }
+
+    /**
+     * Parameter mapping parts ordered by the formal parameters (parts with unknown names keep file order at the
+     * end); parts without an expression are skipped.
+     */
+    private List<FunctionCall.Argument> arguments(MoinElement step, FunctionResolver.Resolved f, Render r, int depth) {
+        record Arg(int order, FunctionCall.Argument argument) {
+        }
+        List<String> params = f == null ? List.of() : f.parameterNames();
+        List<Arg> args = new ArrayList<>();
         ctx.index.first(Galaxy.INVOCATION_PARAMETERS, step.id()).ifPresent(mapping -> {
-            for (String part : ctx.index.firsts(Galaxy.MAPPING_PARTS, mapping)) {
-                ctx.index.first(Galaxy.PART_EXPRESSION, part).ifPresent(x -> args.add(render(x, r, depth + 1)));
+            int unknown = params.size();
+            for (String partId : ctx.index.firsts(Galaxy.MAPPING_PARTS, mapping)) {
+                String expr = ctx.index.first(Galaxy.PART_EXPRESSION, partId).orElse(null);
+                MoinElement part = ctx.index.get(partId).orElse(null);
+                if (expr == null || part == null) {
+                    continue;
+                }
+                String param = ctx.qname(Galaxy.PART_QNAME, partId);
+                int pos = param == null ? -1 : params.indexOf(param);
+                args.add(new Arg(pos >= 0 ? pos : unknown++, new FunctionCall.Argument(param,
+                        render(expr, r, depth + 1), part.attr("category"), part.attr("expander"),
+                        part.attr("transformer"), "false".equals(part.attr("enabled")) ? Boolean.FALSE : null)));
             }
         });
-        String infix = fid == null ? null : Builtins.INFIX.get(fid);
-        if (infix != null && args.size() == 2) {
-            return args.get(0) + " " + infix + " " + args.get(1);
+        return args.stream().sorted(Comparator.comparingInt(Arg::order)).map(Arg::argument).toList();
+    }
+
+    /** Symbol notation of an operator if the editor text uses it, else null. */
+    private static String symbolic(String symbol, List<String> args, String hint) {
+        if (symbol == null) {
+            return null;
         }
-        return name + "(" + String.join(", ", args) + ")";
+        List<String> candidates = new ArrayList<>();
+        if (BINARY_OPERATORS.contains(symbol) && args.size() == 2) {
+            candidates.add(args.get(0) + " " + symbol + " " + args.get(1));
+            candidates.add(wrap(args.get(0)) + " " + symbol + " " + wrap(args.get(1)));
+        } else if (UNARY_OPERATORS.contains(symbol) && args.size() == 1) {
+            candidates.add(symbol + args.getFirst());
+            candidates.add(symbol + wrap(args.getFirst()));
+        }
+        return candidates.stream().filter(c -> hint.contains(normalize(c))).findFirst().orElse(null);
+    }
+
+    private static String wrap(String arg) {
+        return arg.contains(" ") ? "(" + arg + ")" : arg;
     }
 
     private String literal(MoinElement literal) {
         String value = literal.attr("value") == null ? "" : literal.attr("value");
-        String type = ctx.index.first(Galaxy.LITERAL_TYPE, literal.id()).map(Builtins.TYPES::get).orElse(null);
-        return Builtins.STRING_TYPE.equals(type) ? "\"" + value + "\"" : value;
+        String type = ctx.index.first(Galaxy.LITERAL_TYPE, literal.id()).map(catalog::typeName).orElse(null);
+        return QUOTED_TYPES.contains(type) ? "\"" + value + "\"" : value;
     }
 
     private static StringBuilder flush(StringBuilder chain, Render r) {
@@ -208,13 +277,16 @@ final class ExpressionReader {
         return null;
     }
 
+    /** Rendering state; {@code hint} = normalized editor text (or null) used to choose the notation. */
     private static final class Render {
         final String process;
+        final String hint;
         final Set<String> reads = new LinkedHashSet<>();
-        final Set<String> functions = new LinkedHashSet<>();
+        final List<FunctionCall> functions = new ArrayList<>();
 
-        Render(String process) {
+        Render(String process, String hint) {
             this.process = process;
+            this.hint = hint;
         }
     }
 }

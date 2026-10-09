@@ -2,6 +2,7 @@ package io.poxray.bpm;
 
 import io.poxray.IssueLog;
 import io.poxray.model.BpmComponent;
+import io.poxray.model.BuiltinFunction;
 import io.poxray.model.DataType;
 import io.poxray.model.EventDefinition;
 import io.poxray.model.Function;
@@ -42,21 +43,10 @@ public final class BpmReader {
 
     public static BpmComponent read(ScaArchive sca, ScaArchive.DcSource dc, IssueLog issues,
             List<UnmappedElement> unmapped) {
-        MoinIndex index = new MoinIndex();
-        for (var e : dc.sources().entries().entrySet()) {
-            // .diagram partitions hold layout only (not part of the output model, see docs/OUTPUT-MODEL.md)
-            if (!e.getKey().endsWith(".diagram") && MoinParser.isPartition(e.getValue())) {
-                index.add(MoinParser.parse(e.getKey(), e.getValue()));
-            }
-        }
-        BpmContext ctx = new BpmContext(dc.definition().fullName(), dc.sourceEntry(), index, issues);
-        for (String id : index.duplicateIds()) {
-            issues.warn("DUPLICATE_ID", "MOF ID " + id + " is declared in more than one partition",
-                    ctx.at(null, index.get(id).orElse(null), null), null);
-        }
-
-        FunctionNames functionNames = new FunctionNames(ctx);
-        ExpressionReader expressions = new ExpressionReader(ctx, functionNames);
+        Session s = new Session(dc, issues);
+        BpmContext ctx = s.ctx;
+        MoinIndex index = ctx.index;
+        ExpressionReader expressions = s.expressions;
         MappingReader mappings = new MappingReader(ctx, expressions);
         XsdTypes xsd = new XsdTypes(ctx);
         CatalogReader catalog = new CatalogReader(ctx, xsd);
@@ -88,8 +78,61 @@ public final class BpmReader {
         List<ServiceReference> serviceReferences = catalog.serviceReferences(composite);
         reportUnused(ctx, interfaces, serviceReferences, functions, eventDefinitions, usages);
 
-        return new BpmComponent(ctx.dc, processes, new BpmComponent.Catalog(
-                interfaces, serviceReferences, functions, eventDefinitions, dataTypes));
+        return new BpmComponent(ctx.dc, processes, new BpmComponent.Catalog(interfaces, serviceReferences,
+                functions, builtinFunctions(usages), eventDefinitions, dataTypes));
+    }
+
+    /** SAP built-in functions called by the DC's processes, with their catalog semantics, ordered by name. */
+    private static List<BuiltinFunction> builtinFunctions(ProcessReader.Usages usages) {
+        BuiltinFunctionCatalog catalog = BuiltinFunctionCatalog.get();
+        return usages.functions.stream()
+                .map(catalog::function).flatMap(java.util.Optional::stream)
+                .sorted(Comparator.comparing(BuiltinFunctionCatalog.Entry::name)
+                        .thenComparing(BuiltinFunctionCatalog.Entry::category))
+                .map(e -> new BuiltinFunction(e.id(), e.name(), e.category(), e.symbol(),
+                        e.parameters().stream()
+                                .map(p -> new Function.Parameter(p.name(), BuiltinFunctionCatalog.qualify(p.type())))
+                                .toList(),
+                        BuiltinFunctionCatalog.qualify(e.result()),
+                        e.documentation(), e.javaClass()))
+                .toList();
+    }
+
+    /**
+     * Test seam: conditions of all conditional sequence connectors (connector ID → expression rendered from the
+     * tree, notation adapted to the editor text).
+     */
+    static Map<String, String> renderConditions(ScaArchive.DcSource dc) {
+        Session s = new Session(dc, new IssueLog());
+        Map<String, String> out = new java.util.LinkedHashMap<>();
+        for (MoinElement c : s.ctx.index.elementsOf(Galaxy.CONDITIONAL_SEQUENCE_CONNECTOR)) {
+            s.ctx.index.first(Galaxy.CONNECTOR_EXPRESSION, c.id())
+                    .ifPresent(x -> out.put(c.id(), s.expressions.renderTree(x)));
+        }
+        return out;
+    }
+
+    /** Index and expression reader of one DC. */
+    private static final class Session {
+        final BpmContext ctx;
+        final ExpressionReader expressions;
+
+        Session(ScaArchive.DcSource dc, IssueLog issues) {
+            MoinIndex index = new MoinIndex();
+            for (var e : dc.sources().entries().entrySet()) {
+                // .diagram partitions hold layout only (not part of the output model, see docs/OUTPUT-MODEL.md)
+                if (!e.getKey().endsWith(".diagram") && MoinParser.isPartition(e.getValue())) {
+                    index.add(MoinParser.parse(e.getKey(), e.getValue()));
+                }
+            }
+            ctx = new BpmContext(dc.definition().fullName(), dc.sourceEntry(), index, issues);
+            for (String id : index.duplicateIds()) {
+                issues.warn("DUPLICATE_ID", "MOF ID " + id + " is declared in more than one partition",
+                        ctx.at(null, index.get(id).orElse(null), null), null);
+            }
+            BuiltinFunctionCatalog catalog = BuiltinFunctionCatalog.get();
+            expressions = new ExpressionReader(ctx, new FunctionResolver(ctx, catalog), catalog);
+        }
     }
 
     private static void reportUnused(BpmContext ctx, List<Interface> interfaces,
@@ -116,7 +159,7 @@ public final class BpmReader {
             }
         }
         for (Function f : functions) {
-            if (!usages.functions.contains(f.name())) {
+            if (!usages.functions.contains(f.id())) {
                 ctx.issues.info("UNUSED_OBJECT", "Function '" + f.name() + "' is not called by any process",
                         ctx.at(null, element(ctx, f.id()), null), f.source());
             }

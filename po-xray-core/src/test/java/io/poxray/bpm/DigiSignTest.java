@@ -1,6 +1,7 @@
 package io.poxray.bpm;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.tuple;
 
 import io.poxray.PoXray;
 import io.poxray.TestData;
@@ -8,7 +9,10 @@ import io.poxray.json.Json;
 import io.poxray.model.BpmComponent;
 import io.poxray.model.EjbModule;
 import io.poxray.model.Flow;
+import io.poxray.model.FunctionCall;
+import io.poxray.sca.ScaArchive;
 import io.poxray.model.Issue;
+import io.poxray.model.Mapping;
 import io.poxray.model.Node;
 import io.poxray.model.Process;
 import io.poxray.model.ScaInventory;
@@ -94,16 +98,89 @@ class DigiSignTest {
     @Test
     void expressionTextsMatchTheTreeAndFunctionsResolve() {
         assertThat(issues("EXPRESSION_TEXT_MISMATCH")).isEmpty();
-        assertThat(issues("BUILTIN_FUNCTION_CONFLICT")).isEmpty();
-        // the only unknown built-in: a zero-arg function in editor-generated role principals, whose editor text
-        // is empty, so its name cannot be learned (reported, not guessed)
-        assertThat(issues("UNKNOWN_BUILTIN_FUNCTION")).extracting(Issue::message)
-                .allMatch(m -> m.contains("481F3B33967D93A01AC311DDCFD20018717335EB"));
+        // all function IDs resolve (DC functions + built-in catalog incl. principal functions of predefs/default)
+        assertThat(issues("UNKNOWN_BUILTIN_FUNCTION")).isEmpty();
+        assertThat(bpm().processes()).flatExtracting(Process::nodes)
+                .flatExtracting(n -> java.util.stream.Stream.of(n.inputMapping(), n.outputMapping())
+                        .filter(java.util.Objects::nonNull).flatMap(m -> m.assignments().stream())
+                        .filter(a -> a.expr() != null).flatMap(a -> a.expr().functions().stream()).toList())
+                .extracting(FunctionCall::source).doesNotContain("unknown");
         assertThat(inventory.issues())
                 .filteredOn(i -> !i.severity().equals(Issue.INFO))
                 .extracting(Issue::code)
-                .containsOnly("SUSPICIOUS_MAPPING", "UNKNOWN_BUILTIN_FUNCTION");
+                .containsOnly("SUSPICIOUS_MAPPING");
         assertThat(inventory.unmapped()).isEmpty();
+    }
+
+    @ParameterizedTest
+    @CsvSource({"digisign_envelope", "digisign_envelope_download_completed"})
+    void conditionsRenderedFromTreeMatchBpmn2Export(String processName) {
+        Bpmn2Export export = Bpmn2Export.read(TestData.require(processName + ".bpmn2"));
+        ScaArchive sca = ScaArchive.open(TestData.require("EONBPMDIGI00_0.sca"));
+        ScaArchive.DcSource dc = sca.developmentComponents().stream().filter(BpmReader::isBpm).findFirst().orElseThrow();
+        Map<String, String> rendered = BpmReader.renderConditions(dc);
+
+        // names and operands come from the tree + catalogs; only notation (infix/functional) and whitespace may differ
+        export.conditions.forEach((flowId, text) -> {
+            String tree = rendered.get(flowId);
+            assertThat(tree).as("rendered condition of flow %s", flowId).isNotNull().doesNotContain("unknown:");
+            assertThat(ExpressionReader.equivalent(text, tree)).as("export: %s%n tree: %s", text, tree).isTrue();
+        });
+    }
+
+    @Test
+    void catalogListsUsedBuiltinFunctionsWithSemantics() {
+        assertThat(bpm().catalog().builtinFunctions()).extracting(io.poxray.model.BuiltinFunction::name)
+                .contains("get", "isSet", "numeric-less-than", "string-equal", "concat");
+        assertThat(bpm().catalog().builtinFunctions())
+                .filteredOn(f -> f.name().equals("numeric-less-than")).singleElement()
+                .satisfies(f -> {
+                    assertThat(f.symbol()).isEqualTo("<");
+                    assertThat(f.documentation()).isNotBlank();
+                    assertThat(f.parameters()).extracting(io.poxray.model.Function.Parameter::type)
+                            .containsExactly("xsd:long", "xsd:long");
+                });
+        assertThat(bpm().processes()).flatExtracting(Process::nodes)
+                .filteredOn(n -> n.kind().equals("boundaryEvent") && "TechnicalError".equals(n.name())).isNotEmpty()
+                .allSatisfy(n -> assertThat(n.trigger().builtin()).isEqualTo("TechnicalError"));
+    }
+
+    @Test
+    void mappingsCarryAllPartFlags() {
+        Node recipient = node("digisign_envelope", "Create envelope recipient");
+        assertThat(recipient.inputMapping().assignments()).filteredOn(a -> a.expr() != null).hasSize(37);
+        assertThat(recipient.outputMapping().assignments()).filteredOn(a -> a.expr() != null).singleElement()
+                .satisfies(a -> {
+                    assertThat(a.target()).isEqualTo("DO_Recipient");
+                    assertThat(a.expr().text()).startsWith("concat(");
+                });
+
+        Node increment = node("digisign_envelope", "Increment index");
+        assertThat(increment.outputMapping().assignments()).filteredOn(a -> a.expr() != null).singleElement()
+                .satisfies(a -> {
+                    assertThat(a.target()).isEqualTo("DO_RecipientsIndex");
+                    assertThat(a.expr().functions()).singleElement().satisfies(f -> {
+                        assertThat(f.name()).isEqualTo("numeric-add");
+                        assertThat(f.arguments()).extracting(FunctionCall.Argument::text)
+                                .containsExactly("DO_RecipientsIndex", "1");
+                        assertThat(f.arguments()).allSatisfy(arg -> assertThat(arg.category()).isNotNull());
+                    });
+                });
+
+        // every part and every function argument carries category / expander / transformer
+        java.util.List<Mapping.Assignment> all = bpm().processes().stream().flatMap(p -> p.nodes().stream())
+                .flatMap(n -> java.util.stream.Stream.of(n.inputMapping(), n.outputMapping()))
+                .filter(java.util.Objects::nonNull).flatMap(m -> m.assignments().stream()).toList();
+        assertThat(all).isNotEmpty().allSatisfy(a -> {
+            assertThat(a.category()).isIn("set", "merge", "append");
+            assertThat(a.expander()).isIn("currentNode", "moveCorresponding");
+            assertThat(a.transformer()).isIn("getValue", "discardValue");
+        });
+        assertThat(all).anyMatch(a -> a.expander().equals("moveCorresponding"));
+        assertThat(all).filteredOn(a -> a.expr() != null).flatExtracting(a -> a.expr().functions())
+                .flatExtracting(FunctionCall::arguments)
+                .anyMatch(arg -> "moveCorresponding".equals(arg.expander()))
+                .allSatisfy(arg -> assertThat(arg.transformer()).isNotNull());
     }
 
     @Test
@@ -121,7 +198,14 @@ class DigiSignTest {
                 .extracting(Flow::condition).filteredOn(java.util.Objects::nonNull)
                 .anySatisfy(c -> {
                     assertThat(c.text()).isEqualTo("DO_TagsIndex < DO_TagsCount");
-                    assertThat(c.functions()).containsExactly("numeric-less-than");
+                    assertThat(c.functions()).singleElement().satisfies(f -> {
+                        assertThat(f.id()).isEqualTo("481F3B2E935578A21AC311DDCA830018717335EB");
+                        assertThat(f.name()).isEqualTo("numeric-less-than");
+                        assertThat(f.category()).isEqualTo("finite-integer");
+                        assertThat(f.source()).isEqualTo("builtin");
+                        assertThat(f.arguments()).extracting(FunctionCall.Argument::parameter, FunctionCall.Argument::text)
+                                .containsExactly(tuple("left", "DO_TagsIndex"), tuple("right", "DO_TagsCount"));
+                    });
                     assertThat(c.reads()).containsExactly("DO_TagsIndex", "DO_TagsCount");
                 });
     }
@@ -223,6 +307,10 @@ class DigiSignTest {
 
     private static BpmComponent bpm() {
         return inventory.bpm().getFirst();
+    }
+
+    private static Node node(String process, String name) {
+        return process(process).nodes().stream().filter(n -> name.equals(n.name())).findFirst().orElseThrow();
     }
 
     private static Process process(String name) {

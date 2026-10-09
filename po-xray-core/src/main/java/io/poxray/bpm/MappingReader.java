@@ -16,10 +16,6 @@ import java.util.Optional;
  */
 final class MappingReader {
 
-    private static final String DEFAULT_MODE = "set";
-    private static final String DEFAULT_TRANSFORMER = "getValue";
-    private static final String DEFAULT_EXPANDER = "currentNode";
-
     private final BpmContext ctx;
     private final ExpressionReader expressions;
 
@@ -58,17 +54,13 @@ final class MappingReader {
         String name = ctx.qname(Galaxy.PART_QNAME, partId);
         String path = parentPath == null ? String.valueOf(name) : parentPath + "/" + name;
         Optional<String> exprId = ctx.index.first(Galaxy.PART_EXPRESSION, partId);
-        String mode = nonDefault(part.attr("category"), DEFAULT_MODE);
-        String transformer = nonDefault(part.attr("transformer"), DEFAULT_TRANSFORMER);
-        String expander = nonDefault(part.attr("expander"), DEFAULT_EXPANDER);
         Boolean enabled = "false".equals(part.attr("enabled")) ? Boolean.FALSE : null;
-        if (exprId.isPresent()) {
-            Expression expr = expressions.read(exprId.get(), process);
-            // structural parts carry an empty expression; only real assignments are emitted
-            if (expr != null && expr.text() != null && !expr.text().isBlank()) {
-                out.add(new Mapping.Assignment(path, mode, transformer, expander, enabled, expr));
-            }
+        Expression expr = exprId.map(x -> expressions.read(x, process)).orElse(null);
+        if (expr != null && (expr.text() == null || expr.text().isBlank())) {
+            expr = null; // structural part: no source expression
         }
+        out.add(new Mapping.Assignment(path, part.attr("category"), part.attr("expander"), part.attr("transformer"),
+                enabled, expr));
         for (String child : ctx.index.firsts(Galaxy.PART_CHILDREN, partId)) {
             walk(child, path, out, process, depth + 1);
         }
@@ -97,10 +89,6 @@ final class MappingReader {
                         ctx.at(process, owner, a.target()), ctx.source(m.partition()));
             }
         }
-    }
-
-    private static String nonDefault(String value, String def) {
-        return value == null || value.equals(def) ? null : value;
     }
 
     private static String parent(String path) {

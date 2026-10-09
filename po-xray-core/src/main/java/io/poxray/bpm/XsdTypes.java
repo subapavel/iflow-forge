@@ -28,7 +28,7 @@ final class XsdTypes {
         if (typeId == null) {
             return null;
         }
-        String builtin = Builtins.TYPES.get(typeId);
+        String builtin = BuiltinFunctionCatalog.get().typeName(typeId);
         if (builtin != null) {
             return builtin;
         }
