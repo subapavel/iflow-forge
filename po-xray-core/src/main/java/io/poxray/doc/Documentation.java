@@ -1,5 +1,6 @@
 package io.poxray.doc;
 
+import io.poxray.model.IntegrationInventory;
 import io.poxray.model.ScaInventory;
 import java.util.Locale;
 
@@ -18,5 +19,9 @@ public final class Documentation {
 
     public static String render(ScaInventory inventory, DocFormat format, Locale locale) {
         return format.writer().write(DocumentBuilder.build(inventory, locale));
+    }
+
+    public static String render(IntegrationInventory inventory, DocFormat format, Locale locale) {
+        return format.writer().write(IntegrationDocumentBuilder.build(inventory, locale));
     }
 }

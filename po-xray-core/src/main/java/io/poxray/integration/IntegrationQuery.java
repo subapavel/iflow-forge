@@ -78,8 +78,8 @@ public final class IntegrationQuery {
             XiObject ico = source.resolve(ref).orElse(null);
             if (ico == null) {
                 // e.g. inconsistent ICOs the PO itself cannot render (operation removed from the interface)
-                issues.warn("OBJECT_NOT_READABLE", "ICO " + ref.label() + " cannot be read"
-                        + source.failure(ref).map(f -> ": " + f).orElse(""), null, null);
+                issues.warn("OBJECT_NOT_READABLE", "ICO " + ref.label() + " cannot be read (so it is unknown whether"
+                        + " it concerns the component)" + source.failure(ref).map(f -> ": " + f).orElse(""), null, null);
                 continue;
             }
             boolean match = false;

@@ -391,3 +391,54 @@ documentation, optionally via a `knownIssues` input file later.
 - BRM rulesets (`src/brms`), Dictionary (`*.dtdbtable`), UME (`actions.xml`) — listed in `developmentComponents`, content later.
 - Full expression step tree, full WSDL/XSD content (only what processes reference).
 - Compiled `.bpem` csv (used only as secondary source for built-in function IDs).
+
+## Integration inventory (ESR / Integration Directory)
+
+`IntegrationInventory` — result of `po-xray ico`: ICOs to/from a component, their channels and the ESR objects they
+use. Read online (SimpleQuery + `read/ext`, snapshot cache) or from TPZ exports; same `xiObj` parser for both.
+
+```jsonc
+{
+  "schemaVersion": "0.1", "generator": { … },
+  "source": { "system": "xipod", "url": "http://…:54200" },          // or "files": [ "x.tpz" ]
+  "query": { "component": "V3S_D", "direction": "both" },             // in | out | both
+  "components": [ { "name": "V3S_D" } ],                             // components that matched
+  "icos": [ {
+    "oid": "…", "generatedFrom": "SAPCRM_ApplicationStatus",          // iFlow the ICO was generated from
+    "sender": { "component": "V3S_D",
+                "iface": { "type": "ifmmessif", "name": "Application_Out", "namespace": "urn:…", "swc": "PPAS_V3S, 1.0 of ppas.cz", "swcGuid": "…" },
+                "operations": [ "ChangeRequest", "CreateRequest" ],
+                "channel": { "component": "V3S_D", "name": "REST_SND_Application" } },
+    "receivers": [ { "component": "V3S_D", "condition": null,
+      "interfaces": [ { "operation": "ChangeRequest",
+                        "mapping": { "type": "MAPPING", "name": "Application_ChangeRequest_to_…" },
+                        "targets": [ { "iface": { "name": "ApplicationConfirmation_In" }, "multiplicity": "1" },
+                                     { "iface": { "name": "Application_In" }, "multiplicity": "0..1" } ],   // 1:n mapping
+                        "parameters": { "RFCCHANNEL": { "component": "CD1CLNT300", "name": "RFC_RCV" } } } ],
+      "channels": [ { "component": "V3S_D", "name": "SOAP_RCV_LoopBack" } ] } ],
+    "noReceiverBehaviour": "error" } ],
+  "channels": [ { "id": { … }, "direction": "sender|receiver", "adapter": "HTTP/REST",
+                  "attributes": { "in.channel.endpoint": "/v3s/spds/application", … },   // passwords are never exported
+                  "modules": [ { "position": 0, "name": "AF_Modules/DynamicConfigurationBean", "type": "L", "parameters": { … } } ] } ],
+  "esr": {
+    "serviceInterfaces": [ { "id": { … }, "category": "I|O|A", "operations": [ { "name": "…", "mode": "sync|async", "request": { … }, "response": { … }, "faults": [ … ] } ] } ],
+    "operationMappings": [ { "id": { … }, "sourceOperation": { … }, "targetOperation": { … },
+                             "steps": [ { "kind": "request|response|fault", "program": { "type": "XI_TRAFO|MAP_ARCHIVE_PRG|…" }, "sourceMessage": { … }, "targetMessage": { … } } ] } ],
+    "messageMappings": [ { "id": { … }, "source": { … }, "target": { … }, "multiplicity": "1:1" } ],
+    "messageTypes": [ { "id": { … }, "dataType": { … }, "xmlNamespace": "urn:…" } ],
+    "dataTypes": [ { "id": { … }, "uses": [ { … } ], "xsd": "<xsd:schema …>" } ],
+    "externalDefinitions": [ { "id": { … }, "messages": [ "invokeRequest", … ] } ],
+    "mappingPrograms": [ { "type": "MAP_ARCHIVE_PRG", "name": "…" } ]          // Java / XSLT programs
+  },
+  "issues": [ … ]   // UNRESOLVED_OBJECT, OBJECT_NOT_READABLE (with the server's reason)
+}
+```
+Facts verified on xipod (PO 7.50 SP28):
+- ICO links: `MAP<r>` (r = receiver index, kpos = interface determination), `IIF<r>$<n>` (target interfaces,
+  kpos = split item; plain `IIF<r>` for single determinations), `PAR<r>_<n>_<param>` (channel-bound mapping
+  parameters), several `senderOperation` links per ICO.
+- Operation mapping roles `*_OUT_MES` / `*_IN_MES` are not consistent for faults: source/target of a step come from
+  the message mapping (`SOURCE_IFR_MESS` / `TARGET_IFR_MESS`).
+- SimpleQuery: case-insensitive matching is refused for `SERVICE`, `FROMSRVC`, `TOSRVC`, `MODIFYUSER`; `TOSRVC` does
+  not find ICO receivers (they are in the ICO content) → components and ICOs are listed and filtered locally.
+- The JDK HTTP client must use HTTP/1.1: the h2c upgrade request is answered with 403 by SAP AS Java.

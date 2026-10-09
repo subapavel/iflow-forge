@@ -50,7 +50,9 @@ import org.w3c.dom.Element;
 public final class IntegrationReader {
 
     private static final Pattern GENERATED_FROM = Pattern.compile("Generated for dir://IFLOW/\\S+ '([^']*)'");
-    private static final Pattern SECRET = Pattern.compile("(?i).*(pass|pwd|secret|token).*");
+    /** Attribute / parameter names whose values are masked (PO does not export passwords, this is a safety net). */
+    private static final Pattern SECRET =
+            Pattern.compile("(?i).*(password|passwd|pwd|secret|token|credential|privatekey|apikey).*");
 
     private final XiObjectSource source;
     private final IssueLog issues;
