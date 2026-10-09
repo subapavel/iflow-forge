@@ -38,11 +38,27 @@ public final class PoClient {
     private final String authorization;
 
     public PoClient(PoSystem system) {
-        this(system, HttpClient.newBuilder()
+        this(system, httpClient(system));
+    }
+
+    private static HttpClient httpClient(PoSystem system) {
+        HttpClient.Builder b = HttpClient.newBuilder()
                 .version(HttpClient.Version.HTTP_1_1) // no h2c upgrade attempt: SAP AS Java answers it with 403
                 .connectTimeout(Duration.ofSeconds(30))
-                .followRedirects(HttpClient.Redirect.NEVER) // a redirect means: logon page
-                .build());
+                .followRedirects(HttpClient.Redirect.NEVER); // a redirect means: logon page
+        if ("https".equalsIgnoreCase(system.url().getScheme())) {
+            b.sslContext(TrustStores.sslContext(system.trustStore(), system.trustStorePassword()));
+        }
+        if (system.proxy() != null) {
+            String p = system.proxy();
+            int colon = p.lastIndexOf(':');
+            if (colon < 0) {
+                throw new PoException("proxy must be host:port, not '" + p + "'");
+            }
+            b.proxy(java.net.ProxySelector.of(new java.net.InetSocketAddress(p.substring(0, colon),
+                    Integer.parseInt(p.substring(colon + 1)))));
+        }
+        return b.build();
     }
 
     PoClient(PoSystem system, HttpClient http) {

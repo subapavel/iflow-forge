@@ -138,6 +138,16 @@ class PoClientTest {
         assertThat(s.user()).isEqualTo("bob");
         assertThat(PoSystem.load("xipod", dir, Map.of(PoSystem.PASSWORD_ENV, "envpw")).password()).isEqualTo("envpw");
 
+        Files.writeString(dir.resolve("eon.properties"),
+                "url=https://po.example:50001\nuser=bob\npassword=pw\ntruststore=windows\nproxy=proxy.example:8080\n");
+        PoSystem eon = PoSystem.load("eon", dir, Map.of());
+        assertThat(eon.trustStore()).isEqualTo("windows");
+        assertThat(eon.proxy()).isEqualTo("proxy.example:8080");
+        assertThat(s.trustStore()).isNull();
+        assertThat(TrustStores.sslContext("jdk", null).getProtocol()).isEqualTo("TLS");
+        assertThatThrownBy(() -> TrustStores.sslContext(dir.resolve("none.p12").toString(), null))
+                .isInstanceOf(PoException.class).hasMessageContaining("truststore file not found");
+
         assertThatThrownBy(() -> PoSystem.load("missing", dir, Map.of()))
                 .isInstanceOf(PoException.class).hasMessageContaining("missing.properties");
     }

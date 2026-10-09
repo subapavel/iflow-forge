@@ -65,7 +65,9 @@ user=...
 password=...
 ```
 
-`POXRAY_USER` / `POXRAY_PASSWORD` override the file. A read-only user is enough (roles `SAP_XI_DISPLAY_USER_J2EE`,
+Optional: `truststore=windows|jdk|<file>` (+ `truststorePassword`) for HTTPS — by default a certificate is accepted if
+the JDK certificates or, on Windows, the Windows certificate store trust it (company CAs, as in the browser) — and
+`proxy=host:port`. `POXRAY_USER` / `POXRAY_PASSWORD` override the file. A read-only user is enough (roles `SAP_XI_DISPLAY_USER_J2EE`,
 `SAP_XI_API_DISPLAY_J2EE`). Objects read from the system are kept as raw `xiObj` XML in `~/.po-xray/cache/<system>`
 (`--refresh` re-reads them, `--cache <dir>` changes the location): the first `ico` query reads all ICOs, later
 queries work from the snapshot. Before the first object is taken from the snapshot, the system is asked once which
@@ -94,6 +96,16 @@ The executables are `po-xray-cli/target/po-xray-cli-<version>-runner(.exe)` and
 in the shared module `po-xray-native` (`NativeReflection`, guarded by a test; indexed by the applications with
 `quarkus.index-dependency`), MCP result records in `po-xray-mcp` (`McpReflection`); resources of the core (function
 catalog, document labels) are included via `quarkus.native.resources.includes`.
+
+### Windows package without Java
+
+```bash
+powershell -ExecutionPolicy Bypass -File tools/dist-windows.ps1
+```
+
+creates `dist/po-xray-<version>-windows-x64.zip` with `po-xray.exe`, `po-xray-mcp.exe`, the Visual C++ runtime DLLs
+they need (app-local, nothing to install) and `INSTALL.txt`. Native images are built with `-march=compatibility`
+(any x86-64 CPU) and HTTPS support (`quarkus.ssl.native`).
 
 ## MCP server
 

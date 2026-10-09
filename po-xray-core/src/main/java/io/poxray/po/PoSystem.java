@@ -11,8 +11,10 @@ import java.util.Properties;
 
 /**
  * Connection settings of a PO system. Read from {@code ~/.po-xray/systems/<name>.properties} (outside any
- * repository): {@code url}, {@code user}, {@code password}. Environment variables {@code POXRAY_USER} /
- * {@code POXRAY_PASSWORD} override the file. The password is never logged or included in {@link #toString()}.
+ * repository): {@code url}, {@code user}, {@code password}; optional {@code truststore} (HTTPS trust: windows, jdk
+ * or a trust store file with {@code truststorePassword}, see {@link TrustStores}) and {@code proxy}
+ * ({@code host:port}). Environment variables {@code POXRAY_USER} / {@code POXRAY_PASSWORD} override the file. The
+ * password is never logged or included in {@link #toString()}.
  */
 public final class PoSystem {
 
@@ -23,12 +25,27 @@ public final class PoSystem {
     private final URI url;
     private final String user;
     private final String password;
+    private final String trustStore;
+    private final String trustStorePassword;
+    private final String proxy;
 
     public PoSystem(String name, URI url, String user, String password) {
+        this(name, url, user, password, null, null, null);
+    }
+
+    public PoSystem(String name, URI url, String user, String password, String trustStore,
+            String trustStorePassword, String proxy) {
         this.name = name;
         this.url = URI.create(url.toString().replaceAll("/+$", ""));
         this.user = user;
         this.password = password;
+        this.trustStore = blankToNull(trustStore);
+        this.trustStorePassword = trustStorePassword;
+        this.proxy = blankToNull(proxy);
+    }
+
+    private static String blankToNull(String s) {
+        return s == null || s.isBlank() ? null : s.strip();
     }
 
     /** Default location of system files: {@code ~/.po-xray/systems}. */
@@ -62,7 +79,8 @@ public final class PoSystem {
             throw new PoException("Missing user/password for system '" + name + "' (" + file + " or "
                     + USER_ENV + "/" + PASSWORD_ENV + ")");
         }
-        return new PoSystem(name, URI.create(url.strip()), user.strip(), password);
+        return new PoSystem(name, URI.create(url.strip()), user.strip(), password, p.getProperty("truststore"),
+                p.getProperty("truststorePassword"), p.getProperty("proxy"));
     }
 
     public String name() {
@@ -81,8 +99,22 @@ public final class PoSystem {
         return password;
     }
 
+    /** HTTPS trust setting ({@code null} = default), see {@link TrustStores}. */
+    public String trustStore() {
+        return trustStore;
+    }
+
+    String trustStorePassword() {
+        return trustStorePassword;
+    }
+
+    /** HTTP proxy {@code host:port}, null = direct connection. */
+    public String proxy() {
+        return proxy;
+    }
+
     @Override
     public String toString() {
-        return name + " (" + url + ", user " + user + ")";
+        return name + " (" + url + ", user " + user + (proxy == null ? "" : ", proxy " + proxy) + ")";
     }
 }
