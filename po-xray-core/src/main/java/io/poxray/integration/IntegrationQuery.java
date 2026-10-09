@@ -10,6 +10,7 @@ import io.poxray.po.Area;
 import io.poxray.po.PoClient;
 import io.poxray.po.PoException;
 import io.poxray.po.QueryRequest;
+import io.poxray.xi.XiLink;
 import io.poxray.xi.XiObject;
 import io.poxray.xi.XiObjectSource;
 import io.poxray.xi.XiRef;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 import org.w3c.dom.Element;
@@ -41,6 +43,19 @@ public final class IntegrationQuery {
     private final PoClient client;
     private final XiObjectSource source;
     private final List<String> notes = new ArrayList<>();
+
+    static final List<String> CLASSIC_TYPES = List.of("RoutingRelation", "MappingRelation", "InboundBinding",
+            "OutboundBinding");
+    /** Classic configuration types with their key elements (SimpleQuery typeInfo, PO 7.50). */
+    static final Map<String, List<String>> CLASSIC_KEYS = Map.of(
+            "RoutingRelation", List.of("FROMPARTY", "FROMSRVC", "FROMACTIONNS", "FROMACTION", "TOPARTY", "TOSRVC"),
+            "MappingRelation", List.of("FROMACTIONNS", "FROMACTION", "FROMPARTY", "FROMSRVC", "TOPARTY", "TOSRVC"),
+            "InboundBinding", List.of("FROMPARTY", "FROMSRVC", "ACTIONNS", "ACTIONNAME", "TOPARTY", "TOSRVC",
+                    "DIRECTION"),
+            "OutboundBinding", List.of("TOPARTY", "TOSRVC", "ACTIONNS", "ACTIONNAME", "FROMPARTY", "FROMSRVC",
+                    "DIRECTION"));
+    /** Link targets of classic configuration objects expanded into the inventory. */
+    private static final Set<String> EXPANDED_LINKS = Set.of("MAPPING", "ifmmessif", "Channel");
 
     public IntegrationQuery(PoClient client, XiObjectSource source) {
         this.client = client;
@@ -112,6 +127,8 @@ public final class IntegrationQuery {
             }
         }
         List<Ico> icos = reader.icos(selected);
+        List<IntegrationInventory.ObjectDetail> classic = classicConfiguration(p, direction, reader,
+                matchedComponents, issues);
         for (String note : source.offlineNotes()) {
             issues.warn("OFFLINE_SNAPSHOT", note, null, null);
         }
@@ -122,7 +139,73 @@ public final class IntegrationQuery {
                         Instant.now().truncatedTo(ChronoUnit.SECONDS).toString()),
                 new IntegrationInventory.Source(client.system().name(), client.system().url().toString(), List.of()),
                 new IntegrationInventory.Query(componentPattern, direction.name().toLowerCase(Locale.ROOT)),
-                components, icos, reader.channels(), reader.esr(), issues.issues());
+                components, icos, reader.channels(), classic, reader.esr(), issues.issues());
+    }
+
+    /**
+     * Classic configuration (dual-stack / pre-7.5 style, no ICO): receiver and interface determinations, sender and
+     * receiver agreements whose sender ({@code FROMSRVC}) or receiver ({@code TOSRVC}, or a receiver component linked
+     * from a receiver determination) matches. Their interfaces, operation mappings and channels are expanded like
+     * those of ICOs; the content itself (e.g. routing conditions) is kept as XML until verified on real data.
+     */
+    private List<IntegrationInventory.ObjectDetail> classicConfiguration(Pattern p, Direction direction,
+            IntegrationReader reader, Set<String> matchedComponents, IssueLog issues) {
+        List<IntegrationInventory.ObjectDetail> out = new ArrayList<>();
+        for (String type : CLASSIC_TYPES) {
+            List<String> names = CLASSIC_KEYS.get(type);
+            for (XiRef ref : list(type)) {
+                boolean match = false;
+                String from = element(ref, names, "FROMSRVC");
+                String to = element(ref, names, "TOSRVC");
+                if (direction != Direction.IN && p.matcher(from).matches()) {
+                    matchedComponents.add(from);
+                    match = true;
+                }
+                if (direction != Direction.OUT && !to.isEmpty() && p.matcher(to).matches()) {
+                    matchedComponents.add(to);
+                    match = true;
+                }
+                XiObject o = null;
+                if (!match && direction != Direction.OUT && "RoutingRelation".equals(type)) {
+                    o = source.resolve(ref).orElse(null);
+                    for (XiLink l : o == null ? List.<XiLink>of() : o.links()) {
+                        String receiver = l.target().key(1);
+                        if ("Service".equals(l.target().typeId()) && p.matcher(receiver).matches()) {
+                            matchedComponents.add(receiver);
+                            match = true;
+                        }
+                    }
+                }
+                if (!match) {
+                    continue;
+                }
+                if (o == null) {
+                    o = source.resolve(ref).orElse(null);
+                }
+                if (o == null) {
+                    issues.warn("OBJECT_NOT_READABLE", ref.label() + " cannot be read"
+                            + source.failure(ref).map(f -> ": " + f).orElse(""), null, null);
+                    continue;
+                }
+                for (XiLink l : o.links()) {
+                    if (EXPANDED_LINKS.contains(l.target().typeId())) {
+                        reader.read(l.target());
+                    }
+                }
+                out.add(ObjectCatalog.detail(o, names));
+            }
+        }
+        if (!out.isEmpty()) {
+            issues.info("CLASSIC_CONFIGURATION", out.size() + " classic configuration objects (receiver / interface"
+                    + " determinations, agreements): their interfaces, mappings and channels are expanded, the content"
+                    + " (e.g. routing conditions) is included as XML, not yet interpreted", null, null);
+        }
+        return out;
+    }
+
+    private static String element(XiRef ref, List<String> names, String name) {
+        int i = names.indexOf(name);
+        return i < 0 ? "" : ref.key(i);
     }
 
     /** All objects of a Directory type (references only). The condition is mandatory; {@code LIKE *} matches all. */

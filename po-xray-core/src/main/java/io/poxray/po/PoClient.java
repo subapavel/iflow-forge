@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
  */
 public final class PoClient {
 
+    private static final Pattern CHARSET = Pattern.compile("(?i)charset=([^;]+)");
     private static final Pattern RESPONSE_TEXTAREA =
             Pattern.compile("<textarea[^>]*name=\"response\"[^>]*>(.*?)</textarea>", Pattern.DOTALL | Pattern.CASE_INSENSITIVE);
     private static final Duration TIMEOUT = Duration.ofMinutes(2);
@@ -57,6 +58,11 @@ public final class PoClient {
 
     /** Runs a SimpleQuery. */
     public QueryResult query(QueryRequest request) {
+        return QueryResult.parse(queryXml(request));
+    }
+
+    /** Runs a SimpleQuery and returns the raw {@code queryResult} XML. */
+    public String queryXml(QueryRequest request) {
         Map<String, String> form = new LinkedHashMap<>();
         form.put("useXMLL", "true");
         form.put("queryRequestXMLL", request.toXml(system.user()));
@@ -82,7 +88,18 @@ public final class PoClient {
         if (xml.isEmpty()) {
             throw new PoException("SimpleQuery returned no result: " + errorText(html));
         }
-        return QueryResult.parse(xml);
+        return xml;
+    }
+
+    /** The SimpleQuery form page (HTML) of an area: lists the object types this system can query. */
+    public String queryForm(Area area) {
+        URI uri = system.url().resolve("/" + area.path() + "/support/SimpleQuery");
+        HttpRequest req = HttpRequest.newBuilder(uri)
+                .timeout(TIMEOUT)
+                .header("Authorization", authorization)
+                .GET()
+                .build();
+        return send(req, "SimpleQuery form " + area.path());
     }
 
     /** The raw {@code p1:xiObj} XML of the current version of an object. */
@@ -131,14 +148,27 @@ public final class PoClient {
                 : e.getClass().getSimpleName() + " / " + root.getClass().getSimpleName();
     }
 
+    /** Charset of a response: the {@code charset} parameter of its content type, UTF-8 if absent or unknown. */
+    static java.nio.charset.Charset charset(String contentType) {
+        Matcher m = CHARSET.matcher(contentType);
+        if (m.find()) {
+            try {
+                return java.nio.charset.Charset.forName(m.group(1).replace("\"", "").strip());
+            } catch (IllegalArgumentException e) {
+                return StandardCharsets.UTF_8;
+            }
+        }
+        return StandardCharsets.UTF_8;
+    }
+
     public XiObject read(XiRef ref) {
         return XiObjectParser.parse(readRaw(ref), ref.label());
     }
 
     private String send(HttpRequest req, String what) {
-        HttpResponse<String> resp;
+        HttpResponse<byte[]> resp;
         try {
-            resp = http.send(req, HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
+            resp = http.send(req, HttpResponse.BodyHandlers.ofByteArray());
         } catch (java.net.ConnectException | java.net.http.HttpConnectTimeoutException e) {
             throw new PoException(what + " failed: cannot connect to " + req.uri().getHost() + " (" + describe(e)
                     + "; network / VPN?)", e);
@@ -149,7 +179,7 @@ public final class PoClient {
             throw new PoException(what + " interrupted", e);
         }
         int status = resp.statusCode();
-        String body = resp.body();
+        String body = new String(resp.body(), charset(resp.headers().firstValue("Content-Type").orElse("")));
         if (status == 401 || (status / 100 == 3) || isLogonPage(body)) {
             throw new PoException(what + ": authentication failed for " + system + " (HTTP " + status + ")");
         }

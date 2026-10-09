@@ -36,7 +36,7 @@ class ViewsTest {
         var esr = new IntegrationInventory.Esr(List.of(), List.of(), List.of(), List.of(),
                 List.of(new IntegrationInventory.DataType(dt, List.of(), XSD, null)), List.of(), List.of(), List.of());
         return new IntegrationInventory("0.1", null, null, new IntegrationInventory.Query("RCV", "both"),
-                List.of(new IntegrationInventory.Component(null, "RCV", null)), List.of(), List.of(channel), esr,
+                List.of(new IntegrationInventory.Component(null, "RCV", null)), List.of(), List.of(channel), List.of(), esr,
                 List.of());
     }
 

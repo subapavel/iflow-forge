@@ -46,7 +46,15 @@ output (JSON). Exit code 0 = success, non-zero = error.
 | Command | Purpose |
 |---|---|
 | `components -s <system> [-n pattern] [--json]` | Communication components; name filter is case-insensitive (text = contains, `*` `?` = wildcards) |
-| `ico -s <system> -c <component> [-d in\|out\|both] [-f json\|markdown\|jira\|all] [-l cs\|en] [-o dir]` | ICOs to/from a component with channels and ESR objects (interfaces, operation/message mappings, message and data types) |
+| `ico -s <system> -c <component> [-d in\|out\|both] [-f json\|markdown\|jira\|all] [-l cs\|en] [-o dir]` | ICOs to/from a component with channels and ESR objects (interfaces, operation/message mappings, message and data types); also classic configuration (receiver / interface determinations, agreements) |
+| `search -s <system> -t <types> [-n pattern] [--namespace pattern] [--json]` | Objects of any type by name, e.g. `-t messageMapping,operationMapping -n eportal` |
+| `show -s <system> -t <type> -n <name> [--namespace ns]` | One object of any type as JSON (dedicated view or links + raw content) |
+| `where-used -s <system> -t <type> -n <name> [--namespace ns] [--json]` | Objects referencing it, e.g. message mappings using a function library, ICOs using a channel |
+
+Types are given as aliases (`messageMapping`, `operationMapping`, `serviceInterface`, `messageType`, `dataType`,
+`externalDefinition`, `functionLibrary`, `importedArchive`, `ico`, `channel`, `component`, `receiverDetermination`,
+`interfaceDetermination`, `senderAgreement`, `receiverAgreement`, `valueMapping`, `iflow`, ...) or ESR / Directory
+type IDs (`XI_TRAFO`, `RoutingRelation`, ...).
 
 The system is configured outside the repository in `~/.po-xray/systems/<system>.properties`:
 
@@ -59,7 +67,8 @@ password=...
 `POXRAY_USER` / `POXRAY_PASSWORD` override the file. A read-only user is enough (roles `SAP_XI_DISPLAY_USER_J2EE`,
 `SAP_XI_API_DISPLAY_J2EE`). Objects read from the system are kept as raw `xiObj` XML in `~/.po-xray/cache/<system>`
 (`--refresh` re-reads them, `--cache <dir>` changes the location): the first `ico` query reads all ICOs, later
-queries work from the snapshot.
+queries work from the snapshot. Before the first object is taken from the snapshot, the system is asked once which
+objects changed since the last check; changed objects are read again (state in `sync.properties`).
 
 ## Native executable
 
@@ -93,6 +102,7 @@ registered for reflection in `po-xray-cli` (`NativeReflection`, guarded by a tes
 | `find_components` | communication components of a PO system by part of the name |
 | `list_icos` | ICOs to / from a component: routing conditions, interface determinations, channels, names of ESR objects |
 | `get_object` | one object of that inventory: ICO, channel, service interface, operation / message mapping (field logic, UDFs), function library, message / data type |
+| `search_objects`, `read_object`, `where_used` | any object type independent of ICOs: search by name, read one, find its users |
 | `write_integration_documentation` | Markdown / Jira / JSON files of the ICO inventory |
 | `read_sca`, `get_sca_object` | overview of an SCA, then a process outline, single steps with their mappings, process data, catalogs, EJB modules, issues |
 | `write_sca_documentation` | Markdown / Jira / JSON files of an SCA |

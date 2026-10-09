@@ -90,6 +90,48 @@ public final class IntegrationReader {
         }
     }
 
+    /**
+     * Reads one object with the dedicated reader and returns its record (service interface, operation / message
+     * mapping, message / fault type, data type, external definition, function library, channel, ICO); null for
+     * other types or when it cannot be read (reported as issue).
+     */
+    public Object read(XiRef ref) {
+        String k = key(ref);
+        return switch (String.valueOf(ref.typeId())) {
+            case "ifmmessif" -> {
+                serviceInterface(ref);
+                yield interfaces.get(k);
+            }
+            case "MAPPING" -> {
+                operationMapping(ref);
+                yield operationMappings.get(k);
+            }
+            case "XI_TRAFO" -> {
+                messageMapping(ref);
+                yield messageMappings.get(k);
+            }
+            case "ifmmessage", "ifmfaultm" -> {
+                messageType(ref);
+                yield messageTypes.get(k);
+            }
+            case "ifmtypedef" -> {
+                dataType(ref);
+                yield dataTypes.get(k);
+            }
+            case "ifmextdef" -> {
+                externalDefinition(ref);
+                yield externalDefinitions.get(k);
+            }
+            case "FUNC_LIB" -> functionLibrary(ref);
+            case "Channel" -> {
+                channel(ref);
+                yield channels.get("Channel|" + ref.keyString());
+            }
+            case "AllInOne" -> resolve(ref).map(this::ico).orElse(null);
+            default -> null;
+        };
+    }
+
     public List<Channel> channels() {
         return List.copyOf(channels.values());
     }
@@ -560,7 +602,14 @@ public final class IntegrationReader {
         return new ObjRef(r.typeId(), blank(r.key(0)), blank(r.key(1)), r.swcCaption(), r.swcGuid(), r.oid());
     }
 
+    /**
+     * Identity of an object for "read once": the object ID if known (the same ESR object is reached through the
+     * SWCVs of different referring objects), else SWCV and key.
+     */
     private static String key(XiRef r) {
+        if (r.oid() != null && !r.isDirectory()) {
+            return r.typeId() + "|" + r.oid();
+        }
         return r.typeId() + "|" + (r.isDirectory() ? "D" : r.swcGuid()) + "|" + r.keyString();
     }
 

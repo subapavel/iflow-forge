@@ -1,6 +1,7 @@
 package io.poxray.cli;
 
 import io.poxray.integration.IntegrationQuery;
+import io.poxray.integration.ObjectCatalog;
 import io.poxray.po.CachingObjectSource;
 import io.poxray.po.PoClient;
 import io.poxray.po.PoSystem;
@@ -19,6 +20,13 @@ public class PoService {
         PoClient client = new PoClient(PoSystem.load(system));
         Path dir = cache == null ? CachingObjectSource.defaultDirectory(client.system()) : Path.of(cache);
         return new IntegrationQuery(client, new CachingObjectSource(client, dir, refresh));
+    }
+
+    /** Search, read and where-used for any object type of a system, on top of the same snapshot. */
+    ObjectCatalog catalog(String system) {
+        PoClient client = new PoClient(PoSystem.load(system));
+        return new ObjectCatalog(client,
+                new CachingObjectSource(client, CachingObjectSource.defaultDirectory(client.system()), false));
     }
 
     /** File name part for a component pattern: {@code icos-V3S_D}, {@code icos-_DIGISIGN_}. */

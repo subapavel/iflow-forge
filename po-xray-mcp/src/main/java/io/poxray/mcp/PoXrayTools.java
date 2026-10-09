@@ -1,7 +1,9 @@
 package io.poxray.mcp;
 
+import io.poxray.IssueLog;
 import io.poxray.doc.DocFormat;
 import io.poxray.doc.Documentation;
+import io.poxray.integration.ObjectCatalog;
 import io.poxray.json.Json;
 import io.poxray.model.IntegrationInventory;
 import io.poxray.model.ScaInventory;
@@ -29,6 +31,10 @@ public class PoXrayTools {
     private static final String SYSTEM = "PO system name as configured in ~/.po-xray/systems/<name>.properties";
     private static final String COMPONENT = "Exact communication component name (business system / component), "
             + "case-insensitive; * and ? wildcards allowed";
+    private static final String TYPES = "messageMapping, operationMapping, serviceInterface, messageType, "
+            + "dataType, externalDefinition, functionLibrary, importedArchive, ico, channel, component, "
+            + "receiverDetermination, interfaceDetermination, senderAgreement, receiverAgreement, valueMapping, iflow "
+            + "(or ESR / Directory type IDs such as XI_TRAFO, MAPPING, ifmmessif, RoutingRelation)";
     private static final String DIRECTION = "in = component is a receiver, out = component is the sender, both";
 
     @Inject
@@ -107,6 +113,69 @@ public class PoXrayTools {
         });
     }
 
+    @Tool(name = "search_objects", description = "Search ESR / Integration Directory objects of any type by name, "
+            + "independent of ICOs. Types: " + TYPES + ". Returns type, key (name, namespace, ...), SWCV, version and "
+            + "last change; read one with read_object, find its users with where_used.",
+            annotations = @Tool.Annotations(readOnlyHint = true, openWorldHint = true))
+    String searchObjects(@ToolArg(description = SYSTEM) String system,
+            @ToolArg(description = "Comma-separated types (aliases or type IDs)") String types,
+            @ToolArg(description = "Name filter: plain text = contains, * ? wildcards, case-insensitive; empty = all",
+                    defaultValue = "") String name,
+            @ToolArg(description = "Namespace filter (same syntax), empty = any", defaultValue = "") String namespace,
+            @ToolArg(description = "Maximum number of objects returned", defaultValue = "100") int limit) {
+        return call(() -> json(inventories.catalog(system).search(split(types), name, namespace, limit)));
+    }
+
+    @Tool(name = "read_object", description = "One ESR / Integration Directory object of any type by exact name: "
+            + "dedicated view for service interfaces, operation / message mappings (field logic, UDFs), function "
+            + "libraries, message / data types, external definitions, channels and ICOs; other types (receiver / "
+            + "interface determinations, agreements, value mappings, iFlows, ...) as links plus raw content XML.",
+            annotations = @Tool.Annotations(readOnlyHint = true, openWorldHint = true))
+    String readObject(@ToolArg(description = SYSTEM) String system,
+            @ToolArg(description = "Type alias or type ID, e.g. " + TYPES) String type,
+            @ToolArg(description = "Exact name (case-insensitive); Directory objects by any key element or the whole"
+                    + " key a|b|c, e.g. a channel as component|name") String name,
+            @ToolArg(description = "Namespace if the name is not unique", defaultValue = "") String namespace) {
+        return call(() -> {
+            ObjectCatalog catalog = inventories.catalog(system);
+            List<ObjectCatalog.Hit> hits = catalog.find(type, name, namespace);
+            if (hits.isEmpty()) {
+                throw new IllegalArgumentException("No " + type + " named '" + name + "'; try search_objects");
+            }
+            if (hits.size() > 5) {
+                return json(new Ambiguous("More than 5 objects match, narrow down with namespace", hits.stream()
+                        .map(ObjectCatalog.Hit::summary).toList()));
+            }
+            IssueLog issues = new IssueLog();
+            List<Object> out = new ArrayList<>();
+            for (ObjectCatalog.Hit hit : hits) {
+                Object o = catalog.read(hit, issues);
+                out.add(o == null ? hit.summary() : o);
+            }
+            return json(issues.issues().isEmpty() ? (out.size() == 1 ? out.getFirst() : out)
+                    : new WithIssues(out.size() == 1 ? out.getFirst() : out, issues.issues()));
+        });
+    }
+
+    @Tool(name = "where_used", description = "Objects referencing an object (exact name): e.g. operation mappings "
+            + "using a message mapping, message mappings using a function library, ICOs / agreements using a channel"
+            + " or operation mapping, interfaces / mappings using a message or data type. Uses the reference lists of"
+            + " the PO system, the referring objects are not read.",
+            annotations = @Tool.Annotations(readOnlyHint = true, openWorldHint = true))
+    String whereUsed(@ToolArg(description = SYSTEM) String system,
+            @ToolArg(description = "Type alias or type ID of the used object") String type,
+            @ToolArg(description = "Exact name of the used object; channels as component|name") String name,
+            @ToolArg(description = "Namespace if the name is not unique", defaultValue = "") String namespace) {
+        return call(() -> {
+            ObjectCatalog catalog = inventories.catalog(system);
+            List<ObjectCatalog.Hit> targets = catalog.find(type, name, namespace);
+            if (targets.isEmpty()) {
+                throw new IllegalArgumentException("No " + type + " named '" + name + "'; try search_objects");
+            }
+            return json(catalog.whereUsed(targets));
+        });
+    }
+
     @Tool(name = "read_sca", description = "Overview of an NWDI SCA file with SAP NW BPM processes and EJB modules: "
             + "development components, processes (node / flow counts), BPM catalogs, EJB modules, issue counts. "
             + "Fetch details with get_sca_object.",
@@ -165,6 +234,16 @@ public class PoXrayTools {
     }
 
     // ------------------------------------------------------------------------------------------ helpers
+
+    record Ambiguous(String message, Object candidates) {
+    }
+
+    record WithIssues(Object object, Object issues) {
+    }
+
+    private static List<String> split(String types) {
+        return java.util.Arrays.stream(types.split(",")).map(String::strip).filter(t -> !t.isEmpty()).toList();
+    }
 
     /** Compact JSON for tool results (indentation would cost the agent tokens). */
     private static String json(Object value) {

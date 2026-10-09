@@ -56,9 +56,10 @@ class IntegrationReaderTest {
         IntegrationInventory inv = new IntegrationInventory("0.1", null,
                 new IntegrationInventory.Source(null, null, java.util.List.of("XI7_1_directory-objs.tpz")),
                 new IntegrationInventory.Query("V3S_D", "both"), java.util.List.of(), java.util.List.of(ico),
-                reader.channels(), reader.esr(), issues.issues());
+                reader.channels(), java.util.List.of(), reader.esr(), issues.issues());
         inv = new IntegrationInventory(inv.schemaVersion(), new io.poxray.model.ScaInventory.Generator("po-xray", "t", "now"),
-                inv.source(), inv.query(), inv.components(), inv.icos(), inv.channels(), inv.esr(), inv.issues());
+                inv.source(), inv.query(), inv.components(), inv.icos(), inv.channels(), inv.classicConfiguration(), inv.esr(),
+                inv.issues());
         String md = io.poxray.doc.Documentation.render(inv, io.poxray.doc.DocFormat.MARKDOWN, java.util.Locale.ENGLISH);
         String jira = io.poxray.doc.Documentation.render(inv, io.poxray.doc.DocFormat.JIRA, java.util.Locale.forLanguageTag("cs"));
         assertThat(md).contains("# Integrations of V3S\\_D", "### CD1CLNT300 \\| ApplicationStatus\\_Out",

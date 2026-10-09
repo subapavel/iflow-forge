@@ -14,8 +14,10 @@ import org.w3c.dom.Element;
 /**
  * SimpleQuery result ({@code queryResult}): rows of named columns. Cells are plain values ({@code simple}),
  * object references ({@code qref}, e.g. RA_XILINK) or reference lists ({@code array}, e.g. RA_LINK_LIST).
+ * {@code keyNames}: names of the key elements per type ({@code typeInfo}, e.g. AllInOne: FROMPARTY, FROMSRVC,
+ * FROMACTIONNS, FROMACTION, TOPARTY, TOSRVC), present even when no rows match.
  */
-public record QueryResult(List<String> columns, List<Row> rows) {
+public record QueryResult(List<String> columns, List<Row> rows, Map<String, List<String>> keyNames) {
 
     /** One result row: column name → value ({@code String}, {@link XiRef} or {@code List<XiRef>}). */
     public record Row(Map<String, Object> cells) {
@@ -69,7 +71,16 @@ public record QueryResult(List<String> columns, List<Row> rows) {
                 rows.add(new Row(cells));
             }
         }
-        return new QueryResult(List.copyOf(columns), List.copyOf(rows));
+        Map<String, List<String>> keyNames = new LinkedHashMap<>();
+        Element typeInfo = XmlDocs.child(root, "typeInfo");
+        for (Element type : typeInfo == null ? List.<Element>of() : XmlDocs.children(typeInfo, "type")) {
+            Map<Integer, String> names = new TreeMap<>();
+            for (Element k : XmlDocs.children(type, "keyElem")) {
+                names.put(Integer.parseInt(k.getAttribute("pos")), k.getAttribute("name"));
+            }
+            keyNames.put(type.getAttribute("id"), List.copyOf(names.values()));
+        }
+        return new QueryResult(List.copyOf(columns), List.copyOf(rows), Map.copyOf(keyNames));
     }
 
     private static Object cell(Element c) {

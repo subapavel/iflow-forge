@@ -12,15 +12,20 @@ import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HexFormat;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Supplier;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.node.ArrayNode;
 import tools.jackson.databind.node.ObjectNode;
@@ -31,14 +36,25 @@ import tools.jackson.databind.node.ObjectNode;
  * {@code <dir>/<rep|dir>/<typeId>/<hash of SWCV + key>.xml}, listings (SimpleQuery) as
  * {@code <dir>/lists/<typeId>.json}. {@code refresh} re-reads cached objects. When the PO system cannot be reached,
  * listings come from the snapshot and {@link #offlineNotes()} says so.
+ * <p>
+ * Freshness: before the first object is served from the snapshot, the PO system is asked once which objects of the
+ * cached types changed since the last check ({@code MODIFYDATE > last check - 1 day}, the margin covers time zones);
+ * cached objects whose version ID differs are dropped and read again. State: {@code <dir>/sync.properties}.
  */
 public final class CachingObjectSource implements XiObjectSource {
+
+    /** Date format of SimpleQuery date conditions; {@code LocalDateTime.toString()} drops zero seconds. */
+    private static final java.time.format.DateTimeFormatter SERVER_TIME =
+            java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+    private static final Pattern VID = Pattern.compile("VID=\"([^\"]+)\"");
 
     private final PoClient client;
     private final Path directory;
     private final boolean refresh;
     private final Map<Path, String> failures = new ConcurrentHashMap<>();
     private final List<String> offlineNotes = new CopyOnWriteArrayList<>();
+    private volatile boolean synced;
+    private int dropped;
 
     public CachingObjectSource(PoClient client, Path directory, boolean refresh) {
         this.client = client;
@@ -59,6 +75,9 @@ public final class CachingObjectSource implements XiObjectSource {
         Path file = fileOf(ref);
         try {
             if (!refresh && Files.isRegularFile(file)) {
+                syncOnce();
+            }
+            if (!refresh && Files.isRegularFile(file)) {
                 return Optional.of(XiObjectParser.parse(Files.readString(file, StandardCharsets.UTF_8), file.toString()));
             }
             String raw = client.readRaw(ref);
@@ -73,6 +92,108 @@ public final class CachingObjectSource implements XiObjectSource {
             }
             failures.put(file, e.getMessage());
             return Optional.empty(); // deleted or not renderable: reported by the caller with this reason
+        }
+    }
+
+    /** Number of cached objects dropped because they changed on the PO system (after the check ran). */
+    public int changedObjects() {
+        return dropped;
+    }
+
+    private void syncOnce() {
+        if (synced) {
+            return;
+        }
+        synchronized (this) {
+            if (!synced) {
+                synced = true;
+                sync();
+            }
+        }
+    }
+
+    /** Drops cached objects changed on the PO system since the last check (see class comment). */
+    void sync() {
+        Path stateFile = directory.resolve("sync.properties");
+        Properties state = new Properties();
+        try {
+            if (Files.isRegularFile(stateFile)) {
+                try (var in = Files.newBufferedReader(stateFile, StandardCharsets.UTF_8)) {
+                    state.load(in);
+                }
+            }
+            LocalDateTime now = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
+            for (Area area : Area.values()) {
+                Path areaDir = directory.resolve(area.path());
+                List<String> types = subdirectories(areaDir);
+                if (types.isEmpty()) {
+                    continue;
+                }
+                String last = state.getProperty(area.path());
+                LocalDateTime since = (last != null ? LocalDateTime.parse(last) : oldest(areaDir)).minusDays(1);
+                QueryResult changed;
+                try {
+                    changed = client.query(new QueryRequest(area, types, "MODIFYDATE", since.format(SERVER_TIME), "GT", false,
+                            List.of("RA_XILINK", "VERSIONID"), "date"));
+                } catch (PoException e) {
+                    if (isAuthentication(e)) {
+                        throw e;
+                    }
+                    offlineNotes.add(e.getMessage() + " - " + area.path()
+                            + " snapshot objects used without checking for changes");
+                    continue;
+                }
+                for (QueryResult.Row row : changed.rows()) {
+                    XiRef ref = row.xiLink();
+                    String vid = row.text("VERSIONID");
+                    Path file = ref == null || vid == null ? null : fileOf(ref);
+                    if (file != null && Files.isRegularFile(file) && !vid.equalsIgnoreCase(cachedVersion(file))) {
+                        Files.delete(file);
+                        dropped++;
+                    }
+                }
+                state.setProperty(area.path(), now.format(SERVER_TIME));
+            }
+            Files.createDirectories(directory);
+            try (var out = Files.newBufferedWriter(stateFile, StandardCharsets.UTF_8)) {
+                state.store(out, "po-xray snapshot: last check for changed objects (local time, 1 day margin)");
+            }
+        } catch (IOException e) {
+            throw new UncheckedIOException("Cannot update snapshot " + directory, e);
+        }
+    }
+
+    private static List<String> subdirectories(Path dir) throws IOException {
+        if (!Files.isDirectory(dir)) {
+            return List.of();
+        }
+        try (var s = Files.list(dir)) {
+            return s.filter(Files::isDirectory).map(p -> p.getFileName().toString()).sorted().toList();
+        }
+    }
+
+    /** Modification time of the oldest snapshot file (first check of a snapshot taken before checks existed). */
+    private static LocalDateTime oldest(Path dir) throws IOException {
+        try (var files = Files.walk(dir)) {
+            long min = files.filter(Files::isRegularFile).mapToLong(f -> {
+                try {
+                    return Files.getLastModifiedTime(f).toMillis();
+                } catch (IOException e) {
+                    throw new UncheckedIOException(e);
+                }
+            }).min().orElse(System.currentTimeMillis());
+            return LocalDateTime.ofInstant(Instant.ofEpochMilli(min), ZoneId.systemDefault())
+                    .truncatedTo(ChronoUnit.SECONDS);
+        }
+    }
+
+    /** {@code VID} of a cached {@code xiObj} (in its first lines). */
+    static String cachedVersion(Path file) throws IOException {
+        try (var in = Files.newBufferedReader(file, StandardCharsets.UTF_8)) {
+            char[] buf = new char[4096];
+            int n = in.read(buf);
+            Matcher m = VID.matcher(n < 0 ? "" : new String(buf, 0, n));
+            return m.find() ? m.group(1) : null;
         }
     }
 

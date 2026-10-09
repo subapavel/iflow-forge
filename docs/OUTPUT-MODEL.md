@@ -419,6 +419,12 @@ use. Read online (SimpleQuery + `read/ext`, snapshot cache) or from TPZ exports;
                         "parameters": { "RFCCHANNEL": { "component": "CD1CLNT300", "name": "RFC_RCV" } } } ],
       "channels": [ { "component": "V3S_D", "name": "SOAP_RCV_LoopBack" } ] } ],
     "noReceiverBehaviour": "error" } ],
+  "classicConfiguration": [ {                  // receiver / interface determinations, agreements (no ICO)
+      "id": { "type": "RoutingRelation", "area": "dir",
+              "key": { "FROMPARTY": "", "FROMSRVC": "SND", "FROMACTIONNS": "urn:a", "FROMACTION": "Order_Out", "TOPARTY": "", "TOSRVC": "" },
+              "oid": "…", "versionId": "…", "modifiedAt": "…", "modifiedBy": "…" },
+      "links": [ { "role": "…", "type": "Service", "key": "|RCV" } ],    // mappings, interfaces, channels are expanded below
+      "content": "<…raw XML, not interpreted yet…>" } ],
   "channels": [ { "id": { … }, "direction": "sender|receiver", "adapter": "HTTP/REST",
                   "attributes": { "in.channel.endpoint": "/v3s/spds/application", … },   // passwords are never exported
                   "modules": [ { "position": 0, "name": "AF_Modules/DynamicConfigurationBean", "type": "L", "parameters": { … } } ] } ],
@@ -472,6 +478,14 @@ Facts verified on xipod (PO 7.50 SP28):
   (`typetype DCOMCHAN`) point to a link `p_<name>` → adapter metadata (e.g. RFC).
 - Operation mapping roles `*_OUT_MES` / `*_IN_MES` are not consistent for faults: source/target of a step come from
   the message mapping (`SOURCE_IFR_MESS` / `TARGET_IFR_MESS`).
+- Object search (`search` / `search_objects`) returns `ObjectSummary` (type, area, key elements by name from the
+  SimpleQuery `typeInfo`, SWCV, OID, version, last change, description); `show` / `read_object` return the dedicated
+  record or `ObjectDetail` (summary, links by role, raw content XML); where-used matches `RA_LINK_LIST` of the
+  referring types by object ID (links carry the SWCV of the referring object, targets may live in an underlying SWCV).
+- SimpleQuery: case-insensitive matching is also refused for ESR `NAME` (types are listed and filtered locally);
+  date conditions need `<val><simple><date>yyyy-MM-ddTHH:mm:ss</date>` (seconds mandatory, other formats → HTTP 500);
+  `typeInfo/keyElem` names the key elements even when nothing matches; the result page is not UTF-8 (charset from
+  `Content-Type`), `read/ext` is.
 - SimpleQuery: case-insensitive matching is refused for `SERVICE`, `FROMSRVC`, `TOSRVC`, `MODIFYUSER`; `TOSRVC` does
   not find ICO receivers (they are in the ICO content) → components and ICOs are listed and filtered locally.
 - The JDK HTTP client must use HTTP/1.1: the h2c upgrade request is answered with 403 by SAP AS Java.

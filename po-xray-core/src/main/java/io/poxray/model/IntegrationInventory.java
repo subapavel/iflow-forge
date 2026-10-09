@@ -16,8 +16,28 @@ public record IntegrationInventory(
         List<Component> components,
         List<Ico> icos,
         List<Channel> channels,
+        List<ObjectDetail> classicConfiguration,
         Esr esr,
         List<Issue> issues) {
+
+    /**
+     * Any ESR / Directory object as listed by SimpleQuery. {@code key}: key elements by name (e.g. NAME,
+     * NAMESPACE; FROMPARTY, FROMSRVC, ... for configuration objects); {@code area}: rep | dir.
+     */
+    public record ObjectSummary(String type, String area, Map<String, String> key, String swc, String swcGuid,
+            String oid, String versionId, String modifiedAt, String modifiedBy, String description) {
+    }
+
+    /**
+     * Generic view of an object without a dedicated reader (e.g. classic configuration: receiver / interface
+     * determination, sender / receiver agreement; value mappings): its links by role and the raw content XML.
+     */
+    public record ObjectDetail(ObjectSummary id, List<ObjectLink> links, String content) {
+    }
+
+    /** Link of a generic object: role and target (type, key elements joined by |, SWCV). */
+    public record ObjectLink(String role, String type, String key, String swc, String oid) {
+    }
 
     /** {@code system}: PO system (name, URL) for online reads; {@code files}: TPZ exports for offline reads. */
     public record Source(String system, String url, List<String> files) {

@@ -2,6 +2,7 @@ package io.poxray.mcp;
 
 import io.poxray.PoXray;
 import io.poxray.integration.IntegrationQuery;
+import io.poxray.integration.ObjectCatalog;
 import io.poxray.model.IntegrationInventory;
 import io.poxray.model.IntegrationInventory.Component;
 import io.poxray.model.ScaInventory;
@@ -29,6 +30,7 @@ public class Inventories {
 
     private final Map<String, IntegrationInventory> integration = new ConcurrentHashMap<>();
     private final Map<String, ScaInventory> sca = new ConcurrentHashMap<>();
+    private final Map<String, ObjectCatalog> catalogs = new ConcurrentHashMap<>();
 
     /** Components matching the pattern; {@code warnings} when served from the offline snapshot. */
     record Components(List<Component> components, List<String> warnings) {
@@ -47,6 +49,15 @@ public class Inventories {
             integration.remove(key);
         }
         return integration.computeIfAbsent(key, k -> query(system, refresh).icos(component, d));
+    }
+
+    /** Object search / read / where-used of a system; listings are kept for the session. */
+    ObjectCatalog catalog(String system) {
+        return catalogs.computeIfAbsent(system, s -> {
+            PoClient client = new PoClient(PoSystem.load(s));
+            return new ObjectCatalog(client,
+                    new CachingObjectSource(client, CachingObjectSource.defaultDirectory(client.system()), false));
+        });
     }
 
     ScaInventory sca(String path) {

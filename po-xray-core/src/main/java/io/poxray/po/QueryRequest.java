@@ -13,9 +13,15 @@ import java.util.List;
  * @param operator  {@code LIKE}, {@code EQ}, ...
  * @param caseInsensitive case-insensitive comparison
  * @param attributes result columns
+ * @param valueType  type element of the condition value: {@code strg} (default) or {@code date} (MODIFYDATE)
  */
 public record QueryRequest(Area area, List<String> types, String key, String value, String operator,
-        boolean caseInsensitive, List<String> attributes) {
+        boolean caseInsensitive, List<String> attributes, String valueType) {
+
+    public QueryRequest(Area area, List<String> types, String key, String value, String operator,
+            boolean caseInsensitive, List<String> attributes) {
+        this(area, types, key, value, operator, caseInsensitive, attributes, "strg");
+    }
 
     /** Result columns useful for discovery: reference, name/namespace, IDs, change info, description, links. */
     public static final List<String> DEFAULT_ATTRIBUTES =
@@ -26,7 +32,7 @@ public record QueryRequest(Area area, List<String> types, String key, String val
     }
 
     public QueryRequest withAttributes(List<String> attributes) {
-        return new QueryRequest(area, types, key, value, operator, caseInsensitive, attributes);
+        return new QueryRequest(area, types, key, value, operator, caseInsensitive, attributes, valueType);
     }
 
     /** The request XML; {@code user} is the change list context user. */
@@ -45,7 +51,8 @@ public record QueryRequest(Area area, List<String> types, String key, String val
                     .append("<clCxt consider=\"A\" user=\"").append(escape(user)).append("\"/></qc>");
         }
         sb.append("<condition><complex><elementary><single><key>").append(escape(key)).append("</key>")
-                .append("<val><simple><strg>").append(escape(value)).append("</strg></simple></val>")
+                .append("<val><simple><").append(valueType).append(">").append(escape(value)).append("</")
+                .append(valueType).append("></simple></val>")
                 .append("<op isCaseIns=\"").append(caseInsensitive).append("\">").append(escape(operator))
                 .append("</op></single></elementary></complex></condition><result>");
         for (String a : attributes) {

@@ -13,7 +13,7 @@ import org.aesh.command.invocation.CommandInvocation;
         version = PoXray.VERSION,
         generateHelp = true,
         groupCommands = {JsonCommand.class, DocCommand.class, ExportCommand.class, ComponentsCommand.class,
-            IcoCommand.class})
+            IcoCommand.class, SearchCommand.class, ShowCommand.class, WhereUsedCommand.class})
 public class PoXrayCommand implements Command<CommandInvocation> {
 
     @Override
