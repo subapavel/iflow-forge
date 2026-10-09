@@ -1,0 +1,5238 @@
+{
+ "source": {
+  "plugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+  "dc": "sap.com/tc/bpem/content/predefs/types"
+ },
+ "additionalSources": [
+  {
+   "plugin": "com.sap.tc.ap.bpemcontent_7.3.0.250825003525.jar",
+   "dc": "sap.com/tc/bpem/content/predefs/default"
+  }
+ ],
+ "functions": [
+  {
+   "id": "481F3B2A912070301AC311DDB6990018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/boolean",
+   "category": "boolean",
+   "name": "and",
+   "symbol": "and",
+   "infix": false,
+   "documentation": "Returns true if and only if both arguments are true. Returns false if one of the arguments is true and the other argument is false or if both arguments are false.",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "boolean"
+    },
+    {
+     "name": "right",
+     "type": "boolean"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.logic.BooleanAndFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/boolean/and.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2A913CF8E11AC311DD93CF0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/boolean",
+   "category": "boolean",
+   "name": "boolean",
+   "symbol": "boolean",
+   "infix": false,
+   "documentation": "Returns true if the <str> has literal value \"true\".",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "string"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.logic.BooleanFromTextFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/boolean/boolean.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2A9148DFC11AC311DD9AF50018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/boolean",
+   "category": "boolean",
+   "name": "boolean-equal",
+   "symbol": "=",
+   "infix": false,
+   "documentation": "Returns true if both arguments are true or if both arguments are false. Returns false if one of the arguments is true and the other argument is false.",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "boolean"
+    },
+    {
+     "name": "right",
+     "type": "boolean"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.logic.BooleanSameFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/boolean/boolean-equal.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2B915E63911AC311DD956D0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/boolean",
+   "category": "boolean",
+   "name": "boolean-not-equal",
+   "symbol": "!=",
+   "infix": false,
+   "documentation": "Returns true if one of the arguments is true and the other argument is false.",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "boolean"
+    },
+    {
+     "name": "right",
+     "type": "boolean"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.logic.BooleanNotSameFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/boolean/boolean-not-equal.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2B9154C6A01AC311DDA5D30018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/boolean",
+   "category": "boolean",
+   "name": "not",
+   "symbol": "!",
+   "infix": false,
+   "documentation": "Returns the logical negation of the argument (true if the boolean value is false, and false if the boolean value is true).",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "boolean"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.logic.BooleanNotFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/boolean/not.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2B916CBB701AC311DD9D840018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/boolean",
+   "category": "boolean",
+   "name": "or",
+   "symbol": "or",
+   "infix": false,
+   "documentation": "Returns true if one or both of the arguments arguments are true. Returns false if both arguments are false.",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "boolean"
+    },
+    {
+     "name": "right",
+     "type": "boolean"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.logic.BooleanOrFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/boolean/or.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "491822D06FE098A0AF1F11DD85A00019991C7C01",
+   "namespace": "sap.com/bpem/glx/built-in/date-time",
+   "category": "date-time",
+   "name": "IF",
+   "symbol": "IF",
+   "infix": false,
+   "documentation": "Deprecated. This function is deprecated and you can use the conditional if statement instead: if ( <ExpressionOne>) then <ExpreessionTwo> else <ExpressionThree>       If you still want to use this function be aware that it can be used over both lists and single values as input parameters. Function evaluates a Boolean condition provided as the first input parameter. Based on the returned Boolean value, the function returns an xsd:dateTime representing the value received after the evaluation of either the second or the third input parameter.",
+   "parameters": [
+    {
+     "name": "test",
+     "type": "boolean"
+    },
+    {
+     "name": "thenValue",
+     "type": "dateTime"
+    },
+    {
+     "name": "elseValue",
+     "type": "dateTime"
+    }
+   ],
+   "result": "dateTime",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.datetime.DatetimeIFFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/date-time/if.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2C923032801AC311DD91F60018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/date-time",
+   "category": "date-time",
+   "name": "add-dayTimeDuration-to-dateTime",
+   "symbol": "add-dayTimeDuration-to-dateTime",
+   "infix": false,
+   "documentation": "Returns the xs:dateTime computed by adding <duration> to the value of <value>.\r\nIf <duration> is negative, then the result xs:dateTime precedes <value>.\r\nThe result has the same timezone as <value>.\r\nIf <value> has no timezone, the result has no timezone.",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "dateTime"
+    },
+    {
+     "name": "duration",
+     "type": "duration"
+    }
+   ],
+   "result": "dateTime",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.datetime.DatetimeAddDayTimeDurationFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/date-time/add-daytimeduration-to-datetime.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2C921F69A71AC311DD84E20018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/date-time",
+   "category": "date-time",
+   "name": "add-days-to-dateTime",
+   "symbol": "add-days-to-dateTime",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "dateTime"
+    },
+    {
+     "name": "days",
+     "type": "int"
+    }
+   ],
+   "result": "dateTime",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.datetime.DatetimeAddDaysFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/date-time/add-days-to-datetime.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2C92375E711AC311DDAEA30018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/date-time",
+   "category": "date-time",
+   "name": "add-hours-to-dateTime",
+   "symbol": "add-hours-to-dateTime",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "dateTime"
+    },
+    {
+     "name": "hours",
+     "type": "int"
+    }
+   ],
+   "result": "dateTime",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.datetime.DatetimeAddHoursFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/date-time/add-hours-to-datetime.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2C923E8A601AC311DD8D580018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/date-time",
+   "category": "date-time",
+   "name": "add-milliseconds-to-dateTime",
+   "symbol": "add-milliseconds-to-dateTime",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "dateTime"
+    },
+    {
+     "name": "milliseconds",
+     "type": "long"
+    }
+   ],
+   "result": "dateTime",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.datetime.DatetimeAddMillisecondsFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/date-time/add-milliseconds-to-datetime.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2C92458F401AC311DDC90B0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/date-time",
+   "category": "date-time",
+   "name": "add-minutes-to-dateTime",
+   "symbol": "add-minutes-to-dateTime",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "dateTime"
+    },
+    {
+     "name": "minutes",
+     "type": "int"
+    }
+   ],
+   "result": "dateTime",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.datetime.DatetimeAddMinutesFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/date-time/add-minutes-to-datetime.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2C924CBB311AC311DDC9350018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/date-time",
+   "category": "date-time",
+   "name": "add-months-to-dateTime",
+   "symbol": "add-months-to-dateTime",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "dateTime"
+    },
+    {
+     "name": "months",
+     "type": "int"
+    }
+   ],
+   "result": "dateTime",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.datetime.DatetimeAddMonthsFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/date-time/add-months-to-datetime.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2C9253E7221AC311DD95600018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/date-time",
+   "category": "date-time",
+   "name": "add-seconds-to-dateTime",
+   "symbol": "add-seconds-to-dateTime",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "dateTime"
+    },
+    {
+     "name": "seconds",
+     "type": "int"
+    }
+   ],
+   "result": "dateTime",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.datetime.DatetimeAddSecondsFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/date-time/add-seconds-to-datetime.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2C925B13131AC311DDA58F0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/date-time",
+   "category": "date-time",
+   "name": "add-yearMonthDuration-to-dateTime",
+   "symbol": "add-yearMonthDuration-to-dateTime",
+   "infix": false,
+   "documentation": "Returns the xs:dateTime computed by adding <ymDiration> to the value of <value>.\r\nIf <ymDiration> is negative, then the result xs:dateTime precedes <value>.\r\nThe result has the same timezone as <value>.\r\nIf <value> has no timezone, the result has no timezone.",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "dateTime"
+    },
+    {
+     "name": "duration",
+     "type": "duration"
+    }
+   ],
+   "result": "dateTime",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.datetime.DatetimeAddYearMonthDurationFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/date-time/add-yearmonthduration-to-datetime.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2C92623F031AC311DDBC590018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/date-time",
+   "category": "date-time",
+   "name": "add-years-to-dateTime",
+   "symbol": "add-years-to-dateTime",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "dateTime"
+    },
+    {
+     "name": "years",
+     "type": "int"
+    }
+   ],
+   "result": "dateTime",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.datetime.DatetimeAddYearsFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/date-time/add-years-to-datetime.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2C927551D01AC311DD8B7C0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/date-time",
+   "category": "date-time",
+   "name": "current-dateTime",
+   "symbol": "current-dateTime",
+   "infix": false,
+   "documentation": "Returns the current dateTime.",
+   "parameters": [],
+   "result": "dateTime",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.datetime.DatetimeFromCurrentFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/date-time/current-datetime.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2C928138B71AC311DDA14C0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/date-time",
+   "category": "date-time",
+   "name": "date-from-dateTime",
+   "symbol": "date-from-dateTime",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "dateTime"
+    }
+   ],
+   "result": "date",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.datetime.DatetimeGetDateFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/date-time/date-from-datetime.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2C927A0CC11AC311DD81160018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/date-time",
+   "category": "date-time",
+   "name": "dateTime",
+   "symbol": "dateTime",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "string"
+    }
+   ],
+   "result": "dateTime",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.datetime.DatetimeFromTextFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/date-time/datetime.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2C926BB4E01AC311DD82AB0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/date-time",
+   "category": "date-time",
+   "name": "dateTime-equal",
+   "symbol": "=",
+   "infix": false,
+   "documentation": "Returns true if and only if the value of left is equal to the value of right. Returns false otherwise.",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "dateTime"
+    },
+    {
+     "name": "right",
+     "type": "dateTime"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.datetime.DatetimeSameFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/date-time/datetime-equal.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2D92B345311AC311DD99CE0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/date-time",
+   "category": "date-time",
+   "name": "dateTime-greater-equal",
+   "symbol": ">=",
+   "infix": false,
+   "documentation": "Returns true if and only if left is greater than or equal right. Returns false otherwise.",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "dateTime"
+    },
+    {
+     "name": "right",
+     "type": "dateTime"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.datetime.DatetimeGreaterEqualFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/date-time/datetime-greater-equal.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2D92BA71291AC311DDACCF0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/date-time",
+   "category": "date-time",
+   "name": "dateTime-greater-than",
+   "symbol": ">",
+   "infix": false,
+   "documentation": "Returns true if and only if the value of <left> is greater than the value of <right>",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "dateTime"
+    },
+    {
+     "name": "right",
+     "type": "dateTime"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.datetime.DatetimeGreaterThanFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/date-time/datetime-greater-than.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2D92C658001AC311DD9E460018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/date-time",
+   "category": "date-time",
+   "name": "dateTime-less-equal",
+   "symbol": "<=",
+   "infix": false,
+   "documentation": "Returns true if and only if <left> is less than or equal <right>. Returns false otherwise",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "dateTime"
+    },
+    {
+     "name": "right",
+     "type": "dateTime"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.datetime.DatetimeLessEqualFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/date-time/datetime-less-equal.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2D92CB12F31AC311DD97300018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/date-time",
+   "category": "date-time",
+   "name": "dateTime-less-than",
+   "symbol": "<",
+   "infix": false,
+   "documentation": "Returns true if and only if the value of <left> is less than the value of <right>.",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "dateTime"
+    },
+    {
+     "name": "right",
+     "type": "dateTime"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.datetime.DatetimeLessThanFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/date-time/datetime-less-than.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2D92D23EE01AC311DD852D0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/date-time",
+   "category": "date-time",
+   "name": "dateTime-not-equal",
+   "symbol": "!=",
+   "infix": false,
+   "documentation": "Returns true if and only if the value of left is not equal to the value of right. Returns false otherwise.",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "dateTime"
+    },
+    {
+     "name": "right",
+     "type": "dateTime"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.datetime.DatetimeNotSameFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/date-time/datetime-not-equal.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2D928864A01AC311DDBADA0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/date-time",
+   "category": "date-time",
+   "name": "day-from-dateTime",
+   "symbol": "day-from-dateTime",
+   "infix": false,
+   "documentation": "Returns an xs:int between 1 and 31, both inclusive, representing the day component in the localized value of <value>",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "dateTime"
+    }
+   ],
+   "result": "int",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.datetime.DatetimeGetDaysFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/date-time/day-from-datetime.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2D928D1F971AC311DD81AF0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/date-time",
+   "category": "date-time",
+   "name": "hours-from-dateTime",
+   "symbol": "hours-from-dateTime",
+   "infix": false,
+   "documentation": "Returns an xs:int between 0 and 23, both inclusive, representing the hours component in the localized value of <value>.",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "dateTime"
+    }
+   ],
+   "result": "int",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.datetime.DatetimeGetHoursFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/date-time/hours-from-datetime.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2D9291DA891AC311DD9D650018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/date-time",
+   "category": "date-time",
+   "name": "minutes-from-dateTime",
+   "symbol": "minutes-from-dateTime",
+   "infix": false,
+   "documentation": "Returns an xs:int value between 0 and 59, both inclusive, representing the minute component in the localized value of <value>.",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "dateTime"
+    }
+   ],
+   "result": "int",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.datetime.DatetimeGetMinutesFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/date-time/minutes-from-datetime.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2D929906711AC311DD9EC50018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/date-time",
+   "category": "date-time",
+   "name": "month-from-dateTime",
+   "symbol": "month-from-dateTime",
+   "infix": false,
+   "documentation": "Returns an xs:int between 1 and 12, both inclusive, representing the month component in the localized value of <value>.",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "dateTime"
+    }
+   ],
+   "result": "int",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.datetime.DatetimeGetMonthsFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/date-time/month-from-datetime.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2D929DE8741AC311DDA0320018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/date-time",
+   "category": "date-time",
+   "name": "seconds-from-dateTime",
+   "symbol": "seconds-from-dateTime",
+   "infix": false,
+   "documentation": "Returns an xs:int value greater than or equal to zero and less than 60, representing the seconds in the localized value of <value>.",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "dateTime"
+    }
+   ],
+   "result": "int",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.datetime.DatetimeGetSecondsFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/date-time/seconds-from-datetime.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2D92D720E31AC311DDC60E0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/date-time",
+   "category": "date-time",
+   "name": "subtract-dateTimes",
+   "symbol": "subtract-dateTimes",
+   "infix": false,
+   "documentation": "Returns the xs:dayTimeDuration that corresponds to the difference between the normalized value of <left> and the normalized value of <right>.\r\nif the normalized value of <left> precedes in time the normalized value of <right>, then the returned value is a negative duration.",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "dateTime"
+    },
+    {
+     "name": "right",
+     "type": "dateTime"
+    }
+   ],
+   "result": "duration",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.datetime.DatetimeSubtractAsDayTimeDurationFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/date-time/subtract-datetimes.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2D92E096C11AC311DDB1F50018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/date-time",
+   "category": "date-time",
+   "name": "subtract-dateTimes-as-milliseconds",
+   "symbol": "subtract-dateTimes-as-milliseconds",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "dateTime"
+    },
+    {
+     "name": "right",
+     "type": "dateTime"
+    }
+   ],
+   "result": "long",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.datetime.DatetimeSubtractAsMillisecondsFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/date-time/subtract-datetimes-as-milliseconds.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2D92F61A901AC311DDB7630018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/date-time",
+   "category": "date-time",
+   "name": "subtract-dayTimeDuration-from-dateTime",
+   "symbol": "subtract-dayTimeDuration-from-dateTime",
+   "infix": false,
+   "documentation": "Returns the xs:dateTime computed by negating <duration> and adding the result to the value of <value>.\r\nIf <duration> is negative, then the xs:dateTime returned follows <value>.\r\nThe result has the same timezone as <value>. \r\nIf <value> has no timezone, the result has no timezone.",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "dateTime"
+    },
+    {
+     "name": "duration",
+     "type": "duration"
+    }
+   ],
+   "result": "dateTime",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.datetime.DatetimeSubtractDayTimeDurationFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/date-time/subtract-daytimeduration-from-datetime.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2D92EEEEA31AC311DDA73A0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/date-time",
+   "category": "date-time",
+   "name": "subtract-days-from-dateTime",
+   "symbol": "subtract-days-from-dateTime",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "dateTime"
+    },
+    {
+     "name": "right",
+     "type": "int"
+    }
+   ],
+   "result": "dateTime",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.datetime.DatetimeSubtractDaysFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/date-time/subtract-days-from-datetime.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2D92FAD5871AC311DD84C00018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/date-time",
+   "category": "date-time",
+   "name": "subtract-hours-from-dateTime",
+   "symbol": "subtract-hours-from-dateTime",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "dateTime"
+    },
+    {
+     "name": "hours",
+     "type": "int"
+    }
+   ],
+   "result": "dateTime",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.datetime.DatetimeSubtractHoursFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/date-time/subtract-hours-from-datetime.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2D93044B601AC311DD97070018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/date-time",
+   "category": "date-time",
+   "name": "subtract-milliseconds-from-dateTime",
+   "symbol": "subtract-milliseconds-from-dateTime",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "dateTime"
+    },
+    {
+     "name": "milliseconds",
+     "type": "long"
+    }
+   ],
+   "result": "dateTime",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.datetime.DatetimeSubtractMillisecondsFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/date-time/subtract-milliseconds-from-datetime.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2D930B77501AC311DD9A690018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/date-time",
+   "category": "date-time",
+   "name": "subtract-minutes-from-dateTime",
+   "symbol": "subtract-minutes-from-dateTime",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "dateTime"
+    },
+    {
+     "name": "minutes",
+     "type": "int"
+    }
+   ],
+   "result": "dateTime",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.datetime.DatetimeSubtractMinutesFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/date-time/subtract-minutes-from-datetime.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2D931059531AC311DDA0320018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/date-time",
+   "category": "date-time",
+   "name": "subtract-months-from-dateTime",
+   "symbol": "subtract-months-from-dateTime",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "dateTime"
+    },
+    {
+     "name": "months",
+     "type": "int"
+    }
+   ],
+   "result": "dateTime",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.datetime.DatetimeSubtractMonthsFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/date-time/subtract-months-from-datetime.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2D93175E351AC311DD956B0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/date-time",
+   "category": "date-time",
+   "name": "subtract-seconds-from-dateTime",
+   "symbol": "subtract-seconds-from-dateTime",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "dateTime"
+    },
+    {
+     "name": "seconds",
+     "type": "int"
+    }
+   ],
+   "result": "dateTime",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.datetime.DatetimeSubtractSecondsFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/date-time/subtract-seconds-from-datetime.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2E931E8A211AC311DDBAB40018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/date-time",
+   "category": "date-time",
+   "name": "subtract-yearMonthDuration-from-dateTime",
+   "symbol": "subtract-yearMonthDuration-from-dateTime",
+   "infix": false,
+   "documentation": "Returns the xs:dateTime computed by negating <duration> and adding the result to the value of <value>.\r\nIf <duration> is negative, then the xs:dateTime returned follows <value>.\r\nThe result has the same timezone as <value>.\r\nIf <value> has no timezone, the result has no timezone.",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "dateTime"
+    },
+    {
+     "name": "duration",
+     "type": "duration"
+    }
+   ],
+   "result": "dateTime",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.datetime.DatetimeSubtractYearMonthDurationFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/date-time/subtract-yearmonthduration-from-datetime.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2E932345191AC311DDBDF20018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/date-time",
+   "category": "date-time",
+   "name": "subtract-years-from-dateTime",
+   "symbol": "subtract-years-from-dateTime",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "dateTime"
+    },
+    {
+     "name": "years",
+     "type": "int"
+    }
+   ],
+   "result": "dateTime",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.datetime.DatetimeSubtractYearsFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/date-time/subtract-years-from-datetime.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2D92A4ED591AC311DDC64B0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/date-time",
+   "category": "date-time",
+   "name": "time-from-dateTime",
+   "symbol": "time-from-dateTime",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "dateTime"
+    }
+   ],
+   "result": "time",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.datetime.DatetimeGetTimeFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/date-time/time-from-datetime.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2D92AC19471AC311DD9C150018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/date-time",
+   "category": "date-time",
+   "name": "year-from-dateTime",
+   "symbol": "year-from-dateTime",
+   "infix": false,
+   "documentation": "Returns an xs:int representing the year component in the localized value of <value>. \r\n\t\t\tThe result may be negative.",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "dateTime"
+    }
+   ],
+   "result": "int",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.datetime.DatetimeGetYearsFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/date-time/year-from-datetime.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "4926AB3EFC2358A0B7C811DD9D9C001742235CDE",
+   "namespace": "sap.com/tc/bpem/content/predefs/default",
+   "category": "default",
+   "name": "getExternalUser",
+   "symbol": "getExternalUser",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "emailId",
+     "type": "string"
+    },
+    {
+     "name": "locale",
+     "type": "string"
+    },
+    {
+     "name": "timezone",
+     "type": "string"
+    }
+   ],
+   "result": "ExternalusersType",
+   "javaClass": null,
+   "file": "src/functions/sap.com/tc/bpem/content/predefs/default/getexternaluser.function",
+   "sourcePlugin": "com.sap.tc.ap.bpemcontent_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/default"
+  },
+  {
+   "id": "491962FD46E77F80AFDE11DD82840019991C7C01",
+   "namespace": "sap.com/bpem/glx/built-in/duration",
+   "category": "duration",
+   "name": "IF",
+   "symbol": "IF",
+   "infix": false,
+   "documentation": "Deprecated. This function is deprecated and you can use the conditional if statement instead: if ( <ExpressionOne>) then <ExpreessionTwo> else <ExpressionThree>       If you still want to use this function be aware that it can be used over both lists and single values as input parameters. Function evaluates a Boolean condition provided as the first input parameter. Based on the returned Boolean value, the function returns an xsd:duration representing the value received after the evaluation of either the second or the third input parameter.\r\n",
+   "parameters": [
+    {
+     "name": "test",
+     "type": "boolean"
+    },
+    {
+     "name": "thenValue",
+     "type": "duration"
+    },
+    {
+     "name": "elseValue",
+     "type": "duration"
+    }
+   ],
+   "result": "duration",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.duration.DurationIFFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/duration/if.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2B917631511AC311DD95740018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/duration",
+   "category": "duration",
+   "name": "dayTimeDuration-equal",
+   "symbol": "dayTimeDuration-equal",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "duration"
+    },
+    {
+     "name": "right",
+     "type": "duration"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.duration.DayTimeDurationSameFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/duration/daytimeduration-equal.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2B917D5D451AC311DDCBAB0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/duration",
+   "category": "duration",
+   "name": "dayTimeDuration-greater-equal",
+   "symbol": "dayTimeDuration-greater-equal",
+   "infix": false,
+   "documentation": "Returns true if and only if <left> is greater than <right>. Returns false otherwise.",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "duration"
+    },
+    {
+     "name": "right",
+     "type": "duration"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.duration.DayTimeDurationGreaterEqualFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/duration/daytimeduration-greater-equal.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2B918BB5201AC311DDA9A80018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/duration",
+   "category": "duration",
+   "name": "dayTimeDuration-greater-than",
+   "symbol": "dayTimeDuration-greater-than",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "duration"
+    },
+    {
+     "name": "right",
+     "type": "duration"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.duration.DayTimeDurationGreaterThanFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/duration/daytimeduration-greater-than.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2B9192E1141AC311DD88AA0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/duration",
+   "category": "duration",
+   "name": "dayTimeDuration-less-equal",
+   "symbol": "dayTimeDuration-less-equal",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "duration"
+    },
+    {
+     "name": "right",
+     "type": "duration"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.duration.DayTimeDurationLessEqualFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/duration/daytimeduration-less-equal.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2B91A111E11AC311DDC76C0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/duration",
+   "category": "duration",
+   "name": "dayTimeDuration-less-than",
+   "symbol": "dayTimeDuration-less-than",
+   "infix": false,
+   "documentation": "Returns true if and only if <left> is less than <right>. Returns false otherwise.",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "duration"
+    },
+    {
+     "name": "right",
+     "type": "duration"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.duration.DayTimeDurationLessThanFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/duration/daytimeduration-less-than.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2B91A83DD21AC311DD97080018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/duration",
+   "category": "duration",
+   "name": "dayTimeDuration-not-equal",
+   "symbol": "dayTimeDuration-not-equal",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "duration"
+    },
+    {
+     "name": "right",
+     "type": "duration"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.duration.DayTimeDurationNotSameFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/duration/daytimeduration-not-equal.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2B91B906B31AC311DD85770018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/duration",
+   "category": "duration",
+   "name": "days-from-duration",
+   "symbol": "days-from-duration",
+   "infix": false,
+   "documentation": "Returns an xs:int representing the days component in the value of <value>.",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "duration"
+    }
+   ],
+   "result": "int",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.duration.DurationGetDaysFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/duration/days-from-duration.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2B91AF69C41AC311DDCF8C0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/duration",
+   "category": "duration",
+   "name": "duration-equal",
+   "symbol": "duration-equal",
+   "infix": false,
+   "documentation": "Returns true if and only if the value of left is equal to the value of right. Returns false otherwise.",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "duration"
+    },
+    {
+     "name": "right",
+     "type": "duration"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.duration.DurationSameFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/duration/duration-equal.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2C91ED5D201AC311DD92CE0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/duration",
+   "category": "duration",
+   "name": "duration-not-equal",
+   "symbol": "duration-not-equal",
+   "infix": false,
+   "documentation": "Returns true if and only if the value of left is not equal to the value of right. Returns false otherwise.",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "duration"
+    },
+    {
+     "name": "right",
+     "type": "duration"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.duration.DurationNotSameFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/duration/duration-not-equal.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2B91C4ED921AC311DDA4610018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/duration",
+   "category": "duration",
+   "name": "hours-from-duration",
+   "symbol": "hours-from-duration",
+   "infix": false,
+   "documentation": "Returns an xs:int representing the hours component in the value of <value>.",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "duration"
+    }
+   ],
+   "result": "int",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.duration.DurationGetHoursFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/duration/hours-from-duration.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2B91CE63701AC311DDBF760018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/duration",
+   "category": "duration",
+   "name": "minutes-from-duration",
+   "symbol": "minutes-from-duration",
+   "infix": false,
+   "documentation": "Returns an xs:int representing the minutes component in the value of <value>.",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "duration"
+    }
+   ],
+   "result": "int",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.duration.DurationGetMinutesFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/duration/minutes-from-duration.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2B91D58F601AC311DD80620018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/duration",
+   "category": "duration",
+   "name": "months-from-duration",
+   "symbol": "months-from-duration",
+   "infix": false,
+   "documentation": "Returns an xs:int representing the months component in the value of <value>.",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "duration"
+    }
+   ],
+   "result": "int",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.duration.DurationGetMonthsFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/duration/months-from-duration.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2B91DF2C501AC311DDA4E50018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/duration",
+   "category": "duration",
+   "name": "seconds-from-duration",
+   "symbol": "seconds-from-duration",
+   "infix": false,
+   "documentation": "Returns an xs:int representing the seconds component in the value of <value>.",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "duration"
+    }
+   ],
+   "result": "int",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.duration.DurationGetSecondsFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/duration/seconds-from-duration.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2C91F23F281AC311DD92150018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/duration",
+   "category": "duration",
+   "name": "yearMonthDuration-equal",
+   "symbol": "yearMonthDuration-equal",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "duration"
+    },
+    {
+     "name": "right",
+     "type": "duration"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.duration.YearMonthDurationSameFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/duration/yearmonthduration-equal.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2C91FBB5011AC311DDB8010018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/duration",
+   "category": "duration",
+   "name": "yearMonthDuration-greater-equal",
+   "symbol": "yearMonthDuration-greater-equal",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "duration"
+    },
+    {
+     "name": "right",
+     "type": "duration"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.duration.YearMonthDurationGreaterEqualFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/duration/yearmonthduration-greater-equal.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2C9202E0F01AC311DDA97E0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/duration",
+   "category": "duration",
+   "name": "yearMonthDuration-greater-than",
+   "symbol": "yearMonthDuration-greater-than",
+   "infix": false,
+   "documentation": "Returns true if and only if <left> is greater than <right>. Returns false otherwise.",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "duration"
+    },
+    {
+     "name": "right",
+     "type": "duration"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.duration.YearMonthDurationGreaterThanFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/duration/yearmonthduration-greater-than.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2C920A0CE01AC311DDCFD10018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/duration",
+   "category": "duration",
+   "name": "yearMonthDuration-less-equal",
+   "symbol": "yearMonthDuration-less-equal",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "duration"
+    },
+    {
+     "name": "right",
+     "type": "duration"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.duration.YearMonthDurationLessEqualFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/duration/yearmonthduration-less-equal.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2C921138D31AC311DDC4180018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/duration",
+   "category": "duration",
+   "name": "yearMonthDuration-less-than",
+   "symbol": "yearMonthDuration-less-than",
+   "infix": false,
+   "documentation": "Returns true if and only if <left> is less than <right>. Returns false otherwise.",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "duration"
+    },
+    {
+     "name": "right",
+     "type": "duration"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.duration.YearMonthDurationLessThanFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/duration/yearmonthduration-less-than.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2C921864C41AC311DD80630018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/duration",
+   "category": "duration",
+   "name": "yearMonthDuration-not-equal",
+   "symbol": "yearMonthDuration-not-equal",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "duration"
+    },
+    {
+     "name": "right",
+     "type": "duration"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.duration.YearMonthDurationNotSameFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/duration/yearmonthduration-not-equal.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2B91E3E7471AC311DDCB520018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/duration",
+   "category": "duration",
+   "name": "years-from-duration",
+   "symbol": "years-from-duration",
+   "infix": false,
+   "documentation": "Returns an xs:int representing the years component in the value of <value>.",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "duration"
+    }
+   ],
+   "result": "int",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.duration.DurationGetYearsFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/duration/years-from-duration.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "491823BBFB918D50AF1F11DD90D10019991C7C01",
+   "namespace": "sap.com/bpem/glx/built-in/finite-integer",
+   "category": "finite-integer",
+   "name": "IF",
+   "symbol": "IF",
+   "infix": false,
+   "documentation": "Deprecated. This function is deprecated and you can use the conditional if statement instead: if ( <ExpressionOne>) then <ExpreessionTwo> else <ExpressionThree>       If you still want to use this function be aware that it can  be used over both lists and single values as input parameters. Function evaluates a Boolean condition provided as the first input parameter. Based on the returned Boolean value, the function returns an xsd:long representing the value received after the evaluation of either the second or the third input parameter.\r\n",
+   "parameters": [
+    {
+     "name": "test",
+     "type": "boolean"
+    },
+    {
+     "name": "thenValue",
+     "type": "long"
+    },
+    {
+     "name": "elseValue",
+     "type": "long"
+    }
+   ],
+   "result": "long",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.finiteinteger.FiniteIntegerIFFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/finite-integer/if.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2E932F53071AC311DD91840018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/finite-integer",
+   "category": "finite-integer",
+   "name": "abs",
+   "symbol": "abs",
+   "infix": false,
+   "documentation": "Returns the absolute value of <value>. If <value> is negative returns -<value> otherwise returns <value>.",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "long"
+    }
+   ],
+   "result": "long",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.finiteinteger.FiniteIntegerAbsoluteFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/finite-integer/abs.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "4905C79C7E141880A42E11DD8B560019991C7C01",
+   "namespace": "sap.com/bpem/glx/built-in/finite-integer",
+   "category": "finite-integer",
+   "name": "avg",
+   "symbol": "avg",
+   "infix": false,
+   "documentation": "Returns the average of the values in the input sequence <arg>, that is, the sum of the values divided by the number of values.\r\nIf <arg> is the empty sequence, the empty sequence is returned.",
+   "parameters": [
+    {
+     "name": "arg",
+     "type": "long"
+    }
+   ],
+   "result": "long",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.finiteinteger.FiniteIntegerAvgFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/finite-integer/avg.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2E935C7D831AC311DD90F60018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/finite-integer",
+   "category": "finite-integer",
+   "name": "long",
+   "symbol": "long",
+   "infix": false,
+   "documentation": "cast from fuzzy-real",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "double"
+    }
+   ],
+   "result": "long",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.finiteinteger.FiniteIntegerFromFuzzyRealFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/finite-integer/long.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2E93615F871AC311DDCAF10018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/finite-integer",
+   "category": "finite-integer",
+   "name": "long",
+   "symbol": "long",
+   "infix": false,
+   "documentation": "cast from infinite-integer",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "integer"
+    }
+   ],
+   "result": "long",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.finiteinteger.FiniteIntegerFromInfiniteIntegerFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/finite-integer/long.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2E93688B701AC311DD87680018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/finite-integer",
+   "category": "finite-integer",
+   "name": "long",
+   "symbol": "long",
+   "infix": false,
+   "documentation": "cast from precise-real",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "decimal"
+    }
+   ],
+   "result": "long",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.finiteinteger.FiniteIntegerFromPreciseRealFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/finite-integer/long.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2E936D46691AC311DDC03F0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/finite-integer",
+   "category": "finite-integer",
+   "name": "long",
+   "symbol": "long",
+   "infix": false,
+   "documentation": "cast from text",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "string"
+    }
+   ],
+   "result": "long",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.finiteinteger.FiniteIntegerFromTextFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/finite-integer/long.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2E937472511AC311DD9B250018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/finite-integer",
+   "category": "finite-integer",
+   "name": "max",
+   "symbol": "max",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "long"
+    },
+    {
+     "name": "right",
+     "type": "long"
+    }
+   ],
+   "result": "long",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.finiteinteger.FiniteIntegerMaxFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/finite-integer/max.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "4905C4BEC8861690A42C11DD859E0019991C7C01",
+   "namespace": "sap.com/bpem/glx/built-in/finite-integer",
+   "category": "finite-integer",
+   "name": "max",
+   "symbol": "max",
+   "infix": false,
+   "documentation": "Selects an item from the input sequence <arg> whose value is greater than or equal to the value of every other item in the input sequence.\r\nIf <arg> is the empty sequence, the empty sequence is returned.",
+   "parameters": [
+    {
+     "name": "arg",
+     "type": "long"
+    }
+   ],
+   "result": "long",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.finiteinteger.FiniteIntegerMaxRangeFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/finite-integer/max.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2E9382A3231AC311DDA5E90018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/finite-integer",
+   "category": "finite-integer",
+   "name": "min",
+   "symbol": "min",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "long"
+    },
+    {
+     "name": "right",
+     "type": "long"
+    }
+   ],
+   "result": "long",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.finiteinteger.FiniteIntegerMinFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/finite-integer/min.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "48FDEE79F4139FE09F8011DDB4310019991C7C01",
+   "namespace": "sap.com/bpem/glx/built-in/finite-integer",
+   "category": "finite-integer",
+   "name": "min",
+   "symbol": "min",
+   "infix": false,
+   "documentation": "Selects an item from the input sequence <arg> whose value is less than or equal to the value of every other item in the input sequence.\r\nIf <arg> is the empty sequence, the empty sequence is returned.",
+   "parameters": [
+    {
+     "name": "arg",
+     "type": "long"
+    }
+   ],
+   "result": "long",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.finiteinteger.FiniteIntegerMinRangeFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/finite-integer/min.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2E932A71001AC311DDA87F0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/finite-integer",
+   "category": "finite-integer",
+   "name": "numeric-add",
+   "symbol": "+",
+   "infix": false,
+   "documentation": "Returns the sum of its operands (<left> + <right>).",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "long"
+    },
+    {
+     "name": "right",
+     "type": "long"
+    }
+   ],
+   "result": "long",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.finiteinteger.FiniteIntegerAddFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/finite-integer/numeric-add.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2E93340DF91AC311DD81AA0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/finite-integer",
+   "category": "finite-integer",
+   "name": "numeric-divide",
+   "symbol": "div",
+   "infix": false,
+   "documentation": "Returns the arithmetic quotient of its operands: (<left> div <right>)",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "long"
+    },
+    {
+     "name": "right",
+     "type": "long"
+    }
+   ],
+   "result": "long",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.finiteinteger.FiniteIntegerDivideFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/finite-integer/numeric-divide.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2E933B39E31AC311DDAFAD0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/finite-integer",
+   "category": "finite-integer",
+   "name": "numeric-equal",
+   "symbol": "=",
+   "infix": false,
+   "documentation": "Returns true if and only if the value of <left> is equal to the value of <right>.",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "long"
+    },
+    {
+     "name": "right",
+     "type": "long"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.finiteinteger.FiniteIntegerSameFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/finite-integer/numeric-equal.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2E934265D21AC311DDCA3A0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/finite-integer",
+   "category": "finite-integer",
+   "name": "numeric-greater-equal",
+   "symbol": ">=",
+   "infix": false,
+   "documentation": "Returns true if and only if left is greater than or equal right. Returns false otherwise.",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "long"
+    },
+    {
+     "name": "right",
+     "type": "long"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.finiteinteger.FiniteIntegerGreaterEqualFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/finite-integer/numeric-greater-equal.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2E93496AB01AC311DDAC420018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/finite-integer",
+   "category": "finite-integer",
+   "name": "numeric-greater-than",
+   "symbol": ">",
+   "infix": false,
+   "documentation": "Returns true if and only if left is greater than right. Returns false otherwise.",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "long"
+    },
+    {
+     "name": "right",
+     "type": "long"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.finiteinteger.FiniteIntegerGreaterThanFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/finite-integer/numeric-greater-than.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2E934E4CBB1AC311DDCAED0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/finite-integer",
+   "category": "finite-integer",
+   "name": "numeric-less-equal",
+   "symbol": "<=",
+   "infix": false,
+   "documentation": "Returns true if and only if left is less than or equal right. Returns false otherwise.",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "long"
+    },
+    {
+     "name": "right",
+     "type": "long"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.finiteinteger.FiniteIntegerLessEqualFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/finite-integer/numeric-less-equal.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2E935578A21AC311DDCA830018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/finite-integer",
+   "category": "finite-integer",
+   "name": "numeric-less-than",
+   "symbol": "<",
+   "infix": false,
+   "documentation": "Returns true if and only if left is less than right. Returns false otherwise.",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "long"
+    },
+    {
+     "name": "right",
+     "type": "long"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.finiteinteger.FiniteIntegerLessThanFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/finite-integer/numeric-less-than.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2E9389CF151AC311DDBEC50018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/finite-integer",
+   "category": "finite-integer",
+   "name": "numeric-multiply",
+   "symbol": "*",
+   "infix": false,
+   "documentation": "Returns the arithmetic product of its operands: (<left> * <right>).",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "long"
+    },
+    {
+     "name": "right",
+     "type": "long"
+    }
+   ],
+   "result": "long",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.finiteinteger.FiniteIntegerMultiplyFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/finite-integer/numeric-multiply.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2E9390FB011AC311DDB1900018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/finite-integer",
+   "category": "finite-integer",
+   "name": "numeric-not-equal",
+   "symbol": "!=",
+   "infix": false,
+   "documentation": "Returns true if and only if the value of left is not equal to the value of right. Returns false otherwise.",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "long"
+    },
+    {
+     "name": "right",
+     "type": "long"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.finiteinteger.FiniteIntegerNotSameFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/finite-integer/numeric-not-equal.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2E93AFF4B71AC311DDB7D70018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/finite-integer",
+   "category": "finite-integer",
+   "name": "numeric-subtract",
+   "symbol": "-",
+   "infix": false,
+   "documentation": "Returns the difference of its operands (left - right).",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "long"
+    },
+    {
+     "name": "right",
+     "type": "long"
+    }
+   ],
+   "result": "long",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.finiteinteger.FiniteIntegerSubtractFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/finite-integer/numeric-subtract.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2F93B720A01AC311DDC52E0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/finite-integer",
+   "category": "finite-integer",
+   "name": "numeric-unary-minus",
+   "symbol": "numeric-unary-minus",
+   "infix": false,
+   "documentation": "Returns its operand with the sign reversed: (- <value>). If <value> is positive, its negative is returned; if it is negative, its positive is returned.",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "long"
+    }
+   ],
+   "result": "long",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.finiteinteger.FiniteIntegerUnaryMinusFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/finite-integer/numeric-unary-minus.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2F93BBDB911AC311DD9AC40018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/finite-integer",
+   "category": "finite-integer",
+   "name": "numeric-unary-plus",
+   "symbol": "numeric-unary-plus",
+   "infix": false,
+   "documentation": "Returns its operand with the sign unchanged: (+ <value>). Semantically, this operation performs no operation.",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "long"
+    }
+   ],
+   "result": "long",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.finiteinteger.FiniteIntegerUnaryPlusFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/finite-integer/numeric-unary-plus.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2E939826F01AC311DDB6180018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/finite-integer",
+   "category": "finite-integer",
+   "name": "power",
+   "symbol": "power",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "long"
+    },
+    {
+     "name": "right",
+     "type": "long"
+    }
+   ],
+   "result": "long",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.finiteinteger.FiniteIntegerPowerFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/finite-integer/power.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2E939CE1EA1AC311DDCDE00018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/finite-integer",
+   "category": "finite-integer",
+   "name": "signum",
+   "symbol": "signum",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "long"
+    }
+   ],
+   "result": "long",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.finiteinteger.FiniteIntegerSignumFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/finite-integer/signum.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2E93A40DD31AC311DDCFB60018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/finite-integer",
+   "category": "finite-integer",
+   "name": "square",
+   "symbol": "square",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "long"
+    }
+   ],
+   "result": "long",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.finiteinteger.FiniteIntegerSquareFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/finite-integer/square.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2E93AB39C01AC311DD85C80018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/finite-integer",
+   "category": "finite-integer",
+   "name": "square-root",
+   "symbol": "square-root",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "long"
+    }
+   ],
+   "result": "long",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.finiteinteger.FiniteIntegerSquareRootFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/finite-integer/square-root.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "4905C644B1857520A42D11DDC5E90019991C7C01",
+   "namespace": "sap.com/bpem/glx/built-in/finite-integer",
+   "category": "finite-integer",
+   "name": "sum",
+   "symbol": "sum",
+   "infix": false,
+   "documentation": "Returns a value obtained by adding together the values in <arg>. If <arg> is the empty sequence, the empty sequence is returned.",
+   "parameters": [
+    {
+     "name": "arg",
+     "type": "long"
+    }
+   ],
+   "result": "long",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.finiteinteger.FiniteIntegerSumFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/finite-integer/sum.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "4918247C6EECF460AF2011DDA2A80019991C7C01",
+   "namespace": "sap.com/bpem/glx/built-in/fuzzy-real",
+   "category": "fuzzy-real",
+   "name": "IF",
+   "symbol": "IF",
+   "infix": false,
+   "documentation": "Deprecated. This function is deprecated and you can use the conditional if statement instead: if ( <ExpressionOne>) then <ExpreessionTwo> else <ExpressionThree>       If you still want to use this function be aware that it can be used over both lists and single values as input parameters. Function evaluates a Boolean condition provided as the first input parameter. Based on the returned Boolean value, the function returns an xsd:double representing the value received after the evaluation of either the second or the third input parameter.\r\n",
+   "parameters": [
+    {
+     "name": "test",
+     "type": "boolean"
+    },
+    {
+     "name": "thenValue",
+     "type": "double"
+    },
+    {
+     "name": "elseValue",
+     "type": "double"
+    }
+   ],
+   "result": "double",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.fuzzyreal.FuzzyRealIFFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/fuzzy-real/if.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2F93C0BD971AC311DD85040018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/fuzzy-real",
+   "category": "fuzzy-real",
+   "name": "abs",
+   "symbol": "abs",
+   "infix": false,
+   "documentation": "Returns the absolute value of <value>. If <value> is negative returns -<value> otherwise returns <value>.",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "double"
+    }
+   ],
+   "result": "double",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.fuzzyreal.FuzzyRealAbsoluteFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/fuzzy-real/abs.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "49072020D7691E80A4FB11DD909C0019991C7C01",
+   "namespace": "sap.com/bpem/glx/built-in/fuzzy-real",
+   "category": "fuzzy-real",
+   "name": "avg",
+   "symbol": "avg",
+   "infix": false,
+   "documentation": "Returns the average of the values in the input sequence <arg>, that is, the sum of the values divided by the number of values.\r\nIf <arg> is the empty sequence, the empty sequence is returned.",
+   "parameters": [
+    {
+     "name": "arg",
+     "type": "double"
+    }
+   ],
+   "result": "double",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.fuzzyreal.FuzzyRealAvgFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/fuzzy-real/avg.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2F93D3D0601AC311DD8A370018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/fuzzy-real",
+   "category": "fuzzy-real",
+   "name": "ceiling",
+   "symbol": "ceiling",
+   "infix": false,
+   "documentation": "Returns the smallest (closest to negative infinity) number with no fractional part that is not less than the value of <value>.",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "double"
+    }
+   ],
+   "result": "double",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.fuzzyreal.FuzzyRealCeilingFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/fuzzy-real/ceiling.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2F93E472301AC311DD85720018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/fuzzy-real",
+   "category": "fuzzy-real",
+   "name": "double",
+   "symbol": "double",
+   "infix": false,
+   "documentation": "cast from finite-integer",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "long"
+    }
+   ],
+   "result": "double",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.fuzzyreal.FuzzyRealFromFiniteIntegerFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/fuzzy-real/double.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2F93EB9E211AC311DDC6E80018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/fuzzy-real",
+   "category": "fuzzy-real",
+   "name": "double",
+   "symbol": "double",
+   "infix": false,
+   "documentation": "cast from infinite-integer",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "integer"
+    }
+   ],
+   "result": "double",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.fuzzyreal.FuzzyRealFromInfiniteIntegerFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/fuzzy-real/double.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2F93F059171AC311DDA9D50018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/fuzzy-real",
+   "category": "fuzzy-real",
+   "name": "double",
+   "symbol": "double",
+   "infix": false,
+   "documentation": "cast from precise-real",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "decimal"
+    }
+   ],
+   "result": "double",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.fuzzyreal.FuzzyRealFromPreciseRealFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/fuzzy-real/double.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2F93F514071AC311DD90BC0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/fuzzy-real",
+   "category": "fuzzy-real",
+   "name": "double",
+   "symbol": "double",
+   "infix": false,
+   "documentation": "cast from text",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "string"
+    }
+   ],
+   "result": "double",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.fuzzyreal.FuzzyRealFromTextFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/fuzzy-real/double.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2F940121F31AC311DDB4CB0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/fuzzy-real",
+   "category": "fuzzy-real",
+   "name": "floor",
+   "symbol": "floor",
+   "infix": false,
+   "documentation": "Returns the largest (closest to positive infinity) number with no fractional part that is not greater than the value of <value>.",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "double"
+    }
+   ],
+   "result": "double",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.fuzzyreal.FuzzyRealFloorFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/fuzzy-real/floor.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2F941B39A11AC311DD90410018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/fuzzy-real",
+   "category": "fuzzy-real",
+   "name": "inverse",
+   "symbol": "inverse",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "double"
+    }
+   ],
+   "result": "double",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.fuzzyreal.FuzzyRealInverseFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/fuzzy-real/inverse.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2F942C02851AC311DDC5320018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/fuzzy-real",
+   "category": "fuzzy-real",
+   "name": "max",
+   "symbol": "max",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "double"
+    },
+    {
+     "name": "right",
+     "type": "double"
+    }
+   ],
+   "result": "double",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.fuzzyreal.FuzzyRealMaxFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/fuzzy-real/max.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "4905E4F4FC0F9F00A43F11DD9C3D0019991C7C01",
+   "namespace": "sap.com/bpem/glx/built-in/fuzzy-real",
+   "category": "fuzzy-real",
+   "name": "max",
+   "symbol": "max",
+   "infix": false,
+   "documentation": "Selects an item from the input sequence <arg> whose value is greater than or equal to the value of every other item in the input sequence.\r\nIf <arg> is the empty sequence, the empty sequence is returned.",
+   "parameters": [
+    {
+     "name": "arg",
+     "type": "double"
+    }
+   ],
+   "result": "double",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.fuzzyreal.FuzzyRealMaxRangeFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/fuzzy-real/max.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2F94332E701AC311DD9ED40018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/fuzzy-real",
+   "category": "fuzzy-real",
+   "name": "min",
+   "symbol": "min",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "double"
+    },
+    {
+     "name": "right",
+     "type": "double"
+    }
+   ],
+   "result": "double",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.fuzzyreal.FuzzyRealMinFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/fuzzy-real/min.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "49071F6B6B29C8F0A4FB11DDBFD00019991C7C01",
+   "namespace": "sap.com/bpem/glx/built-in/fuzzy-real",
+   "category": "fuzzy-real",
+   "name": "min",
+   "symbol": "min",
+   "infix": false,
+   "documentation": "Selects an item from the input sequence <arg> whose value is less than or equal to the value of every other item in the input sequence.\r\nIf <arg> is the empty sequence, the empty sequence is returned.",
+   "parameters": [
+    {
+     "name": "arg",
+     "type": "double"
+    }
+   ],
+   "result": "double",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.fuzzyreal.FuzzyRealMinRangeFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/fuzzy-real/min.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2F9437E9631AC311DD836D0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/fuzzy-real",
+   "category": "fuzzy-real",
+   "name": "multiply",
+   "symbol": "*",
+   "infix": false,
+   "documentation": "Returns the arithmetic product of its operands: (<left> * <right>).",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "double"
+    },
+    {
+     "name": "right",
+     "type": "double"
+    }
+   ],
+   "result": "double",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.fuzzyreal.FuzzyRealMultiplyFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/fuzzy-real/multiply.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2F93C7E9801AC311DDC1830018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/fuzzy-real",
+   "category": "fuzzy-real",
+   "name": "numeric-add",
+   "symbol": "+",
+   "infix": false,
+   "documentation": "Returns the sum of its operands (left + right).",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "double"
+    },
+    {
+     "name": "right",
+     "type": "double"
+    }
+   ],
+   "result": "double",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.fuzzyreal.FuzzyRealAddFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/fuzzy-real/numeric-add.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2F93DAFC531AC311DD9A210018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/fuzzy-real",
+   "category": "fuzzy-real",
+   "name": "numeric-divide",
+   "symbol": "div",
+   "infix": false,
+   "documentation": "Returns the arithmetic quotient of its operands: (<left> div <right>)",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "double"
+    },
+    {
+     "name": "right",
+     "type": "double"
+    }
+   ],
+   "result": "double",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.fuzzyreal.FuzzyRealDivideFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/fuzzy-real/numeric-divide.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2F93F9F6071AC311DDA9560018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/fuzzy-real",
+   "category": "fuzzy-real",
+   "name": "numeric-equal",
+   "symbol": "=",
+   "infix": false,
+   "documentation": "Returns true if and only if the value of left is equal to the value of right. Returns false otherwise.",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "double"
+    },
+    {
+     "name": "right",
+     "type": "double"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.fuzzyreal.FuzzyRealSameFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/fuzzy-real/numeric-equal.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2F9405DCE91AC311DD99B10018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/fuzzy-real",
+   "category": "fuzzy-real",
+   "name": "numeric-greater-equal",
+   "symbol": ">=",
+   "infix": false,
+   "documentation": "Returns true if and only if left is greater than or equal right. Returns false otherwise.",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "double"
+    },
+    {
+     "name": "right",
+     "type": "double"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.fuzzyreal.FuzzyRealGreaterEqualFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/fuzzy-real/numeric-greater-equal.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2F941434C11AC311DD9D5F0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/fuzzy-real",
+   "category": "fuzzy-real",
+   "name": "numeric-greater-than",
+   "symbol": ">",
+   "infix": false,
+   "documentation": "Returns true if and only if left is greater than right. Returns false otherwise.",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "double"
+    },
+    {
+     "name": "right",
+     "type": "double"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.fuzzyreal.FuzzyRealGreaterThanFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/fuzzy-real/numeric-greater-than.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2F94201BA51AC311DD83270018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/fuzzy-real",
+   "category": "fuzzy-real",
+   "name": "numeric-less-equal",
+   "symbol": "<=",
+   "infix": false,
+   "documentation": "Returns true if and only if left is less than or equal right. Returns false otherwise.",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "double"
+    },
+    {
+     "name": "right",
+     "type": "double"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.fuzzyreal.FuzzyRealLessEqualFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/fuzzy-real/numeric-less-equal.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2F942747901AC311DD825B0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/fuzzy-real",
+   "category": "fuzzy-real",
+   "name": "numeric-less-than",
+   "symbol": "<",
+   "infix": false,
+   "documentation": "Returns true if and only if left is less than right. Returns false otherwise.",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "double"
+    },
+    {
+     "name": "right",
+     "type": "double"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.fuzzyreal.FuzzyRealLessThanFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/fuzzy-real/numeric-less-than.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2F943F15501AC311DD9C060018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/fuzzy-real",
+   "category": "fuzzy-real",
+   "name": "numeric-not-equal",
+   "symbol": "!=",
+   "infix": false,
+   "documentation": "Returns true if and only if the value of left is not equal to the value of right. Returns false otherwise.",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "double"
+    },
+    {
+     "name": "right",
+     "type": "double"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.fuzzyreal.FuzzyRealNotSameFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/fuzzy-real/numeric-not-equal.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B30946080011AC311DD9D5E0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/fuzzy-real",
+   "category": "fuzzy-real",
+   "name": "numeric-subtract",
+   "symbol": "-",
+   "infix": false,
+   "documentation": "Returns the difference of its operands (left - right).",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "double"
+    },
+    {
+     "name": "right",
+     "type": "double"
+    }
+   ],
+   "result": "double",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.fuzzyreal.FuzzyRealSubtractFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/fuzzy-real/numeric-subtract.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B3094653AF71AC311DDBF460018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/fuzzy-real",
+   "category": "fuzzy-real",
+   "name": "numeric-unary-minus",
+   "symbol": "numeric-unary-minus",
+   "infix": false,
+   "documentation": "Returns its operand with the sign reversed: (- <value>). If <value> is positive, its negative is returned; if it is negative, its positive is returned.",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "double"
+    }
+   ],
+   "result": "double",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.fuzzyreal.FuzzyRealUnaryMinusFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/fuzzy-real/numeric-unary-minus.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B30946C66E01AC311DDACE00018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/fuzzy-real",
+   "category": "fuzzy-real",
+   "name": "numeric-unary-plus",
+   "symbol": "numeric-unary-plus",
+   "infix": false,
+   "documentation": "Returns its operand with the sign unchanged: (+ <value>). Semantically, this operation performs no operation.",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "double"
+    }
+   ],
+   "result": "double",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.fuzzyreal.FuzzyRealUnaryPlusFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/fuzzy-real/numeric-unary-plus.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2F9443D0451AC311DDAB740018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/fuzzy-real",
+   "category": "fuzzy-real",
+   "name": "power",
+   "symbol": "power",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "double"
+    },
+    {
+     "name": "right",
+     "type": "double"
+    }
+   ],
+   "result": "double",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.fuzzyreal.FuzzyRealPowerFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/fuzzy-real/power.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B2F944AFC301AC311DD80E30018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/fuzzy-real",
+   "category": "fuzzy-real",
+   "name": "round",
+   "symbol": "round",
+   "infix": false,
+   "documentation": "Returns the number with no fractional part that is closest to the argument. If there are two such numbers, then the one that is closest to positive infinity is returned.",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "double"
+    }
+   ],
+   "result": "double",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.fuzzyreal.FuzzyRealRoundFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/fuzzy-real/round.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B30944FB7211AC311DD9B6A0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/fuzzy-real",
+   "category": "fuzzy-real",
+   "name": "signum",
+   "symbol": "signum",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "double"
+    }
+   ],
+   "result": "double",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.fuzzyreal.FuzzyRealSignumFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/fuzzy-real/signum.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B30945472171AC311DDBE400018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/fuzzy-real",
+   "category": "fuzzy-real",
+   "name": "square",
+   "symbol": "square",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "double"
+    }
+   ],
+   "result": "double",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.fuzzyreal.FuzzyRealSquareFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/fuzzy-real/square.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B30945B9E001AC311DDA1CE0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/fuzzy-real",
+   "category": "fuzzy-real",
+   "name": "square-root",
+   "symbol": "square-root",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "double"
+    }
+   ],
+   "result": "double",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.fuzzyreal.FuzzyRealSquareRootFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/fuzzy-real/square-root.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "4905E2CFB4652CC0A43E11DDB8440019991C7C01",
+   "namespace": "sap.com/bpem/glx/built-in/fuzzy-real",
+   "category": "fuzzy-real",
+   "name": "sum",
+   "symbol": "sum",
+   "infix": false,
+   "documentation": "Returns a value obtained by adding together the values in <arg>. If <arg> is the empty sequence, the empty sequence is returned.",
+   "parameters": [
+    {
+     "name": "arg",
+     "type": "double"
+    }
+   ],
+   "result": "double",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.fuzzyreal.FuzzyRealSumFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/fuzzy-real/sum.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "49182205F6DE33E0AF1E11DD9E4F0019991C7C01",
+   "namespace": "sap.com/bpem/glx/built-in/generic",
+   "category": "generic",
+   "name": "IF",
+   "symbol": "IF",
+   "infix": false,
+   "documentation": "Deprecated. This function is deprecated and you can use the conditional if statement instead: if ( <ExpressionOne>) then <ExpreessionTwo> else <ExpressionThree>       If you still want to use this function be aware that it can be used over both lists and single values as input parameters. Function evaluates a Boolean condition provided as the first input parameter. Based on the returned Boolean value, the function returns the value received after the evaluation of either the second or the third input parameter.\r\n",
+   "parameters": [
+    {
+     "name": "test",
+     "type": "boolean"
+    },
+    {
+     "name": "thenValue",
+     "type": "anyType"
+    },
+    {
+     "name": "elseValue",
+     "type": "anyType"
+    }
+   ],
+   "result": "anyType",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.generic.GenericIFFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/generic/if.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "49182A2ED3FF1A10AF2311DDBFD20019991C7C01",
+   "namespace": "sap.com/bpem/glx/built-in/generic",
+   "category": "generic",
+   "name": "count",
+   "symbol": "count",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "arg",
+     "type": "anyType"
+    }
+   ],
+   "result": "long",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.generic.GenericCountFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/generic/count.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "49182AF047C3F150AF2411DDB9550019991C7C01",
+   "namespace": "sap.com/bpem/glx/built-in/generic",
+   "category": "generic",
+   "name": "filter",
+   "symbol": "filter",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "list",
+     "type": "anyType"
+    },
+    {
+     "name": "criteria",
+     "type": "string"
+    }
+   ],
+   "result": "anyType",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.generic.GenericFilterFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/generic/filter.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "49182A9D15FC90A0AF2411DDB43A0019991C7C01",
+   "namespace": "sap.com/bpem/glx/built-in/generic",
+   "category": "generic",
+   "name": "get",
+   "symbol": "get",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "list",
+     "type": "anyType"
+    },
+    {
+     "name": "index",
+     "type": "long"
+    }
+   ],
+   "result": "anyType",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.generic.GenericGetFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/generic/get.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "4922B50D7B310B10B56C11DDCD1B0019991C7C01",
+   "namespace": "sap.com/bpem/glx/built-in/generic",
+   "category": "generic",
+   "name": "insert-before",
+   "symbol": "insert-before",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "target",
+     "type": "anyType"
+    },
+    {
+     "name": "position",
+     "type": "long"
+    },
+    {
+     "name": "inserts",
+     "type": "anyType"
+    }
+   ],
+   "result": "anyType",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.generic.GenericInsertBeforeFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/generic/insert-before.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "492D235E1CAE0460BBA411DDA2350019991C7C01",
+   "namespace": "sap.com/bpem/glx/built-in/generic",
+   "category": "generic",
+   "name": "isSet",
+   "symbol": "isSet",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "arg",
+     "type": "anyType"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.generic.GenericIsSetFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/generic/isset.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "496CA15C3F3C1780E17C11DD8A070019991C7C01",
+   "namespace": "sap.com/bpem/glx/built-in/generic",
+   "category": "generic",
+   "name": "nilled",
+   "symbol": "nilled",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "arg",
+     "type": "anyType"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.generic.GenericNilledFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/generic/nilled.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "49182B477B8CC750AF2411DDBE590019991C7C01",
+   "namespace": "sap.com/bpem/glx/built-in/generic",
+   "category": "generic",
+   "name": "sort",
+   "symbol": "sort",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "list",
+     "type": "anyType"
+    },
+    {
+     "name": "sortBy",
+     "type": "string"
+    },
+    {
+     "name": "descending",
+     "type": "boolean"
+    }
+   ],
+   "result": "anyType",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.generic.GenericSortFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/generic/sort.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "491824F9B934C340AF2011DD93C20019991C7C01",
+   "namespace": "sap.com/bpem/glx/built-in/infinite-integer",
+   "category": "infinite-integer",
+   "name": "IF",
+   "symbol": "IF",
+   "infix": false,
+   "documentation": "Deprecated. This function is deprecated and you can use the conditional if statement instead: if ( <ExpressionOne>) then <ExpreessionTwo> else <ExpressionThree>       If you still want to use this function be aware that it can be used over both lists and single values as input parameters. Function evaluates a Boolean condition provided as the first input parameter. Based on the returned Boolean value, the function returns an xsd:integer representing the value received after the evaluation of either the second or the third input parameter.\r\n",
+   "parameters": [
+    {
+     "name": "test",
+     "type": "boolean"
+    },
+    {
+     "name": "thenValue",
+     "type": "integer"
+    },
+    {
+     "name": "elseValue",
+     "type": "integer"
+    }
+   ],
+   "result": "integer",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.infiniteinteger.InfiniteIntegerIFFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/infinite-integer/if.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B30947121D51AC311DD90190018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/infinite-integer",
+   "category": "infinite-integer",
+   "name": "abs",
+   "symbol": "abs",
+   "infix": false,
+   "documentation": "Returns the absolute value of <value>. If <value> is negative returns -<value> otherwise returns <value>.",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "integer"
+    }
+   ],
+   "result": "integer",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.infiniteinteger.InfiniteIntegerAbsoluteFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/infinite-integer/abs.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "4907256DFFE2B940A4FE11DDBED90019991C7C01",
+   "namespace": "sap.com/bpem/glx/built-in/infinite-integer",
+   "category": "infinite-integer",
+   "name": "avg",
+   "symbol": "avg",
+   "infix": false,
+   "documentation": "Returns the average of the values in the input sequence <arg>, that is, the sum of the values divided by the number of values.\r\nIf <arg> is the empty sequence, the empty sequence is returned.",
+   "parameters": [
+    {
+     "name": "arg",
+     "type": "integer"
+    }
+   ],
+   "result": "integer",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.infiniteinteger.InfiniteIntegerAvgFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/infinite-integer/avg.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B30949C02631AC311DDB6A80018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/infinite-integer",
+   "category": "infinite-integer",
+   "name": "integer",
+   "symbol": "integer",
+   "infix": false,
+   "documentation": "cast from fuzzy-real",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "double"
+    }
+   ],
+   "result": "integer",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.infiniteinteger.InfiniteIntegerFromFuzzyRealFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/infinite-integer/integer.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B3094A0BD591AC311DDBF600018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/infinite-integer",
+   "category": "infinite-integer",
+   "name": "integer",
+   "symbol": "integer",
+   "infix": false,
+   "documentation": "cast from finite-integer",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "long"
+    }
+   ],
+   "result": "integer",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.infiniteinteger.InfiniteIntegerFromFiniteIntegerFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/infinite-integer/integer.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B3094A7E9411AC311DD8AEE0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/infinite-integer",
+   "category": "infinite-integer",
+   "name": "integer",
+   "symbol": "integer",
+   "infix": false,
+   "documentation": "cast from precise-real",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "decimal"
+    }
+   ],
+   "result": "integer",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.infiniteinteger.InfiniteIntegerFromPreciseRealFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/infinite-integer/integer.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B3094ACCB451AC311DDA4BD0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/infinite-integer",
+   "category": "infinite-integer",
+   "name": "integer",
+   "symbol": "integer",
+   "infix": false,
+   "documentation": "cast from text",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "string"
+    }
+   ],
+   "result": "integer",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.infiniteinteger.InfiniteIntegerFromTextFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/infinite-integer/integer.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B3094BFDE101AC311DDB8060018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/infinite-integer",
+   "category": "infinite-integer",
+   "name": "max",
+   "symbol": "max",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "integer"
+    },
+    {
+     "name": "right",
+     "type": "integer"
+    }
+   ],
+   "result": "integer",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.infiniteinteger.InfiniteIntegerMaxFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/infinite-integer/max.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "49072679A0091B30A4FF11DDC8E30019991C7C01",
+   "namespace": "sap.com/bpem/glx/built-in/infinite-integer",
+   "category": "infinite-integer",
+   "name": "max",
+   "symbol": "max",
+   "infix": false,
+   "documentation": "Selects an item from the input sequence <arg> whose value is greater than or equal to the value of every other item in the input sequence.\r\nIf <arg> is the empty sequence, the empty sequence is returned.",
+   "parameters": [
+    {
+     "name": "arg",
+     "type": "integer"
+    }
+   ],
+   "result": "integer",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.infiniteinteger.InfiniteIntegerMaxRangeFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/infinite-integer/max.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B3094C499091AC311DD90EE0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/infinite-integer",
+   "category": "infinite-integer",
+   "name": "min",
+   "symbol": "min",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "integer"
+    },
+    {
+     "name": "right",
+     "type": "integer"
+    }
+   ],
+   "result": "integer",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.infiniteinteger.InfiniteIntegerMinFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/infinite-integer/min.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "4907269CB4D18A70A4FF11DDAECA0019991C7C01",
+   "namespace": "sap.com/bpem/glx/built-in/infinite-integer",
+   "category": "infinite-integer",
+   "name": "min",
+   "symbol": "min",
+   "infix": false,
+   "documentation": "Selects an item from the input sequence <arg> whose value is less than or equal to the value of every other item in the input sequence.\r\nIf <arg> is the empty sequence, the empty sequence is returned.",
+   "parameters": [
+    {
+     "name": "arg",
+     "type": "integer"
+    }
+   ],
+   "result": "integer",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.infiniteinteger.InfiniteIntegerMinRangeFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/infinite-integer/min.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B309475DCC91AC311DD8E6F0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/infinite-integer",
+   "category": "infinite-integer",
+   "name": "numeric-add",
+   "symbol": "+",
+   "infix": false,
+   "documentation": "Returns the sum of its operands (left + right).",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "integer"
+    },
+    {
+     "name": "right",
+     "type": "integer"
+    }
+   ],
+   "result": "integer",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.infiniteinteger.InfiniteIntegerAddFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/infinite-integer/numeric-add.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B30947D08B11AC311DDC5390018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/infinite-integer",
+   "category": "infinite-integer",
+   "name": "numeric-divide",
+   "symbol": "div",
+   "infix": false,
+   "documentation": "Returns the arithmetic quotient of its operands: (<left> div <right>)",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "integer"
+    },
+    {
+     "name": "right",
+     "type": "integer"
+    }
+   ],
+   "result": "integer",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.infiniteinteger.InfiniteIntegerDivideFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/infinite-integer/numeric-divide.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B30948B60901AC311DDADC60018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/infinite-integer",
+   "category": "infinite-integer",
+   "name": "numeric-equal",
+   "symbol": "=",
+   "infix": false,
+   "documentation": "Returns true if and only if the value of left is equal to the value of right. Returns false otherwise.",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "integer"
+    },
+    {
+     "name": "right",
+     "type": "integer"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.infiniteinteger.InfiniteIntegerSameFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/infinite-integer/numeric-equal.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B3094901B831AC311DD8B4E0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/infinite-integer",
+   "category": "infinite-integer",
+   "name": "numeric-greater-equal",
+   "symbol": ">=",
+   "infix": false,
+   "documentation": "Returns true if and only if left is greater than or equal right. Returns false otherwise.",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "integer"
+    },
+    {
+     "name": "right",
+     "type": "integer"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.infiniteinteger.InfiniteIntegerGreaterEqualFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/infinite-integer/numeric-greater-equal.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B30949747701AC311DDA0A90018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/infinite-integer",
+   "category": "infinite-integer",
+   "name": "numeric-greater-than",
+   "symbol": ">",
+   "infix": false,
+   "documentation": "Returns true if and only if left is greater than right. Returns false otherwise.",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "integer"
+    },
+    {
+     "name": "right",
+     "type": "integer"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.infiniteinteger.InfiniteIntegerGreaterThanFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/infinite-integer/numeric-greater-than.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B3094B186371AC311DDC8EB0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/infinite-integer",
+   "category": "infinite-integer",
+   "name": "numeric-less-equal",
+   "symbol": "<=",
+   "infix": false,
+   "documentation": "Returns true if and only if left is less than or equal right. Returns false otherwise.",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "integer"
+    },
+    {
+     "name": "right",
+     "type": "integer"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.infiniteinteger.InfiniteIntegerLessEqualFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/infinite-integer/numeric-less-equal.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B3094B8B2241AC311DDCB5A0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/infinite-integer",
+   "category": "infinite-integer",
+   "name": "numeric-less-than",
+   "symbol": "<",
+   "infix": false,
+   "documentation": "Returns true if and only if left is less than right. Returns false otherwise.",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "integer"
+    },
+    {
+     "name": "right",
+     "type": "integer"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.infiniteinteger.InfiniteIntegerLessThanFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/infinite-integer/numeric-less-than.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B3094CBC4F91AC311DDA98E0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/infinite-integer",
+   "category": "infinite-integer",
+   "name": "numeric-mod",
+   "symbol": "mod",
+   "infix": false,
+   "documentation": "Informally, this function returns the remainder resulting from dividing <left>, the dividend, by <right>, the divisor.",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "integer"
+    },
+    {
+     "name": "right",
+     "type": "integer"
+    }
+   ],
+   "result": "integer",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.infiniteinteger.InfiniteIntegerModuloFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/infinite-integer/numeric-mod.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B3094D2F0E31AC311DDB47F0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/infinite-integer",
+   "category": "infinite-integer",
+   "name": "numeric-multiply",
+   "symbol": "*",
+   "infix": false,
+   "documentation": "Returns the arithmetic product of its operands: (<left> * <right>).",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "integer"
+    },
+    {
+     "name": "right",
+     "type": "integer"
+    }
+   ],
+   "result": "integer",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.infiniteinteger.InfiniteIntegerMultiplyFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/infinite-integer/numeric-multiply.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B3094D7ABD91AC311DD9D430018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/infinite-integer",
+   "category": "infinite-integer",
+   "name": "numeric-not-equal",
+   "symbol": "!=",
+   "infix": false,
+   "documentation": "Returns true if and only if the value of left is not equal to the value of right. Returns false otherwise.",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "integer"
+    },
+    {
+     "name": "right",
+     "type": "integer"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.infiniteinteger.InfiniteIntegerNotSameFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/infinite-integer/numeric-not-equal.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B3194EF79991AC311DDB3E60018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/infinite-integer",
+   "category": "infinite-integer",
+   "name": "numeric-subtract",
+   "symbol": "-",
+   "infix": false,
+   "documentation": "Returns the difference of its operands (left - right).",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "integer"
+    },
+    {
+     "name": "right",
+     "type": "integer"
+    }
+   ],
+   "result": "integer",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.infiniteinteger.InfiniteIntegerSubtractFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/infinite-integer/numeric-subtract.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B3194FB60731AC311DDBC620018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/infinite-integer",
+   "category": "infinite-integer",
+   "name": "numeric-unary-minus",
+   "symbol": "numeric-unary-minus",
+   "infix": false,
+   "documentation": "Returns its operand with the sign reversed: (- <value>). If <value> is positive, its negative is returned; if it is negative, its positive is returned.",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "integer"
+    }
+   ],
+   "result": "integer",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.infiniteinteger.InfiniteIntegerUnaryMinusFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/infinite-integer/numeric-unary-minus.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B3195028C601AC311DDA6A50018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/infinite-integer",
+   "category": "infinite-integer",
+   "name": "numeric-unary-plus",
+   "symbol": "numeric-unary-plus",
+   "infix": false,
+   "documentation": "Returns its operand with the sign unchanged: (+ <value>). Semantically, this operation performs no operation.",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "integer"
+    }
+   ],
+   "result": "integer",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.infiniteinteger.InfiniteIntegerUnaryPlusFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/infinite-integer/numeric-unary-plus.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B3094DED7C11AC311DD93150018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/infinite-integer",
+   "category": "infinite-integer",
+   "name": "power",
+   "symbol": "power",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "integer"
+    },
+    {
+     "name": "right",
+     "type": "integer"
+    }
+   ],
+   "result": "integer",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.infiniteinteger.InfiniteIntegerPowerFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/infinite-integer/power.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B3194E603B01AC311DDA5E60018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/infinite-integer",
+   "category": "infinite-integer",
+   "name": "signum",
+   "symbol": "signum",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "integer"
+    }
+   ],
+   "result": "integer",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.infiniteinteger.InfiniteIntegerSignumFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/infinite-integer/signum.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B3194EABEA41AC311DD899A0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/infinite-integer",
+   "category": "infinite-integer",
+   "name": "square",
+   "symbol": "square",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "integer"
+    }
+   ],
+   "result": "integer",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.infiniteinteger.InfiniteIntegerSquareFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/infinite-integer/square.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "490725D9404348B0A4FF11DDC0B60019991C7C01",
+   "namespace": "sap.com/bpem/glx/built-in/infinite-integer",
+   "category": "infinite-integer",
+   "name": "sum",
+   "symbol": "sum",
+   "infix": false,
+   "documentation": "Returns a value obtained by adding together the values in <arg>. If <arg> is the empty sequence, the empty sequence is returned.",
+   "parameters": [
+    {
+     "name": "arg",
+     "type": "integer"
+    }
+   ],
+   "result": "integer",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.infiniteinteger.InfiniteIntegerSumFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/infinite-integer/sum.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "4918258C10DE2B40AF2111DDA16D0019991C7C01",
+   "namespace": "sap.com/bpem/glx/built-in/precise-real",
+   "category": "precise-real",
+   "name": "IF",
+   "symbol": "IF",
+   "infix": false,
+   "documentation": "Deprecated. This function is deprecated and you can use the conditional if statement instead: if ( <ExpressionOne>) then <ExpreessionTwo> else <ExpressionThree>       If you still want to use this function be aware that it can be used over both lists and single values as input parameters. Function evaluates a Boolean condition provided as the first input parameter. Based on the returned Boolean value, the function returns an xsd:decimal representing the value received after the evaluation of either the second or the third input parameter.\r\n",
+   "parameters": [
+    {
+     "name": "test",
+     "type": "boolean"
+    },
+    {
+     "name": "thenValue",
+     "type": "decimal"
+    },
+    {
+     "name": "elseValue",
+     "type": "decimal"
+    }
+   ],
+   "result": "decimal",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.precisereal.PreciseRealIFFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/precise-real/if.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B31950747531AC311DDAF9E0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/precise-real",
+   "category": "precise-real",
+   "name": "abs",
+   "symbol": "abs",
+   "infix": false,
+   "documentation": "Returns the absolute value of <value>. If <value> is negative returns -<value> otherwise returns <value>.",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "decimal"
+    }
+   ],
+   "result": "decimal",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.precisereal.PreciseRealAbsoluteFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/precise-real/abs.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "49072E78640DC860A50411DD909F0019991C7C01",
+   "namespace": "sap.com/bpem/glx/built-in/precise-real",
+   "category": "precise-real",
+   "name": "avg",
+   "symbol": "avg",
+   "infix": false,
+   "documentation": "Returns the average of the values in the input sequence <arg>, that is, the sum of the values divided by the number of values.\r\nIf <arg> is the empty sequence, the empty sequence is returned.",
+   "parameters": [
+    {
+     "name": "arg",
+     "type": "decimal"
+    }
+   ],
+   "result": "decimal",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.precisereal.PreciseRealAvgFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/precise-real/avg.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B3195132E331AC311DDA7120018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/precise-real",
+   "category": "precise-real",
+   "name": "ceiling",
+   "symbol": "ceiling",
+   "infix": false,
+   "documentation": "Returns the smallest (closest to negative infinity) number with no fractional part that is not less than the value of <value>.",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "decimal"
+    }
+   ],
+   "result": "decimal",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.precisereal.PreciseRealCeilingFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/precise-real/ceiling.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B31951810391AC311DDA3B60018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/precise-real",
+   "category": "precise-real",
+   "name": "decimal",
+   "symbol": "decimal",
+   "infix": false,
+   "documentation": "cast from finite-integer",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "long"
+    }
+   ],
+   "result": "decimal",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.precisereal.PreciseRealFromFiniteIntegerFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/precise-real/decimal.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B31951F3C211AC311DDAC180018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/precise-real",
+   "category": "precise-real",
+   "name": "decimal",
+   "symbol": "decimal",
+   "infix": false,
+   "documentation": "cast from fuzzy-real",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "double"
+    }
+   ],
+   "result": "decimal",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.precisereal.PreciseRealFromFuzzyRealFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/precise-real/decimal.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B319523F7131AC311DD83590018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/precise-real",
+   "category": "precise-real",
+   "name": "decimal",
+   "symbol": "decimal",
+   "infix": false,
+   "documentation": "cast from infinite-integer",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "integer"
+    }
+   ],
+   "result": "decimal",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.precisereal.PreciseRealFromInfiniteIntegerFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/precise-real/decimal.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B319528B2071AC311DDBD8F0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/precise-real",
+   "category": "precise-real",
+   "name": "decimal",
+   "symbol": "decimal",
+   "infix": false,
+   "documentation": "cast from text",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "string"
+    }
+   ],
+   "result": "decimal",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.precisereal.PreciseRealFromTextFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/precise-real/decimal.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B31953E35D31AC311DD9DFA0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/precise-real",
+   "category": "precise-real",
+   "name": "floor",
+   "symbol": "floor",
+   "infix": false,
+   "documentation": "Returns the largest (closest to positive infinity) number with no fractional part that is not greater than the value of <value>.",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "decimal"
+    }
+   ],
+   "result": "decimal",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.precisereal.PreciseRealFloorFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/precise-real/floor.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B31955148A51AC311DD881F0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/precise-real",
+   "category": "precise-real",
+   "name": "inverse",
+   "symbol": "inverse",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "decimal"
+    }
+   ],
+   "result": "decimal",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.precisereal.PreciseRealInverseFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/precise-real/inverse.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B319566A5601AC311DD88D10018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/precise-real",
+   "category": "precise-real",
+   "name": "max",
+   "symbol": "max",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "decimal"
+    },
+    {
+     "name": "right",
+     "type": "decimal"
+    }
+   ],
+   "result": "decimal",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.precisereal.PreciseRealMaxFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/precise-real/max.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "49072E9C79334BC0A50411DDBA270019991C7C01",
+   "namespace": "sap.com/bpem/glx/built-in/precise-real",
+   "category": "precise-real",
+   "name": "max",
+   "symbol": "max",
+   "infix": false,
+   "documentation": "Selects an item from the input sequence <arg> whose value is greater than or equal to the value of every other item in the input sequence.\r\nIf <arg> is the empty sequence, the empty sequence is returned.",
+   "parameters": [
+    {
+     "name": "arg",
+     "type": "decimal"
+    }
+   ],
+   "result": "decimal",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.precisereal.PreciseRealMaxRangeFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/precise-real/max.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B319574FD401AC311DD8E430018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/precise-real",
+   "category": "precise-real",
+   "name": "min",
+   "symbol": "min",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "decimal"
+    },
+    {
+     "name": "right",
+     "type": "decimal"
+    }
+   ],
+   "result": "decimal",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.precisereal.PreciseRealMinFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/precise-real/min.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "49072EC591A2CA00A50411DDA4BB0019991C7C01",
+   "namespace": "sap.com/bpem/glx/built-in/precise-real",
+   "category": "precise-real",
+   "name": "min",
+   "symbol": "min",
+   "infix": false,
+   "documentation": "Selects an item from the input sequence <arg> whose value is less than or equal to the value of every other item in the input sequence.\r\nIf <arg> is the empty sequence, the empty sequence is returned.",
+   "parameters": [
+    {
+     "name": "arg",
+     "type": "decimal"
+    }
+   ],
+   "result": "decimal",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.precisereal.PreciseRealMinRangeFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/precise-real/min.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B31950C29581AC311DD83780018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/precise-real",
+   "category": "precise-real",
+   "name": "numeric-add",
+   "symbol": "+",
+   "infix": false,
+   "documentation": "Returns the sum of its operands (left + right).",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "decimal"
+    },
+    {
+     "name": "right",
+     "type": "decimal"
+    }
+   ],
+   "result": "decimal",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.precisereal.PreciseRealAddFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/precise-real/numeric-add.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B31952FDDF11AC311DD849F0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/precise-real",
+   "category": "precise-real",
+   "name": "numeric-divide",
+   "symbol": "div",
+   "infix": false,
+   "documentation": "Returns the arithmetic quotient of its operands: (<left> div <right>)",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "decimal"
+    },
+    {
+     "name": "right",
+     "type": "decimal"
+    }
+   ],
+   "result": "decimal",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.precisereal.PreciseRealDivideFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/precise-real/numeric-divide.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B31953709E41AC311DD9E1E0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/precise-real",
+   "category": "precise-real",
+   "name": "numeric-equal",
+   "symbol": "=",
+   "infix": false,
+   "documentation": "Returns true if and only if the value of left is equal to the value of right. Returns false otherwise.",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "decimal"
+    },
+    {
+     "name": "right",
+     "type": "decimal"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.precisereal.PreciseRealEqualFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/precise-real/numeric-equal.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B31954561C01AC311DD83C00018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/precise-real",
+   "category": "precise-real",
+   "name": "numeric-greater-equal",
+   "symbol": ">=",
+   "infix": false,
+   "documentation": "Returns true if and only if left is greater than or equal right. Returns false otherwise.",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "decimal"
+    },
+    {
+     "name": "right",
+     "type": "decimal"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.precisereal.PreciseRealGreaterEqualFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/precise-real/numeric-greater-equal.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B31954C66A01AC311DDCC150018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/precise-real",
+   "category": "precise-real",
+   "name": "numeric-greater-than",
+   "symbol": ">",
+   "infix": false,
+   "documentation": "Returns true if and only if left is greater than right. Returns false otherwise.",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "decimal"
+    },
+    {
+     "name": "right",
+     "type": "decimal"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.precisereal.PreciseRealGreaterThanFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/precise-real/numeric-greater-than.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B31955874901AC311DDB9820018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/precise-real",
+   "category": "precise-real",
+   "name": "numeric-less-equal",
+   "symbol": "<=",
+   "infix": false,
+   "documentation": "Returns true if and only if left is less than or equal right. Returns false otherwise.",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "decimal"
+    },
+    {
+     "name": "right",
+     "type": "decimal"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.precisereal.PreciseRealLessEqualFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/precise-real/numeric-less-equal.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B31955D2F851AC311DDA15A0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/precise-real",
+   "category": "precise-real",
+   "name": "numeric-less-than",
+   "symbol": "<",
+   "infix": false,
+   "documentation": "Returns true if and only if left is less than right. Returns false otherwise.",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "decimal"
+    },
+    {
+     "name": "right",
+     "type": "decimal"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.precisereal.PreciseRealLessThanFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/precise-real/numeric-less-than.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B319579B8371AC311DD95D30018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/precise-real",
+   "category": "precise-real",
+   "name": "numeric-mod",
+   "symbol": "mod",
+   "infix": false,
+   "documentation": "Informally, this function returns the remainder resulting from dividing <left>, the dividend, by <right>, the divisor.",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "decimal"
+    },
+    {
+     "name": "right",
+     "type": "decimal"
+    }
+   ],
+   "result": "decimal",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.precisereal.PreciseRealModuloFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/precise-real/numeric-mod.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B329580E4231AC311DD83190018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/precise-real",
+   "category": "precise-real",
+   "name": "numeric-multiply",
+   "symbol": "*",
+   "infix": false,
+   "documentation": "Returns the arithmetic product of its operands: (<left> * <right>).",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "decimal"
+    },
+    {
+     "name": "right",
+     "type": "decimal"
+    }
+   ],
+   "result": "decimal",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.precisereal.PreciseRealMultiplyFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/precise-real/numeric-multiply.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B32958A81101AC311DD9DDC0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/precise-real",
+   "category": "precise-real",
+   "name": "numeric-not-equal",
+   "symbol": "!=",
+   "infix": false,
+   "documentation": "Returns true if and only if the value of left is not equal to the value of right. Returns false otherwise.",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "decimal"
+    },
+    {
+     "name": "right",
+     "type": "decimal"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.precisereal.PreciseRealNotSameFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/precise-real/numeric-not-equal.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B3295A97AC51AC311DD93480018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/precise-real",
+   "category": "precise-real",
+   "name": "numeric-subtract",
+   "symbol": "-",
+   "infix": false,
+   "documentation": "Returns the difference of its operands (left - right).",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "decimal"
+    },
+    {
+     "name": "right",
+     "type": "decimal"
+    }
+   ],
+   "result": "decimal",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.precisereal.PreciseRealSubtractFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/precise-real/numeric-subtract.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B3295B0A6B11AC311DDA0D40018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/precise-real",
+   "category": "precise-real",
+   "name": "numeric-unary-minus",
+   "symbol": "unary-minus",
+   "infix": false,
+   "documentation": "Returns its operand with the sign reversed: (- <value>). If <value> is positive, its negative is returned; if it is negative, its positive is returned.",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "decimal"
+    }
+   ],
+   "result": "decimal",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.precisereal.PreciseRealUnaryMinusFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/precise-real/numeric-unary-minus.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B3295B561A71AC311DDBC3C0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/precise-real",
+   "category": "precise-real",
+   "name": "numeric-unary-plus",
+   "symbol": "unary-plus",
+   "infix": false,
+   "documentation": "Returns its operand with the sign unchanged: (+ <value>). Semantically, this operation performs no operation.",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "decimal"
+    }
+   ],
+   "result": "decimal",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.precisereal.PreciseRealUnaryPlusFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/precise-real/numeric-unary-plus.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B32958F3C071AC311DDAF9C0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/precise-real",
+   "category": "precise-real",
+   "name": "power",
+   "symbol": "power",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "decimal"
+    },
+    {
+     "name": "right",
+     "type": "decimal"
+    }
+   ],
+   "result": "decimal",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.precisereal.PreciseRealPowerFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/precise-real/power.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B32959667F31AC311DDBA7B0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/precise-real",
+   "category": "precise-real",
+   "name": "round",
+   "symbol": "round",
+   "infix": false,
+   "documentation": "Returns the number with no fractional part that is closest to the argument. If there are two such numbers, then the one that is closest to positive infinity is returned.",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "decimal"
+    }
+   ],
+   "result": "decimal",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.precisereal.PreciseRealRoundFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/precise-real/round.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B32959D93E01AC311DDC6510018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/precise-real",
+   "category": "precise-real",
+   "name": "signum",
+   "symbol": "signum",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "decimal"
+    }
+   ],
+   "result": "decimal",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.precisereal.PreciseRealSignumFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/precise-real/signum.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B3295A24ED51AC311DDCBDD0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/precise-real",
+   "category": "precise-real",
+   "name": "square",
+   "symbol": "square",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "decimal"
+    }
+   ],
+   "result": "decimal",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.precisereal.PreciseRealSquareFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/precise-real/square.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "49072EE0A2082D40A50411DDC1B40019991C7C01",
+   "namespace": "sap.com/bpem/glx/built-in/precise-real",
+   "category": "precise-real",
+   "name": "sum",
+   "symbol": "sum",
+   "infix": false,
+   "documentation": "Returns a value obtained by adding together the values in <arg>. If <arg> is the empty sequence, the empty sequence is returned.",
+   "parameters": [
+    {
+     "name": "arg",
+     "type": "decimal"
+    }
+   ],
+   "result": "decimal",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.precisereal.PreciseRealSumFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/precise-real/sum.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B3396610AF31AC311DD93170018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/principal",
+   "category": "principal",
+   "name": "getPrincipal",
+   "symbol": "getPrincipal",
+   "infix": false,
+   "documentation": "Returns the principal corresponding to the given principalID. The returned principal can be a user or a group.",
+   "parameters": [
+    {
+     "name": "principalID",
+     "type": "string"
+    }
+   ],
+   "result": "Principal",
+   "javaClass": null,
+   "file": "src/functions/sap.com/bpem/glx/built-in/principal/getprincipal.function",
+   "sourcePlugin": "com.sap.tc.ap.bpemcontent_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/default"
+  },
+  {
+   "id": "481F3B33968275A51AC311DD93EB0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/principal",
+   "category": "principal",
+   "name": "getPrincipalByUniqueName",
+   "symbol": "getPrincipalByUniqueName",
+   "infix": false,
+   "documentation": "Returns the principal corresponding to the given uniqueName and identityType. The returned principal can be a user or a group.",
+   "parameters": [
+    {
+     "name": "uniqueName",
+     "type": "string"
+    },
+    {
+     "name": "identityType",
+     "type": "string"
+    }
+   ],
+   "result": "Principal",
+   "javaClass": null,
+   "file": "src/functions/sap.com/bpem/glx/built-in/principal/getprincipalbyuniquename.function",
+   "sourcePlugin": "com.sap.tc.ap.bpemcontent_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/default"
+  },
+  {
+   "id": "481F3B33967D93A01AC311DDCFD20018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/principal",
+   "category": "principal",
+   "name": "getPrincipals",
+   "symbol": "getPrincipals",
+   "infix": false,
+   "documentation": "Returns the principals corresponding to the given principalIDs. The returned principals can be a user or a group.",
+   "parameters": [
+    {
+     "name": "principalID",
+     "type": "string"
+    }
+   ],
+   "result": "Principal",
+   "javaClass": null,
+   "file": "src/functions/sap.com/bpem/glx/built-in/principal/getprincipals.function",
+   "sourcePlugin": "com.sap.tc.ap.bpemcontent_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/default"
+  },
+  {
+   "id": "491826085AB97CB0AF2111DD9D5C0019991C7C01",
+   "namespace": "sap.com/bpem/glx/built-in/text",
+   "category": "text",
+   "name": "IF",
+   "symbol": "IF",
+   "infix": false,
+   "documentation": "Deprecated. This function is deprecated and you can use the conditional if statement instead: if ( <ExpressionOne>) then <ExpreessionTwo> else <ExpressionThree>       If you still want to use this function be aware that it can be used over both lists and single values as input parameters. Function evaluates a Boolean condition provided as the first input parameter. Based on the returned Boolean value, the function returns an xsd:string representing the value received after the evaluation of either the second or the third input parameter.\r\n",
+   "parameters": [
+    {
+     "name": "test",
+     "type": "boolean"
+    },
+    {
+     "name": "thenValue",
+     "type": "string"
+    },
+    {
+     "name": "elseValue",
+     "type": "string"
+    }
+   ],
+   "result": "string",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.text.TextIFFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/text/if.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B3295BED7811AC311DDC6E20018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/text",
+   "category": "text",
+   "name": "concat",
+   "symbol": "concat",
+   "infix": false,
+   "documentation": "Returns the concatenation of the strings.",
+   "parameters": [
+    {
+     "name": "head",
+     "type": "string"
+    },
+    {
+     "name": "tail",
+     "type": "string"
+    }
+   ],
+   "result": "string",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.text.TextConcatFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/text/concat.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B3295C3B9891AC311DDAA570018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/text",
+   "category": "text",
+   "name": "contains",
+   "symbol": "contains",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "string"
+    },
+    {
+     "name": "right",
+     "type": "string"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.text.TextContainsFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/text/contains.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B3295CAE5751AC311DDCE8F0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/text",
+   "category": "text",
+   "name": "ends-with",
+   "symbol": "ends-with",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "string"
+    },
+    {
+     "name": "right",
+     "type": "string"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.text.TextEndsWithFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/text/ends-with.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "E077102C64BB3BE163AC11E1CE23002710AA9C90",
+   "namespace": "sap.com/bpem/glx/built-in/text",
+   "category": "text",
+   "name": "load-xml",
+   "symbol": "load-xml",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "xml",
+     "type": "string"
+    }
+   ],
+   "result": "anyType",
+   "javaClass": "com.sap.mapping.lib.execution.implementation.function.builtin.text.LoadXmlFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/text/load-xml.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B32960667D31AC311DDC1590018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/text",
+   "category": "text",
+   "name": "lower-case",
+   "symbol": "lower-case",
+   "infix": false,
+   "documentation": "Converts the string argument to lower-case using the rules of the given locale.",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "string"
+    },
+    {
+     "name": "locale",
+     "type": "string"
+    }
+   ],
+   "result": "string",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.text.TextLowercaseFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/text/lower-case.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B32960D93C11AC311DD91720018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/text",
+   "category": "text",
+   "name": "matches",
+   "symbol": "matches",
+   "infix": false,
+   "documentation": "Returns true if <left> matches the regular expression supplied as <pattern>",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "string"
+    },
+    {
+     "name": "right",
+     "type": "string"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.text.TextMatchesFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/text/matches.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B33961BEBA01AC311DDB7250018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/text",
+   "category": "text",
+   "name": "replace",
+   "symbol": "replace",
+   "infix": false,
+   "documentation": "Replaces each pattern from the src with the given replacement",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "string"
+    },
+    {
+     "name": "pattern",
+     "type": "string"
+    },
+    {
+     "name": "replacement",
+     "type": "string"
+    }
+   ],
+   "result": "string",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.text.TextReplaceFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/text/replace.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B33962317901AC311DDAF350018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/text",
+   "category": "text",
+   "name": "starts-with",
+   "symbol": "starts-with",
+   "infix": false,
+   "documentation": "Returns an xs:boolean indicating whether or not the value of <left> starts with <right>.",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "string"
+    },
+    {
+     "name": "right",
+     "type": "string"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.text.TextStartsWithFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/text/starts-with.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B339627D2891AC311DD81A30018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/text",
+   "category": "text",
+   "name": "string",
+   "symbol": "string",
+   "infix": false,
+   "documentation": "cast from boolean",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "boolean"
+    }
+   ],
+   "result": "string",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.text.TextFromBooleanFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/text/string.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B33962EFE721AC311DD9D7B0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/text",
+   "category": "text",
+   "name": "string",
+   "symbol": "string",
+   "infix": false,
+   "documentation": "cast from date-time",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "dateTime"
+    }
+   ],
+   "result": "string",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.text.TextFromDatetimeFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/text/string.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B339633B9691AC311DDBDA70018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/text",
+   "category": "text",
+   "name": "string",
+   "symbol": "string",
+   "infix": false,
+   "documentation": "cast from finite-integer",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "long"
+    }
+   ],
+   "result": "string",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.text.TextFromFiniteIntegerFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/text/string.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B33963AE5511AC311DD9E140018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/text",
+   "category": "text",
+   "name": "string",
+   "symbol": "string",
+   "infix": false,
+   "documentation": "cast from fuzzy-real",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "double"
+    }
+   ],
+   "result": "string",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.text.TextFromFuzzyRealFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/text/string.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B33963FA0481AC311DD98550018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/text",
+   "category": "text",
+   "name": "string",
+   "symbol": "string",
+   "infix": false,
+   "documentation": "cast from infinite-real",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "integer"
+    }
+   ],
+   "result": "string",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.text.TextFromInfiniteIntegerFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/text/string.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B33964B87271AC311DD9B600018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/text",
+   "category": "text",
+   "name": "string",
+   "symbol": "string",
+   "infix": false,
+   "documentation": "cast from precise-real",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "decimal"
+    }
+   ],
+   "result": "string",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.text.TextFromPreciseRealFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/text/string.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B3295D1EA511AC311DD8C180018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/text",
+   "category": "text",
+   "name": "string-equal",
+   "symbol": "=",
+   "infix": false,
+   "documentation": "Returns true if and only if the value of left is equal to the value of right. Returns false otherwise.",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "string"
+    },
+    {
+     "name": "right",
+     "type": "string"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.text.TextSameFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/text/string-equal.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B3295D916411AC311DDC0760018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/text",
+   "category": "text",
+   "name": "string-greater-equal",
+   "symbol": ">=",
+   "infix": false,
+   "documentation": "Returns true if and only if left is greater than or equal right. Returns false otherwise.",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "string"
+    },
+    {
+     "name": "right",
+     "type": "string"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.text.TextGreaterEqualFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/text/string-greater-equal.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B3295E4FD251AC311DD9F220018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/text",
+   "category": "text",
+   "name": "string-greater-than",
+   "symbol": ">",
+   "infix": false,
+   "documentation": "Returns true if and only if left is greater than right. Returns false otherwise.",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "string"
+    },
+    {
+     "name": "right",
+     "type": "string"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.text.TextGreaterThanFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/text/string-greater-than.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B3295EC29111AC311DD98010018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/text",
+   "category": "text",
+   "name": "string-join",
+   "symbol": "string-join",
+   "infix": false,
+   "documentation": "Returns a string created by concatenating the members of the list using the second argument as a separator. If the value of <separator> is the zero-length string, then the list elements are concatenated without a separator.",
+   "parameters": [
+    {
+     "name": "values",
+     "type": "string"
+    },
+    {
+     "name": "separator",
+     "type": "string"
+    }
+   ],
+   "result": "string",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.text.TextJoinFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/text/string-join.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B3295F355001AC311DD9D850018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/text",
+   "category": "text",
+   "name": "string-length",
+   "symbol": "string-length",
+   "infix": false,
+   "documentation": "Returns the length of the specified string.",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "string"
+    }
+   ],
+   "result": "int",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.text.TextLengthFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/text/string-length.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B3295FA80F01AC311DD92020018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/text",
+   "category": "text",
+   "name": "string-less-equal",
+   "symbol": "<=",
+   "infix": false,
+   "documentation": "Returns true if and only if left is less than or equal right. Returns false otherwise.",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "string"
+    },
+    {
+     "name": "right",
+     "type": "string"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.text.TextLessEqualFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/text/string-less-equal.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B3295FF3BE81AC311DDAC040018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/text",
+   "category": "text",
+   "name": "string-less-than",
+   "symbol": "<",
+   "infix": false,
+   "documentation": "Returns true if and only if left is less than right. Returns false otherwise.",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "string"
+    },
+    {
+     "name": "right",
+     "type": "string"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.text.TextLessThanFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/text/string-less-than.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B329614BFB01AC311DDCFAE0018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/text",
+   "category": "text",
+   "name": "string-not-equal",
+   "symbol": "!=",
+   "infix": false,
+   "documentation": "Returns true if and only if the value of left is not equal to the value of right. Returns false otherwise.",
+   "parameters": [
+    {
+     "name": "left",
+     "type": "string"
+    },
+    {
+     "name": "right",
+     "type": "string"
+    }
+   ],
+   "result": "boolean",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.text.TextNotSameFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/text/string-not-equal.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B339652B3171AC311DDBC270018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/text",
+   "category": "text",
+   "name": "substring",
+   "symbol": "substring",
+   "infix": false,
+   "documentation": "Returns the portion of the value of <value> beginning at the position indicated by the value of <location> and continuing for the number of characters indicated by the value of <length>",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "string"
+    },
+    {
+     "name": "location",
+     "type": "int"
+    },
+    {
+     "name": "length",
+     "type": "int"
+    }
+   ],
+   "result": "string",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.text.TextSubstringFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/text/substring.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "4907333D3B7DFED0A50711DD87B50019991C7C01",
+   "namespace": "sap.com/bpem/glx/built-in/text",
+   "category": "text",
+   "name": "tokenize",
+   "symbol": "tokenize",
+   "infix": false,
+   "documentation": "This function breaks the <input> string into a sequence of strings, treating any substring that matches <pattern> as a separator. The separators themselves are not returned.",
+   "parameters": [
+    {
+     "name": "input",
+     "type": "string"
+    },
+    {
+     "name": "pattern",
+     "type": "string"
+    }
+   ],
+   "result": "string",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.text.TextTokenizeFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/text/tokenize.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "49073435CFAB5850A50711DD84540019991C7C01",
+   "namespace": "sap.com/bpem/glx/built-in/text",
+   "category": "text",
+   "name": "translate",
+   "symbol": "translate",
+   "infix": false,
+   "documentation": "Returns the value of <arg> modified so that every character in the value of <arg> that occurs at some position N in the value of <mapString> has been replaced by the character that occurs at position N in the value of <transString>.",
+   "parameters": [
+    {
+     "name": "arg",
+     "type": "string"
+    },
+    {
+     "name": "mapString",
+     "type": "string"
+    },
+    {
+     "name": "transString",
+     "type": "string"
+    }
+   ],
+   "result": "string",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.text.TextTranslateFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/text/translate.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "481F3B339659DF051AC311DD85430018717335EB",
+   "namespace": "sap.com/bpem/glx/built-in/text",
+   "category": "text",
+   "name": "upper-case",
+   "symbol": "upper-case",
+   "infix": false,
+   "documentation": "Converts the string argument to upper-case using the rules of the given locale.",
+   "parameters": [
+    {
+     "name": "value",
+     "type": "string"
+    },
+    {
+     "name": "locale",
+     "type": "string"
+    }
+   ],
+   "result": "string",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.text.TextUppercaseFunction",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/text/upper-case.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  },
+  {
+   "id": "E0BC3BFD6FD347557BD811E0A7F5002710AA9C90",
+   "namespace": "sap.com/tc/bpem/content/predefs/types",
+   "category": "types",
+   "name": "remove-timeZone",
+   "symbol": "remove-timeZone",
+   "infix": false,
+   "documentation": "",
+   "parameters": [
+    {
+     "name": "dateTime",
+     "type": "dateTime"
+    }
+   ],
+   "result": "dateTime",
+   "javaClass": "com.sap.glx.mapping.execution.implementation.function.builtin.datetime.DatetimeRemoveTimeZone",
+   "file": "rep/functions/sap.com/bpem/glx/built-in/date-time/remove-timezone.function",
+   "sourcePlugin": "com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/types"
+  }
+ ],
+ "xsdTypes": {
+  "4743E046A4700C52980411DCADE30011252E548A": "string",
+  "4743E048A5AA8822980411DC94DD0011252E548A": "anySimpleType",
+  "4743E048A5AC0EC1980411DCB60A0011252E548A": "anyType",
+  "4743E048A5B22940980411DC83220011252E548A": "boolean",
+  "4743E048A5B22946980411DC85930011252E548A": "float",
+  "4743E048A5B3AFE2980411DC887D0011252E548A": "double",
+  "4743E048A5B3AFE8980411DCC6BD0011252E548A": "decimal",
+  "4743E048A5B53684980411DCBA0D0011252E548A": "duration",
+  "4743E048A5B6BD20980411DCCF430011252E548A": "dateTime",
+  "4743E048A5B6BD26980411DC86820011252E548A": "time",
+  "4743E048A5B843C2980411DC8D800011252E548A": "date",
+  "4743E048A5B843C8980411DCCC280011252E548A": "gYearMonth",
+  "4743E048A5BB5100980411DC8C4B0011252E548A": "gYear",
+  "4743E048A5BB5106980411DCB1E90011252E548A": "gMonthDay",
+  "4743E048A5BCD7A5980411DCA1240011252E548A": "gDay",
+  "4743E048A5BE5E42980411DC9F5C0011252E548A": "gMonth",
+  "4743E048A5BFE4E2980411DC919A0011252E548A": "hexBinary",
+  "4743E048A5BFE4E8980411DCA1E70011252E548A": "base64Binary",
+  "4743E048A5C16B85980411DCCA630011252E548A": "anyURI",
+  "4743E048A5C2F222980411DCB9120011252E548A": "QName",
+  "4743E048A5C2F228980411DCC44A0011252E548A": "NOTATION",
+  "4743E048A5C478C2980411DCB45D0011252E548A": "normalizedString",
+  "4743E048A5C5FF62980411DC99E80011252E548A": "token",
+  "4743E048A5C78605980411DC98F80011252E548A": "language",
+  "4743E048A5CF2725980411DC8C930011252E548A": "IDREFS",
+  "4743E048A5D0ADC3980411DCA3C60011252E548A": "IDREF",
+  "4743E048A5D0ADC6980411DCAED20011252E548A": "NCName",
+  "4743E048A5D23462980411DCAC2B0011252E548A": "Name",
+  "4743E048A5D84EE2980411DCB0960011252E548A": "ENTITIES",
+  "4743E048A5D84EE6980411DC8E8E0011252E548A": "ENTITY",
+  "4743E048A5D9D585980411DCB4530011252E548A": "NMTOKEN",
+  "4743E048A5DB5C28980411DCA8E30011252E548A": "NMTOKENS",
+  "4743E048A5DCE2C5980411DCBE790011252E548A": "ID",
+  "4743E048A5DE6962980411DC98C90011252E548A": "integer",
+  "4743E048A5E176A2980411DCAFC10011252E548A": "nonPositiveInteger",
+  "4743E048A5E483E4980411DCC7240011252E548A": "negativeInteger",
+  "4743E048A5E60A85980411DCA1E50011252E548A": "long",
+  "4743E048A5E917C5980411DC9ABE0011252E548A": "int",
+  "4743E048A5EA9E68980411DC8D590011252E548A": "short",
+  "4743E048A5EC2508980411DC861F0011252E548A": "byte",
+  "4743E048A5EF3247980411DCBA670011252E548A": "nonNegativeInteger",
+  "4743E048A5F0B8E2980411DCA7000011252E548A": "unsignedLong",
+  "4743E048A5F3C625980411DC80570011252E548A": "unsignedInt",
+  "4743E048A5F54CC2980411DC92150011252E548A": "unsignedShort",
+  "4743E048A5F54CC8980411DCCCE40011252E548A": "unsignedByte",
+  "4743E048A5F85A02980411DCC8DA0011252E548A": "positiveInteger",
+  "E016575C837878C0154911DECB13001F3C7ECCDE": "allNNI",
+  "E016575C83B92B40154911DEC891001F3C7ECCDE": "openAttrs",
+  "E016575C83BBEA60154911DEA101001F3C7ECCDE": "annotated",
+  "E016575C83BDBF20154911DEB1AA001F3C7ECCDE": "formChoice",
+  "E016575C83BF1EB0154911DEC73A001F3C7ECCDE": "reducedDerivationControl",
+  "E016575C83BF6CD0154911DEADF1001F3C7ECCDE": "derivationControl",
+  "E016575C83C03020154911DEC66F001F3C7ECCDE": "derivationSet",
+  "E016575C83C14190154911DEB563001F3C7ECCDE": "typeDerivationControl",
+  "E016575C83C22BF0154911DE96CF001F3C7ECCDE": "fullDerivationSet",
+  "E016575C841C59E0154911DE8FE9001F3C7ECCDE": "attribute",
+  "E016575C841F4010154911DEB8D1001F3C7ECCDE": "topLevelAttribute",
+  "E016575C842162F0154911DEB19D001F3C7ECCDE": "complexType",
+  "E016575C84235EC0154911DE81C7001F3C7ECCDE": "topLevelComplexType",
+  "E016575C84247030154911DECF46001F3C7ECCDE": "localComplexType",
+  "E016575C84261DE0154911DEBD39001F3C7ECCDE": "restrictionType",
+  "E016575C84272F50154911DEA7B5001F3C7ECCDE": "complexRestrictionType",
+  "E016575C84288EE0154911DE8E78001F3C7ECCDE": "extensionType",
+  "E016575C84295230154911DEB373001F3C7ECCDE": "simpleRestrictionType",
+  "E016575C842AB1C0154911DE8999001F3C7ECCDE": "simpleExtensionType",
+  "E016575C842BC330154911DECADA001F3C7ECCDE": "blockSet",
+  "E016575C842C8680154911DEA4FE001F3C7ECCDE": "element",
+  "E016575C842F6CB0154911DECD2B001F3C7ECCDE": "topLevelElement",
+  "E016575C8431B6A0154911DEBD30001F3C7ECCDE": "localElement",
+  "E016575C8434EAF0154911DEBE54001F3C7ECCDE": "group",
+  "E016575C8435AE40154911DEA2A5001F3C7ECCDE": "realGroup",
+  "E016575C84378300154911DE96DD001F3C7ECCDE": "namedGroup",
+  "E016575C843ADE60154911DEBE6A001F3C7ECCDE": "groupRef",
+  "E016575C8440D1D0154911DEC1AE001F3C7ECCDE": "explicitGroup",
+  "E016575C84423160154911DE9348001F3C7ECCDE": "simpleExplicitGroup",
+  "E016575C844369E0154911DEB1D3001F3C7ECCDE": "narrowMaxMin",
+  "E016575C844601F0154911DE8B4B001F3C7ECCDE": "all",
+  "E016575C84478890154911DE8EE3001F3C7ECCDE": "wildcard",
+  "E016575C8447D6B0154911DEAF96001F3C7ECCDE": "namespaceList",
+  "E016575C844A47B0154911DEC881001F3C7ECCDE": "attributeGroup",
+  "E016575C844ABCE0154911DE82A4001F3C7ECCDE": "namedAttributeGroup",
+  "E016575C844BF560154911DEB629001F3C7ECCDE": "attributeGroupRef",
+  "E016575C844D06D0154911DEC8C7001F3C7ECCDE": "keybase",
+  "E016575C844E6660154911DECA6B001F3C7ECCDE": "public",
+  "E016575C845DCFB0154911DEB8F7001F3C7ECCDE": "simpleDerivationSet",
+  "E016575C845E9300154911DEB698001F3C7ECCDE": "simpleType",
+  "E016575C845FA470154911DEBF39001F3C7ECCDE": "topLevelSimpleType",
+  "E016575C8460DCF0154911DEAB1E001F3C7ECCDE": "localSimpleType",
+  "E016575C84623C80154911DEA1D6001F3C7ECCDE": "facet",
+  "E016575C8462D8C0154911DEADED001F3C7ECCDE": "noFixedFacet",
+  "E016575C8463C320154911DE8E26001F3C7ECCDE": "numFacet"
+ },
+ "sapTypes": {
+  "481F3B278F32D1001AC311DD9CDF0018717335EB": "Principal",
+  "481F3B278F378BF01AC311DDAD0B0018717335EB": "PrincipalType",
+  "481F3B278F3EB7E01AC311DDA8ED0018717335EB": "TaskAttributes",
+  "481F3B278F4128E01AC311DDA96C0018717335EB": "Priority",
+  "481F3B278F75A6601AC311DDBFB00018717335EB": "Role",
+  "481F3B278F83D7301AC311DDA4940018717335EB": "ProcessAttributes",
+  "481F3B278F8648301AC311DDCD240018717335EB": "TaskStatus",
+  "481F3B288F94A0101AC311DDBA8D0018717335EB": "LaneRole",
+  "481F3B288F96EA001AC311DDC1750018717335EB": "TaskException",
+  "48D9D29D2F5C7D1089FB11DD9AFB001279A77876": "arrayCoordinate",
+  "48D9D29D2F8058C089FB11DD9CB0001279A77876": "Array",
+  "48D9D29D2F8784B089FB11DD8FCF001279A77876": "Struct",
+  "48D9D29D2F8C3FA089FB11DD8FE1001279A77876": "base64",
+  "48D9D29D2F8EB0A089FB11DDCFFE001279A77876": "duration",
+  "48D9D29D2F90FA9089FB11DDB5F0001279A77876": "dateTime",
+  "48D9D29D2F95DC9089FB11DDC9C7001279A77876": "NOTATION",
+  "48D9D29D2F9A978089FB11DDAA0E001279A77876": "time",
+  "48D9D29D2F9D088089FB11DDA9BB001279A77876": "date",
+  "48D9D29D2FA1C37089FB11DD9649001279A77876": "gYearMonth",
+  "48D9D29E2FA67E6089FB11DD8C29001279A77876": "gYear",
+  "48D9D29E2FAB395089FB11DDB81D001279A77876": "gMonthDay",
+  "48D9D29E2FADAA5089FB11DD848D001279A77876": "gDay",
+  "48D9D29E2FB2654089FB11DDA548001279A77876": "gMonth",
+  "48D9D29E2FB7474089FB11DD9E85001279A77876": "boolean",
+  "48D9D29E2FB9913089FB11DD961C001279A77876": "base64Binary",
+  "48D9D29E2FBE733089FB11DD98C8001279A77876": "hexBinary",
+  "48D9D29E2FC32E2089FB11DD9B54001279A77876": "float",
+  "48D9D29E2FC7E91089FB11DDC6AF001279A77876": "double",
+  "48D9D29E2FCA5A1089FB11DDB388001279A77876": "anyURI",
+  "48D9D29E2FCF150089FB11DDCB4C001279A77876": "QName",
+  "48D9D29E2FD3CFF089FB11DDC61F001279A77876": "string",
+  "48D9D29E2FD8B1F089FB11DD81BA001279A77876": "normalizedString",
+  "48D9D29E2FDD6CE089FB11DD9FD8001279A77876": "token",
+  "48D9D29E2FDFB6D089FB11DDB2CB001279A77876": "language",
+  "48D9D29E2FE498D089FB11DDB906001279A77876": "Name",
+  "48D9D29E2FE953C089FB11DD8EE1001279A77876": "NMTOKEN",
+  "48D9D29E2FEE0EB089FB11DDCD40001279A77876": "NCName",
+  "48D9D29E2FF2F0B089FB11DDCAD3001279A77876": "NMTOKENS",
+  "48D9D29E2FF7ABA089FB11DD86E2001279A77876": "ID",
+  "48D9D29E2FFC669089FB11DDB771001279A77876": "IDREF",
+  "48D9D29E3001218089FB11DD856F001279A77876": "ENTITY",
+  "48D9D29E3006038089FB11DD957C001279A77876": "IDREFS",
+  "48D9D29E30084D7089FB11DD8AB1001279A77876": "ENTITIES",
+  "48D9D29E300D2F7089FB11DD9595001279A77876": "decimal",
+  "48D9D29E3011EA6089FB11DDA70E001279A77876": "integer",
+  "48D9D29E3016A55089FB11DD8DD2001279A77876": "nonPositiveInteger",
+  "48D9D29E301B604089FB11DD8C53001279A77876": "negativeInteger",
+  "48D9D29E3020424089FB11DDCEB1001279A77876": "long",
+  "48D9D29E3024FD3089FB11DD8F73001279A77876": "int",
+  "48D9D29E3029B82089FB11DD900B001279A77876": "short",
+  "48D9D29E302E9A2089FB11DDC512001279A77876": "byte",
+  "48D9D29E3033551089FB11DDCA94001279A77876": "nonNegativeInteger",
+  "48D9D29E3038100089FB11DD8A6E001279A77876": "unsignedLong",
+  "48D9D29F303CCAF089FB11DD8079001279A77876": "unsignedInt",
+  "48D9D29F3041ACF089FB11DDB095001279A77876": "unsignedShort",
+  "48D9D29F304667E089FB11DDA65A001279A77876": "unsignedByte",
+  "48D9D29F304B22D089FB11DD8D50001279A77876": "positiveInteger",
+  "48EA2B6984766F5093B911DD805C001742235CDE": "Context",
+  "4911944FF87C1CD9AB3611DDBFA700199905BD52": "FormAttributes_Input",
+  "4911944FF87E66C5AB3611DDC05100199905BD52": "FormAttributes_Output",
+  "4911944FF880D7C6AB3611DD84EC00199905BD52": "EmailDeliveryType",
+  "4911944FF88592B0AB3611DDBAF100199905BD52": "FormApplicationParameterType",
+  "4911944FF88803B0AB3611DDC5AD00199905BD52": "FormBinaryType",
+  "492555B76B736A50B6FD11DD8DF00018717335EB": "getTime",
+  "492555B86BAA31C0B6FD11DD85CB0018717335EB": "getTimeResponse",
+  "49258AE01AE89E50B71D11DDAABD001742235CDE": "UsersType",
+  "49258AE01AEFCA40B71D11DDCAC2001742235CDE": "ExternalusersType",
+  "492D7A2BD9A1DF5ABBD711DDAD1500199905BD52": "EmailResponseType",
+  "E007956A29DF6A4AF91911E28D894437E68365F0": "TechnicalErrorType",
+  "E02C978BF5A4C4FAE11511DFC9DB0019993BA185": "ProcessInstanceAttributes",
+  "E0AAACCD7DE007A08C0611DEA35D00199905BD52": "ContextTypeINPUT",
+  "E0AAACCD7DE278A08C0611DEBF0700199905BD52": "CancelTypeOUTPUT",
+  "E0AAACCD7DE278A58C0611DE8B7900199905BD52": "CompleteTypeOUTPUT",
+  "E0E1B8C608CAA76E003611E3CF134437E68365F0": "ExecutionTimeDetailsType",
+  "E0E1B8C63AB65CC9003511E380AD4437E68365F0": "InterfaceDetailsType",
+  "E0E1B8C69EE335AC003511E3C6254437E68365F0": "SOAConfigurationDetailsType",
+  "E0E1B8C69EE4D481003511E3AD724437E68365F0": "XIDetailsType",
+  "E0E1B8C69EE5AEF9003511E3843E4437E68365F0": "WSDetailsType"
+ }
+}
