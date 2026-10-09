@@ -8,6 +8,7 @@ scheduler jobs), and produces a JSON inventory plus generated documentation.
 |---|---|
 | `po-xray-core` | Library: SCA/MOIN/Galaxy readers, EJB reader, JSON output model, documentation generator |
 | `po-xray-cli` | Command line interface (Quarkus + Aesh), JVM uber-jar or native executable |
+| `po-xray-mcp` | MCP server (STDIO) with the same readers as tools for AI agents |
 
 Docs: [output model](docs/OUTPUT-MODEL.md), [built-in function catalog](docs/BPM-BUILTIN-FUNCTIONS.md),
 [exploration handoff](docs/HANDOFF.md).
@@ -81,6 +82,37 @@ mvn -pl po-xray-cli -am package -Dnative -DskipTests -Dquarkus.native.container-
 The executable is `po-xray-cli/target/po-xray-cli-<version>-runner(.exe)`. Classes serialised by Jackson are
 registered for reflection in `po-xray-cli` (`NativeReflection`, guarded by a test); resources of the core
 (function catalog, document labels) are included via `quarkus.native.resources.includes`.
+
+## MCP server
+
+`po-xray-mcp` exposes the readers as MCP tools (STDIO transport), built by `mvn verify` as
+`po-xray-mcp/target/po-xray-mcp-<version>-runner.jar`. Tools:
+
+| Tool | Purpose |
+|---|---|
+| `find_components` | communication components of a PO system by part of the name |
+| `list_icos` | ICOs to / from a component: routing conditions, interface determinations, channels, names of ESR objects |
+| `get_object` | one object of that inventory: ICO, channel, service interface, operation / message mapping (field logic, UDFs), function library, message / data type |
+| `write_integration_documentation` | Markdown / Jira / JSON files of the ICO inventory |
+| `read_sca`, `get_sca_object` | overview of an SCA, then single BPM processes, catalogs, EJB modules, issues |
+| `write_sca_documentation` | Markdown / Jira / JSON files of an SCA |
+
+Results are deliberately small (overview first, details on request): MCP clients truncate large tool results.
+PO systems are the ones configured in `~/.po-xray/systems/<name>.properties` (see CLI); the snapshot cache is shared
+with the CLI.
+
+Register in Claude Code (absolute path to the jar):
+
+```bash
+claude mcp add po-xray -- java -jar C:/Users/pavol/Documents/Projekty/po-xray/po-xray-mcp/target/po-xray-mcp-0.1.0-SNAPSHOT-runner.jar
+```
+
+Claude Desktop (`claude_desktop_config.json`):
+
+```json
+{ "mcpServers": { "po-xray": { "command": "java",
+    "args": ["-jar", "C:/Users/pavol/Documents/Projekty/po-xray/po-xray-mcp/target/po-xray-mcp-0.1.0-SNAPSHOT-runner.jar"] } } }
+```
 
 ## Confidentiality
 
