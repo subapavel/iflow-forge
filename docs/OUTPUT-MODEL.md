@@ -12,6 +12,12 @@ Status: **accepted** (2026-10-09), BPM and EJB parts implemented.
 5. Process identity = `Galaxy.Workflow.Collaboration`; the active (orchestration) pool is in `pool`.
 6. Functions in expressions are resolved by MOF ID: first DC functions (`.function`), then the SAP built-in
    catalog (`docs/BPM-BUILTIN-FUNCTIONS.md`, never by name). Unknown IDs are kept and reported.
+   The catalog covers DC `predefs/types` (220 functions) and `predefs/default` (principal functions, e.g.
+   `getPrincipals` used in role assignments; the editor shows `getPrincipals("<uniqueName>")` as
+   `<uniqueName>#<displayName>`).
+10. Type names: `xsd:<name>` for XSD types (catalog `xsdTypes`), `sap:<name>` for SAP-defined types of the BPM
+    content (catalog `sapTypes`, e.g. `sap:Principal`, `sap:TechnicalErrorType`, `sap:ProcessInstanceAttributes`),
+    otherwise the type name from the DC's own XSD (named complex/simple types).
 7. Service group per service reference comes from the deployed `.composite` (SDA) and the `mc` logical system.
 8. All graph references (`flows.source/target/via`, node `scope`/`lane`, data object `scope`) are `{ref, name}`.
 9. Every MappingPart is emitted with `category` / `expander` / `transformer` (also structural parts and

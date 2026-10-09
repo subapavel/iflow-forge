@@ -91,9 +91,9 @@ public final class BpmReader {
                         .thenComparing(BuiltinFunctionCatalog.Entry::category))
                 .map(e -> new BuiltinFunction(e.id(), e.name(), e.category(), e.symbol(),
                         e.parameters().stream()
-                                .map(p -> new Function.Parameter(p.name(), BuiltinFunctionCatalog.qualify(p.type())))
+                                .map(p -> new Function.Parameter(p.name(), catalog.qualify(p.type())))
                                 .toList(),
-                        BuiltinFunctionCatalog.qualify(e.result()),
+                        catalog.qualify(e.result()),
                         e.documentation(), e.javaClass()))
                 .toList();
     }

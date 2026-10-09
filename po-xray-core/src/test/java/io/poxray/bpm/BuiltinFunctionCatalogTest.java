@@ -39,6 +39,13 @@ class BuiltinFunctionCatalogTest {
         assertThat(catalog.typeName("4743E046A4700C52980411DCADE30011252E548A")).isEqualTo("xsd:string");
         assertThat(catalog.typeName("E02C978BF5A4C4FAE11511DFC9DB0019993BA185")).isEqualTo("sap:ProcessInstanceAttributes");
         assertThat(catalog.typeName("0000")).isNull();
+
+        // principal functions from DC predefs/default; result is an SAP type, parameters XSD types
+        BuiltinFunctionCatalog.Entry principals = catalog.function("481F3B33967D93A01AC311DDCFD20018717335EB").orElseThrow();
+        assertThat(principals.name()).isEqualTo("getPrincipals");
+        assertThat(principals.category()).isEqualTo("principal");
+        assertThat(catalog.qualify(principals.result())).isEqualTo("sap:Principal");
+        assertThat(catalog.qualify("string")).isEqualTo("xsd:string"); // XSD preferred over SOAP-enc duplicate
         assertThat(catalog.function("0000")).isEmpty();
     }
 }

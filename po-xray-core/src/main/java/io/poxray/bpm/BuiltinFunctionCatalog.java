@@ -34,20 +34,13 @@ final class BuiltinFunctionCatalog {
             Map<String, String> sapTypes) {
     }
 
-    /** W3C XML Schema built-in datatypes: rendered with the {@code xsd:} prefix, other catalog types as is. */
-    private static final Set<String> XSD_DATATYPES = Set.of("string", "boolean", "decimal", "float", "double",
-            "duration", "dateTime", "time", "date", "gYearMonth", "gYear", "gMonthDay", "gDay", "gMonth", "hexBinary",
-            "base64Binary", "anyURI", "QName", "NOTATION", "normalizedString", "token", "language", "NMTOKEN",
-            "NMTOKENS", "Name", "NCName", "ID", "IDREF", "IDREFS", "ENTITY", "ENTITIES", "integer",
-            "nonPositiveInteger", "negativeInteger", "long", "int", "short", "byte", "nonNegativeInteger",
-            "unsignedLong", "unsignedInt", "unsignedShort", "unsignedByte", "positiveInteger", "anyType",
-            "anySimpleType");
-
     private static final BuiltinFunctionCatalog INSTANCE = load();
 
     private final Map<String, Entry> functions = new HashMap<>();
     private final Map<String, String> xsdTypes;
     private final Map<String, String> sapTypes;
+    private final Set<String> xsdTypeNames;
+    private final Set<String> sapTypeNames;
 
     private BuiltinFunctionCatalog(Data data) {
         for (Entry e : data.functions()) {
@@ -55,6 +48,8 @@ final class BuiltinFunctionCatalog {
         }
         this.xsdTypes = Map.copyOf(data.xsdTypes());
         this.sapTypes = data.sapTypes() == null ? Map.of() : Map.copyOf(data.sapTypes());
+        this.xsdTypeNames = Set.copyOf(xsdTypes.values());
+        this.sapTypeNames = Set.copyOf(sapTypes.values());
     }
 
     static BuiltinFunctionCatalog get() {
@@ -81,9 +76,18 @@ final class BuiltinFunctionCatalog {
         return sap == null ? null : "sap:" + sap;
     }
 
-    /** {@code xsd:} prefix for W3C datatypes (catalog parameter/result types are plain names). */
-    static String qualify(String typeName) {
-        return typeName != null && XSD_DATATYPES.contains(typeName) ? "xsd:" + typeName : typeName;
+    /**
+     * Qualifies a plain type name as used for catalog parameters/results: {@code xsd:} if it is an XSD type
+     * (preferred, some names exist in both), {@code sap:} if it is an SAP type, else unchanged.
+     */
+    String qualify(String typeName) {
+        if (typeName == null) {
+            return null;
+        }
+        if (xsdTypeNames.contains(typeName)) {
+            return "xsd:" + typeName;
+        }
+        return sapTypeNames.contains(typeName) ? "sap:" + typeName : typeName;
     }
 
     private static BuiltinFunctionCatalog load() {

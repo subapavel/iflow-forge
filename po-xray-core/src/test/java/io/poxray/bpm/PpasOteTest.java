@@ -31,6 +31,12 @@ class PpasOteTest {
         assertThat(inventory.developmentComponents()).isNotEmpty();
         assertThat(inventory.bpm()).allSatisfy(b -> assertThat(b.processes()).isNotEmpty());
         assertThat(inventory.issues()).noneMatch(i -> i.severity().equals(Issue.ERROR));
+        // getPrincipals (role assignments) resolves via the catalog; its editor display form is accepted
+        assertThat(inventory.issues()).extracting(Issue::code)
+                .doesNotContain("UNKNOWN_BUILTIN_FUNCTION", "EXPRESSION_TEXT_MISMATCH");
+        assertThat(inventory.bpm().getFirst().catalog().builtinFunctions())
+                .filteredOn(f -> f.name().equals("getPrincipals")).singleElement()
+                .satisfies(f -> assertThat(f.result()).isEqualTo("sap:Principal"));
         assertThat(inventory.unmapped()).isEmpty();
         assertThat(inventory.bpm()).flatExtracting(b -> b.processes()).flatExtracting(p -> p.nodes())
                 .noneMatch(n -> n.kind().equals("unknown"));
