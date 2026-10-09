@@ -56,6 +56,8 @@ public final class IntegrationReader {
     private final XiObjectSource source;
     private final IssueLog issues;
     private final Set<String> visited = new HashSet<>();
+    /** Object IDs of objects reached by name (without ID), e.g. through the SWCV of different referring objects. */
+    private final Set<String> readIds = new HashSet<>();
     private final Map<String, Channel> channels = new LinkedHashMap<>();
     private final Map<String, ServiceInterface> interfaces = new LinkedHashMap<>();
     private final Map<String, OperationMapping> operationMappings = new LinkedHashMap<>();
@@ -524,7 +526,9 @@ public final class IntegrationReader {
         }
         resolve(ref).ifPresent(o -> {
             try {
-                importedArchives.put(key(ref), ArchiveReader.archive(o, objRef(o.id())));
+                if (firstRead(o)) {
+                    importedArchives.put(key(ref), ArchiveReader.archive(o, objRef(o.id())));
+                }
             } catch (IllegalArgumentException e) {
                 issues.warn("ARCHIVE_UNREADABLE", "Imported archive " + o.id().label() + " cannot be read: "
                         + e.getMessage(), IssueLog.at(null, null, new Ref(o.id().oid(), o.id().label()), null), null);
@@ -618,7 +622,9 @@ public final class IntegrationReader {
                     messages.add(inner.id().key(2));
                 }
             }
-            externalDefinitions.put(key(def), new ExternalDefinition(objRef(o.id()), messages, o.description()));
+            if (firstRead(o)) {
+                externalDefinitions.put(key(def), new ExternalDefinition(objRef(o.id()), messages, o.description()));
+            }
         });
     }
 
@@ -640,8 +646,18 @@ public final class IntegrationReader {
         return o;
     }
 
+    /** False if an object with the same ID was already read (reached again through another SWCV). */
+    private boolean firstRead(XiObject o) {
+        return o.id().oid() == null || readIds.add(o.typeId() + "|" + o.id().oid());
+    }
+
     static ObjRef objRef(XiRef r) {
-        return new ObjRef(r.typeId(), blank(r.key(0)), blank(r.key(1)), r.swcCaption(), r.swcGuid(), r.oid());
+        String program = null;
+        if ("MAP_ARCHIVE_PRG".equals(r.typeId()) && !r.key(3).isEmpty()) { // archive|namespace|class or xsl|path
+            program = "class".equals(r.key(2)) ? r.key(3).replace('/', '.') : r.key(3);
+        }
+        return new ObjRef(r.typeId(), blank(r.key(0)), blank(r.key(1)), r.swcCaption(), r.swcGuid(), r.oid(),
+                program);
     }
 
     /**

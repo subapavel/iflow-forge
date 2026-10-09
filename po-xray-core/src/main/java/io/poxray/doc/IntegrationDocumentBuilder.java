@@ -187,6 +187,8 @@ public final class IntegrationDocumentBuilder {
             for (var om : esr.operationMappings()) {
                 t.row(code(name(om.id())), code(name(om.sourceOperation())), code(name(om.targetOperation())),
                         text(om.steps().stream().map(s -> s.kind() + ": " + name(s.program())
+                                + (s.program() == null || s.program().program() == null ? ""
+                                        : " / " + s.program().program())
                                 + (s.program() == null || "XI_TRAFO".equals(s.program().type()) ? "" : " (" + s.program().type() + ")"))
                                 .collect(Collectors.joining("; "))));
             }

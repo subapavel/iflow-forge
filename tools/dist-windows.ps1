@@ -32,17 +32,22 @@ Copy-Item (Join-Path $crt "vcruntime140.dll"), (Join-Path $crt "vcruntime140_1.d
 po-xray $Version for Windows x64 - no Java needed
 
 1. Unzip to a folder, e.g. C:\Tools\po-xray (keep the DLLs next to the .exe files).
-2. Create %USERPROFILE%\.po-xray\systems\<system>.properties, e.g. eon.properties:
+2. One file per PO system: %USERPROFILE%\.po-xray\systems\<system>.properties, e.g. eon-dev.properties:
      url=https://host:port
      user=...
      password=...
    optional:
      truststore=windows        (HTTPS: default = JDK certificates or the Windows store; windows | jdk | file path)
      proxy=host:port           (HTTP proxy, default direct)
-   The password can instead come from the environment variables POXRAY_USER / POXRAY_PASSWORD.
+   User / password can instead come from environment variables, per system (name in upper case, other
+   characters as _): POXRAY_EON_DEV_USER / POXRAY_EON_DEV_PASSWORD; POXRAY_USER / POXRAY_PASSWORD apply to all.
 3. Test: po-xray.exe components -s <system> -n <part of a component name>
 4. Claude Code: claude mcp add -s user po-xray -- C:\Tools\po-xray\po-xray-mcp.exe
    then start a new Claude Code session; claude mcp list shows the status.
+   Claude Desktop (chat): add to %APPDATA%\Claude\claude_desktop_config.json (top level, next to "preferences"):
+     "mcpServers": { "po-xray": { "command": "C:\\Tools\\po-xray\\po-xray-mcp.exe" } }
+   then quit Claude Desktop completely (tray icon - Quit) and start it again.
+5. Update: quit the sessions / Claude Desktop using the MCP server, unzip the new package over the folder.
 
 Objects read are kept in %USERPROFILE%\.po-xray\cache\<system> (customer data: keep it on that machine).
 "@ | Set-Content -Encoding utf8 (Join-Path $out "INSTALL.txt")

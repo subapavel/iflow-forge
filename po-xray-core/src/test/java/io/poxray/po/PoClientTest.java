@@ -137,6 +137,14 @@ class PoClientTest {
         assertThat(s.url()).hasToString("http://host:54200");
         assertThat(s.user()).isEqualTo("bob");
         assertThat(PoSystem.load("xipod", dir, Map.of(PoSystem.PASSWORD_ENV, "envpw")).password()).isEqualTo("envpw");
+        // per-system variables win over the global ones, so several systems can keep passwords out of files
+        Map<String, String> env = Map.of("POXRAY_EON_PROD_PASSWORD", "prodpw", "POXRAY_EON_PROD_USER", "prod",
+                PoSystem.PASSWORD_ENV, "globalpw");
+        Files.writeString(dir.resolve("eon-prod.properties"), "url=https://h:1\nuser=u\n");
+        PoSystem prod = PoSystem.load("eon-prod", dir, env);
+        assertThat(prod.user()).isEqualTo("prod");
+        assertThat(prod.password()).isEqualTo("prodpw");
+        assertThat(PoSystem.load("xipod", dir, env).password()).isEqualTo("globalpw");
 
         Files.writeString(dir.resolve("eon.properties"),
                 "url=https://po.example:50001\nuser=bob\npassword=pw\ntruststore=windows\nproxy=proxy.example:8080\n");

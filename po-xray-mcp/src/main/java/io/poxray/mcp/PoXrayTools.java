@@ -66,13 +66,13 @@ public class PoXrayTools {
     @Tool(name = "get_object", description = "One object from the ICO inventory of a component (as listed by "
             + "list_icos): ico (by sender interface), channel (attributes, modules), serviceInterface, "
             + "operationMapping, messageMapping (field logic as function terms, user-defined functions with Java "
-            + "code), functionLibrary (UDF code, SAP APIs used), messageType, dataType (XSD and fields), "
-            + "externalDefinition.",
+            + "code), functionLibrary (UDF code, SAP APIs used), importedArchive (Java mapping classes, XSLT), "
+            + "messageType, dataType (XSD and fields), externalDefinition.",
             annotations = @Tool.Annotations(readOnlyHint = true, openWorldHint = true))
     String getObject(@ToolArg(description = SYSTEM) String system,
             @ToolArg(description = COMPONENT) String component,
             @ToolArg(description = "ico, channel, serviceInterface, operationMapping, messageMapping, "
-                    + "functionLibrary, messageType, dataType or externalDefinition") String kind,
+                    + "functionLibrary, importedArchive, messageType, dataType or externalDefinition") String kind,
             @ToolArg(description = "Object name; channels as name or component|name") String name,
             @ToolArg(description = DIRECTION, defaultValue = "both") String direction) {
         return call(() -> {

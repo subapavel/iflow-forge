@@ -51,8 +51,17 @@ public record IntegrationInventory(
     public record Component(String party, String name, String description) {
     }
 
-    /** ESR/Directory object reference: type, name, namespace, SWCV (caption + GUID) and OID. */
-    public record ObjRef(String type, String name, String namespace, String swc, String swcGuid, String oid) {
+    /**
+     * ESR/Directory object reference: type, name, namespace, SWCV (caption + GUID) and OID. {@code program}: for a
+     * program in an imported archive ({@code MAP_ARCHIVE_PRG}, name = archive) the Java class or file used, e.g.
+     * {@code cz.acme.OrderMapping} or {@code xsl/Strip.xsl}; null otherwise.
+     */
+    public record ObjRef(String type, String name, String namespace, String swc, String swcGuid, String oid,
+            String program) {
+
+        public ObjRef(String type, String name, String namespace, String swc, String swcGuid, String oid) {
+            this(type, name, namespace, swc, swcGuid, oid, null);
+        }
     }
 
     /** Directory reference by party / component / name (channels). */

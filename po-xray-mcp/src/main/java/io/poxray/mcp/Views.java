@@ -34,7 +34,7 @@ final class Views {
 
     /** Kinds accepted by {@code get_object}. */
     static final List<String> INTEGRATION_KINDS = List.of("ico", "channel", "serviceInterface", "operationMapping",
-            "messageMapping", "messageType", "dataType", "externalDefinition", "functionLibrary");
+            "messageMapping", "messageType", "dataType", "externalDefinition", "functionLibrary", "importedArchive");
     /** Kinds accepted by {@code get_sca_object}. */
     static final List<String> SCA_KINDS = List.of("process", "step", "processData", "catalog", "ejbModule",
             "developmentComponent", "issues");
@@ -70,7 +70,9 @@ final class Views {
         put(objects, "messageType", esr.messageTypes(), s -> label(s.id()));
         put(objects, "dataType", esr.dataTypes(), s -> label(s.id()));
         put(objects, "externalDefinition", esr.externalDefinitions(), s -> label(s.id()));
-        put(objects, "mappingProgram", esr.mappingPrograms(), s -> s.type() + " " + label(s));
+        put(objects, "importedArchive", esr.importedArchives(), s -> label(s.id()));
+        put(objects, "mappingProgram", esr.mappingPrograms(), s -> s.type() + " " + label(s)
+                + (s.program() == null ? "" : " : " + s.program()));
         return new IcoOverview(inv.query(), inv.components(), inv.icos(), channels, objects, inv.issues(),
                 "Details: get_object(kind, name) with kind one of " + String.join(", ", INTEGRATION_KINDS)
                         + "; channel names as 'component|name'.");
@@ -94,6 +96,8 @@ final class Views {
             case "externalDefinition" -> esr.externalDefinitions().stream().filter(o -> eq(o.id().name(), n))
                     .forEach(out::add);
             case "functionLibrary" -> esr.functionLibraries().stream().filter(o -> eq(o.id().name(), n))
+                    .forEach(out::add);
+            case "importedArchive" -> esr.importedArchives().stream().filter(o -> eq(o.id().name(), n))
                     .forEach(out::add);
             default -> throw new IllegalArgumentException("Unknown kind '" + kind + "', use one of "
                     + String.join(", ", INTEGRATION_KINDS));

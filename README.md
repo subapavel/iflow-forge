@@ -67,7 +67,9 @@ password=...
 
 Optional: `truststore=windows|jdk|<file>` (+ `truststorePassword`) for HTTPS — by default a certificate is accepted if
 the JDK certificates or, on Windows, the Windows certificate store trust it (company CAs, as in the browser) — and
-`proxy=host:port`. `POXRAY_USER` / `POXRAY_PASSWORD` override the file. A read-only user is enough (roles `SAP_XI_DISPLAY_USER_J2EE`,
+`proxy=host:port`. Environment variables override the file: `POXRAY_<SYSTEM>_USER` / `POXRAY_<SYSTEM>_PASSWORD`
+for one system (name upper case, other characters as `_`, e.g. `POXRAY_EON_DEV_PASSWORD` for `eon-dev`), then
+`POXRAY_USER` / `POXRAY_PASSWORD` for all systems. A read-only user is enough (roles `SAP_XI_DISPLAY_USER_J2EE`,
 `SAP_XI_API_DISPLAY_J2EE`). Objects read from the system are kept as raw `xiObj` XML in `~/.po-xray/cache/<system>`
 (`--refresh` re-reads them, `--cache <dir>` changes the location): the first `ico` query reads all ICOs, later
 queries work from the snapshot. Before the first object is taken from the snapshot, the system is asked once which
@@ -140,12 +142,14 @@ With the native executable (faster start, rebuild it after changes):
 claude mcp add po-xray -- C:/Users/pavol/Documents/Projekty/po-xray/po-xray-mcp/target/po-xray-mcp-0.1.0-SNAPSHOT-runner.exe
 ```
 
-Claude Desktop (`claude_desktop_config.json`):
+Claude Desktop chat uses its own configuration, not the Claude Code one: add the server to
+`%APPDATA%\Claude\claude_desktop_config.json` (top level, next to `preferences`) and restart Claude Desktop completely:
 
 ```json
-{ "mcpServers": { "po-xray": { "command": "java",
-    "args": ["-jar", "C:/Users/pavol/Documents/Projekty/po-xray/po-xray-mcp/target/po-xray-mcp-0.1.0-SNAPSHOT-runner.jar"] } } }
+"mcpServers": { "po-xray": { "command": "C:\\Tools\\po-xray\\po-xray-mcp.exe" } }
 ```
+
+(or `"command": "java", "args": ["-jar", "…/po-xray-mcp-<version>-runner.jar"]` with a JVM).
 
 ## Confidentiality
 

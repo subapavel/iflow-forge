@@ -13,8 +13,10 @@ import java.util.Properties;
  * Connection settings of a PO system. Read from {@code ~/.po-xray/systems/<name>.properties} (outside any
  * repository): {@code url}, {@code user}, {@code password}; optional {@code truststore} (HTTPS trust: windows, jdk
  * or a trust store file with {@code truststorePassword}, see {@link TrustStores}) and {@code proxy}
- * ({@code host:port}). Environment variables {@code POXRAY_USER} / {@code POXRAY_PASSWORD} override the file. The
- * password is never logged or included in {@link #toString()}.
+ * ({@code host:port}). Environment variables override the file: {@code POXRAY_<SYSTEM>_USER} /
+ * {@code POXRAY_<SYSTEM>_PASSWORD} for one system (name in upper case, other characters than letters and digits as
+ * {@code _}, e.g. {@code POXRAY_EON_PROD_PASSWORD} for {@code eon-prod}), then {@code POXRAY_USER} /
+ * {@code POXRAY_PASSWORD} for all systems. The password is never logged or included in {@link #toString()}.
  */
 public final class PoSystem {
 
@@ -73,14 +75,29 @@ public final class PoSystem {
         if (url == null || url.isBlank()) {
             throw new PoException("Missing url in " + file);
         }
-        String user = env.getOrDefault(USER_ENV, p.getProperty("user"));
-        String password = env.getOrDefault(PASSWORD_ENV, p.getProperty("password"));
+        String prefix = envPrefix(name);
+        String user = firstOf(env.get(prefix + "_USER"), env.get(USER_ENV), p.getProperty("user"));
+        String password = firstOf(env.get(prefix + "_PASSWORD"), env.get(PASSWORD_ENV), p.getProperty("password"));
         if (user == null || user.isBlank() || password == null || password.isEmpty()) {
-            throw new PoException("Missing user/password for system '" + name + "' (" + file + " or "
-                    + USER_ENV + "/" + PASSWORD_ENV + ")");
+            throw new PoException("Missing user/password for system '" + name + "' (" + file + ", " + prefix
+                    + "_USER/" + prefix + "_PASSWORD or " + USER_ENV + "/" + PASSWORD_ENV + ")");
         }
         return new PoSystem(name, URI.create(url.strip()), user.strip(), password, p.getProperty("truststore"),
                 p.getProperty("truststorePassword"), p.getProperty("proxy"));
+    }
+
+    /** {@code POXRAY_<SYSTEM>}: system name in upper case, other characters than letters and digits as {@code _}. */
+    static String envPrefix(String system) {
+        return "POXRAY_" + system.toUpperCase(java.util.Locale.ROOT).replaceAll("[^A-Z0-9]", "_");
+    }
+
+    private static String firstOf(String... values) {
+        for (String v : values) {
+            if (v != null && !v.isEmpty()) {
+                return v;
+            }
+        }
+        return null;
     }
 
     public String name() {
