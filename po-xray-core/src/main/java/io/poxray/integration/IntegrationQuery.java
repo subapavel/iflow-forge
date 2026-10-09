@@ -1,0 +1,165 @@
+package io.poxray.integration;
+
+import io.poxray.IssueLog;
+import io.poxray.PoXray;
+import io.poxray.model.IntegrationInventory;
+import io.poxray.model.IntegrationInventory.Component;
+import io.poxray.model.IntegrationInventory.Ico;
+import io.poxray.model.ScaInventory;
+import io.poxray.po.Area;
+import io.poxray.po.PoClient;
+import io.poxray.po.QueryRequest;
+import io.poxray.xi.XiObject;
+import io.poxray.xi.XiObjectSource;
+import io.poxray.xi.XiRef;
+import io.poxray.sca.XmlDocs;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Locale;
+import java.util.Set;
+import java.util.regex.Pattern;
+import org.w3c.dom.Element;
+
+/**
+ * Online queries against a PO system: communication components by name and ICOs to / from components, expanded
+ * into channels and ESR objects.
+ * <p>
+ * Verified on xipod (PO 7.50): SimpleQuery allows case-insensitive matching only for some keys, and the receiver of
+ * an ICO is not queryable ({@code TOSRVC} finds nothing, receivers live in the ICO content). Components and ICOs
+ * are therefore listed completely and filtered locally; ICO contents come through the snapshot cache, so only the
+ * first query reads them from the system.
+ */
+public final class IntegrationQuery {
+
+    /** in = component is a receiver, out = component is the sender, both = either. */
+    public enum Direction { IN, OUT, BOTH }
+
+    private final PoClient client;
+    private final XiObjectSource source;
+
+    public IntegrationQuery(PoClient client, XiObjectSource source) {
+        this.client = client;
+        this.source = source;
+    }
+
+    /**
+     * Communication components whose name (or party) matches {@code pattern}, case-insensitively: a plain text
+     * matches as substring, {@code *} / {@code ?} are wildcards. Null or blank pattern = all.
+     */
+    public List<Component> components(String pattern) {
+        Pattern p = pattern == null || pattern.isBlank() ? null : glob(pattern, true);
+        List<Component> out = new ArrayList<>();
+        for (XiRef ref : list("Service")) {
+            String party = blank(ref.key(0));
+            String name = ref.key(ref.key().size() > 1 ? 1 : 0);
+            if (p == null || p.matcher(name).matches() || (party != null && p.matcher(party).matches())) {
+                out.add(new Component(party, name, null));
+            }
+        }
+        out.sort((a, b) -> a.name().compareToIgnoreCase(b.name()));
+        return out;
+    }
+
+    /**
+     * ICOs where a component matching {@code componentPattern} (exact name, case-insensitive, or wildcard
+     * pattern) is the sender ({@link Direction#OUT}), a receiver ({@link Direction#IN}) or either, expanded into
+     * channels and ESR objects.
+     */
+    public IntegrationInventory icos(String componentPattern, Direction direction) {
+        Pattern p = glob(componentPattern, false);
+        IssueLog issues = new IssueLog();
+        IntegrationReader reader = new IntegrationReader(source, issues);
+        Set<String> matchedComponents = new LinkedHashSet<>();
+        List<XiObject> selected = new ArrayList<>();
+        for (XiRef ref : list("AllInOne")) {
+            XiObject ico = source.resolve(ref).orElse(null);
+            if (ico == null) {
+                // e.g. inconsistent ICOs the PO itself cannot render (operation removed from the interface)
+                issues.warn("OBJECT_NOT_READABLE", "ICO " + ref.label() + " cannot be read"
+                        + source.failure(ref).map(f -> ": " + f).orElse(""), null, null);
+                continue;
+            }
+            boolean match = false;
+            String sender = ico.id().key(1);
+            if (direction != Direction.IN && p.matcher(sender).matches()) {
+                matchedComponents.add(sender);
+                match = true;
+            }
+            if (direction != Direction.OUT) {
+                for (String receiver : receivers(ico)) {
+                    if (p.matcher(receiver).matches()) {
+                        matchedComponents.add(receiver);
+                        match = true;
+                    }
+                }
+            }
+            if (match) {
+                selected.add(ico);
+            }
+        }
+        List<Ico> icos = reader.icos(selected);
+        List<Component> components = matchedComponents.stream().map(c -> new Component(null, c, null)).toList();
+        return new IntegrationInventory(
+                ScaInventory.SCHEMA_VERSION,
+                new ScaInventory.Generator(PoXray.NAME, PoXray.VERSION,
+                        Instant.now().truncatedTo(ChronoUnit.SECONDS).toString()),
+                new IntegrationInventory.Source(client.system().name(), client.system().url().toString(), List.of()),
+                new IntegrationInventory.Query(componentPattern, direction.name().toLowerCase(Locale.ROOT)),
+                components, icos, reader.channels(), reader.esr(), issues.issues());
+    }
+
+    /** All objects of a Directory type (references only). The condition is mandatory; {@code LIKE *} matches all. */
+    private List<XiRef> list(String type) {
+        QueryRequest all = new QueryRequest(Area.DIRECTORY, List.of(type), "MODIFYUSER", "*", "LIKE", false,
+                List.of("RA_XILINK"));
+        return client.query(all).rows().stream().map(r -> r.xiLink()).filter(r -> r != null).toList();
+    }
+
+    /** Receiver components of an ICO: receiver configurations (constant extractors) and the optional key part. */
+    static List<String> receivers(XiObject ico) {
+        List<String> out = new ArrayList<>();
+        if (!ico.id().key(5).isEmpty()) {
+            out.add(ico.id().key(5));
+        }
+        Element content = ico.content();
+        Element configs = content == null ? null : XmlDocs.child(content, "ReceiverConfigurations");
+        if (configs != null) {
+            for (Element rc : XmlDocs.children(configs, "ReceiverConfiguration")) {
+                Element receiver = XmlDocs.child(rc, "Receiver");
+                Element ex = receiver == null ? null : XmlDocs.child(receiver, "ServiceExtractor");
+                Element trd = ex == null ? null : XmlDocs.child(ex, "TRD_EXTRACTOR");
+                String value = trd == null ? null : XmlDocs.childText(trd, "VALUE");
+                if (value != null) {
+                    out.add(value);
+                }
+            }
+        }
+        return out;
+    }
+
+    /**
+     * Case-insensitive glob ({@code *}, {@code ?}). Without wildcards: substring if {@code containsByDefault},
+     * else exact match.
+     */
+    static Pattern glob(String pattern, boolean containsByDefault) {
+        String p = pattern.strip();
+        boolean wildcard = p.contains("*") || p.contains("?");
+        StringBuilder regex = new StringBuilder();
+        for (char ch : p.toCharArray()) {
+            switch (ch) {
+                case '*' -> regex.append(".*");
+                case '?' -> regex.append('.');
+                default -> regex.append(Pattern.quote(String.valueOf(ch)));
+            }
+        }
+        String body = !wildcard && containsByDefault ? ".*" + regex + ".*" : regex.toString();
+        return Pattern.compile(body, Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE);
+    }
+
+    private static String blank(String s) {
+        return s == null || s.isEmpty() ? null : s;
+    }
+}

@@ -27,15 +27,18 @@ class IntegrationReaderTest {
         assertThat(ico.generatedFrom()).isEqualTo("SAPCRM_ApplicationStatus");
         assertThat(ico.sender().component()).isEqualTo("CD1CLNT300");
         assertThat(ico.sender().iface().name()).isEqualTo("ApplicationStatus_Out");
-        assertThat(ico.sender().operation()).isEqualTo("UpdateRequestConfirmation");
+        assertThat(ico.sender().operations()).containsExactly("UpdateRequestConfirmation");
         assertThat(ico.noReceiverBehaviour()).isEqualTo("error");
         assertThat(ico.receivers()).singleElement().satisfies(r -> {
             assertThat(r.component()).isEqualTo("V3S_D");
             assertThat(r.interfaces()).singleElement().satisfies(a -> {
-                assertThat(a.iface().name()).isEqualTo("StateUpdate_In");
+                assertThat(a.operation()).isEqualTo("UpdateRequestConfirmation");
                 assertThat(a.mapping().name())
                         .isEqualTo("ApplicationStatus_UpdateRequestConfirmation_to_StateUpdate_RequestConfirmation_SetEportalId");
-                assertThat(a.multiplicity()).isEqualTo("1");
+                assertThat(a.targets()).singleElement().satisfies(t -> {
+                    assertThat(t.iface().name()).isEqualTo("StateUpdate_In");
+                    assertThat(t.multiplicity()).isEqualTo("1");
+                });
             });
             assertThat(r.channels()).extracting(IntegrationInventory.DirRef::name).containsExactly("REST_RCV_StateUpdate");
         });
@@ -49,6 +52,69 @@ class IntegrationReaderTest {
                 }));
         // ESR objects of PPAS_V3S / PPAS_SAPCRM are not in the exports: reported, not guessed
         assertThat(issues.issues()).extracting(i -> i.code()).containsOnly("UNRESOLVED_OBJECT");
+    }
+
+    /** Link structure of an ICO with two sender operations and a 1:n mapping, as found on xipod (neutral names). */
+    private static final String MULTI_ICO = """
+            <p1:xiObj xmlns:p1="urn:sap-com:xi"><p1:idInfo VID="v"><p1:vc vcType="D"/>
+            <p1:key typeID="AllInOne" oid="ico1"><p1:elem/><p1:elem>SND</p1:elem><p1:elem>urn:a</p1:elem><p1:elem>Order_Out</p1:elem><p1:elem/><p1:elem/></p1:key></p1:idInfo>
+            <p1:generic><p1:lnks>
+            %s
+            </p1:lnks></p1:generic>
+            <p1:content><AllInOne><ReceiverConfigurations><ReceiverConfiguration>
+              <Receiver><ServiceExtractor><TRD_EXTRACTOR><TYPE>KO</TYPE><VALUE>RCV</VALUE></TRD_EXTRACTOR></ServiceExtractor></Receiver>
+              <InterfaceDeterminations>
+                <InterfaceDetermination><Counter>0</Counter><Operation>Change</Operation><SplitItems>
+                  <SplitItem><SplitCounter>0</SplitCounter><Multiplicity>1</Multiplicity></SplitItem>
+                  <SplitItem><SplitCounter>1</SplitCounter><Multiplicity>0..1</Multiplicity></SplitItem></SplitItems></InterfaceDetermination>
+                <InterfaceDetermination><Counter>1</Counter><Operation>Create</Operation><SplitItems>
+                  <SplitItem><SplitCounter>0</SplitCounter><Multiplicity>1</Multiplicity></SplitItem></SplitItems></InterfaceDetermination>
+              </InterfaceDeterminations></ReceiverConfiguration></ReceiverConfigurations></AllInOne></p1:content></p1:xiObj>
+            """.formatted(String.join("\n",
+            link("senderOperation", 0, "S", "ifmoper", "Order_Out.Change", "urn:a"),
+            link("senderOperation", 1, "S", "ifmoper", "Order_Out.Create", "urn:a"),
+            link("MAP0", 0, "S", "MAPPING", "OM_Change", "urn:a"),
+            link("MAP0", 1, "S", "MAPPING", "OM_Create", "urn:a"),
+            link("IIF0$0", 0, "S", "ifmmessif", "Confirmation_In", "urn:a"),
+            link("IIF0$0", 1, "S", "ifmmessif", "Order_In", "urn:a"),
+            link("IIF0$1", 0, "S", "ifmmessif", "Order_In", "urn:a"),
+            link("PAR0_0_LOOKUP", 0, "D", "Channel", "", "RCV", "RFC_LOOKUP"),
+            link("receiverChannel", 12345, "D", "Channel", "", "RCV", "SOAP_RCV")));
+
+    private static String link(String role, int kpos, String vcType, String type, String... key) {
+        String vc = "S".equals(vcType) ? "<p1:vc vcType=\"S\" swcGuid=\"aaaa\"/>" : "<p1:vc vcType=\"D\"/>";
+        StringBuilder elems = new StringBuilder();
+        for (String k : key) {
+            elems.append("<p1:elem>").append(k).append("</p1:elem>");
+        }
+        return "<p1:lnkRole role=\"" + role + "\" kpos=\"" + kpos + "\"><p1:lnk rMode=\"A\">" + vc
+                + "<p1:key typeID=\"" + type + "\">" + elems + "</p1:key></p1:lnk></p1:lnkRole>";
+    }
+
+    @Test
+    void readsMultiOperationIcoWithOneToManyMapping() {
+        IssueLog issues = new IssueLog();
+        IntegrationReader reader = new IntegrationReader(new InMemoryObjectSource(), issues);
+
+        Ico ico = reader.icos(java.util.List.of(io.poxray.xi.XiObjectParser.parse(MULTI_ICO, "multi"))).getFirst();
+
+        assertThat(ico.sender().operations()).containsExactly("Change", "Create");
+        assertThat(ico.receivers()).singleElement().satisfies(r -> {
+            assertThat(r.component()).isEqualTo("RCV");
+            assertThat(r.channels()).extracting(IntegrationInventory.DirRef::name).containsExactly("SOAP_RCV");
+            assertThat(r.interfaces()).hasSize(2);
+            assertThat(r.interfaces().get(0)).satisfies(a -> {
+                assertThat(a.operation()).isEqualTo("Change");
+                assertThat(a.mapping().name()).isEqualTo("OM_Change");
+                assertThat(a.targets()).extracting(t -> t.iface().name() + ":" + t.multiplicity())
+                        .containsExactly("Confirmation_In:1", "Order_In:0..1");
+                assertThat(a.parameters()).containsOnlyKeys("LOOKUP");
+            });
+            assertThat(r.interfaces().get(1)).satisfies(a -> {
+                assertThat(a.mapping().name()).isEqualTo("OM_Create");
+                assertThat(a.targets()).extracting(t -> t.iface().name()).containsExactly("Order_In");
+            });
+        });
     }
 
     @Test

@@ -28,6 +28,9 @@ public final class PoClient {
     private static final Pattern RESPONSE_TEXTAREA =
             Pattern.compile("<textarea[^>]*name=\"response\"[^>]*>(.*?)</textarea>", Pattern.DOTALL | Pattern.CASE_INSENSITIVE);
     private static final Duration TIMEOUT = Duration.ofMinutes(2);
+    /** First {@code some.package.SomeException: message} of a stack trace (up to the first frame). */
+    private static final Pattern EXCEPTION =
+            Pattern.compile("\\b(?:[a-z][\\w$]*\\.)+[A-Z][\\w$]*(?:Exception|Error)\\b:?[^\\n]*?(?=\\s+at\\s+[\\w$.]+\\(|$)");
 
     private final PoSystem system;
     private final HttpClient http;
@@ -35,6 +38,7 @@ public final class PoClient {
 
     public PoClient(PoSystem system) {
         this(system, HttpClient.newBuilder()
+                .version(HttpClient.Version.HTTP_1_1) // no h2c upgrade attempt: SAP AS Java answers it with 403
                 .connectTimeout(Duration.ofSeconds(30))
                 .followRedirects(HttpClient.Redirect.NEVER) // a redirect means: logon page
                 .build());
@@ -145,10 +149,15 @@ public final class PoClient {
         return html.contains("j_username") && html.contains("j_password");
     }
 
-    /** A short plain-text excerpt of an HTML error page. */
+    /** A short plain-text excerpt of an HTML error page; for Java stack traces the first exception and message. */
     static String errorText(String html) {
         String text = unescapeHtml(html.replaceAll("(?is)<(script|style)\\b.*?</\\1>", " ").replaceAll("<[^>]+>", " "))
                 .replaceAll("\\s+", " ").strip();
+        Matcher ex = EXCEPTION.matcher(text);
+        if (ex.find()) {
+            String message = ex.group(0).replaceAll("\\s+at\\s+[\\w$.]+\\(.*$", "").strip();
+            return message.length() > 400 ? message.substring(0, 400) + "…" : message;
+        }
         int i = text.toLowerCase(java.util.Locale.ROOT).indexOf("exception");
         String excerpt = i >= 0 ? text.substring(Math.max(0, i - 80)) : text;
         return excerpt.length() > 400 ? excerpt.substring(0, 400) + "…" : excerpt;

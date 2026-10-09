@@ -108,16 +108,19 @@ public final class IntegrationReader {
         ObjRef senderIf = o.link("outboundInterface").map(l -> objRef(l.target())).orElse(
                 new ObjRef("ifmmessif", id.key(3), id.key(2), null, null, null));
         o.link("outboundInterface").ifPresent(l -> serviceInterface(l.target()));
-        String operation = o.link("senderOperation").map(l -> operationName(l.target().key(0))).orElse(null);
+        List<String> operations = o.links("senderOperation").stream()
+                .sorted(java.util.Comparator.comparingInt(XiLink::kpos))
+                .map(l -> operationName(l.target().key(0))).toList();
         DirRef senderChannel = o.link("senderChannel").map(l -> channel(l.target())).orElse(null);
-        Endpoint sender = new Endpoint(blank(id.key(0)), blank(id.key(1)), senderIf, operation, senderChannel);
+        Endpoint sender = new Endpoint(blank(id.key(0)), blank(id.key(1)), senderIf, operations, senderChannel);
 
         List<Receiver> receivers = new ArrayList<>();
         Element content = o.content();
         Element configs = content == null ? null : XmlDocs.child(content, "ReceiverConfigurations");
         if (configs != null) {
+            int index = 0;
             for (Element rc : XmlDocs.children(configs, "ReceiverConfiguration")) {
-                receivers.add(receiver(o, rc));
+                receivers.add(receiver(o, rc, index++));
             }
         }
         if (receivers.isEmpty() && !id.key(5).isEmpty()) {
@@ -133,7 +136,13 @@ public final class IntegrationReader {
                 o.modifiedAt());
     }
 
-    private Receiver receiver(XiObject ico, Element rc) {
+    /**
+     * One receiver (index {@code r} = position of the receiver configuration). Link roles verified on xipod:
+     * {@code MAP<r>} with kpos = interface determination counter → operation mapping; {@code IIF<r>$<counter>}
+     * (or {@code IIF<r>} for single determinations) with kpos = split counter → target interfaces;
+     * {@code PAR<r>_<counter>_<parameter>} → channel bound to a mapping parameter.
+     */
+    private Receiver receiver(XiObject ico, Element rc, int r) {
         Element receiver = XmlDocs.child(rc, "Receiver");
         String party = extractor(receiver, "PartyExtractor");
         String component = extractor(receiver, "ServiceExtractor");
@@ -146,19 +155,38 @@ public final class IntegrationReader {
         Element dets = XmlDocs.child(rc, "InterfaceDeterminations");
         if (dets != null) {
             for (Element d : XmlDocs.children(dets, "InterfaceDetermination")) {
-                String counter = XmlDocs.childText(d, "Counter");
-                Optional<XiLink> iif = ico.link("IIF" + counter);
-                Optional<XiLink> map = ico.link("MAP" + counter);
-                iif.ifPresent(l -> serviceInterface(l.target()));
+                String counterText = XmlDocs.childText(d, "Counter");
+                int counter = counterText == null ? 0 : Integer.parseInt(counterText);
+                Optional<XiLink> map = ico.links("MAP" + r).stream().filter(l -> l.kpos() == counter).findFirst();
                 map.ifPresent(l -> operationMapping(l.target()));
-                String multiplicity = null;
+
+                Map<Integer, String> multiplicities = new LinkedHashMap<>();
                 Element split = XmlDocs.child(d, "SplitItems");
-                if (split != null && XmlDocs.child(split, "SplitItem") != null) {
-                    multiplicity = XmlDocs.childText(XmlDocs.child(split, "SplitItem"), "Multiplicity");
+                if (split != null) {
+                    for (Element item : XmlDocs.children(split, "SplitItem")) {
+                        String sc = XmlDocs.childText(item, "SplitCounter");
+                        multiplicities.put(sc == null ? 0 : Integer.parseInt(sc), XmlDocs.childText(item, "Multiplicity"));
+                    }
+                }
+                // IIF<r>$<counter>: kpos = split counter; plain IIF<r>: kpos = counter, single split item
+                List<XiLink> iifs = ico.links("IIF" + r + "$" + counter);
+                boolean perSplit = !iifs.isEmpty();
+                if (!perSplit) {
+                    iifs = ico.links("IIF" + r).stream().filter(l -> l.kpos() == counter).toList();
+                }
+                List<IntegrationInventory.Target> targets = new ArrayList<>();
+                for (XiLink l : iifs.stream().sorted(java.util.Comparator.comparingInt(XiLink::kpos)).toList()) {
+                    serviceInterface(l.target());
+                    targets.add(new IntegrationInventory.Target(objRef(l.target()),
+                            multiplicities.get(perSplit ? l.kpos() : 0)));
+                }
+                Map<String, DirRef> parameters = new LinkedHashMap<>();
+                String prefix = "PAR" + r + "_" + counter + "_";
+                for (XiLink l : ico.linksStartingWith(prefix)) {
+                    parameters.put(l.role().substring(prefix.length()), channel(l.target()));
                 }
                 assignments.add(new InterfaceAssignment(XmlDocs.childText(d, "Operation"),
-                        iif.map(l -> objRef(l.target())).orElse(null),
-                        map.map(l -> objRef(l.target())).orElse(null), multiplicity));
+                        map.map(l -> objRef(l.target())).orElse(null), targets, parameters));
             }
         }
         List<DirRef> receiverChannels = new ArrayList<>();
@@ -410,9 +438,15 @@ public final class IntegrationReader {
     private Optional<XiObject> resolve(XiRef ref) {
         Optional<XiObject> o = source.resolve(ref);
         if (o.isEmpty()) {
-            issues.warn("UNRESOLVED_OBJECT", "Object not found: " + ref.label()
-                            + (ref.swcCaption() == null ? "" : " (" + ref.swcCaption() + ")"),
-                    IssueLog.at(null, null, new Ref(ref.oid(), ref.label()), null), null);
+            String where = ref.swcCaption() == null ? "" : " (" + ref.swcCaption() + ")";
+            Optional<String> failure = source.failure(ref);
+            if (failure.isPresent()) {
+                issues.warn("OBJECT_NOT_READABLE", "Object " + ref.label() + where + " cannot be read: " + failure.get(),
+                        IssueLog.at(null, null, new Ref(ref.oid(), ref.label()), null), null);
+            } else {
+                issues.warn("UNRESOLVED_OBJECT", "Object not found: " + ref.label() + where,
+                        IssueLog.at(null, null, new Ref(ref.oid(), ref.label()), null), null);
+            }
         }
         return o;
     }

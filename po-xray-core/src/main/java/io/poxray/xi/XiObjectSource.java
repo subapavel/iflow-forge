@@ -10,4 +10,9 @@ public interface XiObjectSource {
 
     /** The object a reference points to (resolved by OID if present, else by type + SWCV + key). */
     Optional<XiObject> resolve(XiRef ref);
+
+    /** Why the last {@link #resolve} of {@code ref} returned nothing (e.g. the server's error), if known. */
+    default Optional<String> failure(XiRef ref) {
+        return Optional.empty();
+    }
 }

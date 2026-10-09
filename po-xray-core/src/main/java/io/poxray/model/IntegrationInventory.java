@@ -55,7 +55,8 @@ public record IntegrationInventory(
             String modifiedAt) {
     }
 
-    public record Endpoint(String party, String component, ObjRef iface, String operation, DirRef channel) {
+    /** Sender: interface, the operations covered by the ICO and the sender channel. */
+    public record Endpoint(String party, String component, ObjRef iface, List<String> operations, DirRef channel) {
     }
 
     /** {@code condition}: routing condition as stored (null = unconditional). */
@@ -63,8 +64,16 @@ public record IntegrationInventory(
             List<DirRef> channels) {
     }
 
-    /** Receiver interface determination: target interface / operation and the operation mapping used. */
-    public record InterfaceAssignment(String operation, ObjRef iface, ObjRef mapping, String multiplicity) {
+    /**
+     * Receiver interface determination for one sender operation: the operation mapping and its target interfaces
+     * (more than one for 1:n mappings), plus mapping parameters bound to channels (e.g. RFC lookup channels).
+     */
+    public record InterfaceAssignment(String operation, ObjRef mapping, List<Target> targets,
+            Map<String, DirRef> parameters) {
+    }
+
+    /** Target interface of an interface determination with its multiplicity ({@code 1}, {@code 0..1}, ...). */
+    public record Target(ObjRef iface, String multiplicity) {
     }
 
     /**

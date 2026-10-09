@@ -12,7 +12,9 @@ import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HexFormat;
+import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Objects read online ({@code read/ext}) and kept as raw {@code xiObj} XML in a local snapshot directory, so that
@@ -24,6 +26,7 @@ public final class CachingObjectSource implements XiObjectSource {
     private final PoClient client;
     private final Path directory;
     private final boolean refresh;
+    private final Map<Path, String> failures = new ConcurrentHashMap<>();
 
     public CachingObjectSource(PoClient client, Path directory, boolean refresh) {
         this.client = client;
@@ -56,8 +59,14 @@ public final class CachingObjectSource implements XiObjectSource {
             if (e.getMessage() != null && e.getMessage().contains("authentication failed")) {
                 throw e;
             }
-            return Optional.empty(); // deleted or not readable: reported by the caller as unresolved
+            failures.put(file, e.getMessage());
+            return Optional.empty(); // deleted or not renderable: reported by the caller with this reason
         }
+    }
+
+    @Override
+    public Optional<String> failure(XiRef ref) {
+        return ref == null || ref.typeId() == null ? Optional.empty() : Optional.ofNullable(failures.get(fileOf(ref)));
     }
 
     Path fileOf(XiRef ref) {
