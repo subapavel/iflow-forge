@@ -210,7 +210,7 @@ def main(plugins_dir, out_path):
         'xsdTypes': dict(sorted(xsd.items())),
         'sapTypes': dict(sorted(sap.items())),
     }
-    with open(out_path, 'w', encoding='utf-8') as fh:
+    with open(out_path, 'w', encoding='utf-8', newline='\n') as fh:  # LF on every platform
         json.dump(out, fh, indent=1, ensure_ascii=False)
     print(f'{len(functions)} functions, {len(triggers)} triggers, {len(xsd)} XSD types, '
           f'{len(sap)} SAP types -> {out_path}')
