@@ -128,8 +128,12 @@ public final class PoClient {
         }
         int status = resp.statusCode();
         String body = resp.body();
-        if (status == 401 || status == 403 || (status / 100 == 3) || isLogonPage(body)) {
+        if (status == 401 || (status / 100 == 3) || isLogonPage(body)) {
             throw new PoException(what + ": authentication failed for " + system + " (HTTP " + status + ")");
+        }
+        if (status == 403) {
+            throw new PoException(what + ": authentication failed or not authorized for " + system
+                    + " (HTTP 403; roles SAP_XI_DISPLAY_USER_J2EE / SAP_XI_API_DISPLAY_J2EE needed): " + errorText(body));
         }
         if (status != 200) {
             throw new PoException(what + ": HTTP " + status + ": " + errorText(body));
@@ -143,7 +147,7 @@ public final class PoClient {
 
     /** A short plain-text excerpt of an HTML error page. */
     static String errorText(String html) {
-        String text = unescapeHtml(html.replaceAll("(?s)<script.*?</script>", " ").replaceAll("<[^>]+>", " "))
+        String text = unescapeHtml(html.replaceAll("(?is)<(script|style)\\b.*?</\\1>", " ").replaceAll("<[^>]+>", " "))
                 .replaceAll("\\s+", " ").strip();
         int i = text.toLowerCase(java.util.Locale.ROOT).indexOf("exception");
         String excerpt = i >= 0 ? text.substring(Math.max(0, i - 80)) : text;
