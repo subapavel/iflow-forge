@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import io.poxray.IssueLog;
 import io.poxray.PoXray;
+import io.poxray.doc.DocFormat;
+import io.poxray.doc.Documentation;
 import io.poxray.model.BpmComponent;
 import io.poxray.model.EjbModule;
 import io.poxray.model.Function;
@@ -64,6 +66,18 @@ class SyntheticScaTest {
         });
         assertThat(inv.issues()).filteredOn(i -> i.code().equals("DEPLOYED_SOURCE_DIFFERS")).singleElement()
                 .satisfies(i -> assertThat(i.message()).contains("com/acme/Calc.java").doesNotContain("CalcLocal"));
+    }
+
+    @Test
+    void generatesDocumentation(@TempDir Path dir) throws IOException {
+        Path sca = dir.resolve("ACME.sca");
+        Files.write(sca, sca(BEAN_V1));
+        ScaInventory inv = PoXray.read(sca);
+
+        for (DocFormat format : DocFormat.values()) {
+            String doc = Documentation.render(inv, format);
+            assertThat(doc).contains("CALC", "acme.com/calc/ejb", "Calc");
+        }
     }
 
     @Test

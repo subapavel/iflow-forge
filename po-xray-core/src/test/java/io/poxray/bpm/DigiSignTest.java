@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.tuple;
 
 import io.poxray.PoXray;
 import io.poxray.TestData;
+import io.poxray.doc.DocFormat;
+import io.poxray.doc.Documentation;
 import io.poxray.json.Json;
 import io.poxray.model.BpmComponent;
 import io.poxray.model.EjbModule;
@@ -294,6 +296,46 @@ class DigiSignTest {
         assertThat(issues("MISSING_SOURCE")).isEmpty();
         assertThat(issues("EJB_INTERFACE_MISMATCH")).isEmpty();
         assertThat(issues("DEPLOYED_SOURCE_DIFFERS")).isEmpty();
+    }
+
+    @Test
+    void generatesDocumentationInBothFormats() throws java.io.IOException {
+        String md = Documentation.render(inventory, DocFormat.MARKDOWN);
+        String jira = Documentation.render(inventory, DocFormat.JIRA);
+        java.nio.file.Files.writeString(Path.of("target/testoutput/EONBPMDIGI00_0.md"), md);
+        java.nio.file.Files.writeString(Path.of("target/testoutput/EONBPMDIGI00_0.jira.txt"), jira);
+
+        assertThat(md).startsWith("# Obsah SAP PO: EON\\_BPM\\_DIGISIGN")
+                .contains("### Proces digisign\\_envelope", "```mermaid", "##### Create envelope recipient",
+                        "**moveCorresponding** (automatické mapování stejnojmenných polí)",
+                        "`DO_TagsIndex < DO_TagsCount`", "## Nálezy", "## Příloha: datové typy");
+        assertThat(jira).startsWith("h1. Obsah SAP PO: EON\\_BPM\\_DIGISIGN")
+                .contains("h3. Proces digisign\\_envelope", "h5. Create envelope recipient",
+                        "*moveCorresponding* (automatické mapování stejnojmenných polí)", "||Cíl||Zdroj||Režim||")
+                .doesNotContain("flowchart");
+        assertTablesConsistent(md, "| ");
+        assertTablesConsistent(jira, "|");
+
+        String english = Documentation.render(inventory, DocFormat.MARKDOWN, java.util.Locale.ENGLISH);
+        assertThat(english).contains("### Process digisign\\_envelope", "fields with equal names are mapped automatically");
+    }
+
+    /** Every row of a table has the same number of unescaped cell separators as the table's first line. */
+    private static void assertTablesConsistent(String doc, String rowPrefix) {
+        int expected = -1;
+        for (String lineText : doc.split("\n")) {
+            if (!lineText.startsWith(rowPrefix.substring(0, 1))) {
+                expected = -1;
+                continue;
+            }
+            int pipes = lineText.replace("\\\\", "").replaceAll("\\\\\\|", "").replace("||", "|").length()
+                    - lineText.replace("\\\\", "").replaceAll("\\\\\\|", "").replace("||", "|").replace("|", "").length();
+            if (expected < 0) {
+                expected = pipes;
+            } else {
+                assertThat(pipes).as("cells in row: %s", lineText).isEqualTo(expected);
+            }
+        }
     }
 
     @Test
