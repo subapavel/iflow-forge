@@ -7,6 +7,8 @@ Sources (NWDS plugins dir):
       rep/wsdl/xml_schema.types                                       (XSD built-in types)
   com.sap.tc.ap.bpemcontent_*.jar -> DC sap.com/tc/bpem/content/predefs/default
       src/functions/**/*.function                                     (principal functions, getExternalUser)
+      src/triggers/*.eventdef                                         (standard triggers: TechnicalError, deadlines,
+                                                                       escalations, default message/timer triggers)
 
 Usage: python3 gen_bpm_builtin_functions.py <nwds-plugins-dir> <output.json>
 Output is derived from SAP software: keep it in private repositories only.
@@ -151,26 +153,67 @@ def read_functions(data, name, xsd, plugin, dc):
     return out
 
 
+EVENT_DEFINITIONS = {'ErrorEventDefinition': 'error', 'MessageEventDefinition': 'message',
+                     'TimerEventDefinition': 'timer'}
+
+
+def read_triggers(data, name, types, plugin, dc):
+    """Standard event definitions of an .eventdef partition (one file may hold several, e.g. a message
+    trigger with its fault). Parameter = XSD element linked via EventDefinitionHasParameter."""
+    el, links = load_partition(data)
+    param_of = {s: f for a, f, s in links if a == 'EventDefinitionHasParameter'}
+    type_of = {f: s for a, f, s in links if a == 'TypeDefinitionForElementDeclaration'}
+    out = []
+    for tid, (mc, d) in el.items():
+        if mc not in EVENT_DEFINITIONS:
+            continue
+        p = param_of.get(tid)
+        parameter = None
+        if p in el:
+            pd = el[p][1]
+            type_id = type_of.get(p)
+            parameter = {'name': pd.get('name'), 'namespace': pd.get('namespace'),
+                         'type': types.get(type_id, type_id)}
+        out.append({
+            'id': tid,
+            'kind': EVENT_DEFINITIONS[mc],
+            'name': d.get('name'),
+            'documentation': d.get('documentation'),
+            'isCritical': d.get('isCritical') == 'true',
+            'isTechnical': d.get('isTechnical') == 'true',
+            'parameter': parameter,
+            'file': name,
+            'sourcePlugin': plugin,
+            'sourceDc': dc,
+        })
+    return out
+
+
 def main(plugins_dir, out_path):
     sources = list(open_sources(plugins_dir))
     xsd, sap = read_types([s[2] for s in sources])
     all_types = {**sap, **xsd}
-    functions = []
+    functions, triggers = [], []
     for plugin, dc, dc_zip, prefix in sources:
         for name in sorted(n for n in dc_zip.namelist() if n.startswith(prefix) and n.endswith('.function')):
             functions.extend(read_functions(dc_zip.read(name), name, all_types, plugin, dc))
+        for name in sorted(n for n in dc_zip.namelist() if n.startswith('src/triggers/') and n.endswith('.eventdef')):
+            triggers.extend(read_triggers(dc_zip.read(name), name, all_types, plugin, dc))
     functions.sort(key=lambda o: (o['category'], o['name'], o['id']))
+    triggers.sort(key=lambda o: (o['kind'], o['name'], o['id']))
     out = {
         # 'source' = primary source (object, read by BuiltinFunctionCatalog); further sources listed separately
         'source': {'plugin': sources[0][0], 'dc': sources[0][1]},
         'additionalSources': [{'plugin': s[0], 'dc': s[1]} for s in sources[1:]],
         'functions': functions,
+        'triggers': triggers,
         'xsdTypes': dict(sorted(xsd.items())),
         'sapTypes': dict(sorted(sap.items())),
     }
     with open(out_path, 'w', encoding='utf-8') as fh:
         json.dump(out, fh, indent=1, ensure_ascii=False)
-    print(f'{len(functions)} functions, {len(xsd)} XSD types, {len(sap)} SAP types -> {out_path}')
+    print(f'{len(functions)} functions, {len(triggers)} triggers, {len(xsd)} XSD types, '
+          f'{len(sap)} SAP types -> {out_path}')
 
 
 if __name__ == '__main__':

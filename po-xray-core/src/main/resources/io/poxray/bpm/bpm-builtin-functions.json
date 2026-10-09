@@ -5062,6 +5062,168 @@
    "sourceDc": "sap.com/tc/bpem/content/predefs/types"
   }
  ],
+ "triggers": [
+  {
+   "id": "48EA291D263E372093B811DDBA87001742235CDE",
+   "kind": "error",
+   "name": "CompletionDeadlineIsCriticalException",
+   "documentation": "The exception which is thrown if completion deadline was marked as critical",
+   "isCritical": true,
+   "isTechnical": false,
+   "parameter": {
+    "name": "CompletionDeadlineIsCriticalException",
+    "namespace": "sap_com_tc_bpem_content_predefs_default_StandaloneTask_DefaultTask",
+    "type": "TaskException"
+   },
+   "file": "src/triggers/CompletionDeadlineIsCriticalException.eventdef",
+   "sourcePlugin": "com.sap.tc.ap.bpemcontent_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/default"
+  },
+  {
+   "id": "48EA291D264A451093B811DDB8D1001742235CDE",
+   "kind": "error",
+   "name": "CompletionDeadlineIsNonCriticalException",
+   "documentation": "The exception which is thrown if start deadline was marked as non-critical",
+   "isCritical": false,
+   "isTechnical": false,
+   "parameter": {
+    "name": "CompletionDeadlineIsNonCriticalException",
+    "namespace": "sap_com_tc_bpem_content_predefs_default_StandaloneTask_DefaultTask",
+    "type": "TaskException"
+   },
+   "file": "src/triggers/CompletionDeadlineIsNonCriticalException.eventdef",
+   "sourcePlugin": "com.sap.tc.ap.bpemcontent_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/default"
+  },
+  {
+   "id": "493EA31339B3D260C61211DD928C001742235CDE",
+   "kind": "error",
+   "name": "DefaultEscalationCritical",
+   "documentation": "A generic critical  Escalation that can be used for multi purpose. The payload is a string.",
+   "isCritical": true,
+   "isTechnical": false,
+   "parameter": {
+    "name": "parameters",
+    "namespace": "sap.com/tc/bpem/content/predefs/default/DefaultEscalationCritical",
+    "type": "string"
+   },
+   "file": "src/triggers/defaultescalationcritical.eventdef",
+   "sourcePlugin": "com.sap.tc.ap.bpemcontent_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/default"
+  },
+  {
+   "id": "493E9D6BDADC10C0C60E11DD8E6E001742235CDE",
+   "kind": "error",
+   "name": "DefaultEscalationNonCritical",
+   "documentation": "A generic non-critical  Escalation that can be used for multi purpose. The payload is a string.",
+   "isCritical": false,
+   "isTechnical": false,
+   "parameter": {
+    "name": "parameters",
+    "namespace": "test.sap.com/tc/alittleprocess/DefaultEscalationNonCritical",
+    "type": "string"
+   },
+   "file": "src/triggers/defaultescalationnoncritical.eventdef",
+   "sourcePlugin": "com.sap.tc.ap.bpemcontent_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/default"
+  },
+  {
+   "id": "49429615D5C12112C86C11DDCEEB001742235CDE",
+   "kind": "error",
+   "name": "DefaultService_Fault",
+   "documentation": "",
+   "isCritical": false,
+   "isTechnical": false,
+   "parameter": null,
+   "file": "src/triggers/defaultservice_empty.eventdef",
+   "sourcePlugin": "com.sap.tc.ap.bpemcontent_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/default"
+  },
+  {
+   "id": "48EA291B250D0A2093B811DDCB4A001742235CDE",
+   "kind": "error",
+   "name": "StartDeadlineIsCriticalException",
+   "documentation": "The exception which is thrown if start deadline was marked as critical",
+   "isCritical": true,
+   "isTechnical": false,
+   "parameter": {
+    "name": "StartDeadlineIsCriticalException",
+    "namespace": "sap_com_tc_bpem_content_predefs_default_StandaloneTask_DefaultTask",
+    "type": "TaskException"
+   },
+   "file": "src/triggers/StartDeadlineIsCriticalException.eventdef",
+   "sourcePlugin": "com.sap.tc.ap.bpemcontent_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/default"
+  },
+  {
+   "id": "48EA291D262B245093B811DD8FB4001742235CDE",
+   "kind": "error",
+   "name": "StartDeadlineIsNonCriticalException",
+   "documentation": "The exception which is thrown if start deadline was marked as non-critical",
+   "isCritical": false,
+   "isTechnical": false,
+   "parameter": {
+    "name": "StartDeadlineIsNonCriticalException",
+    "namespace": "sap_com_tc_bpem_content_predefs_default_StandaloneTask_DefaultTask",
+    "type": "TaskException"
+   },
+   "file": "src/triggers/StartDeadlineIsNonCriticalException.eventdef",
+   "sourcePlugin": "com.sap.tc.ap.bpemcontent_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/default"
+  },
+  {
+   "id": "E0EE4DB2B3D39C3FEAEE11E2BF54001999A12632",
+   "kind": "error",
+   "name": "TechnicalError",
+   "documentation": "The error that is thrown when a technical exception occurs. This error is always critical.",
+   "isCritical": true,
+   "isTechnical": true,
+   "parameter": {
+    "name": "parameters",
+    "namespace": "sap.com/tc/bpem/content/predefs/default/TechnicalError",
+    "type": "TechnicalErrorType"
+   },
+   "file": "src/triggers/technicalerror.eventdef",
+   "sourcePlugin": "com.sap.tc.ap.bpemcontent_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/default"
+  },
+  {
+   "id": "493960185D44DFB0C2EF11DDB091001742235CDE",
+   "kind": "message",
+   "name": "DefaultService_Empty",
+   "documentation": "Default Trigger for DefaultService, Operation Empty. Using this trigger usually means that you don't expose your project as WebService.",
+   "isCritical": false,
+   "isTechnical": false,
+   "parameter": null,
+   "file": "src/triggers/defaultservice_empty.eventdef",
+   "sourcePlugin": "com.sap.tc.ap.bpemcontent_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/default"
+  },
+  {
+   "id": "493960A4B0B001C0C2EF11DDC247001742235CDE",
+   "kind": "message",
+   "name": "DefaultService_EmptyAsync",
+   "documentation": "Default Trigger for DefaultService, Operation EmptyAsync. Using this trigger usually means that you don't expose your project as WebService.",
+   "isCritical": false,
+   "isTechnical": false,
+   "parameter": null,
+   "file": "src/triggers/defaultservice_emptyasync.eventdef",
+   "sourcePlugin": "com.sap.tc.ap.bpemcontent_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/default"
+  },
+  {
+   "id": "493D0CDE1B6FF3D0C52011DDBD5E001742235CDE",
+   "kind": "timer",
+   "name": "DefaultTimer",
+   "documentation": "",
+   "isCritical": false,
+   "isTechnical": false,
+   "parameter": null,
+   "file": "src/triggers/defaulttimer.eventdef",
+   "sourcePlugin": "com.sap.tc.ap.bpemcontent_7.3.0.250825003525.jar",
+   "sourceDc": "sap.com/tc/bpem/content/predefs/default"
+  }
+ ],
  "xsdTypes": {
   "4743E046A4700C52980411DCADE30011252E548A": "string",
   "4743E048A5AA8822980411DC94DD0011252E548A": "anySimpleType",
