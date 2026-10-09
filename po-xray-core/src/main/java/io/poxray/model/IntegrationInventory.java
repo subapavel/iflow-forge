@@ -121,7 +121,8 @@ public record IntegrationInventory(
             List<MessageType> messageTypes,
             List<DataType> dataTypes,
             List<ExternalDefinition> externalDefinitions,
-            List<ObjRef> mappingPrograms) {
+            List<ObjRef> mappingPrograms,
+            List<FunctionLibrary> functionLibraries) {
     }
 
     /** {@code category}: I inbound | O outbound | A abstract; {@code pattern}: interface pattern (L = stateless). */
@@ -146,7 +147,59 @@ public record IntegrationInventory(
     public record MappingStep(String kind, ObjRef program, ObjRef sourceMessage, ObjRef targetMessage) {
     }
 
-    public record MessageMapping(ObjRef id, ObjRef source, ObjRef target, String multiplicity, String description) {
+    /** Graphical message mapping; {@code logic}: field logic and user-defined functions (null if unreadable). */
+    public record MessageMapping(ObjRef id, ObjRef source, ObjRef target, String multiplicity, String description,
+            MappingLogic logic) {
+    }
+
+    /**
+     * Field logic of a message mapping (from its MetaData blob).
+     *
+     * @param namespaces     prefix → namespace URI of the prefixes used in paths
+     * @param fields         mapped target fields in mapping order
+     * @param disabledFields target fields switched off ("disabled" in the mapping editor)
+     * @param parameters     mapping parameters (import / export)
+     * @param libraries      function libraries used ({@code FUNC_LIB}), details in {@link Esr#functionLibraries}
+     * @param localFunctions user-defined functions of the mapping itself (null if none)
+     */
+    public record MappingLogic(Map<String, String> namespaces, List<FieldMapping> fields, List<String> disabledFields,
+            List<MappingParameter> parameters, List<ObjRef> libraries, FunctionLibrary localFunctions) {
+    }
+
+    /**
+     * One target field: {@code expression} is the mapping as a function term over source paths, e.g.
+     * {@code concat(/ns0:A/B, "-", Lib.fn(/ns0:A/C))}; standard functions keep their SAP names ({@code iF},
+     * {@code createIf}, {@code FixValues}, ...), constants are quoted, mapping parameters are {@code $name}.
+     * {@code sources}: source paths used.
+     */
+    public record FieldMapping(String target, String expression, List<String> sources) {
+    }
+
+    /** {@code type}: XSD type or {@code channel:<adapter>}; {@code direction}: import | export. */
+    public record MappingParameter(String name, String type, String direction, boolean mandatory) {
+    }
+
+    /**
+     * User-defined functions: a function library ({@code FUNC_LIB}) or the local functions of a message mapping
+     * ({@code id} null). {@code imports}: imports beyond the SAP defaults; {@code globals}, {@code init},
+     * {@code cleanup}: Java code (null if empty); {@code archives}: imported archives ({@code TRAFO_JAR}) on the class
+     * path; {@code sapApis}: SAP APIs used in globals / init / cleanup.
+     */
+    public record FunctionLibrary(ObjRef id, List<String> imports, String globals, String init, String cleanup,
+            List<UserFunction> functions, List<ObjRef> archives, List<String> sapApis, String description) {
+    }
+
+    /**
+     * User-defined function. {@code key}: ID used in mapping metadata; {@code execution}: singleValues |
+     * contextValues | queueValues (UDF execution type); {@code sapApis}: SAP APIs used by the code (LookupService,
+     * DynamicConfiguration, Trace, GlobalContainer, StructureNode, ValueMapping, JDBC, MessageHeader, ...).
+     */
+    public record UserFunction(String key, String name, String title, String description, String execution,
+            List<FunctionArgument> arguments, String code, List<String> sapApis) {
+    }
+
+    /** {@code kind}: input | result | parameter. */
+    public record FunctionArgument(String name, String kind, String javaType, String description) {
     }
 
     public record MessageType(ObjRef id, ObjRef dataType, String xmlNamespace, String description) {

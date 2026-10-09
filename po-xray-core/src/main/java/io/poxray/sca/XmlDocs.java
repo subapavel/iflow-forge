@@ -31,9 +31,12 @@ public final class XmlDocs {
         }
     }
 
-    /** Direct child elements with the given local name (any namespace). */
+    /** Direct child elements with the given local name (any namespace); empty for a null parent. */
     public static List<Element> children(Element parent, String localName) {
         List<Element> out = new ArrayList<>();
+        if (parent == null) {
+            return out;
+        }
         for (Node n = parent.getFirstChild(); n != null; n = n.getNextSibling()) {
             if (n instanceof Element e && localName.equals(e.getLocalName())) {
                 out.add(e);

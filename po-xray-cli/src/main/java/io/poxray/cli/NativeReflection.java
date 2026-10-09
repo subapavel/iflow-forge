@@ -57,6 +57,9 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
             IntegrationInventory.Module.class, IntegrationInventory.Esr.class, IntegrationInventory.ServiceInterface.class,
             IntegrationInventory.Operation.class, IntegrationInventory.OperationMapping.class,
             IntegrationInventory.MappingStep.class, IntegrationInventory.MessageMapping.class,
+            IntegrationInventory.MappingLogic.class, IntegrationInventory.FieldMapping.class,
+            IntegrationInventory.MappingParameter.class, IntegrationInventory.FunctionLibrary.class,
+            IntegrationInventory.UserFunction.class, IntegrationInventory.FunctionArgument.class,
             IntegrationInventory.MessageType.class, IntegrationInventory.DataType.class,
             IntegrationInventory.ExternalDefinition.class
         },

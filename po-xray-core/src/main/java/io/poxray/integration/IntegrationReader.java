@@ -7,6 +7,7 @@ import io.poxray.model.IntegrationInventory.DataType;
 import io.poxray.model.IntegrationInventory.DirRef;
 import io.poxray.model.IntegrationInventory.Endpoint;
 import io.poxray.model.IntegrationInventory.ExternalDefinition;
+import io.poxray.model.IntegrationInventory.FunctionLibrary;
 import io.poxray.model.IntegrationInventory.Ico;
 import io.poxray.model.IntegrationInventory.InterfaceAssignment;
 import io.poxray.model.IntegrationInventory.MappingStep;
@@ -20,6 +21,7 @@ import io.poxray.model.IntegrationInventory.Receiver;
 import io.poxray.model.IntegrationInventory.ServiceInterface;
 import io.poxray.model.Ref;
 import io.poxray.sca.XmlDocs;
+import io.poxray.xi.XiBlob;
 import io.poxray.xi.XiLink;
 import io.poxray.xi.XiObject;
 import io.poxray.xi.XiObjectSource;
@@ -65,6 +67,7 @@ public final class IntegrationReader {
     private final Map<String, DataType> dataTypes = new LinkedHashMap<>();
     private final Map<String, ExternalDefinition> externalDefinitions = new LinkedHashMap<>();
     private final Map<String, ObjRef> mappingPrograms = new LinkedHashMap<>();
+    private final Map<String, FunctionLibrary> functionLibraries = new LinkedHashMap<>();
 
     public IntegrationReader(XiObjectSource source, IssueLog issues) {
         this.source = source;
@@ -95,7 +98,7 @@ public final class IntegrationReader {
         return new IntegrationInventory.Esr(List.copyOf(interfaces.values()), List.copyOf(operationMappings.values()),
                 List.copyOf(messageMappings.values()), List.copyOf(messageTypes.values()),
                 List.copyOf(dataTypes.values()), List.copyOf(externalDefinitions.values()),
-                List.copyOf(mappingPrograms.values()));
+                List.copyOf(mappingPrograms.values()), List.copyOf(functionLibraries.values()));
     }
 
     // ------------------------------------------------------------------------------------------ ICO
@@ -399,8 +402,78 @@ public final class IntegrationReader {
             messageMappings.put(key(ref), new MessageMapping(objRef(o.id()),
                     o.link("SOURCE_IFR_MESS").map(l -> message(l.target())).orElse(null),
                     o.link("TARGET_IFR_MESS").map(l -> message(l.target())).orElse(null),
-                    c == null ? null : XmlDocs.childText(c, "Multiplicity"), o.description()));
+                    c == null ? null : XmlDocs.childText(c, "Multiplicity"), o.description(), mappingLogic(o)));
         });
+    }
+
+    /** Field logic from the MetaData blob; function libraries are read through the {@code UsedFuncLib} links. */
+    private IntegrationInventory.MappingLogic mappingLogic(XiObject o) {
+        Element blob = XmlDocs.child(XmlDocs.child(o.content(), "MetaData"), "blob");
+        if (blob == null) {
+            return null;
+        }
+        Map<String, XiRef> libraryLinks = new LinkedHashMap<>();
+        for (XiLink l : o.links("UsedFuncLib")) {
+            libraryLinks.put(l.target().key(0) + "|" + l.target().key(1), l.target());
+        }
+        Ref at = new Ref(o.id().oid(), o.id().label());
+        try {
+            Element root = XmlDocs.parse(XiBlob.payload(blob), o.id().label()).getDocumentElement();
+            IntegrationInventory.MappingLogic logic = MappingLogicReader.mapping(root, MappingLogicReader.parameters(o.content(),
+                    role -> o.link(role).map(l -> l.target().key(0)).orElse(null)), lib -> {
+                XiRef target = libraryLinks.get(lib.name() + "|" + lib.namespace());
+                if (target == null) {
+                    issues.warn("UNRESOLVED_OBJECT", "Function library " + lib.name() + " | " + lib.namespace()
+                            + " used in mapping metadata but not linked from " + o.id().label(),
+                            IssueLog.at(null, null, at, null), null);
+                    return null;
+                }
+                return functionLibrary(target);
+            }, msg -> issues.warn("MAPPING_LOGIC", o.id().label() + ": " + msg, IssueLog.at(null, null, at, null),
+                    null));
+            if (logic != null && logic.localFunctions() != null) {
+                archives(logic.localFunctions());
+            }
+            return logic;
+        } catch (IllegalArgumentException e) {
+            issues.warn("MAPPING_LOGIC_UNREADABLE", "Mapping logic of " + o.id().label() + " cannot be read: "
+                    + e.getMessage(), IssueLog.at(null, null, at, null), null);
+            return null;
+        }
+    }
+
+    private void archives(FunctionLibrary lib) {
+        for (ObjRef archive : lib.archives()) {
+            mappingPrograms.putIfAbsent(archive.type() + "|" + archive.name() + "|" + archive.namespace(), archive);
+        }
+    }
+
+    /** Function library ({@code FUNC_LIB}) with its user-defined functions; imported archives are listed as programs. */
+    private FunctionLibrary functionLibrary(XiRef ref) {
+        String k = key(ref);
+        if (functionLibraries.containsKey(k) || !visited.add(k)) {
+            return functionLibraries.get(k);
+        }
+        Optional<XiObject> resolved = resolve(ref);
+        if (resolved.isEmpty()) {
+            return null;
+        }
+        XiObject o = resolved.get();
+        Element blob = XmlDocs.child(XmlDocs.child(o.content(), "MetaData"), "blob");
+        try {
+            Element root = blob == null ? null : XmlDocs.parse(XiBlob.payload(blob), o.id().label()).getDocumentElement();
+            if (root == null || !"functionstorage".equals(root.getLocalName())) {
+                throw new IllegalArgumentException("no <functionstorage> in MetaData");
+            }
+            FunctionLibrary lib = MappingLogicReader.functionStorage(root, objRef(o.id()), o.description());
+            archives(lib);
+            functionLibraries.put(k, lib);
+            return lib;
+        } catch (IllegalArgumentException e) {
+            issues.warn("MAPPING_LOGIC_UNREADABLE", "Function library " + o.id().label() + " cannot be read: "
+                    + e.getMessage(), IssueLog.at(null, null, new Ref(o.id().oid(), o.id().label()), null), null);
+            return null;
+        }
     }
 
     /** A message reference: message type, fault message type or external message (resolved to its definition). */

@@ -9,10 +9,14 @@ import io.poxray.model.DataType;
 import io.poxray.model.IntegrationInventory;
 import io.poxray.model.IntegrationInventory.Channel;
 import io.poxray.model.IntegrationInventory.DirRef;
+import io.poxray.model.IntegrationInventory.FieldMapping;
+import io.poxray.model.IntegrationInventory.FunctionLibrary;
 import io.poxray.model.IntegrationInventory.Ico;
 import io.poxray.model.IntegrationInventory.InterfaceAssignment;
+import io.poxray.model.IntegrationInventory.MappingLogic;
 import io.poxray.model.IntegrationInventory.ObjRef;
 import io.poxray.model.IntegrationInventory.Receiver;
+import io.poxray.model.IntegrationInventory.UserFunction;
 import io.poxray.model.Issue;
 import java.util.ArrayList;
 import java.util.List;
@@ -192,10 +196,23 @@ public final class IntegrationDocumentBuilder {
                 t.row(code(name(mm.id())), code(name(mm.source())), code(name(mm.target())), text(mm.multiplicity()));
             }
             table(t);
+            for (var mm : esr.messageMappings()) {
+                if (mm.logic() != null) {
+                    mappingLogic(mm);
+                }
+            }
         }
         if (!esr.mappingPrograms().isEmpty()) {
             bullets(text(l.get("int.mappingPrograms") + ": " + esr.mappingPrograms().stream()
                     .map(p -> p.type() + " " + name(p)).collect(Collectors.joining(", "))));
+        }
+        if (!esr.functionLibraries().isEmpty()) {
+            heading(3, l.get("int.functionLibraries"));
+            for (FunctionLibrary lib : esr.functionLibraries()) {
+                heading(4, name(lib.id()) + " | " + nz(ns(lib.id())) + " (" + nz(lib.id().swc()) + ")");
+                paragraph(lib.description());
+                functionStorage(lib);
+            }
         }
         if (!esr.messageTypes().isEmpty()) {
             heading(3, l.get("int.messageTypes"));
@@ -223,6 +240,86 @@ public final class IntegrationDocumentBuilder {
                 }
                 table(t);
             }
+        }
+    }
+
+    /** Field logic of one message mapping: parameters, libraries, field table, disabled fields, local functions. */
+    private void mappingLogic(IntegrationInventory.MessageMapping mm) {
+        MappingLogic logic = mm.logic();
+        heading(4, name(mm.id()));
+        List<List<Doc.Inline>> facts = new ArrayList<>();
+        if (!logic.parameters().isEmpty()) {
+            facts.add(line(new Doc.Text(l.get("int.parameters") + ": "), new Doc.Code(logic.parameters().stream()
+                    .map(p -> p.name() + " (" + p.type() + ", " + p.direction() + ")").collect(Collectors.joining(", ")))));
+        }
+        if (!logic.libraries().isEmpty()) {
+            facts.add(line(new Doc.Text(l.get("int.libraries") + ": "), new Doc.Code(logic.libraries().stream()
+                    .map(r -> r.name() + " | " + r.namespace()).collect(Collectors.joining(", ")))));
+        }
+        if (!logic.disabledFields().isEmpty()) {
+            facts.add(line(new Doc.Text(l.get("int.disabledFields") + ": "),
+                    new Doc.Code(String.join(", ", logic.disabledFields()))));
+        }
+        if (!facts.isEmpty()) {
+            bulletList(facts);
+        }
+        Doc.TableBuilder t = new Doc.TableBuilder(l.get("col.target"), l.get("col.logic"));
+        for (FieldMapping f : logic.fields()) {
+            t.row(code(f.target()), code(f.expression()));
+        }
+        table(t);
+        if (logic.localFunctions() != null) {
+            paragraph(line(new Doc.Strong(l.get("int.localFunctions"))));
+            functionStorage(logic.localFunctions());
+        }
+    }
+
+    /** Imports, archives, global code and the user-defined functions of a library or of a mapping. */
+    private void functionStorage(FunctionLibrary lib) {
+        List<List<Doc.Inline>> facts = new ArrayList<>();
+        if (!lib.archives().isEmpty()) {
+            facts.add(line(new Doc.Text(l.get("int.archives") + ": "), new Doc.Code(lib.archives().stream()
+                    .map(r -> r.name() + " | " + r.namespace()).collect(Collectors.joining(", ")))));
+        }
+        if (!lib.imports().isEmpty()) {
+            facts.add(line(new Doc.Text(l.get("int.imports") + ": "), new Doc.Code(lib.imports().stream()
+                    .map(i -> i.replaceFirst("^import\\s+", "").replaceFirst(";$", ""))
+                    .collect(Collectors.joining(", ")))));
+        }
+        if (!lib.sapApis().isEmpty()) {
+            facts.add(text(l.get("int.sapApis") + ": " + String.join(", ", lib.sapApis())));
+        }
+        if (!facts.isEmpty()) {
+            bulletList(facts);
+        }
+        javaCode(l.get("int.globals"), lib.globals());
+        javaCode(l.get("int.init"), lib.init());
+        javaCode(l.get("int.cleanup"), lib.cleanup());
+        for (UserFunction f : lib.functions()) {
+            paragraph(line(new Doc.Strong(l.get("int.function", f.name())),
+                    new Doc.Text((f.description() == null ? "" : " – " + f.description()) + " ("
+                            + l.get("int.execution." + f.execution()) + ")")));
+            List<List<Doc.Inline>> items = new ArrayList<>();
+            for (var a : f.arguments()) {
+                items.add(line(new Doc.Code(a.name() + ": " + a.javaType()), new Doc.Text(" " + l.get("arg." + a.kind())
+                        + (a.description() == null ? "" : " – " + a.description()))));
+            }
+            if (!f.sapApis().isEmpty()) {
+                items.add(text(l.get("int.sapApis") + ": " + String.join(", ", f.sapApis())));
+            }
+            if (!items.isEmpty()) {
+                bulletList(items);
+            }
+            if (f.code() != null) {
+                out.add(new Doc.CodeBlock("java", f.code()));
+            }
+        }
+    }
+
+    private void javaCode(String caption, String code) {
+        if (code != null) {
+            paragraph(line(new Doc.Strong(caption)));
+            out.add(new Doc.CodeBlock("java", code));
         }
     }
 

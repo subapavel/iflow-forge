@@ -426,11 +426,28 @@ use. Read online (SimpleQuery + `read/ext`, snapshot cache) or from TPZ exports;
     "serviceInterfaces": [ { "id": { … }, "category": "I|O|A", "operations": [ { "name": "…", "mode": "sync|async", "request": { … }, "response": { … }, "faults": [ … ] } ] } ],
     "operationMappings": [ { "id": { … }, "sourceOperation": { … }, "targetOperation": { … },
                              "steps": [ { "kind": "request|response|fault", "program": { "type": "XI_TRAFO|MAP_ARCHIVE_PRG|…" }, "sourceMessage": { … }, "targetMessage": { … } } ] } ],
-    "messageMappings": [ { "id": { … }, "source": { … }, "target": { … }, "multiplicity": "1:1" } ],
+    "messageMappings": [ { "id": { … }, "source": { … }, "target": { … }, "multiplicity": "1:1",
+                           "logic": {                                                    // null if unreadable
+                             "namespaces": { "ns0": "urn:…" },
+                             "fields": [ { "target": "/ns0:T/B",
+                                           "expression": "iF(if: stringEquals(Utils.check(/ns1:S/B, channel=$rfc).valid, \"X\"), then: /ns1:S/B, else: \"\")",
+                                           "sources": [ "/ns1:S/B" ] } ],
+                             "disabledFields": [ "/ns0:T/F" ],
+                             "parameters": [ { "name": "rfc", "type": "channel:RFC", "direction": "import", "mandatory": true } ],
+                             "libraries": [ { "type": "FUNC_LIB", "name": "Utils", "namespace": "urn:u" } ],
+                             "localFunctions": { …FunctionLibrary without id… } } } ],
     "messageTypes": [ { "id": { … }, "dataType": { … }, "xmlNamespace": "urn:…" } ],
     "dataTypes": [ { "id": { … }, "uses": [ { … } ], "xsd": "<xsd:schema …>" } ],
     "externalDefinitions": [ { "id": { … }, "messages": [ "invokeRequest", … ] } ],
-    "mappingPrograms": [ { "type": "MAP_ARCHIVE_PRG", "name": "…" } ]          // Java / XSLT programs
+    "mappingPrograms": [ { "type": "MAP_ARCHIVE_PRG", "name": "…" } ],         // Java / XSLT programs, imported archives (TRAFO_JAR)
+    "functionLibraries": [ { "id": { … }, "imports": [ "import javax.xml.stream.XMLInputFactory;" ],   // beyond SAP defaults
+                             "globals": "…java…", "init": null, "cleanup": null,
+                             "functions": [ { "key": "54865ab5-…", "name": "validateApplicationXml", "title": "…", "description": "…",
+                                              "execution": "singleValues|contextValues|queueValues",
+                                              "arguments": [ { "name": "inputXml", "kind": "input|result|parameter", "javaType": "String" } ],
+                                              "code": "…java…", "sapApis": [ "LookupService", "DynamicConfiguration" ] } ],
+                             "archives": [ { "type": "TRAFO_JAR", "name": "Java_V3SXmlValidation", "namespace": "urn:…" } ],
+                             "sapApis": [ "LookupService" ] } ]
   },
   "issues": [ … ]   // UNRESOLVED_OBJECT, OBJECT_NOT_READABLE (with the server's reason)
 }
@@ -445,6 +462,14 @@ Facts verified on xipod (PO 7.50 SP28):
   several conditional assignments of one receiver = OR, any assignment without condition = unconditional. Interface
   determinations carry `InterfaceConditionId` directly (always empty on xipod: 54 conditional receivers, 0 conditional
   interface determinations out of 259 ICOs).
+- Message mapping logic: `XiTrafo/MetaData/blob` = `!zip!` + base64 of a zip whose entry is another zip with the
+  mapping editor XML `<mappingtool>` (function libraries: `FunctionLibrary/MetaData` → `<functionstorage>`, same format
+  as the mapping's local functions). Target fields are `transformation/brick type="Dst"` trees of `Src` / `Func`
+  bricks; `fns="dflt"` = standard function, otherwise the library alias from `libstorage/entry` (library functions are
+  referenced by GUID key, resolved through the `UsedFuncLib` link) or `usernamespace` (local). The standard `iF` has
+  pins then (0), if (1), else (2); the expression shows them as `iF(if: …, then: …, else: …)`. UDF argument `tp`:
+  0 input, 1 result, 2 parameter; `cacheType` 0/1/2 = single values / context / queue. Channel parameters
+  (`typetype DCOMCHAN`) point to a link `p_<name>` → adapter metadata (e.g. RFC).
 - Operation mapping roles `*_OUT_MES` / `*_IN_MES` are not consistent for faults: source/target of a step come from
   the message mapping (`SOURCE_IFR_MESS` / `TARGET_IFR_MESS`).
 - SimpleQuery: case-insensitive matching is refused for `SERVICE`, `FROMSRVC`, `TOSRVC`, `MODIFYUSER`; `TOSRVC` does
