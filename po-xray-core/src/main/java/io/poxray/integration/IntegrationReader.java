@@ -119,14 +119,18 @@ public final class IntegrationReader {
         List<Receiver> receivers = new ArrayList<>();
         Element content = o.content();
         Element configs = content == null ? null : XmlDocs.child(content, "ReceiverConfigurations");
+        Map<String, IntegrationInventory.Condition> conditions = Conditions.read(content);
+        Map<String, List<String>> assignments = Conditions.receiverAssignments(content);
         if (configs != null) {
             int index = 0;
             for (Element rc : XmlDocs.children(configs, "ReceiverConfiguration")) {
-                receivers.add(receiver(o, rc, index++));
+                IntegrationInventory.Condition condition = receiverCondition(
+                        assignments.get(Conditions.blankToNull(XmlDocs.childText(rc, "ReceiverId"))), conditions, o);
+                receivers.add(receiver(o, rc, index++, condition, conditions));
             }
         }
         if (receivers.isEmpty() && !id.key(5).isEmpty()) {
-            receivers.add(new Receiver(blank(id.key(4)), id.key(5), null, List.of(), List.of()));
+            receivers.add(new Receiver(blank(id.key(4)), id.key(5), null, null, List.of(), List.of()));
         }
         String noReceiver = null;
         Element nrb = content == null ? null : XmlDocs.child(content, "NoReceiverBehaviour");
@@ -144,15 +148,11 @@ public final class IntegrationReader {
      * (or {@code IIF<r>} for single determinations) with kpos = split counter → target interfaces;
      * {@code PAR<r>_<counter>_<parameter>} → channel bound to a mapping parameter.
      */
-    private Receiver receiver(XiObject ico, Element rc, int r) {
+    private Receiver receiver(XiObject ico, Element rc, int r, IntegrationInventory.Condition condition,
+            Map<String, IntegrationInventory.Condition> conditions) {
         Element receiver = XmlDocs.child(rc, "Receiver");
         String party = extractor(receiver, "PartyExtractor");
         String component = extractor(receiver, "ServiceExtractor");
-        String condition = null;
-        Element cond = XmlDocs.child(rc, "Condition");
-        if (cond != null && !cond.getTextContent().isBlank()) {
-            condition = cond.getTextContent().replaceAll("\\s+", " ").strip();
-        }
         List<InterfaceAssignment> assignments = new ArrayList<>();
         Element dets = XmlDocs.child(rc, "InterfaceDeterminations");
         if (dets != null) {
@@ -188,6 +188,7 @@ public final class IntegrationReader {
                     parameters.put(l.role().substring(prefix.length()), channel(l.target()));
                 }
                 assignments.add(new InterfaceAssignment(XmlDocs.childText(d, "Operation"),
+                        condition(XmlDocs.childText(d, "InterfaceConditionId"), conditions, ico),
                         map.map(l -> objRef(l.target())).orElse(null), targets, parameters));
             }
         }
@@ -197,7 +198,36 @@ public final class IntegrationReader {
                 receiverChannels.add(channel(l.target()));
             }
         }
-        return new Receiver(party, component, condition, assignments, receiverChannels);
+        return new Receiver(party, component, condition, XmlDocs.childText(rc, "QualityOfService"), assignments,
+                receiverChannels);
+    }
+
+    /**
+     * Receiver condition from its assignments: none or any assignment without condition = unconditional,
+     * several conditional assignments = alternatives (OR).
+     */
+    private IntegrationInventory.Condition receiverCondition(List<String> conditionIds,
+            Map<String, IntegrationInventory.Condition> conditions, XiObject ico) {
+        if (conditionIds == null || conditionIds.isEmpty() || conditionIds.contains(null)) {
+            return null;
+        }
+        List<IntegrationInventory.Condition> resolved = conditionIds.stream().distinct()
+                .map(id -> condition(id, conditions, ico)).filter(java.util.Objects::nonNull).toList();
+        return resolved.isEmpty() ? null : Conditions.or(resolved);
+    }
+
+    /** Condition referenced by ID; a dangling ID is reported (never silently treated as unconditional). */
+    private IntegrationInventory.Condition condition(String id, Map<String, IntegrationInventory.Condition> conditions,
+            XiObject ico) {
+        if (Conditions.blankToNull(id) == null) {
+            return null;
+        }
+        IntegrationInventory.Condition c = conditions.get(id.strip());
+        if (c == null) {
+            issues.warn("UNRESOLVED_CONDITION", "Condition " + id + " referenced but not defined in ICO "
+                    + ico.id().label(), null, null);
+        }
+        return c;
     }
 
     /** Constant value of a receiver extractor ({@code TYPE KO}); otherwise the extractor type. */

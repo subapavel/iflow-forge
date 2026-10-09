@@ -63,7 +63,7 @@ class IntegrationReaderTest {
         String jira = io.poxray.doc.Documentation.render(inv, io.poxray.doc.DocFormat.JIRA, java.util.Locale.forLanguageTag("cs"));
         assertThat(md).contains("# Integrations of V3S\\_D", "### CD1CLNT300 \\| ApplicationStatus\\_Out",
                 "`StateUpdate_In [1]`", "`V3S_D | REST_RCV_StateUpdate`");
-        assertThat(jira).contains("h1. Integrace komponenty V3S\\_D", "||Operace||Mapping||Cílová rozhraní||Parametry||");
+        assertThat(jira).contains("h1. Integrace komponenty V3S\\_D", "||Operace||Podmínka||Mapping||Cílová rozhraní||Parametry||");
     }
 
     /** Link structure of an ICO with two sender operations and a 1:n mapping, as found on xipod (neutral names). */
@@ -73,15 +73,35 @@ class IntegrationReaderTest {
             <p1:generic><p1:lnks>
             %s
             </p1:lnks></p1:generic>
-            <p1:content><AllInOne><ReceiverConfigurations><ReceiverConfiguration>
+            <p1:content><AllInOne><ReceiverConfigurations><ReceiverConfiguration><ReceiverId>R1</ReceiverId>
               <Receiver><ServiceExtractor><TRD_EXTRACTOR><TYPE>KO</TYPE><VALUE>RCV</VALUE></TRD_EXTRACTOR></ServiceExtractor></Receiver>
+              <QualityOfService>EO</QualityOfService>
               <InterfaceDeterminations>
                 <InterfaceDetermination><Counter>0</Counter><Operation>Change</Operation><SplitItems>
                   <SplitItem><SplitCounter>0</SplitCounter><Multiplicity>1</Multiplicity></SplitItem>
                   <SplitItem><SplitCounter>1</SplitCounter><Multiplicity>0..1</Multiplicity></SplitItem></SplitItems></InterfaceDetermination>
-                <InterfaceDetermination><Counter>1</Counter><Operation>Create</Operation><SplitItems>
+                <InterfaceDetermination><Counter>1</Counter><Operation>Create</Operation><InterfaceConditionId>C2</InterfaceConditionId><SplitItems>
                   <SplitItem><SplitCounter>0</SplitCounter><Multiplicity>1</Multiplicity></SplitItem></SplitItems></InterfaceDetermination>
-              </InterfaceDeterminations></ReceiverConfiguration></ReceiverConfigurations></AllInOne></p1:content></p1:xiObj>
+              </InterfaceDeterminations></ReceiverConfiguration></ReceiverConfigurations>
+              <ReceiverAssignmentList><ReceiverAssignment><ReceiverConditionId>C1</ReceiverConditionId>
+                <ReceiverIds><ReceiverId>R1</ReceiverId></ReceiverIds></ReceiverAssignment></ReceiverAssignmentList>
+              <Conditions>
+                <RDS_CONDSHORT><CONDITIONID>C1</CONDITIONID>
+                  <CONDLINE><COMPGROUP>1</COMPGROUP><COMPOP>EQ</COMPOP>
+                    <LEXTRACTOR><TRD_EXTRACTOR><TYPE>CT</TYPE><VALUE/><COBJNS>http://sap.com/xi/XI/System/SOAP</COBJNS><COBJNAME>XHeaderName1</COBJNAME></TRD_EXTRACTOR></LEXTRACTOR>
+                    <REXTRACTOR><TRD_EXTRACTOR><TYPE>KO</TYPE><VALUE>301</VALUE></TRD_EXTRACTOR></REXTRACTOR></CONDLINE>
+                  <CONDLINE><COMPGROUP>2</COMPGROUP><COMPOP>CP</COMPOP>
+                    <LEXTRACTOR><TRD_EXTRACTOR><TYPE>XP</TYPE><VALUE>/Order/Type</VALUE></TRD_EXTRACTOR></LEXTRACTOR>
+                    <REXTRACTOR><TRD_EXTRACTOR><TYPE>KO</TYPE><VALUE>Z*</VALUE></TRD_EXTRACTOR></REXTRACTOR></CONDLINE>
+                  <CONDLINE><COMPGROUP>2</COMPGROUP><COMPOP>EX</COMPOP>
+                    <LEXTRACTOR><TRD_EXTRACTOR><TYPE>XP</TYPE><VALUE>/Order/Id</VALUE></TRD_EXTRACTOR></LEXTRACTOR></CONDLINE>
+                </RDS_CONDSHORT>
+                <RDS_CONDSHORT><CONDITIONID>C2</CONDITIONID>
+                  <CONDLINE><COMPGROUP>1</COMPGROUP><COMPOP>NE</COMPOP>
+                    <LEXTRACTOR><TRD_EXTRACTOR><TYPE>XP</TYPE><VALUE>/Order/Status</VALUE></TRD_EXTRACTOR></LEXTRACTOR>
+                    <REXTRACTOR><TRD_EXTRACTOR><TYPE>KO</TYPE><VALUE>X</VALUE></TRD_EXTRACTOR></REXTRACTOR></CONDLINE>
+                </RDS_CONDSHORT>
+              </Conditions></AllInOne></p1:content></p1:xiObj>
             """.formatted(String.join("\n",
             link("senderOperation", 0, "S", "ifmoper", "Order_Out.Change", "urn:a"),
             link("senderOperation", 1, "S", "ifmoper", "Order_Out.Create", "urn:a"),
@@ -113,6 +133,11 @@ class IntegrationReaderTest {
         assertThat(ico.sender().operations()).containsExactly("Change", "Create");
         assertThat(ico.receivers()).singleElement().satisfies(r -> {
             assertThat(r.component()).isEqualTo("RCV");
+            assertThat(r.qualityOfService()).isEqualTo("EO");
+            // lines of a group: AND, groups: OR
+            assertThat(r.condition().text()).isEqualTo(
+                    "context:XHeaderName1 (http://sap.com/xi/XI/System/SOAP) = \"301\" OR (/Order/Type like \"Z*\" AND exists /Order/Id)");
+            assertThat(r.condition().lines()).hasSize(3);
             assertThat(r.channels()).extracting(IntegrationInventory.DirRef::name).containsExactly("SOAP_RCV");
             assertThat(r.interfaces()).hasSize(2);
             assertThat(r.interfaces().get(0)).satisfies(a -> {
@@ -124,6 +149,7 @@ class IntegrationReaderTest {
             });
             assertThat(r.interfaces().get(1)).satisfies(a -> {
                 assertThat(a.mapping().name()).isEqualTo("OM_Create");
+                assertThat(a.condition().text()).isEqualTo("/Order/Status != \"X\"");
                 assertThat(a.targets()).extracting(t -> t.iface().name()).containsExactly("Order_In");
             });
         });

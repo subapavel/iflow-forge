@@ -409,8 +409,10 @@ use. Read online (SimpleQuery + `read/ext`, snapshot cache) or from TPZ exports;
                 "iface": { "type": "ifmmessif", "name": "Application_Out", "namespace": "urn:…", "swc": "PPAS_V3S, 1.0 of ppas.cz", "swcGuid": "…" },
                 "operations": [ "ChangeRequest", "CreateRequest" ],
                 "channel": { "component": "V3S_D", "name": "REST_SND_Application" } },
-    "receivers": [ { "component": "V3S_D", "condition": null,
-      "interfaces": [ { "operation": "ChangeRequest",
+    "receivers": [ { "component": "V3S_D", "qualityOfService": "EO",
+      "condition": { "text": "context:XHeaderName1 (http://sap.com/xi/XI/System/SOAP) = \"301\" OR (/Order/Type like \"Z*\" AND exists /Order/Id)",
+                     "lines": [ { "group": 1, "left": "context:XHeaderName1 (…)", "operator": "EQ", "right": "\"301\"" }, … ] },  // null = unconditional
+      "interfaces": [ { "operation": "ChangeRequest", "condition": null,
                         "mapping": { "type": "MAPPING", "name": "Application_ChangeRequest_to_…" },
                         "targets": [ { "iface": { "name": "ApplicationConfirmation_In" }, "multiplicity": "1" },
                                      { "iface": { "name": "Application_In" }, "multiplicity": "0..1" } ],   // 1:n mapping
@@ -437,6 +439,12 @@ Facts verified on xipod (PO 7.50 SP28):
 - ICO links: `MAP<r>` (r = receiver index, kpos = interface determination), `IIF<r>$<n>` (target interfaces,
   kpos = split item; plain `IIF<r>` for single determinations), `PAR<r>_<n>_<param>` (channel-bound mapping
   parameters), several `senderOperation` links per ICO.
+- Routing conditions: `AllInOne/Conditions/RDS_CONDSHORT` (lines `COMPGROUP`, `COMPOP` EQ/NE/CP/NP/EX/NX, extractors
+  `XP` XPath, `CT` context object, `KO` constant). Lines of one group = AND, groups = OR. Receivers are bound via
+  `ReceiverAssignmentList/ReceiverAssignment` (`ReceiverConditionId` + `ReceiverIds` → `ReceiverConfiguration/ReceiverId`);
+  several conditional assignments of one receiver = OR, any assignment without condition = unconditional. Interface
+  determinations carry `InterfaceConditionId` directly (always empty on xipod: 54 conditional receivers, 0 conditional
+  interface determinations out of 259 ICOs).
 - Operation mapping roles `*_OUT_MES` / `*_IN_MES` are not consistent for faults: source/target of a step come from
   the message mapping (`SOURCE_IFR_MESS` / `TARGET_IFR_MESS`).
 - SimpleQuery: case-insensitive matching is refused for `SERVICE`, `FROMSRVC`, `TOSRVC`, `MODIFYUSER`; `TOSRVC` does

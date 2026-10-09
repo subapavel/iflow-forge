@@ -59,16 +59,33 @@ public record IntegrationInventory(
     public record Endpoint(String party, String component, ObjRef iface, List<String> operations, DirRef channel) {
     }
 
-    /** {@code condition}: routing condition as stored (null = unconditional). */
-    public record Receiver(String party, String component, String condition, List<InterfaceAssignment> interfaces,
-            List<DirRef> channels) {
+    /**
+     * Receiver with its routing condition (null = unconditional) and quality of service (EO, EOIO, BE; null = as
+     * the sender).
+     */
+    public record Receiver(String party, String component, Condition condition, String qualityOfService,
+            List<InterfaceAssignment> interfaces, List<DirRef> channels) {
+    }
+
+    /**
+     * Routing condition. Lines of the same {@code group} are combined with AND, groups with OR (SAP data model:
+     * AtomicConditionBlock). {@code text} is the rendered expression, e.g. {@code (A = "1") OR (B = "2")}.
+     */
+    public record Condition(String text, List<ConditionLine> lines) {
+    }
+
+    /**
+     * One elementary condition. Operands: XPath into the payload, {@code context:<name> (<namespace>)} for context
+     * objects, quoted constants. {@code operator}: EQ, NE, CP (matches pattern), EX (exists), ...
+     */
+    public record ConditionLine(int group, String left, String operator, String right) {
     }
 
     /**
      * Receiver interface determination for one sender operation: the operation mapping and its target interfaces
      * (more than one for 1:n mappings), plus mapping parameters bound to channels (e.g. RFC lookup channels).
      */
-    public record InterfaceAssignment(String operation, ObjRef mapping, List<Target> targets,
+    public record InterfaceAssignment(String operation, Condition condition, ObjRef mapping, List<Target> targets,
             Map<String, DirRef> parameters) {
     }
 

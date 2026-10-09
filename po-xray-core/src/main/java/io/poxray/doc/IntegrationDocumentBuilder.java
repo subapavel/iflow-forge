@@ -82,7 +82,8 @@ public final class IntegrationDocumentBuilder {
     private String receiverSummary(Receiver r) {
         String ifaces = r.interfaces().stream().flatMap(a -> a.targets().stream()).map(tg -> name(tg.iface()))
                 .distinct().collect(Collectors.joining(", "));
-        return nz(r.component()) + (ifaces.isEmpty() ? "" : " (" + ifaces + ")");
+        return nz(r.component()) + (ifaces.isEmpty() ? "" : " (" + ifaces + ")")
+                + (r.condition() == null ? "" : " [" + l.get("int.conditional") + "]");
     }
 
     private void ico(Ico ico) {
@@ -107,12 +108,20 @@ public final class IntegrationDocumentBuilder {
         }
         bulletList(facts);
         for (Receiver r : ico.receivers()) {
-            paragraph(List.of(new Doc.Strong(l.get("int.receiver") + ": " + nz(r.component())
-                    + (r.condition() == null ? "" : " — " + l.get("col.condition") + " " + r.condition()))));
-            Doc.TableBuilder t = new Doc.TableBuilder(l.get("int.operation"), l.get("col.mapping"),
+            List<Doc.Inline> header = new ArrayList<>();
+            header.add(new Doc.Strong(l.get("int.receiver") + ": " + nz(r.component())));
+            if (r.condition() != null) {
+                header.add(new Doc.Text(" — " + l.get("int.when") + " "));
+                header.add(new Doc.Code(r.condition().text()));
+            }
+            if (r.qualityOfService() != null) {
+                header.add(new Doc.Text(" (QoS " + r.qualityOfService() + ")"));
+            }
+            paragraph(header);
+            Doc.TableBuilder t = new Doc.TableBuilder(l.get("int.operation"), l.get("col.condition"), l.get("col.mapping"),
                     l.get("col.targetInterfaces"), l.get("col.parameters"));
             for (InterfaceAssignment a : r.interfaces()) {
-                t.row(text(a.operation()), code(name(a.mapping())),
+                t.row(text(a.operation()), code(a.condition() == null ? null : a.condition().text()), code(name(a.mapping())),
                         code(a.targets().stream().map(tg -> name(tg.iface())
                                 + (tg.multiplicity() == null ? "" : " [" + tg.multiplicity() + "]")).collect(Collectors.joining(", "))),
                         code(a.parameters().entrySet().stream().map(e -> e.getKey() + " = " + dir(e.getValue()))

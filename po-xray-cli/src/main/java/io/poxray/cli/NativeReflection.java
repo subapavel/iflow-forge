@@ -52,6 +52,7 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
             IntegrationInventory.Component.class, IntegrationInventory.ObjRef.class, IntegrationInventory.DirRef.class,
             IntegrationInventory.Ico.class, IntegrationInventory.Endpoint.class, IntegrationInventory.Receiver.class,
             IntegrationInventory.InterfaceAssignment.class, IntegrationInventory.Target.class,
+            IntegrationInventory.Condition.class, IntegrationInventory.ConditionLine.class,
             IntegrationInventory.Channel.class,
             IntegrationInventory.Module.class, IntegrationInventory.Esr.class, IntegrationInventory.ServiceInterface.class,
             IntegrationInventory.Operation.class, IntegrationInventory.OperationMapping.class,
