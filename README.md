@@ -8,7 +8,8 @@ scheduler jobs), and produces a JSON inventory plus generated documentation.
 |---|---|
 | `po-xray-core` | Library: SCA/MOIN/Galaxy readers, EJB reader, JSON output model, documentation generator |
 | `po-xray-cli` | Command line interface (Quarkus + Aesh), JVM uber-jar or native executable |
-| `po-xray-mcp` | MCP server (STDIO) with the same readers as tools for AI agents |
+| `po-xray-mcp` | MCP server (STDIO) with the same readers as tools for AI agents, JVM uber-jar or native executable |
+| `po-xray-native` | Reflection registration of the output model for native images (shared by CLI and MCP) |
 
 Docs: [output model](docs/OUTPUT-MODEL.md), [built-in function catalog](docs/BPM-BUILTIN-FUNCTIONS.md),
 [exploration handoff](docs/HANDOFF.md).
@@ -79,18 +80,20 @@ Windows (GraalVM 25 + Visual Studio Build Tools with the C++ workload), from a s
 ```
 
 ```bash
-mvn -pl po-xray-cli -am package -Dnative -DskipTests
+mvn -pl po-xray-cli,po-xray-mcp -am package -Dnative -DskipTests
 ```
 
 Linux executable built in a container (Docker), on any OS:
 
 ```bash
-mvn -pl po-xray-cli -am package -Dnative -DskipTests -Dquarkus.native.container-build=true
+mvn -pl po-xray-cli,po-xray-mcp -am package -Dnative -DskipTests -Dquarkus.native.container-build=true
 ```
 
-The executable is `po-xray-cli/target/po-xray-cli-<version>-runner(.exe)`. Classes serialised by Jackson are
-registered for reflection in `po-xray-cli` (`NativeReflection`, guarded by a test); resources of the core
-(function catalog, document labels) are included via `quarkus.native.resources.includes`.
+The executables are `po-xray-cli/target/po-xray-cli-<version>-runner(.exe)` and
+`po-xray-mcp/target/po-xray-mcp-<version>-runner(.exe)`. Classes serialised by Jackson are registered for reflection
+in the shared module `po-xray-native` (`NativeReflection`, guarded by a test; indexed by the applications with
+`quarkus.index-dependency`), MCP result records in `po-xray-mcp` (`McpReflection`); resources of the core (function
+catalog, document labels) are included via `quarkus.native.resources.includes`.
 
 ## MCP server
 
@@ -117,6 +120,12 @@ Register in Claude Code (absolute path to the jar):
 
 ```bash
 claude mcp add po-xray -- java -jar C:/Users/pavol/Documents/Projekty/po-xray/po-xray-mcp/target/po-xray-mcp-0.1.0-SNAPSHOT-runner.jar
+```
+
+With the native executable (faster start, rebuild it after changes):
+
+```bash
+claude mcp add po-xray -- C:/Users/pavol/Documents/Projekty/po-xray/po-xray-mcp/target/po-xray-mcp-0.1.0-SNAPSHOT-runner.exe
 ```
 
 Claude Desktop (`claude_desktop_config.json`):

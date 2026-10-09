@@ -14,6 +14,7 @@
 
     <modules>
         <module>po-xray-core</module>
+        <module>po-xray-native</module>
         <module>po-xray-cli</module>
         <module>po-xray-mcp</module>
     </modules>
@@ -70,6 +71,11 @@
                 <artifactId>po-xray-core</artifactId>
                 <version>${project.version}</version>
                 <type>test-jar</type>
+            </dependency>
+            <dependency>
+                <groupId>io.poxray</groupId>
+                <artifactId>po-xray-native</artifactId>
+                <version>${project.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

@@ -45,6 +45,10 @@
             <artifactId>po-xray-core</artifactId>
         </dependency>
         <dependency>
+            <groupId>io.poxray</groupId>
+            <artifactId>po-xray-native</artifactId>
+        </dependency>
+        <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-aesh</artifactId>
         </dependency>

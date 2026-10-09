@@ -1,4 +1,4 @@
-package io.poxray.cli;
+package io.poxray.nativeimage;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

@@ -1,4 +1,4 @@
-package io.poxray.cli;
+package io.poxray.nativeimage;
 
 import io.poxray.model.BpmComponent;
 import io.poxray.model.BuiltinFunction;
