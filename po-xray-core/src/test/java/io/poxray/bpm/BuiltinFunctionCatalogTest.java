@@ -46,6 +46,18 @@ class BuiltinFunctionCatalogTest {
         assertThat(principals.category()).isEqualTo("principal");
         assertThat(catalog.qualify(principals.result())).isEqualTo("sap:Principal");
         assertThat(catalog.qualify("string")).isEqualTo("xsd:string"); // XSD preferred over SOAP-enc duplicate
+    }
+
+    @Test
+    void containsStandardTriggers() {
+        BuiltinFunctionCatalog.Trigger technical = catalog.trigger("E0EE4DB2B3D39C3FEAEE11E2BF54001999A12632").orElseThrow();
+        assertThat(technical.name()).isEqualTo("TechnicalError");
+        assertThat(technical.kind()).isEqualTo("error");
+        assertThat(technical.isCritical()).isTrue();
+        assertThat(technical.isTechnical()).isTrue();
+        assertThat(technical.documentation()).isNotBlank();
+        assertThat(technical.parameter().type()).isEqualTo("TechnicalErrorType");
+        assertThat(catalog.trigger("0000")).isEmpty();
         assertThat(catalog.function("0000")).isEmpty();
     }
 }

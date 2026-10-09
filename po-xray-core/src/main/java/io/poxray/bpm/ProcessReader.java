@@ -47,6 +47,7 @@ final class ProcessReader {
         final Set<String> functions = new HashSet<>();
         final Set<String> dataTypes = new LinkedHashSet<>();
         final Set<String> serviceReferences = new HashSet<>();
+        final Set<String> builtinTriggers = new LinkedHashSet<>();
         final List<UnmappedElement> unmapped = new ArrayList<>();
     }
 
@@ -294,11 +295,12 @@ final class ProcessReader {
                     : def.is(Galaxy.ERROR_EVENT_DEFINITION) ? "error" : def.simpleType();
             return new Node.Trigger(kind, ctx.ref(def), null);
         }
-        String builtin = Builtins.TRIGGERS.get(id);
-        if (builtin != null) {
-            return new Node.Trigger("error", new Ref(id, builtin), builtin);
+        BuiltinFunctionCatalog.Trigger standard = BuiltinFunctionCatalog.get().trigger(id).orElse(null);
+        if (standard != null) {
+            usages.builtinTriggers.add(id);
+            return new Node.Trigger(standard.kind(), new Ref(id, standard.name()), standard.name());
         }
-        ctx.issues.warn("UNRESOLVED_REF", "Trigger " + id + " is neither in the DC nor a known SAP built-in",
+        ctx.issues.warn("UNRESOLVED_REF", "Trigger " + id + " is neither in the DC nor a standard SAP trigger",
                 ctx.at(process, event, null), ctx.source(event.partition()));
         return new Node.Trigger("unknown", new Ref(id, null), null);
     }

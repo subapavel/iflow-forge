@@ -85,7 +85,8 @@ Status: **accepted** (2026-10-09), BPM and EJB parts implemented.
     "serviceReferences": [ /* ServiceReference */ ],
     "functions":         [ /* Function — DC functions (.function) */ ],
     "builtinFunctions":  [ /* BuiltinFunction — SAP built-ins called by the processes */ ],
-    "eventDefinitions":  [ /* EventDefinition */ ],
+    "eventDefinitions":  [ /* EventDefinition — DC triggers (src/triggers) */ ],
+    "builtinEventDefinitions": [ /* EventDefinition — standard SAP triggers used (e.g. TechnicalError) */ ],
     "dataTypes":         [ /* DataType */ ]
   }
 }
@@ -175,8 +176,9 @@ Unknown metaclass → `kind: "unknown"` + `metaclass` + `attributes` + issue `UN
 // boundaryEvent
 { "attachedTo": { "ref": "…", "name": "Send Envelope" },
   "trigger": { "kind": "error", "eventDefinition": { "ref": "…", "name": "EON_MT_Fault" } },
-  // SAP standard trigger (not in the DC): { "kind": "error", "eventDefinition": { "ref": "…", "name": "TechnicalError" },
-  //                                         "builtin": "TechnicalError" }
+  // standard SAP trigger (catalog `triggers`, not in the DC):
+  //   { "kind": "error", "eventDefinition": { "ref": "…", "name": "TechnicalError" }, "builtin": "TechnicalError" }
+  //   its semantics (documentation, isCritical, isTechnical, parameter) is in catalog.builtinEventDefinitions
   "condition": Expression, "outputMapping": Mapping }
 
 // exclusiveGateway: conditions live on outgoing flows; nothing extra

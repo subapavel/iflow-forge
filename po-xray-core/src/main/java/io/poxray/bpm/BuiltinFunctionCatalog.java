@@ -13,7 +13,7 @@ import tools.jackson.databind.DeserializationFeature;
 import tools.jackson.databind.JsonNode;
 
 /**
- * NW BPM built-in function catalog (resource {@value #RESOURCE}, generated from NWDS by
+ * NW BPM built-in function and standard trigger catalog (resource {@value #RESOURCE}, generated from NWDS by
  * {@code tools/gen_bpm_builtin_functions.py}, see {@code docs/BPM-BUILTIN-FUNCTIONS.md}).
  * Always keyed by MOF ID: the same name exists in several type categories with different IDs.
  * Derived from SAP software: private repositories only.
@@ -29,14 +29,23 @@ final class BuiltinFunctionCatalog {
             List<Parameter> parameters, String result, String javaClass) {
     }
 
+    record TriggerParameter(String name, String namespace, String type) {
+    }
+
+    /** Standard SAP event definition (src/triggers of DC predefs/default); {@code kind}: error | message | timer. */
+    record Trigger(String id, String kind, String name, String documentation, boolean isCritical,
+            boolean isTechnical, TriggerParameter parameter, String file, String sourceDc) {
+    }
+
     /** Provenance ({@code source}, {@code additionalSources}) is not interpreted. */
-    private record Data(JsonNode source, List<Entry> functions, Map<String, String> xsdTypes,
+    private record Data(JsonNode source, List<Entry> functions, List<Trigger> triggers, Map<String, String> xsdTypes,
             Map<String, String> sapTypes) {
     }
 
     private static final BuiltinFunctionCatalog INSTANCE = load();
 
     private final Map<String, Entry> functions = new HashMap<>();
+    private final Map<String, Trigger> triggers = new HashMap<>();
     private final Map<String, String> xsdTypes;
     private final Map<String, String> sapTypes;
     private final Set<String> xsdTypeNames;
@@ -45,6 +54,11 @@ final class BuiltinFunctionCatalog {
     private BuiltinFunctionCatalog(Data data) {
         for (Entry e : data.functions()) {
             functions.put(e.id(), e);
+        }
+        if (data.triggers() != null) {
+            for (Trigger t : data.triggers()) {
+                triggers.put(t.id(), t);
+            }
         }
         this.xsdTypes = Map.copyOf(data.xsdTypes());
         this.sapTypes = data.sapTypes() == null ? Map.of() : Map.copyOf(data.sapTypes());
@@ -58,6 +72,11 @@ final class BuiltinFunctionCatalog {
 
     Optional<Entry> function(String id) {
         return Optional.ofNullable(id == null ? null : functions.get(id));
+    }
+
+    /** Standard SAP trigger (event definition not contained in the customer DC). */
+    Optional<Trigger> trigger(String id) {
+        return Optional.ofNullable(id == null ? null : triggers.get(id));
     }
 
     /**

@@ -143,6 +143,11 @@ class DigiSignTest {
         assertThat(bpm().processes()).flatExtracting(Process::nodes)
                 .filteredOn(n -> n.kind().equals("boundaryEvent") && "TechnicalError".equals(n.name())).isNotEmpty()
                 .allSatisfy(n -> assertThat(n.trigger().builtin()).isEqualTo("TechnicalError"));
+        assertThat(bpm().catalog().builtinEventDefinitions()).singleElement().satisfies(d -> {
+            assertThat(d.name()).isEqualTo("TechnicalError");
+            assertThat(d.isTechnical()).isTrue();
+            assertThat(d.documentation()).isNotBlank();
+        });
     }
 
     @Test

@@ -78,7 +78,7 @@ class SyntheticScaTest {
         Function f = new Function("F1", "calc", "acme", "ejb", "acme.com/other~ear/LOCAL/Gone/com.acme.GoneLocal",
                 new Function.EjbLink("acme.com/other~ear", "Gone", "com.acme.GoneLocal"), List.of(), null, "x.function");
         BpmComponent bpm = new BpmComponent("acme.com/bpm",
-                List.of(), new BpmComponent.Catalog(List.of(), List.of(), List.of(f), List.of(), List.of(), List.of()));
+                List.of(), new BpmComponent.Catalog(List.of(), List.of(), List.of(f), List.of(), List.of(), List.of(), List.of()));
         IssueLog issues = new IssueLog();
 
         new BpmFunctionLinks(List.of(bpm)).reportMissing(issues);

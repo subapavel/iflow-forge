@@ -11,6 +11,7 @@ public record BpmComponent(String dc, List<Process> processes, Catalog catalog) 
             List<Function> functions,
             List<BuiltinFunction> builtinFunctions,
             List<EventDefinition> eventDefinitions,
+            List<EventDefinition> builtinEventDefinitions,
             List<DataType> dataTypes) {
     }
 }

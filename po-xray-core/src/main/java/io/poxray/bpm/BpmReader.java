@@ -79,7 +79,7 @@ public final class BpmReader {
         reportUnused(ctx, interfaces, serviceReferences, functions, eventDefinitions, usages);
 
         return new BpmComponent(ctx.dc, processes, new BpmComponent.Catalog(interfaces, serviceReferences,
-                functions, builtinFunctions(usages), eventDefinitions, dataTypes));
+                functions, builtinFunctions(usages), eventDefinitions, builtinEventDefinitions(usages), dataTypes));
     }
 
     /** SAP built-in functions called by the DC's processes, with their catalog semantics, ordered by name. */
@@ -95,6 +95,18 @@ public final class BpmReader {
                                 .toList(),
                         catalog.qualify(e.result()),
                         e.documentation(), e.javaClass()))
+                .toList();
+    }
+
+    /** Standard SAP triggers used by the DC's processes (e.g. TechnicalError), with SAP documentation. */
+    private static List<EventDefinition> builtinEventDefinitions(ProcessReader.Usages usages) {
+        BuiltinFunctionCatalog catalog = BuiltinFunctionCatalog.get();
+        return usages.builtinTriggers.stream()
+                .map(catalog::trigger).flatMap(java.util.Optional::stream)
+                .map(t -> new EventDefinition(t.id(), t.name(), t.kind(), t.documentation(),
+                        t.isCritical() ? Boolean.TRUE : null, t.isTechnical() ? Boolean.TRUE : null,
+                        t.parameter() == null ? null : new QNameRef(t.parameter().name(), t.parameter().namespace()),
+                        null, t.sourceDc() + "!/" + t.file()))
                 .toList();
     }
 
