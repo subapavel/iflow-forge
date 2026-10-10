@@ -44,6 +44,29 @@ class DigiSignTest {
     }
 
     @Test
+    void customFunctionsKnowWhereTheyAreCalled() {
+        var functions = inventory.bpm().getFirst().catalog().functions();
+        java.util.function.Function<String, io.poxray.model.Function> fn =
+                name -> functions.stream().filter(f -> f.name().equals(name)).findFirst().orElseThrow();
+
+        assertThat(fn.apply("createMetadata").usedBy()).extracting(u -> u.element().name() + ":" + u.part())
+                .containsExactlyInAnyOrder("Create Envelope:inputMapping", "Create envelope recipient:inputMapping",
+                        "File upload:outputMapping");
+        assertThat(fn.apply("getDocumentsTagsIndexedDetail").usedBy()).singleElement().satisfies(u -> {
+            assertThat(u.elementKind()).isEqualTo("boundaryEvent");
+            assertThat(u.target()).isEqualTo("DO_ApplicationError/faultUrl");
+        });
+        assertThat(fn.apply("getRecipientIdIndex").usedBy()).singleElement().satisfies(u -> {
+            assertThat(u.process()).isEqualTo("digisign_envelope_download_completed");
+            assertThat(u.elementKind()).isEqualTo("flow");
+            assertThat(u.part()).isEqualTo("condition");
+            assertThat(u.element().name()).isEqualTo("Signer only? -> Download audit log? (Yes)");
+        });
+        assertThat(fn.apply("getRecipientIdByExtId").usedBy()).extracting(u -> u.element().name())
+                .containsExactly("Create envelope tag");
+    }
+
+    @Test
     void readsComponentsAndProcesses() {
         assertThat(inventory.source().softwareComponent().name()).isEqualTo("EON_BPM_DIGISIGN");
         assertThat(inventory.developmentComponents()).extracting(dc -> dc.vendor() + "/" + dc.name())

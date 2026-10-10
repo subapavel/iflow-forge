@@ -289,7 +289,13 @@ Hierarchical MappingParts are flattened into target paths.
   "ejb": { "application": "eon.com/bpm~digisignfunctionsea", "bean": "GetRecipientIdIndex",
            "interface": "com.eon.digisign.bpm.functions.GetRecipientIdIndexLocal" },   // parsed from lookupName; links to ejb[].beans
   "parameters": [ { "name": "recipientId", "type": "xsd:string" }, { "name": "recipientIds", "type": "…" } ],
-  "result": { "name": "result", "type": "…" } }
+  "result": { "name": "result", "type": "…" },
+  "usedBy": [ { "process": "digisign_envelope_download_completed",       // every call in the DC's processes
+                "element": { "ref": "…", "name": "Signer only? -> Download audit log? (Yes)" },
+                "elementKind": "flow",                                    // step kind | flow | role | dataObject
+                "part": "condition",                                      // inputMapping | outputMapping | condition | assignment | initialValue
+                "target": null,                                           // mapping target path (null for conditions)
+                "expression": "or(boolean-equal(DO_SignerOnly,false), …)" } ] }
 
 // EventDefinition (src/triggers/*.eventdef)
 { "id": "…", "name": "DigiSignTechnicalEscacaltion", "kind": "error|message",

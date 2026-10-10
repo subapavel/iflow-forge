@@ -38,8 +38,8 @@ final class Views {
     static final List<String> INTEGRATION_KINDS = List.of("ico", "channel", "serviceInterface", "operationMapping",
             "messageMapping", "messageType", "dataType", "externalDefinition", "functionLibrary", "importedArchive");
     /** Kinds accepted by {@code get_sca_object}. */
-    static final List<String> SCA_KINDS = List.of("process", "step", "processData", "catalog", "ejbModule",
-            "developmentComponent", "issues");
+    static final List<String> SCA_KINDS = List.of("process", "step", "processData", "catalog", "function",
+            "interface", "serviceReference", "dataType", "ejbModule", "developmentComponent", "issues");
 
     private Views() {
     }
@@ -172,7 +172,15 @@ final class Views {
                 }
             }
             case "catalog" -> inv.bpm().stream().filter(b -> eq(b.dc(), n) && b.catalog() != null)
-                    .map(BpmComponent::catalog).forEach(out::add);
+                    .map(b -> catalogOverview(b.dc(), b.catalog())).forEach(out::add);
+            case "function" -> catalogs(inv).flatMap(c -> c.functions().stream()).filter(f -> eq(f.name(), n))
+                    .forEach(out::add);
+            case "interface" -> catalogs(inv).flatMap(c -> c.interfaces().stream()).filter(i -> eq(i.name(), n))
+                    .forEach(out::add);
+            case "serviceReference" -> catalogs(inv).flatMap(c -> c.serviceReferences().stream())
+                    .filter(s -> eq(s.uuid(), n) || (s.iface() != null && eq(s.iface().name(), n))).forEach(out::add);
+            case "dataType" -> dataTypes(catalogs(inv).flatMap(c -> c.dataTypes().stream())
+                    .filter(d -> eq(d.name(), n)).toList()).forEach(out::add);
             case "ejbModule" -> inv.ejb().stream().filter((EjbModule m) -> eq(m.dc(), n) || eq(m.application(), n))
                     .forEach(out::add);
             case "developmentComponent" -> inv.developmentComponents().stream().filter(d -> eq(d.name(), n))
@@ -182,6 +190,77 @@ final class Views {
                     + String.join(", ", SCA_KINDS));
         }
         return out;
+    }
+
+    // ------------------------------------------------------------------------------------------ catalog
+
+    /**
+     * Catalog of a BPM DC by name only (the full catalog of a real DC exceeds what MCP clients accept, mostly
+     * because of the data types); details with the kinds function, interface, serviceReference, dataType.
+     */
+    record CatalogOverview(String dc, List<InterfaceSummary> interfaces, List<ServiceReference> serviceReferences,
+            List<FunctionSummary> functions, List<String> builtinFunctions, List<String> eventDefinitions,
+            List<DataTypeSummary> dataTypes, String next) {
+    }
+
+    record InterfaceSummary(String name, String namespace, List<String> operations, int usages) {
+    }
+
+    /** {@code implementation}: EJB bean @ application or lookup name; {@code usages}: number of calls. */
+    record FunctionSummary(String name, String implementation, int usages) {
+    }
+
+    /** {@code occurrences}: in how many process / pool namespaces a type of this name and structure is defined. */
+    record DataTypeSummary(String name, String type, int fields, int occurrences) {
+    }
+
+    /**
+     * A data type defined identically in several namespaces (process-local types repeat per process / pool), with
+     * one line per field: {@code path : type [min..max]} (type omitted for anonymous structures, cardinality
+     * only when not 1..1).
+     */
+    record DataTypeView(String name, String type, List<String> namespaces, List<String> fields) {
+    }
+
+    static CatalogOverview catalogOverview(String dc, BpmComponent.Catalog c) {
+        List<InterfaceSummary> interfaces = c.interfaces().stream().map(i -> new InterfaceSummary(i.name(),
+                i.namespace(), i.operations().stream().map(o -> o.name()).toList(),
+                i.usedBy() == null ? 0 : i.usedBy().size())).toList();
+        List<FunctionSummary> functions = c.functions().stream().map(f -> new FunctionSummary(f.name(),
+                f.ejb() == null ? f.lookupName() : f.ejb().bean() + " @ " + f.ejb().application(),
+                f.usedBy() == null ? 0 : f.usedBy().size())).toList();
+        List<DataTypeSummary> types = dataTypes(c.dataTypes()).stream().map(t -> new DataTypeSummary(t.name(),
+                t.type(), t.fields().size(), t.namespaces().size())).toList();
+        return new CatalogOverview(dc, interfaces, c.serviceReferences(), functions,
+                c.builtinFunctions().stream().map(b -> b.name()).distinct().toList(),
+                java.util.stream.Stream.concat(c.eventDefinitions().stream(), c.builtinEventDefinitions().stream())
+                        .map(e -> e.name()).toList(),
+                types, "Details: get_sca_object with kind function (incl. where it is called), interface,"
+                        + " serviceReference (by interface name), dataType (fields) and the name.");
+    }
+
+    private static java.util.stream.Stream<BpmComponent.Catalog> catalogs(ScaInventory inv) {
+        return inv.bpm().stream().map(BpmComponent::catalog).filter(java.util.Objects::nonNull);
+    }
+
+    /** Data types grouped by name, type and fields; fields as compact lines. */
+    static List<DataTypeView> dataTypes(List<DataType> types) {
+        Map<String, DataTypeView> out = new LinkedHashMap<>();
+        for (DataType t : types) {
+            List<String> fields = t.fields() == null ? List.of() : t.fields().stream().map(Views::field).toList();
+            String key = t.name() + "|" + t.type() + "|" + fields;
+            DataTypeView v = out.get(key);
+            List<String> namespaces = new ArrayList<>(v == null ? List.of() : v.namespaces());
+            namespaces.add(t.namespace());
+            out.put(key, new DataTypeView(t.name(), t.type(), List.copyOf(namespaces), fields));
+        }
+        return List.copyOf(out.values());
+    }
+
+    private static String field(DataType.Field f) {
+        boolean single = (f.min() == null || f.min() == 1) && (f.max() == null || "1".equals(f.max()));
+        return f.path() + (f.type() == null ? "" : " : " + f.type()) + (single ? "" : " [" + (f.min() == null ? 1
+                : f.min()) + ".." + (f.max() == null ? "1" : f.max()) + "]");
     }
 
     /** A step with the service reference it calls (binding, service group, ESR operation mapping if any). */

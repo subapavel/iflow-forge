@@ -454,11 +454,15 @@ public final class DocumentBuilder {
         if (!c.functions().isEmpty()) {
             heading(4, l.get("catalog.functions"));
             Doc.TableBuilder ft = new Doc.TableBuilder(l.get("col.function"), l.get("col.parameters"),
-                    l.get("col.result"), l.get("col.implementation"));
+                    l.get("col.result"), l.get("col.implementation"), l.get("col.usedBy"));
             for (Function f : c.functions()) {
                 ft.row(code(f.name()), code(params(f.parameters())),
                         code(f.result() == null ? null : f.result().type()),
-                        code(f.ejb() == null ? f.lookupName() : f.ejb().bean() + " @ " + f.ejb().application()));
+                        code(f.ejb() == null ? f.lookupName() : f.ejb().bean() + " @ " + f.ejb().application()),
+                        text(f.usedBy() == null ? null : f.usedBy().stream()
+                                .map(u -> u.process() + " / " + nz(u.element().name()) + " (" + u.part()
+                                        + (u.target() == null ? "" : " → " + u.target()) + ")")
+                                .collect(Collectors.joining("; "))));
             }
             table(ft);
         }

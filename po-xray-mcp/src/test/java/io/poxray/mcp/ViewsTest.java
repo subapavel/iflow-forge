@@ -89,5 +89,19 @@ class ViewsTest {
         assertThat(Views.find(inv, "step", "digisign_envelope/Create envelope recipient")).singleElement()
                 .isInstanceOfSatisfying(Views.StepDetail.class, d -> assertThat(d.step().inputMapping()).isNotNull());
         assertThat(Views.find(inv, "processData", "digisign_envelope")).hasSize(1);
+
+        Object catalog = Views.find(inv, "catalog", "eon.com/bpm/digisign").getFirst();
+        String catalogJson = Json.mapper().writer().without(tools.jackson.databind.SerializationFeature.INDENT_OUTPUT)
+                .writeValueAsString(catalog);
+        assertThat(catalogJson.length()).isLessThan(20_000);
+        assertThat(((Views.CatalogOverview) catalog).functions()).extracting(f -> f.name() + ":" + f.usages())
+                .contains("createMetadata:3", "getRecipientIdIndex:1");
+        // process-local types repeat per process / pool: identical ones are one view with all namespaces;
+        // the TextVariables of one pool has an extra field (envelopeId) and stays separate
+        assertThat(Views.find(inv, "dataType", "TextVariables")).extracting(t -> ((Views.DataTypeView) t).namespaces().size())
+                .containsExactlyInAnyOrder(3, 1);
+        assertThat(Views.find(inv, "dataType", "DO_Envelope")).singleElement()
+                .isInstanceOfSatisfying(Views.DataTypeView.class, t -> assertThat(t.namespaces()).hasSize(2));
+        assertThat(Views.find(inv, "function", "createMetadata")).hasSize(1);
     }
 }

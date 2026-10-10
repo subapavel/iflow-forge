@@ -144,7 +144,7 @@ final class CatalogReader {
             String kind = impl == null ? null
                     : impl.is(Galaxy.EJB_FUNCTION) ? "ejb" : impl.simpleType();
             out.add(new Function(fi.id(), fi.name(), fi.attr("namespace"), kind, lookupName, ejb,
-                    List.copyOf(params), result, ctx.source(fi.partition())));
+                    List.copyOf(params), result, ctx.source(fi.partition()), List.of()));
         }
         return out;
     }

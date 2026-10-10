@@ -6,6 +6,8 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
 @RegisterForReflection(targets = {
     Views.IcoOverview.class, Views.ChannelSummary.class, Views.DataTypeDetail.class, Views.ScaOverview.class,
     Views.ProcessSummary.class, Views.EjbSummary.class, Views.ProcessData.class, Views.StepDetail.class,
+    Views.CatalogOverview.class, Views.InterfaceSummary.class, Views.FunctionSummary.class,
+    Views.DataTypeSummary.class, Views.DataTypeView.class,
     Inventories.Components.class, PoXrayTools.Ambiguous.class, PoXrayTools.WithIssues.class
 })
 final class McpReflection {

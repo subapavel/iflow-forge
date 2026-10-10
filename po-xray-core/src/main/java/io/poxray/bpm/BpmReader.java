@@ -69,7 +69,7 @@ public final class BpmReader {
                 : sca.zip().get(dc.deployEntry()).map(b -> ZipArchive.of(b, dc.deployEntry())).orElse(null));
 
         List<Interface> interfaces = catalog.interfaces(usages.interfaces);
-        List<Function> functions = catalog.functions();
+        List<Function> functions = FunctionUsages.attach(catalog.functions(), processes);
         List<EventDefinition> eventDefinitions = catalog.eventDefinitions();
         List<DataType> dataTypes = new ArrayList<>();
         for (String id : usages.dataTypes) {

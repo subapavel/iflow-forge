@@ -31,6 +31,8 @@ public class PoXrayTools {
     private static final String SYSTEM = "PO system name as configured in ~/.po-xray/systems/<name>.properties";
     private static final String COMPONENT = "Exact communication component name (business system / component), "
             + "case-insensitive; * and ? wildcards allowed";
+    /** Upper bound of a tool result; Claude Code rejects results above ~25k tokens. */
+    static final int MAX_RESULT = 80_000;
     private static final String TYPES = "messageMapping, operationMapping, serviceInterface, messageType, "
             + "dataType, externalDefinition, functionLibrary, importedArchive, ico, channel, component, "
             + "receiverDetermination, interfaceDetermination, senderAgreement, receiverAgreement, valueMapping, iflow "
@@ -186,16 +188,19 @@ public class PoXrayTools {
 
     @Tool(name = "get_sca_object", description = "One part of an SCA inventory: process (steps, gateways, flows "
             + "with conditions, events; mappings only listed), step (one step with its input / output mappings and "
-            + "resolved functions, and its service reference incl. an ESR operation mapping it calls), processData (data objects with types, roles), catalog (interfaces, service "
-            + "references, functions, data types of a BPM DC), ejbModule (beans, roles, web services, JPA), "
-            + "developmentComponent, issues.",
+            + "resolved functions, and its service reference incl. an ESR operation mapping it calls), processData "
+            + "(data objects with types, roles), catalog (overview of a BPM DC: interfaces, service references, "
+            + "custom functions with number of calls, built-in functions, events, data types by name), function "
+            + "(custom function: EJB implementation and every place it is called), interface, serviceReference, "
+            + "dataType (fields), ejbModule (beans, roles, web services, JPA), developmentComponent, issues.",
             annotations = @Tool.Annotations(readOnlyHint = true, openWorldHint = false))
     String getScaObject(@ToolArg(description = "Path to the .sca file") String path,
-            @ToolArg(description = "process, step, processData, catalog, ejbModule, developmentComponent or issues")
-            String kind,
+            @ToolArg(description = "process, step, processData, catalog, function, interface, serviceReference, "
+                    + "dataType, ejbModule, developmentComponent or issues") String kind,
             @ToolArg(description = "Process name or id (process, processData); '<process>/<step name or id>' "
-                    + "(step); DC name (catalog, ejbModule, developmentComponent); severity (error, warning, info) or "
-                    + "empty (issues)", defaultValue = "") String name) {
+                    + "(step); DC name (catalog, ejbModule, developmentComponent); function / interface / data type "
+                    + "name; service reference by interface name; severity (error, warning, info) or empty (issues)",
+                    defaultValue = "") String name) {
         return call(() -> {
             List<Object> found = Views.find(inventories.sca(path), kind, name);
             if (found.isEmpty() && !"issues".equals(kind)) {
@@ -247,7 +252,14 @@ public class PoXrayTools {
 
     /** Compact JSON for tool results (indentation would cost the agent tokens). */
     private static String json(Object value) {
-        return Json.mapper().writer().without(SerializationFeature.INDENT_OUTPUT).writeValueAsString(value);
+        String s = Json.mapper().writer().without(SerializationFeature.INDENT_OUTPUT).writeValueAsString(value);
+        if (s.length() > MAX_RESULT) {
+            // a truncated or rejected result is worse than a clear request to narrow it down
+            throw new ToolCallException("Result too large (" + s.length() + " characters, MCP clients accept about "
+                    + MAX_RESULT + "): narrow the request - an overview first, then single objects by name"
+                    + " (e.g. one step, one data type, one channel), or a namespace / component filter.");
+        }
+        return s;
     }
 
     private static boolean wants(String format, String f) {
