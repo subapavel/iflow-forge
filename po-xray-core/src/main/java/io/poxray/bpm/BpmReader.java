@@ -65,7 +65,7 @@ public final class BpmReader {
                 });
         unmapped.addAll(usages.unmapped);
 
-        Map<String, Composite.Reference> composite = Composite.read(dc.deployEntry() == null ? null
+        Composite.Content composite = Composite.read(dc.deployEntry() == null ? null
                 : sca.zip().get(dc.deployEntry()).map(b -> ZipArchive.of(b, dc.deployEntry())).orElse(null));
 
         List<Interface> interfaces = catalog.interfaces(usages.interfaces);

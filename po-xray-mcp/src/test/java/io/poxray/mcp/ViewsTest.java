@@ -11,7 +11,6 @@ import io.poxray.model.IntegrationInventory;
 import io.poxray.model.IntegrationInventory.Channel;
 import io.poxray.model.IntegrationInventory.DirRef;
 import io.poxray.model.IntegrationInventory.ObjRef;
-import io.poxray.model.Node;
 import io.poxray.model.ScaInventory;
 import java.nio.file.Path;
 import java.util.List;
@@ -88,7 +87,7 @@ class ViewsTest {
         assertThat(json).doesNotContain("\"inputMapping\":{").contains("\"mappings\":[\"inputMapping\"");
         assertThat(json.length()).isLessThan(60_000);
         assertThat(Views.find(inv, "step", "digisign_envelope/Create envelope recipient")).singleElement()
-                .isInstanceOfSatisfying(Node.class, n -> assertThat(n.inputMapping()).isNotNull());
+                .isInstanceOfSatisfying(Views.StepDetail.class, d -> assertThat(d.step().inputMapping()).isNotNull());
         assertThat(Views.find(inv, "processData", "digisign_envelope")).hasSize(1);
     }
 }

@@ -186,7 +186,7 @@ public class PoXrayTools {
 
     @Tool(name = "get_sca_object", description = "One part of an SCA inventory: process (steps, gateways, flows "
             + "with conditions, events; mappings only listed), step (one step with its input / output mappings and "
-            + "resolved functions), processData (data objects with types, roles), catalog (interfaces, service "
+            + "resolved functions, and its service reference incl. an ESR operation mapping it calls), processData (data objects with types, roles), catalog (interfaces, service "
             + "references, functions, data types of a BPM DC), ejbModule (beans, roles, web services, JPA), "
             + "developmentComponent, issues.",
             annotations = @Tool.Annotations(readOnlyHint = true, openWorldHint = false))

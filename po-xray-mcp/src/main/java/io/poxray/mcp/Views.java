@@ -13,7 +13,9 @@ import io.poxray.model.IntegrationInventory.Ico;
 import io.poxray.model.IntegrationInventory.ObjRef;
 import io.poxray.model.IntegrationInventory.Query;
 import io.poxray.model.Issue;
+import io.poxray.model.Node;
 import io.poxray.model.Process;
+import io.poxray.model.ServiceReference;
 import io.poxray.model.ScaInventory;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -159,8 +161,15 @@ final class Views {
                 String step = slash < 0 ? n : n.substring(slash + 1);
                 List<Process> scope = slash < 0 ? inv.bpm().stream().flatMap(b -> b.processes().stream()).toList()
                         : processes(inv, n.substring(0, slash));
-                scope.stream().flatMap(p -> p.nodes().stream())
-                        .filter(node -> eq(node.name(), step) || eq(node.id(), step)).forEach(out::add);
+                for (BpmComponent b : inv.bpm()) {
+                    for (Process p : b.processes()) {
+                        if (!scope.contains(p)) {
+                            continue;
+                        }
+                        p.nodes().stream().filter(node -> eq(node.name(), step) || eq(node.id(), step))
+                                .forEach(node -> out.add(new StepDetail(node, serviceReference(b, node))));
+                    }
+                }
             }
             case "catalog" -> inv.bpm().stream().filter(b -> eq(b.dc(), n) && b.catalog() != null)
                     .map(BpmComponent::catalog).forEach(out::add);
@@ -173,6 +182,18 @@ final class Views {
                     + String.join(", ", SCA_KINDS));
         }
         return out;
+    }
+
+    /** A step with the service reference it calls (binding, service group, ESR operation mapping if any). */
+    record StepDetail(Node step, ServiceReference serviceReference) {
+    }
+
+    private static ServiceReference serviceReference(BpmComponent b, Node node) {
+        if (node.serviceReference() == null || b.catalog() == null) {
+            return null;
+        }
+        return b.catalog().serviceReferences().stream().filter(s -> s.id().equals(node.serviceReference().ref()))
+                .findFirst().orElse(null);
     }
 
     /** Data objects and roles of a process (kept out of the outline). */

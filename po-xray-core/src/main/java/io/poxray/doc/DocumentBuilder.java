@@ -228,6 +228,10 @@ public final class DocumentBuilder {
             facts.add(text(l.get("step.serviceReference") + ": " + (sr == null ? nz(n.serviceReference().name())
                     : l.get("step.serviceReference.value", nz(sr.bindingType()), nz(sr.serviceGroup()),
                     nz(sr.authenticationProfile())))));
+            if (sr != null && sr.operationMapping() != null) {
+                facts.add(line(new Doc.Text(l.get("step.operationMapping") + ": "),
+                        new Doc.Code(esr(sr.operationMapping()))));
+            }
         }
         if (n.subject() != null) {
             facts.add(text(l.get("step.subject") + ": " + n.subject()));
@@ -439,10 +443,11 @@ public final class DocumentBuilder {
 
         heading(4, l.get("catalog.serviceReferences"));
         Doc.TableBuilder st = new Doc.TableBuilder(l.get("col.interface"), l.get("col.binding"),
-                l.get("col.serviceGroup"), l.get("col.authProfile"));
+                l.get("col.serviceGroup"), l.get("col.authProfile"), l.get("col.operationMapping"));
         for (ServiceReference sr : c.serviceReferences()) {
             st.row(code(sr.iface() == null ? sr.uuid() : sr.iface().name()), text(sr.bindingType()),
-                    text(sr.serviceGroup()), text(sr.authenticationProfile()));
+                    text(sr.serviceGroup()), text(sr.authenticationProfile()),
+                    code(sr.operationMapping() == null ? null : esr(sr.operationMapping())));
         }
         table(st);
 
@@ -667,6 +672,11 @@ public final class DocumentBuilder {
 
     private static String name(Ref r) {
         return r == null ? "?" : r.name() != null ? r.name() : r.ref();
+    }
+
+    /** {@code name | namespace (ESR OID …)}. */
+    private static String esr(io.poxray.model.EsrOperationMapping om) {
+        return nz(om.name()) + " | " + nz(om.namespace()) + (om.oid() == null ? "" : " (ESR " + om.oid() + ")");
     }
 
     private static String nz(String s) {

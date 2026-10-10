@@ -485,6 +485,11 @@ Facts verified on xipod (PO 7.50 SP28):
   pins then (0), if (1), else (2); the expression shows them as `iF(if: …, then: …, else: …)`. UDF argument `tp`:
   0 input, 1 result, 2 parameter; `cacheType` 0/1/2 = single values / context / queue. Channel parameters
   (`typetype DCOMCHAN`) point to a link `p_<name>` → adapter metadata (e.g. RFC).
+- NW BPM calling ESR operation mappings: the deployed composite has a component with `implementation.piom`, one
+  `service` per operation mapping with `sapextensions omguid` (object ID in the ESR) / `svguid` (SWCV) and input /
+  output types; the process calls it through a service reference to the generated port type. The service reference
+  gets `operationMapping { name, namespace, oid, swcGuid, input, output }` (PPAS_OTE archive BPM: 3 mappings, OIDs
+  identical to the ESR of xipod).
 - Imported archives (`TRAFO_JAR`): `Archive/blob type="jar" zipped="false"` = the uploaded jar / zip itself, plus
   `Encoding` (of Java sources) and link `FILE_NAME`. Classes are read from the byte code (constant pool), not
   decompiled: Java mappings extend `AbstractTransformation` or implement `StreamTransformation` (also through classes of

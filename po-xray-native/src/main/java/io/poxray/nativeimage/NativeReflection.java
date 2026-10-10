@@ -42,7 +42,7 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
             Flow.class, Expression.class, FunctionCall.class, FunctionCall.Argument.class,
             Mapping.class, Mapping.Assignment.class,
             Interface.class, Interface.Operation.class, Interface.Fault.class, Interface.Usage.class,
-            ServiceReference.class, Function.class, Function.EjbLink.class, Function.Parameter.class,
+            ServiceReference.class, io.poxray.model.EsrOperationMapping.class, Function.class, Function.EjbLink.class, Function.Parameter.class,
             BuiltinFunction.class, EventDefinition.class, DataType.class, DataType.Field.class,
             Issue.class, Issue.Location.class, UnmappedElement.class, Ref.class, QNameRef.class,
             EjbModule.class, EjbModule.Bean.class, EjbModule.Interfaces.class, EjbModule.WebService.class,

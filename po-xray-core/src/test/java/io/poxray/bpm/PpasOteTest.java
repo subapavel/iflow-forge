@@ -43,6 +43,20 @@ class PpasOteTest {
     }
 
     @Test
+    void recognisesEsrOperationMappingsCalledByTheProcess() {
+        var calls = inventory.bpm().stream().flatMap(b -> b.catalog().serviceReferences().stream())
+                .filter(sr -> sr.operationMapping() != null).map(sr -> sr.operationMapping()).toList();
+        // OIDs verified against the ESR of xipod (same SWCV PPAS_OTE)
+        assertThat(calls).extracting(om -> om.name() + "|" + om.oid()).contains(
+                "AMMR_to_ZIDE_XML_ARCHIVACE_CDSINVOICE|f443996c50d23ebcb196abf00baecb57",
+                "AMMR_to_ZIDE_XML_ARCHIVACE_CDSGASINVOICE|e3e5d776273e313985e42c75ee2ae479");
+        assertThat(calls).allSatisfy(om -> {
+            assertThat(om.namespace()).isEqualTo("urn:ppas-cz:ote:archive");
+            assertThat(om.swcGuid()).isEqualTo("499c5b00241c11ebacc6c8f6ac1203a0");
+        });
+    }
+
+    @Test
     void classifiesEjbPatterns() {
         EjbModule m = inventory.ejb().getFirst();
         assertThat(m.ear()).isEqualTo("ppas.cz/dc/ear/dc_ide_ote_routing");

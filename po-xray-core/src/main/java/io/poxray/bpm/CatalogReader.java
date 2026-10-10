@@ -1,5 +1,6 @@
 package io.poxray.bpm;
 
+import io.poxray.model.EsrOperationMapping;
 import io.poxray.model.EventDefinition;
 import io.poxray.model.Function;
 import io.poxray.model.Interface;
@@ -92,7 +93,7 @@ final class CatalogReader {
         return new Interface.Operation(op.id(), op.name(), pattern, input, output, List.copyOf(faults));
     }
 
-    List<ServiceReference> serviceReferences(Map<String, Composite.Reference> composite) {
+    List<ServiceReference> serviceReferences(Composite.Content composite) {
         List<ServiceReference> out = new ArrayList<>();
         for (MoinElement sr : ctx.index.elementsOf(Galaxy.SERVICE_REFERENCE)) {
             QNameRef iface = ctx.index.firstElement(Galaxy.SERVICE_REFERENCE_QNAME, sr.id())
@@ -111,10 +112,12 @@ final class CatalogReader {
             for (MoinElement a : ctx.index.firstElements(Galaxy.SERVICE_REFERENCE_ATTRIBUTES, sr.id())) {
                 attrs.put(a.attr("key"), a.attr("value"));
             }
-            Composite.Reference c = composite.get(sr.attr("id"));
+            Composite.Reference c = composite.references().get(sr.attr("id"));
+            EsrOperationMapping om = iface == null ? null
+                    : composite.operationMappings().get("{" + iface.namespace() + "}" + iface.name());
             out.add(new ServiceReference(sr.id(), sr.attr("id"), sr.attr("type"), sr.attr("bindingType"), iface,
                     auth != null ? auth : c == null ? null : c.authenticationProfile(),
-                    logicalSystem, c == null ? null : c.serviceGroup(), attrs));
+                    logicalSystem, c == null ? null : c.serviceGroup(), attrs, om));
         }
         return out;
     }
