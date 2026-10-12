@@ -48,7 +48,7 @@ public final class CachingObjectSource implements XiObjectSource {
             java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
     private static final Pattern VID = Pattern.compile("VID=\"([^\"]+)\"");
 
-    private final PoClient client;
+    private final PoGateway client;
     private final Path directory;
     private final boolean refresh;
     private final Map<Path, String> failures = new ConcurrentHashMap<>();
@@ -56,7 +56,7 @@ public final class CachingObjectSource implements XiObjectSource {
     private volatile boolean synced;
     private int dropped;
 
-    public CachingObjectSource(PoClient client, Path directory, boolean refresh) {
+    public CachingObjectSource(PoGateway client, Path directory, boolean refresh) {
         this.client = client;
         this.directory = directory;
         this.refresh = refresh;

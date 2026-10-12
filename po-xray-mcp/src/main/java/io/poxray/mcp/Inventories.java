@@ -6,8 +6,7 @@ import io.poxray.integration.ObjectCatalog;
 import io.poxray.model.IntegrationInventory;
 import io.poxray.model.IntegrationInventory.Component;
 import io.poxray.model.ScaInventory;
-import io.poxray.po.CachingObjectSource;
-import io.poxray.po.PoClient;
+import io.poxray.po.PoConnection;
 import io.poxray.po.PoSystem;
 import jakarta.enterprise.context.ApplicationScoped;
 import java.io.IOException;
@@ -54,9 +53,8 @@ public class Inventories {
     /** Object search / read / where-used of a system; listings are kept for the session. */
     ObjectCatalog catalog(String system) {
         return catalogs.computeIfAbsent(system, s -> {
-            PoClient client = new PoClient(PoSystem.load(s));
-            return new ObjectCatalog(client,
-                    new CachingObjectSource(client, CachingObjectSource.defaultDirectory(client.system()), false));
+            PoConnection c = PoConnection.open(PoSystem.load(s), null, false);
+            return new ObjectCatalog(c.gateway(), c.source());
         });
     }
 
@@ -74,9 +72,8 @@ public class Inventories {
     }
 
     private static IntegrationQuery query(String system, boolean refresh) {
-        PoClient client = new PoClient(PoSystem.load(system));
-        return new IntegrationQuery(client,
-                new CachingObjectSource(client, CachingObjectSource.defaultDirectory(client.system()), refresh));
+        PoConnection c = PoConnection.open(PoSystem.load(system), null, refresh);
+        return new IntegrationQuery(c.gateway(), c.source());
     }
 
     static IntegrationQuery.Direction direction(String direction) {

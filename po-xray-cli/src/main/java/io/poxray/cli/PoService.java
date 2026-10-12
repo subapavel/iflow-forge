@@ -2,13 +2,15 @@ package io.poxray.cli;
 
 import io.poxray.integration.IntegrationQuery;
 import io.poxray.integration.ObjectCatalog;
-import io.poxray.po.CachingObjectSource;
-import io.poxray.po.PoClient;
+import io.poxray.po.PoConnection;
 import io.poxray.po.PoSystem;
 import jakarta.enterprise.context.ApplicationScoped;
 import java.nio.file.Path;
 
-/** Access to a configured PO system (~/.po-xray/systems/<name>.properties) with the local snapshot cache. */
+/**
+ * Access to a configured PO system (~/.po-xray/systems/<name>.properties): online with the local snapshot cache,
+ * or a directory of TPZ exports (tpz=...).
+ */
 @ApplicationScoped
 public class PoService {
 
@@ -17,16 +19,14 @@ public class PoService {
      * {@code refresh} re-reads them.
      */
     IntegrationQuery query(String system, String cache, boolean refresh) {
-        PoClient client = new PoClient(PoSystem.load(system));
-        Path dir = cache == null ? CachingObjectSource.defaultDirectory(client.system()) : Path.of(cache);
-        return new IntegrationQuery(client, new CachingObjectSource(client, dir, refresh));
+        PoConnection c = PoConnection.open(PoSystem.load(system), cache == null ? null : Path.of(cache), refresh);
+        return new IntegrationQuery(c.gateway(), c.source());
     }
 
     /** Search, read and where-used for any object type of a system, on top of the same snapshot. */
     ObjectCatalog catalog(String system) {
-        PoClient client = new PoClient(PoSystem.load(system));
-        return new ObjectCatalog(client,
-                new CachingObjectSource(client, CachingObjectSource.defaultDirectory(client.system()), false));
+        PoConnection c = PoConnection.open(PoSystem.load(system), null, false);
+        return new ObjectCatalog(c.gateway(), c.source());
     }
 
     /** File name part for a component pattern: {@code icos-V3S_D}, {@code icos-_DIGISIGN_}. */

@@ -29,7 +29,8 @@ import tools.jackson.databind.SerializationFeature;
  */
 public class PoXrayTools {
 
-    private static final String SYSTEM = "PO system name as configured in ~/.po-xray/systems/<name>.properties";
+    private static final String SYSTEM = "PO system name as configured in ~/.po-xray/systems/<name>.properties "
+            + "(url= for an online system, tpz= for a directory of TPZ exports read offline)";
     private static final String COMPONENT = "Exact communication component name (business system / component), "
             + "case-insensitive; * and ? wildcards allowed";
     /** Upper bound of a tool result; Claude Code rejects results above ~25k tokens. */

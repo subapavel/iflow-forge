@@ -7,9 +7,10 @@ import io.poxray.model.IntegrationInventory.Component;
 import io.poxray.model.IntegrationInventory.Ico;
 import io.poxray.model.ScaInventory;
 import io.poxray.po.Area;
-import io.poxray.po.PoClient;
 import io.poxray.po.PoException;
+import io.poxray.po.PoGateway;
 import io.poxray.po.QueryRequest;
+import io.poxray.po.TypeKeys;
 import io.poxray.xi.XiLink;
 import io.poxray.xi.XiObject;
 import io.poxray.xi.XiObjectSource;
@@ -40,24 +41,18 @@ public final class IntegrationQuery {
     /** in = component is a receiver, out = component is the sender, both = either. */
     public enum Direction { IN, OUT, BOTH }
 
-    private final PoClient client;
+    private final PoGateway client;
     private final XiObjectSource source;
     private final List<String> notes = new ArrayList<>();
 
     static final List<String> CLASSIC_TYPES = List.of("RoutingRelation", "MappingRelation", "InboundBinding",
             "OutboundBinding");
     /** Classic configuration types with their key elements (SimpleQuery typeInfo, PO 7.50). */
-    static final Map<String, List<String>> CLASSIC_KEYS = Map.of(
-            "RoutingRelation", List.of("FROMPARTY", "FROMSRVC", "FROMACTIONNS", "FROMACTION", "TOPARTY", "TOSRVC"),
-            "MappingRelation", List.of("FROMACTIONNS", "FROMACTION", "FROMPARTY", "FROMSRVC", "TOPARTY", "TOSRVC"),
-            "InboundBinding", List.of("FROMPARTY", "FROMSRVC", "ACTIONNS", "ACTIONNAME", "TOPARTY", "TOSRVC",
-                    "DIRECTION"),
-            "OutboundBinding", List.of("TOPARTY", "TOSRVC", "ACTIONNS", "ACTIONNAME", "FROMPARTY", "FROMSRVC",
-                    "DIRECTION"));
+    static final Map<String, List<String>> CLASSIC_KEYS = TypeKeys.NAMES;
     /** Link targets of classic configuration objects expanded into the inventory. */
     private static final Set<String> EXPANDED_LINKS = Set.of("MAPPING", "ifmmessif", "Channel");
 
-    public IntegrationQuery(PoClient client, XiObjectSource source) {
+    public IntegrationQuery(PoGateway client, XiObjectSource source) {
         this.client = client;
         this.source = source;
     }
@@ -137,7 +132,7 @@ public final class IntegrationQuery {
                 ScaInventory.SCHEMA_VERSION,
                 new ScaInventory.Generator(PoXray.NAME, PoXray.VERSION,
                         Instant.now().truncatedTo(ChronoUnit.SECONDS).toString()),
-                new IntegrationInventory.Source(client.system().name(), client.system().url().toString(), List.of()),
+                new IntegrationInventory.Source(client.system().name(), client.system().location(), List.of()),
                 new IntegrationInventory.Query(componentPattern, direction.name().toLowerCase(Locale.ROOT)),
                 components, icos, reader.channels(), classic, reader.esr(), issues.issues());
     }

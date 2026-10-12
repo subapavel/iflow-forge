@@ -65,9 +65,24 @@ user=...
 password=...
 ```
 
-Optional: `truststore=windows|jdk|<file>` (+ `truststorePassword`) for HTTPS — by default a certificate is accepted if
-the JDK certificates or, on Windows, the Windows certificate store trust it (company CAs, as in the browser) — and
-`proxy=host:port`. Environment variables override the file: `POXRAY_<SYSTEM>_USER` / `POXRAY_<SYSTEM>_PASSWORD`
+A system available only as TPZ exports (no network access to it) is configured with a directory instead of a URL —
+no user or password needed:
+
+```properties
+tpz=D:/customers/eon/tpz-prod
+```
+
+All commands and MCP tools then read the `.tpz` files of that directory (ESR and Directory exports side by side;
+where-used comes from the object links in the exports). Files load in name order and an object occurring in several
+files is taken from the last one, so date-stamped export names make updates predictable: a new export is just a new
+file in the directory. TPZ exports do not carry environment-specific channel attributes (URLs, users) or passwords;
+results carry a note. Export in the Integration Builder: ESR *Tools → Export Design Objects* per SWCV (including
+underlying/common SWCVs), Directory *Tools → Export Configuration Objects* per configuration scenario or folder
+(an ICO exported alone does not include its channels and components).
+
+Optional (online systems): `truststore=windows|jdk|<file>` (+ `truststorePassword`) for HTTPS — by default a
+certificate is accepted if the JDK certificates or, on Windows, the Windows certificate store trust it (company CAs,
+as in the browser) — and `proxy=host:port`. Environment variables override the file: `POXRAY_<SYSTEM>_USER` / `POXRAY_<SYSTEM>_PASSWORD`
 for one system (name upper case, other characters as `_`, e.g. `POXRAY_EON_DEV_PASSWORD` for `eon-dev`), then
 `POXRAY_USER` / `POXRAY_PASSWORD` for all systems. A read-only user is enough (roles `SAP_XI_DISPLAY_USER_J2EE`,
 `SAP_XI_API_DISPLAY_J2EE`). Objects read from the system are kept as raw `xiObj` XML in `~/.po-xray/cache/<system>`

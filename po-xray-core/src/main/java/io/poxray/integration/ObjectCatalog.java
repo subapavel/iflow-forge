@@ -5,7 +5,7 @@ import io.poxray.model.IntegrationInventory.ObjectDetail;
 import io.poxray.model.IntegrationInventory.ObjectLink;
 import io.poxray.model.IntegrationInventory.ObjectSummary;
 import io.poxray.po.Area;
-import io.poxray.po.PoClient;
+import io.poxray.po.PoGateway;
 import io.poxray.po.QueryRequest;
 import io.poxray.po.QueryResult;
 import io.poxray.xi.XiLink;
@@ -103,12 +103,12 @@ public final class ObjectCatalog {
         REFERRERS = Map.copyOf(r);
     }
 
-    private final PoClient client;
+    private final PoGateway client;
     private final XiObjectSource source;
     private final Map<String, List<String>> keyNames = new ConcurrentHashMap<>();
     private final Map<String, QueryResult> listings = new ConcurrentHashMap<>();
 
-    public ObjectCatalog(PoClient client, XiObjectSource source) {
+    public ObjectCatalog(PoGateway client, XiObjectSource source) {
         this.client = client;
         this.source = source;
     }

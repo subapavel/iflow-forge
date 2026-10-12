@@ -11,7 +11,9 @@ import java.util.Properties;
 
 /**
  * Connection settings of a PO system. Read from {@code ~/.po-xray/systems/<name>.properties} (outside any
- * repository): {@code url}, {@code user}, {@code password}; optional {@code truststore} (HTTPS trust: windows, jdk
+ * repository): {@code url}, {@code user}, {@code password} — or {@code tpz=<directory>} for a system available only
+ * as TPZ exports (no url or credentials needed; a relative directory is resolved against the systems directory).
+ * Optional {@code truststore} (HTTPS trust: windows, jdk
  * or a trust store file with {@code truststorePassword}, see {@link TrustStores}) and {@code proxy}
  * ({@code host:port}). Environment variables override the file: {@code POXRAY_<SYSTEM>_USER} /
  * {@code POXRAY_<SYSTEM>_PASSWORD} for one system (name in upper case, other characters than letters and digits as
@@ -25,6 +27,7 @@ public final class PoSystem {
 
     private final String name;
     private final URI url;
+    private final Path tpz;
     private final String user;
     private final String password;
     private final String trustStore;
@@ -32,13 +35,24 @@ public final class PoSystem {
     private final String proxy;
 
     public PoSystem(String name, URI url, String user, String password) {
-        this(name, url, user, password, null, null, null);
+        this(name, url, null, user, password, null, null, null);
     }
 
     public PoSystem(String name, URI url, String user, String password, String trustStore,
             String trustStorePassword, String proxy) {
+        this(name, url, null, user, password, trustStore, trustStorePassword, proxy);
+    }
+
+    /** A system backed by a directory of TPZ exports instead of an online connection. */
+    public static PoSystem tpz(String name, Path directory) {
+        return new PoSystem(name, null, directory, null, null, null, null, null);
+    }
+
+    private PoSystem(String name, URI url, Path tpz, String user, String password, String trustStore,
+            String trustStorePassword, String proxy) {
         this.name = name;
-        this.url = URI.create(url.toString().replaceAll("/+$", ""));
+        this.url = url == null ? null : URI.create(url.toString().replaceAll("/+$", ""));
+        this.tpz = tpz;
         this.user = user;
         this.password = password;
         this.trustStore = blankToNull(trustStore);
@@ -71,9 +85,15 @@ public final class PoSystem {
         } catch (IOException e) {
             throw new UncheckedIOException("Cannot read " + file, e);
         }
+        String tpz = p.getProperty("tpz");
+        if (tpz != null && !tpz.isBlank()) {
+            // a relative directory is resolved against the systems directory
+            return PoSystem.tpz(name, directory.resolve(tpz.strip()).normalize());
+        }
         String url = p.getProperty("url");
         if (url == null || url.isBlank()) {
-            throw new PoException("Missing url in " + file);
+            throw new PoException("Missing url in " + file + " (url=... for an online system,"
+                    + " or tpz=<directory of .tpz exports>)");
         }
         String prefix = envPrefix(name);
         String user = firstOf(env.get(prefix + "_USER"), env.get(USER_ENV), p.getProperty("user"));
@@ -104,8 +124,19 @@ public final class PoSystem {
         return name;
     }
 
+    /** Base URL of the online system; null when the system is a TPZ export directory ({@link #tpz()}). */
     public URI url() {
         return url;
+    }
+
+    /** Directory of TPZ exports; null when the system is online ({@link #url()}). */
+    public Path tpz() {
+        return tpz;
+    }
+
+    /** Where the content comes from, for people: the URL or the TPZ directory. */
+    public String location() {
+        return tpz != null ? tpz.toString() : String.valueOf(url);
     }
 
     public String user() {
@@ -132,6 +163,7 @@ public final class PoSystem {
 
     @Override
     public String toString() {
-        return name + " (" + url + ", user " + user + (proxy == null ? "" : ", proxy " + proxy) + ")";
+        return tpz != null ? name + " (tpz " + tpz + ")"
+                : name + " (" + url + ", user " + user + (proxy == null ? "" : ", proxy " + proxy) + ")";
     }
 }

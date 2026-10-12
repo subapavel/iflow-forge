@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
  * ESR ({@code /rep}) and the Integration Directory ({@code /dir}). Unofficial support endpoints, see
  * docs/SOURCES-ESR-DIRECTORY.md. Basic authentication is sent preemptively (POST endpoints challenge separately).
  */
-public final class PoClient {
+public final class PoClient implements PoGateway {
 
     private static final Pattern CHARSET = Pattern.compile("(?i)charset=([^;]+)");
     private static final Pattern RESPONSE_TEXTAREA =
@@ -42,6 +42,10 @@ public final class PoClient {
     }
 
     private static HttpClient httpClient(PoSystem system) {
+        if (system.url() == null) {
+            throw new PoException("System '" + system.name() + "' is a directory of TPZ exports (tpz=...),"
+                    + " it has no online connection");
+        }
         HttpClient.Builder b = HttpClient.newBuilder()
                 .version(HttpClient.Version.HTTP_1_1) // no h2c upgrade attempt: SAP AS Java answers it with 403
                 .connectTimeout(Duration.ofSeconds(30))
