@@ -126,7 +126,8 @@ they need (app-local, nothing to install) and `INSTALL.txt`. Native images are b
 | `write_sca_documentation` | Markdown / Jira / JSON files of an SCA |
 
 Results are deliberately small (compact JSON, overview first, details on request): MCP clients truncate large tool
-results. When the PO system cannot be reached (network / VPN), listings come from the snapshot and the result carries
+results. A result above the client limit is written to `<temp>/po-xray/<tool>-*.json` as indented JSON and the tool
+returns the file path instead. When the PO system cannot be reached (network / VPN), listings come from the snapshot and the result carries
 a warning (`OFFLINE_SNAPSHOT` issue, `warnings` of `find_components`).
 PO systems are the ones configured in `~/.po-xray/systems/<name>.properties` (see CLI); the snapshot cache is shared
 with the CLI.

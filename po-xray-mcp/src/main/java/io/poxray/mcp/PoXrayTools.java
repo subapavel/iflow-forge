@@ -50,7 +50,7 @@ public class PoXrayTools {
     String findComponents(@ToolArg(description = SYSTEM) String system,
             @ToolArg(description = "Part of the component name (substring) or * ? pattern; empty = all",
                     defaultValue = "") String name) {
-        return call(() -> json(inventories.components(system, name)));
+        return call(() -> json("find_components", inventories.components(system, name)));
     }
 
     @Tool(name = "list_icos", description = "Integrated configurations (ICOs) to and/or from a component: sender, "
@@ -63,7 +63,7 @@ public class PoXrayTools {
             @ToolArg(description = DIRECTION, defaultValue = "both") String direction,
             @ToolArg(description = "Re-read objects from the PO system instead of the local snapshot",
                     defaultValue = "false") boolean refresh) {
-        return call(() -> json(Views.overview(inventories.icos(system, component, direction, refresh))));
+        return call(() -> json("list_icos", Views.overview(inventories.icos(system, component, direction, refresh))));
     }
 
     @Tool(name = "get_object", description = "One object from the ICO inventory of a component (as listed by "
@@ -84,7 +84,7 @@ public class PoXrayTools {
                 throw new IllegalArgumentException("No " + kind + " named '" + name + "' in the ICO inventory of "
                         + component + "; see list_icos for the names");
             }
-            return json(found.size() == 1 ? found.getFirst() : found);
+            return json("get_object", found.size() == 1 ? found.getFirst() : found);
         });
     }
 
@@ -112,7 +112,7 @@ public class PoXrayTools {
                             Documentation.render(inv, f, Locale.forLanguageTag(lang))));
                 }
             }
-            return json(written);
+            return json("write_integration_documentation", written);
         });
     }
 
@@ -126,7 +126,7 @@ public class PoXrayTools {
                     defaultValue = "") String name,
             @ToolArg(description = "Namespace filter (same syntax), empty = any", defaultValue = "") String namespace,
             @ToolArg(description = "Maximum number of objects returned", defaultValue = "100") int limit) {
-        return call(() -> json(inventories.catalog(system).search(split(types), name, namespace, limit)));
+        return call(() -> json("search_objects", inventories.catalog(system).search(split(types), name, namespace, limit)));
     }
 
     @Tool(name = "read_object", description = "One ESR / Integration Directory object of any type by exact name: "
@@ -146,7 +146,7 @@ public class PoXrayTools {
                 throw new IllegalArgumentException("No " + type + " named '" + name + "'; try search_objects");
             }
             if (hits.size() > 5) {
-                return json(new Ambiguous("More than 5 objects match, narrow down with namespace", hits.stream()
+                return json("read_object", new Ambiguous("More than 5 objects match, narrow down with namespace", hits.stream()
                         .map(ObjectCatalog.Hit::summary).toList()));
             }
             IssueLog issues = new IssueLog();
@@ -155,7 +155,7 @@ public class PoXrayTools {
                 Object o = catalog.read(hit, issues);
                 out.add(o == null ? hit.summary() : o);
             }
-            return json(issues.issues().isEmpty() ? (out.size() == 1 ? out.getFirst() : out)
+            return json("read_object", issues.issues().isEmpty() ? (out.size() == 1 ? out.getFirst() : out)
                     : new WithIssues(out.size() == 1 ? out.getFirst() : out, issues.issues()));
         });
     }
@@ -175,7 +175,7 @@ public class PoXrayTools {
             if (targets.isEmpty()) {
                 throw new IllegalArgumentException("No " + type + " named '" + name + "'; try search_objects");
             }
-            return json(catalog.whereUsed(targets));
+            return json("where_used", catalog.whereUsed(targets));
         });
     }
 
@@ -184,13 +184,14 @@ public class PoXrayTools {
             + "(message start / intermediate events = inbound, automated activities = outbound with binding type, "
             + "service group and the ESR operation mapping called) the matching ESR service interfaces and all "
             + "objects referencing them - ICOs, receiver / interface determinations, agreements, operation mappings. "
-            + "Details: read_object / get_sca_object; narrow to one process if the result is too large.",
+            + "Details: read_object / get_sca_object; a result too large for the client is written to a JSON file "
+            + "and its path returned.",
             annotations = @Tool.Annotations(readOnlyHint = true, openWorldHint = true))
     String bpmIntegration(@ToolArg(description = "Path to the .sca file") String path,
             @ToolArg(description = SYSTEM) String system,
             @ToolArg(description = "Process name or id; empty = all processes of the SCA",
                     defaultValue = "") String process) {
-        return call(() -> json(BpmIntegration.report(inventories.sca(path).bpm(), process,
+        return call(() -> json("bpm_integration", BpmIntegration.report(inventories.sca(path).bpm(), process,
                 inventories.catalog(system))));
     }
 
@@ -199,7 +200,7 @@ public class PoXrayTools {
             + "Fetch details with get_sca_object.",
             annotations = @Tool.Annotations(readOnlyHint = true, openWorldHint = false))
     String readSca(@ToolArg(description = "Path to the .sca file") String path) {
-        return call(() -> json(Views.overview(inventories.sca(path))));
+        return call(() -> json("read_sca", Views.overview(inventories.sca(path))));
     }
 
     @Tool(name = "get_sca_object", description = "One part of an SCA inventory: process (steps, gateways, flows "
@@ -223,7 +224,7 @@ public class PoXrayTools {
                 throw new IllegalArgumentException("No " + kind + " named '" + name + "' in " + path
                         + "; see read_sca for the names");
             }
-            return json("issues".equals(kind) || found.size() > 1 ? found : found.getFirst());
+            return json("get_sca_object", "issues".equals(kind) || found.size() > 1 ? found : found.getFirst());
         });
     }
 
@@ -250,7 +251,7 @@ public class PoXrayTools {
                             Documentation.render(inv, f, Locale.forLanguageTag(lang))));
                 }
             }
-            return json(written);
+            return json("write_sca_documentation", written);
         });
     }
 
@@ -262,20 +263,46 @@ public class PoXrayTools {
     record WithIssues(Object object, Object issues) {
     }
 
+    /** Envelope returned instead of a result above {@link #MAX_RESULT}; the result is in {@code file}. */
+    record ResultFile(String message, String file) {
+    }
+
     private static List<String> split(String types) {
         return java.util.Arrays.stream(types.split(",")).map(String::strip).filter(t -> !t.isEmpty()).toList();
     }
 
-    /** Compact JSON for tool results (indentation would cost the agent tokens). */
-    private static String json(Object value) {
+    /** Where results above {@link #MAX_RESULT} are written: {@code <java.io.tmpdir>/po-xray}. */
+    private static final Path RESULTS = Path.of(System.getProperty("java.io.tmpdir"), "po-xray");
+
+    private static String json(String tool, Object value) {
+        return json(tool, value, RESULTS);
+    }
+
+    /**
+     * Compact JSON for tool results (indentation would cost the agent tokens). A result above {@link #MAX_RESULT}
+     * (MCP clients truncate or reject it) is written to a file in {@code dir} as indented JSON and an envelope with
+     * the file path is returned instead.
+     */
+    static String json(String tool, Object value, Path dir) {
         String s = Json.mapper().writer().without(SerializationFeature.INDENT_OUTPUT).writeValueAsString(value);
-        if (s.length() > MAX_RESULT) {
+        if (s.length() <= MAX_RESULT) {
+            return s;
+        }
+        try {
+            Files.createDirectories(dir);
+            Path file = Files.createTempFile(dir, tool + "-", ".json");
+            Files.writeString(file, Json.write(value), StandardCharsets.UTF_8);
+            return json(tool, new ResultFile("Result too large for an MCP client (" + s.length()
+                    + " characters): written as indented JSON to the file. Read it selectively (search by name,"
+                    + " line ranges) or narrow the request for an inline result.",
+                    file.toAbsolutePath().toString()), dir);
+        } catch (IOException e) {
             // a truncated or rejected result is worse than a clear request to narrow it down
             throw new ToolCallException("Result too large (" + s.length() + " characters, MCP clients accept about "
-                    + MAX_RESULT + "): narrow the request - an overview first, then single objects by name"
-                    + " (e.g. one step, one data type, one channel), or a namespace / component filter.");
+                    + MAX_RESULT + ") and it could not be written to " + dir + " (" + e.getMessage()
+                    + "): narrow the request - an overview first, then single objects by name"
+                    + " (e.g. one step, one data type, one channel), or a namespace / component filter.", e);
         }
-        return s;
     }
 
     private static boolean wants(String format, String f) {

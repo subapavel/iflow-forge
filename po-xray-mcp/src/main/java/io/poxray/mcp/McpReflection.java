@@ -8,7 +8,8 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
     Views.ProcessSummary.class, Views.EjbSummary.class, Views.ProcessData.class, Views.StepDetail.class,
     Views.CatalogOverview.class, Views.InterfaceSummary.class, Views.FunctionSummary.class,
     Views.DataTypeSummary.class, Views.DataTypeView.class,
-    Inventories.Components.class, PoXrayTools.Ambiguous.class, PoXrayTools.WithIssues.class
+    Inventories.Components.class, PoXrayTools.Ambiguous.class, PoXrayTools.WithIssues.class,
+    PoXrayTools.ResultFile.class
 })
 final class McpReflection {
 
