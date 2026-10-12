@@ -3,6 +3,7 @@ package io.poxray.mcp;
 import io.poxray.IssueLog;
 import io.poxray.doc.DocFormat;
 import io.poxray.doc.Documentation;
+import io.poxray.integration.BpmIntegration;
 import io.poxray.integration.ObjectCatalog;
 import io.poxray.json.Json;
 import io.poxray.model.IntegrationInventory;
@@ -176,6 +177,21 @@ public class PoXrayTools {
             }
             return json(catalog.whereUsed(targets));
         });
+    }
+
+    @Tool(name = "bpm_integration", description = "Cross-reference of NW BPM processes (SCA file) with the ESR / "
+            + "Integration Directory of a PO system, in one call: for every service interface a process uses "
+            + "(message start / intermediate events = inbound, automated activities = outbound with binding type, "
+            + "service group and the ESR operation mapping called) the matching ESR service interfaces and all "
+            + "objects referencing them - ICOs, receiver / interface determinations, agreements, operation mappings. "
+            + "Details: read_object / get_sca_object; narrow to one process if the result is too large.",
+            annotations = @Tool.Annotations(readOnlyHint = true, openWorldHint = true))
+    String bpmIntegration(@ToolArg(description = "Path to the .sca file") String path,
+            @ToolArg(description = SYSTEM) String system,
+            @ToolArg(description = "Process name or id; empty = all processes of the SCA",
+                    defaultValue = "") String process) {
+        return call(() -> json(BpmIntegration.report(inventories.sca(path).bpm(), process,
+                inventories.catalog(system))));
     }
 
     @Tool(name = "read_sca", description = "Overview of an NWDI SCA file with SAP NW BPM processes and EJB modules: "

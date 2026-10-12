@@ -163,11 +163,12 @@ public final class ObjectCatalog {
                     false, ATTRIBUTES));
             keyNames.putAll(r.keyNames());
             Pattern ns = namespace == null || namespace.isBlank() ? null : exact(namespace.strip());
+            Pattern exactName = exact(name.strip());
             List<Hit> direct = new ArrayList<>();
             for (QueryResult.Row row : r.rows()) {
                 if (row.xiLink() != null) {
                     ObjectSummary s = summary(row.xiLink(), row);
-                    if (matches(s, row.xiLink(), null, ns)) {
+                    if (matches(s, row.xiLink(), exactName, ns)) {
                         direct.add(new Hit(row.xiLink(), s));
                     }
                 }

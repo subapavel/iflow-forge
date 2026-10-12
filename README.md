@@ -120,6 +120,7 @@ they need (app-local, nothing to install) and `INSTALL.txt`. Native images are b
 | `list_icos` | ICOs to / from a component: routing conditions, interface determinations, channels, names of ESR objects |
 | `get_object` | one object of that inventory: ICO, channel, service interface, operation / message mapping (field logic, UDFs), function library, message / data type |
 | `search_objects`, `read_object`, `where_used` | any object type independent of ICOs: search by name, read one, find its users |
+| `bpm_integration` | cross-reference of the BPM processes of an SCA with a PO system: interfaces a process uses (inbound / outbound, ESR operation mapping called) and the ICOs, determinations, agreements and mappings referencing them |
 | `write_integration_documentation` | Markdown / Jira / JSON files of the ICO inventory |
 | `read_sca`, `get_sca_object` | overview of an SCA, then a process outline, single steps with their mappings, process data, catalogs, EJB modules, issues |
 | `write_sca_documentation` | Markdown / Jira / JSON files of an SCA |
