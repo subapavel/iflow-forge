@@ -1,7 +1,7 @@
 package io.poxray.po;
 
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.ByteArrayInputStream;
 import java.io.UncheckedIOException;
 import java.net.URI;
 import java.nio.file.Files;
@@ -80,8 +80,12 @@ public final class PoSystem {
                     + " with url=..., user=..., password=...");
         }
         Properties p = new Properties();
-        try (InputStream in = Files.newInputStream(file)) {
-            p.load(in);
+        try {
+            byte[] bytes = Files.readAllBytes(file);
+            // editors on Windows often save a UTF-8 BOM, which would otherwise become part of the first key
+            int start = bytes.length >= 3 && bytes[0] == (byte) 0xEF && bytes[1] == (byte) 0xBB
+                    && bytes[2] == (byte) 0xBF ? 3 : 0;
+            p.load(new ByteArrayInputStream(bytes, start, bytes.length - start));
         } catch (IOException e) {
             throw new UncheckedIOException("Cannot read " + file, e);
         }

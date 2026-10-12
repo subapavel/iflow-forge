@@ -80,6 +80,21 @@ class TpzGatewayTest {
     }
 
     @Test
+    void utf8BomOfAnEditorDoesNotHideTheFirstKey(@TempDir Path dir) throws IOException {
+        Path systems = Files.createDirectories(dir.resolve("systems"));
+        exports(Files.createDirectories(dir.resolve("exports")));
+        byte[] content = "tpz=../exports\n".getBytes(java.nio.charset.StandardCharsets.UTF_8);
+        byte[] withBom = new byte[content.length + 3];
+        withBom[0] = (byte) 0xEF;
+        withBom[1] = (byte) 0xBB;
+        withBom[2] = (byte) 0xBF;
+        System.arraycopy(content, 0, withBom, 3, content.length);
+        Files.write(systems.resolve("eon.properties"), withBom);
+
+        assertThat(PoSystem.load("eon", systems, Map.of()).tpz()).isNotNull();
+    }
+
+    @Test
     void notesDuplicatesAndMixedSourceSystems(@TempDir Path dir) {
         SyntheticTpz.write(dir.resolve("a-esr.tpz"), ESR_META, List.of(
                 xiObj("S", "XI_TRAFO", "mm1", List.of("MM_Order", "urn:a"), null, List.of())));
