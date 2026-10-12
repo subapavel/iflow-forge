@@ -19,14 +19,15 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Reads and keeps inventories for the session: integration inventories per (system, component, direction) on top
- * of the on-disk snapshot (~/.po-xray/cache/&lt;system&gt;), SCA inventories per file and modification time.
- * Credentials come from ~/.po-xray/systems/&lt;system&gt;.properties (or POXRAY_USER / POXRAY_PASSWORD) and never
- * leave {@link PoSystem}.
+ * Reads and keeps inventories for the session: one connection per system (so TPZ exports and snapshot listings are
+ * not re-read on every tool call), integration inventories per (system, component, direction), SCA inventories per
+ * file and modification time. Credentials come from ~/.po-xray/systems/&lt;system&gt;.properties (or POXRAY_USER /
+ * POXRAY_PASSWORD) and never leave {@link PoSystem}.
  */
 @ApplicationScoped
 public class Inventories {
 
+    private final Map<String, PoConnection> connections = new ConcurrentHashMap<>();
     private final Map<String, IntegrationInventory> integration = new ConcurrentHashMap<>();
     private final Map<String, ScaInventory> sca = new ConcurrentHashMap<>();
     private final Map<String, ObjectCatalog> catalogs = new ConcurrentHashMap<>();
@@ -36,7 +37,7 @@ public class Inventories {
     }
 
     Components components(String system, String pattern) {
-        IntegrationQuery q = query(system, false);
+        IntegrationQuery q = query(connection(system));
         List<Component> found = q.components(pattern);
         return new Components(found, q.offlineNotes());
     }
@@ -46,14 +47,17 @@ public class Inventories {
         String key = system + "|" + component.toLowerCase(Locale.ROOT) + "|" + d;
         if (refresh) {
             integration.remove(key);
+            connections.remove(system);
+            catalogs.remove(system);
         }
-        return integration.computeIfAbsent(key, k -> query(system, refresh).icos(component, d));
+        return integration.computeIfAbsent(key,
+                k -> query(refresh ? openConnection(system, true) : connection(system)).icos(component, d));
     }
 
     /** Object search / read / where-used of a system; listings are kept for the session. */
     ObjectCatalog catalog(String system) {
         return catalogs.computeIfAbsent(system, s -> {
-            PoConnection c = PoConnection.open(PoSystem.load(s), null, false);
+            PoConnection c = connection(s);
             return new ObjectCatalog(c.gateway(), c.source());
         });
     }
@@ -71,9 +75,21 @@ public class Inventories {
         }
     }
 
-    private static IntegrationQuery query(String system, boolean refresh) {
-        PoConnection c = PoConnection.open(PoSystem.load(system), null, refresh);
-        return new IntegrationQuery(c.gateway(), c.source());
+    /** The session connection of a system (opened once; TPZ systems load their exports here). */
+    private PoConnection connection(String system) {
+        return connections.computeIfAbsent(system, s -> openConnection(s, false));
+    }
+
+    /**
+     * A refreshing connection re-reads every object it serves, so it is used for one inventory and not kept;
+     * {@link #icos} drops the session connection first, so later calls see the refreshed snapshot / TPZ files.
+     */
+    PoConnection openConnection(String system, boolean refresh) {
+        return PoConnection.open(PoSystem.load(system), null, refresh);
+    }
+
+    private static IntegrationQuery query(PoConnection connection) {
+        return new IntegrationQuery(connection.gateway(), connection.source());
     }
 
     static IntegrationQuery.Direction direction(String direction) {
