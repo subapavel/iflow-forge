@@ -85,12 +85,43 @@ class ArchiveReaderTest {
     void genericContentMasksSecrets() {
         Element e = XmlDocs.parse("""
                 <Cfg password="x"><Attribute><Name>clientSecret</Name><Value>s3cret</Value></Attribute>
-                <ApiKey>k</ApiKey><Url>http://h</Url></Cfg>""".getBytes(StandardCharsets.UTF_8), "c").getDocumentElement();
+                <ApiKey>k</ApiKey><AccessKey>AKIA42</AccessKey><Url>http://h</Url></Cfg>"""
+                .getBytes(StandardCharsets.UTF_8), "c").getDocumentElement();
 
         Secrets.mask(e);
 
         String xml = ObjectCatalog.serialize(e);
-        assertThat(xml).doesNotContain("s3cret", ">k<", "\"x\"").contains("http://h", "<Name>clientSecret</Name>");
+        assertThat(xml).doesNotContain("s3cret", ">k<", "\"x\"", "AKIA42")
+                .contains("http://h", "<Name>clientSecret</Name>");
+    }
+
+    @Test
+    void flagsAndSourcesAboutSecretsStayReadable() {
+        Element e = XmlDocs.parse("""
+                <Cfg UseXSRFToken="true"><Attribute><Name>accessTokenSource</Name><Value>body</Value></Attribute>
+                <TokenCaching>true</TokenCaching><tokenServiceUrl>http://login</tokenServiceUrl></Cfg>"""
+                .getBytes(StandardCharsets.UTF_8), "c").getDocumentElement();
+
+        Secrets.mask(e);
+
+        assertThat(ObjectCatalog.serialize(e)).contains("UseXSRFToken=\"true\"", "<Value>body</Value>",
+                "<TokenCaching>true</TokenCaching>", "http://login").doesNotContain(Secrets.HIDDEN);
+    }
+
+    @Test
+    void sensitiveTableFieldsAreMaskedCompletely() {
+        Element e = XmlDocs.parse("""
+                <Cfg><Attribute><Name>oauth20ParamTable</Name><Value isTable="true">
+                <Row><Field>accessKey</Field><Field>AKIA42</Field></Row>
+                <Row><Field>secretKey</Field><Field>sh00sh</Field></Row></Value></Attribute>
+                <Attribute><Name>headerTable</Name><Value isTable="true">
+                <Row><Field>Accept</Field><Field>application/json</Field></Row></Value></Attribute></Cfg>"""
+                .getBytes(StandardCharsets.UTF_8), "c").getDocumentElement();
+
+        Secrets.mask(e);
+
+        assertThat(ObjectCatalog.serialize(e)).doesNotContain("AKIA42", "sh00sh", "accessKey")
+                .contains("Accept", "application/json");
     }
 
     // ------------------------------------------------------------------------------------------ fixtures

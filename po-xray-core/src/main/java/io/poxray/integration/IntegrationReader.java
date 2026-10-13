@@ -343,9 +343,21 @@ public final class IntegrationReader {
             if (data != null) {
                 for (Element a : XmlDocs.children(data, "Attribute")) {
                     String name = XmlDocs.childText(a, "Name");
-                    String value = XmlDocs.childText(a, "Value");
-                    if (name != null && value != null) {
-                        attributes.put(name, Secrets.mask(name, value));
+                    Element valueElement = XmlDocs.child(a, "Value");
+                    if (name == null || valueElement == null) {
+                        continue;
+                    }
+                    if ("true".equals(valueElement.getAttribute("isTable"))
+                            || XmlDocs.child(valueElement, "Row") != null) {
+                        String rows = tableValue(name, valueElement);
+                        if (rows != null) {
+                            attributes.put(name, rows);
+                        }
+                    } else {
+                        String value = XmlDocs.childText(a, "Value");
+                        if (value != null) {
+                            attributes.put(name, Secrets.mask(name, value));
+                        }
                     }
                 }
             }
@@ -353,6 +365,29 @@ public final class IntegrationReader {
         }
         String adapter = transport == null && message == null ? null : transport + "/" + message;
         return new Channel(id, direction, adapter, transport, message, engine, attributes, modules, o.description());
+    }
+
+    /**
+     * A table attribute as {@code f1 | f2 ; f1 | f2} rows. The fields are positional (their column names live in
+     * the adapter metadata, not in the channel), so fields of authentication-related tables are masked completely.
+     */
+    private static String tableValue(String name, Element value) {
+        boolean sensitive = Secrets.isSensitiveTable(name);
+        List<String> rows = new ArrayList<>();
+        for (Element row : XmlDocs.children(value, "Row")) {
+            List<String> fields = new ArrayList<>();
+            for (Element field : XmlDocs.children(row, "Field")) {
+                String t = field.getTextContent().strip();
+                fields.add(t.isEmpty() ? "" : sensitive ? Secrets.HIDDEN : t);
+            }
+            while (!fields.isEmpty() && fields.getLast().isEmpty()) {
+                fields.removeLast();
+            }
+            if (!fields.isEmpty()) {
+                rows.add(String.join(" | ", fields));
+            }
+        }
+        return rows.isEmpty() ? null : String.join(" ; ", rows);
     }
 
     private static List<Module> modules(Element channel) {

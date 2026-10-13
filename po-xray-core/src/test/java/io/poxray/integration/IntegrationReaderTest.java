@@ -67,6 +67,33 @@ class IntegrationReaderTest {
         assertThat(jira).contains("h1. Integrace komponenty V3S\\_D", "||Operace||Podmínka||Mapping||Cílová rozhraní||Parametry||");
     }
 
+    @Test
+    void channelTableAttributesRenderedAndSensitiveTablesMasked() {
+        XiObject ch = io.poxray.xi.XiObjectParser.parse("""
+                <p1:xiObj xmlns:p1="urn:sap-com:xi"><p1:idInfo VID="v"><p1:vc vcType="D"/>
+                <p1:key typeID="Channel" oid="ch1"><p1:elem/><p1:elem>RCV</p1:elem><p1:elem>REST_RCV</p1:elem></p1:key></p1:idInfo>
+                <p1:content><Channel xmlns="urn:sap-com:xi:xiChannel"><EngineType>AE</EngineType>
+                <ChannelDirection>I</ChannelDirection><TransportProtocol>HTTP</TransportProtocol><MessageProtocol>REST</MessageProtocol>
+                <ChannelAttributes><AdapterTypeData>
+                <Attribute><Name>UseXSRFToken</Name><Value>true</Value></Attribute>
+                <Attribute><Name>accessTokenSource</Name><Value>body</Value></Attribute>
+                <Attribute><Name>oauth20ParamTable</Name><Value isTable="true">
+                <Row><Field>accessKey</Field><Field>AKIA42</Field></Row>
+                <Row><Field>secretKey</Field><Field>sh00sh</Field></Row></Value></Attribute>
+                <Attribute><Name>headerTable</Name><Value isTable="true">
+                <Row><Field>Accept</Field><Field>application/json</Field><Field/></Row></Value></Attribute>
+                </AdapterTypeData></ChannelAttributes></Channel></p1:content></p1:xiObj>""", "ch");
+        IntegrationReader reader = new IntegrationReader(new InMemoryObjectSource().add(ch), new IssueLog());
+
+        reader.read(ch.id());
+
+        assertThat(reader.channels()).singleElement().satisfies(c -> assertThat(c.attributes())
+                .containsEntry("UseXSRFToken", "true")
+                .containsEntry("accessTokenSource", "body")
+                .containsEntry("headerTable", "Accept | application/json")
+                .containsEntry("oauth20ParamTable", "<hidden> | <hidden> ; <hidden> | <hidden>"));
+    }
+
     /** Link structure of an ICO with two sender operations and a 1:n mapping, as found on xipod (neutral names). */
     private static final String MULTI_ICO = """
             <p1:xiObj xmlns:p1="urn:sap-com:xi"><p1:idInfo VID="v"><p1:vc vcType="D"/>
