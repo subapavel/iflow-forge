@@ -113,6 +113,20 @@ class TpzGatewayTest {
     }
 
     @Test
+    void loadsExportsFromSubdirectories(@TempDir Path dir) throws IOException {
+        SyntheticTpz.write(Files.createDirectories(dir.resolve("esr")).resolve("mappings.tpz"), ESR_META, List.of(
+                xiObj("S", "XI_TRAFO", "mm1", List.of("MM_Order", "urn:a"), null, List.of())));
+        SyntheticTpz.write(Files.createDirectories(dir.resolve("directory")).resolve("services.tpz"), DIR_META,
+                List.of(xiObj("D", "Service", "sv1", List.of("", "BC_DIGISIGN"), null, List.of())));
+
+        TpzGateway gateway = new TpzGateway(PoSystem.tpz("eon", dir));
+
+        ObjectCatalog catalog = new ObjectCatalog(gateway, gateway);
+        assertThat(catalog.search(List.of("messageMapping"), "", "", 10).total()).isEqualTo(1);
+        assertThat(new IntegrationQuery(gateway, gateway).components("")).hasSize(1);
+    }
+
+    @Test
     void refusesMissingOrEmptyDirectory(@TempDir Path dir) {
         assertThatThrownBy(() -> new TpzGateway(PoSystem.tpz("eon", dir.resolve("missing"))))
                 .isInstanceOf(PoException.class).hasMessageContaining("missing");

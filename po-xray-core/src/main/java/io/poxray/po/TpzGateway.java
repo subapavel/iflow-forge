@@ -22,10 +22,10 @@ import java.util.regex.Pattern;
 /**
  * A system backed by a directory of TPZ exports (ESR / Integration Directory transport files) instead of an online
  * connection: SimpleQuery answers are synthesised from the exported objects — {@code RA_LINK_LIST} from each
- * object's links, so where-used works offline — and object content comes from memory. Files are loaded in file name
- * order and an object occurring in several files is taken from the file loaded last, so date-stamped export names
- * behave predictably. TPZ exports do not carry environment-specific channel attributes (URLs, users) or passwords;
- * {@link #offlineNotes()} says so.
+ * object's links, so where-used works offline — and object content comes from memory. The whole directory tree is
+ * loaded in relative path order and an object occurring in several files is taken from the file loaded last, so
+ * date-stamped export names behave predictably. TPZ exports do not carry environment-specific channel attributes
+ * (URLs, users) or passwords; {@link #offlineNotes()} says so.
  */
 public final class TpzGateway implements PoGateway, XiObjectSource {
 
@@ -40,9 +40,11 @@ public final class TpzGateway implements PoGateway, XiObjectSource {
             throw new PoException("TPZ directory of system '" + system.name() + "' not found: " + dir);
         }
         List<Path> files;
-        try (var list = Files.list(dir)) {
-            files = list.filter(f -> f.getFileName().toString().toLowerCase(Locale.ROOT).endsWith(".tpz"))
-                    .sorted(Comparator.comparing(f -> f.getFileName().toString().toLowerCase(Locale.ROOT)))
+        try (var walk = Files.walk(dir)) {
+            // subdirectories included (exports organised by type); order = relative path, so later names win
+            files = walk.filter(Files::isRegularFile)
+                    .filter(f -> f.getFileName().toString().toLowerCase(Locale.ROOT).endsWith(".tpz"))
+                    .sorted(Comparator.comparing(f -> dir.relativize(f).toString().toLowerCase(Locale.ROOT)))
                     .toList();
         } catch (IOException e) {
             throw new UncheckedIOException("Cannot list " + dir, e);

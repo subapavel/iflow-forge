@@ -72,10 +72,11 @@ no user or password needed:
 tpz=D:/customers/eon/tpz-prod
 ```
 
-All commands and MCP tools then read the `.tpz` files of that directory (ESR and Directory exports side by side;
-where-used comes from the object links in the exports). Files load in name order and an object occurring in several
-files is taken from the last one, so date-stamped export names make updates predictable: a new export is just a new
-file in the directory. TPZ exports do not carry environment-specific channel attributes (URLs, users) or passwords;
+All commands and MCP tools then read the `.tpz` files of that directory **including subdirectories** (ESR and
+Directory exports side by side, organised freely, e.g. one subdirectory per object type). Files load in relative
+path order and an object occurring in several files is taken from the last one, so date-stamped export names make
+updates predictable: a new export is just a new file in the directory. Keep replaced exports outside the directory,
+they would be loaded too. TPZ exports do not carry environment-specific channel attributes (URLs, users) or passwords;
 results carry a note. Export in the Integration Builder: ESR *Tools → Export Design Objects* per SWCV (including
 underlying/common SWCVs), Directory *Tools → Export Configuration Objects* per configuration scenario or folder
 (an ICO exported alone does not include its channels and components).
