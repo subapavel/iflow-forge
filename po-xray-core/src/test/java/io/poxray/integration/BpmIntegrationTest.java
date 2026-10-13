@@ -87,10 +87,11 @@ class BpmIntegrationTest {
     @Test
     void crossReferencesOneProcess(@TempDir Path dir) {
         try (FakePo po = fake()) {
-            List<ProcessIntegration> report = BpmIntegration.report(bpm(), "digisign envelope", catalog(po, dir));
+            BpmIntegration.Report report = BpmIntegration.report(bpm(), "digisign envelope", catalog(po, dir));
 
-            assertThat(report).hasSize(1);
-            ProcessIntegration p = report.getFirst();
+            assertThat(report.warnings()).isEmpty(); // online source: no snapshot / TPZ notes
+            assertThat(report.processes()).hasSize(1);
+            ProcessIntegration p = report.processes().getFirst();
             assertThat(p.process()).isEqualTo("DigiSign Envelope");
             assertThat(p.dc()).isEqualTo("eon/digisign");
             assertThat(p.interfaces()).extracting(InterfaceIntegration::name)
@@ -123,17 +124,65 @@ class BpmIntegrationTest {
             InterfaceIntegration local = p.interfaces().get(2);
             assertThat(local.esr()).isEmpty();
             assertThat(local.usedBy()).isEmpty();
+            assertThat(local.note()).contains("Not found in the ESR");
+            assertThat(p.interfaces().get(0).note()).isNull();
+        }
+    }
+
+    @Test
+    void fallsBackToNameOnlyWhenTheNamespaceDiffers(@TempDir Path dir) {
+        // the deployed BPM uses another namespace than the SCA WSDL (service groups are bound at deployment)
+        Interface iface = new Interface("if1", "CreateEnvelope", "urn:bpm-local", "rep/wsdl/a.services",
+                List.of(), List.of(new Interface.Usage("P", new Ref("n1", "Call"), "outbound")));
+        BpmComponent.Catalog catalog = new BpmComponent.Catalog(List.of(iface), List.of(), List.of(), List.of(),
+                List.of(), List.of(), List.of());
+        List<BpmComponent> bpm = List.of(new BpmComponent("dc", List.of(process("p", "P")), catalog));
+        try (FakePo po = fake()) {
+            BpmIntegration.Report report = BpmIntegration.report(bpm, "", catalog(po, dir));
+
+            InterfaceIntegration i = report.processes().getFirst().interfaces().getFirst();
+            assertThat(i.esr()).singleElement()
+                    .satisfies(s -> assertThat(s.key()).containsEntry("NAMESPACE", "urn:a"));
+            assertThat(i.note()).contains("name only").contains("urn:bpm-local");
+            assertThat(i.usedBy()).isNotEmpty();
+        }
+    }
+
+    @Test
+    void nodeReferenceSelectsTheServiceReference(@TempDir Path dir) {
+        Interface iface = new Interface("if1", "CreateEnvelope", "urn:a", "rep/wsdl/a.services",
+                List.of(), List.of(new Interface.Usage("P", new Ref("n5", "Call"), "outbound")));
+        // a decoy declared first for the same interface: the node's own reference must win
+        ServiceReference decoy = new ServiceReference("srA", "u1", "WS", "WS", new QNameRef("CreateEnvelope", "urn:a"),
+                null, null, "decoy_group", Map.of(), null);
+        ServiceReference called = new ServiceReference("srB", "u2", "WS", "XI", new QNameRef("CreateEnvelope", "urn:a"),
+                null, null, "sappo_om", Map.of(),
+                new EsrOperationMapping("OM_Create", "urn:a", "om1", "aaaa", null, null));
+        BpmComponent.Catalog catalog = new BpmComponent.Catalog(List.of(iface), List.of(decoy, called), List.of(),
+                List.of(), List.of(), List.of(), List.of());
+        Process p = new Process("p", "P", null, null, null, List.of(), List.of(), List.of(), List.of(),
+                List.of(new io.poxray.model.Node.Builder("n5", "automatedActivity").name("Call")
+                        .serviceReference(new Ref("srB", null)).build()),
+                List.of(), List.of(), null);
+        try (FakePo po = fake()) {
+            BpmIntegration.Report report = BpmIntegration.report(List.of(new BpmComponent("dc", List.of(p), catalog)),
+                    "", catalog(po, dir));
+
+            InterfaceIntegration i = report.processes().getFirst().interfaces().getFirst();
+            assertThat(i.serviceGroup()).isEqualTo("sappo_om");
+            assertThat(i.operationMapping().name()).isEqualTo("OM_Create");
+            assertThat(i.uses()).singleElement().satisfies(u -> assertThat(u.id()).isEqualTo("n5"));
         }
     }
 
     @Test
     void reportsEveryProcessWithItsOwnUsages(@TempDir Path dir) {
         try (FakePo po = fake()) {
-            List<ProcessIntegration> report = BpmIntegration.report(bpm(), "", catalog(po, dir));
+            BpmIntegration.Report report = BpmIntegration.report(bpm(), "", catalog(po, dir));
 
-            assertThat(report).extracting(ProcessIntegration::process)
+            assertThat(report.processes()).extracting(ProcessIntegration::process)
                     .containsExactly("DigiSign Envelope", "Download Completed");
-            ProcessIntegration download = report.get(1);
+            ProcessIntegration download = report.processes().get(1);
             assertThat(download.interfaces()).hasSize(1);
             assertThat(download.interfaces().getFirst().name()).isEqualTo("Start_In");
             assertThat(download.interfaces().getFirst().uses()).hasSize(1);

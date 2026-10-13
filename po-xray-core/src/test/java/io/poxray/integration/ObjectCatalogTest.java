@@ -149,6 +149,11 @@ class ObjectCatalogTest {
         assertThat(ObjectCatalog.references(sameNameOtherObject, target)).isFalse();
         assertThat(ObjectCatalog.references(operation,
                 new XiRef("S", "app", null, "ifmmessif", "i1", List.of("Order_In", "urn:a")))).isTrue();
+        // an operation named like its interface is keyed by the plain name (verified on E.ON PXC exports)
+        assertThat(ObjectCatalog.references(new XiRef("S", "app", null, "ifmoper", null, List.of("Order_In", "urn:a")),
+                new XiRef("S", "app", null, "ifmmessif", "i1", List.of("Order_In", "urn:a")))).isTrue();
+        assertThat(ObjectCatalog.references(new XiRef("S", "app", null, "ifmoper", null, List.of("Order_Inx", "urn:a")),
+                new XiRef("S", "app", null, "ifmmessif", "i1", List.of("Order_In", "urn:a")))).isFalse();
         assertThat(ObjectCatalog.typeId("MessageMapping")).isEqualTo("XI_TRAFO");
         assertThat(ObjectCatalog.typeId("receiverAgreement")).isEqualTo("OutboundBinding");
     }

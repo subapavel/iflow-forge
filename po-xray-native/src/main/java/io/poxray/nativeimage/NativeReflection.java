@@ -62,6 +62,7 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
             IntegrationInventory.ArchiveProgram.class, IntegrationInventory.ValueMappingGroup.class,
             IntegrationInventory.ValueMappingEntry.class,
             io.poxray.integration.ObjectCatalog.SearchResult.class,
+            io.poxray.integration.BpmIntegration.Report.class,
             io.poxray.integration.BpmIntegration.ProcessIntegration.class,
             io.poxray.integration.BpmIntegration.InterfaceIntegration.class,
             io.poxray.integration.BpmIntegration.Use.class,

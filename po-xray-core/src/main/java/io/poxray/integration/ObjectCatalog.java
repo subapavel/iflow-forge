@@ -117,6 +117,11 @@ public final class ObjectCatalog {
     public record Hit(XiRef ref, ObjectSummary summary) {
     }
 
+    /** Notes of the object source (offline snapshot, TPZ exports), for results built on this catalog. */
+    public List<String> notes() {
+        return source.offlineNotes();
+    }
+
     /** {@code total} matches, of which the first {@code limit} are returned. */
     public record SearchResult(int total, List<ObjectSummary> objects) {
     }
@@ -328,7 +333,9 @@ public final class ObjectCatalog {
                     : link.keyString().equals(target.keyString());
         }
         if ("ifmmessif".equals(target.typeId()) && "ifmoper".equals(link.typeId())) {
-            return link.key(0).startsWith(target.key(0) + ".") && link.key(1).equals(target.key(1));
+            // an operation named like its interface is keyed by the plain name, others as <interface>.<operation>
+            return (link.key(0).equals(target.key(0)) || link.key(0).startsWith(target.key(0) + "."))
+                    && link.key(1).equals(target.key(1));
         }
         if ("ifmextdef".equals(target.typeId()) && "ifmextmes".equals(link.typeId())) {
             return link.key(0).equals(target.key(0)) && link.key(1).equals(target.key(1));

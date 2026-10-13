@@ -185,8 +185,10 @@ public class PoXrayTools {
             + "(message start / intermediate events = inbound, automated activities = outbound with binding type, "
             + "service group and the ESR operation mapping called) the matching ESR service interfaces and all "
             + "objects referencing them - ICOs, receiver / interface determinations, agreements, operation mappings. "
-            + "Details: read_object / get_sca_object; a result too large for the client is written to a JSON file "
-            + "and its path returned.",
+            + "The deployed BPM often runs under another namespace (service groups are bound at deployment), so "
+            + "interfaces are also matched by name alone; the note of every interface says how it was matched or "
+            + "that nothing matches. Details: read_object / get_sca_object; a result too large for the client is "
+            + "written to a JSON file and its path returned.",
             annotations = @Tool.Annotations(readOnlyHint = true, openWorldHint = true))
     String bpmIntegration(@ToolArg(description = "Path to the .sca file") String path,
             @ToolArg(description = SYSTEM) String system,
