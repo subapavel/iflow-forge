@@ -2,6 +2,7 @@ package io.poxray.xi;
 
 import io.poxray.sca.ZipArchive;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.nio.ByteBuffer;
@@ -65,30 +66,80 @@ public final class TpzArchive {
         return objects;
     }
 
-    /** Objects of the {@code modelElement} segments of a {@code .tpt} container. */
+    /** Payload of large containers is written in blocks of this size, separated by 8-byte markers. */
+    static final int BLOCK = 1048576;
+
+    /**
+     * Objects of the {@code modelElement} segments of a {@code .tpt} container. Containers over 1 MiB are written
+     * in 1 MiB payload blocks separated by 8-byte markers (catalog offsets count payload bytes, the trailing
+     * catalog pointer counts file bytes): tried first as-is, then with the markers removed; each segment must
+     * carry its own length as {@code catalog length - 8}, which tells the two layouts apart.
+     */
     static List<XiObject> readTpt(byte[] tpt, String name) {
         if (tpt.length < 16) {
             throw new IllegalArgumentException("Not a TPT container (too short): " + name);
         }
-        long catalogOffset = ByteBuffer.wrap(tpt, tpt.length - 8, 8).getLong();
-        if (catalogOffset < 0 || catalogOffset >= tpt.length - 8) {
-            throw new IllegalArgumentException("Invalid TPT catalog offset " + catalogOffset + ": " + name);
+        long pointer = ByteBuffer.wrap(tpt, tpt.length - 8, 8).getLong();
+        List<XiObject> plain = read(tpt, pointer, name);
+        if (plain != null) {
+            return plain;
         }
-        String catalog = xmlOf(tpt, (int) catalogOffset, tpt.length - 8 - (int) catalogOffset);
-        List<XiObject> out = new ArrayList<>();
+        List<XiObject> deblocked = read(deblock(tpt), payloadOffset(pointer), name);
+        if (deblocked == null) {
+            throw new IllegalArgumentException("Invalid TPT segment structure: " + name);
+        }
+        return deblocked;
+    }
+
+    /** The objects, or null when the catalog or a segment does not fit the data (the other layout applies). */
+    private static List<XiObject> read(byte[] data, long catalogOffset, String name) {
+        if (catalogOffset < 0 || catalogOffset >= data.length - 8) {
+            return null;
+        }
+        String catalog = xmlOf(data, (int) catalogOffset, data.length - 8 - (int) catalogOffset);
+        record Segment(int offset, int length) {
+        }
+        List<Segment> segments = new ArrayList<>();
         Matcher m = SEGMENT.matcher(catalog);
         while (m.find()) {
             if (!"modelElement".equals(m.group(1))) {
                 continue;
             }
-            int offset = Integer.parseInt(m.group(2));
-            int length = Integer.parseInt(m.group(3));
-            if (offset < 0 || length < 8 || offset + length > tpt.length) {
-                throw new IllegalArgumentException("Segment outside the TPT container at " + offset + ": " + name);
+            Segment s = new Segment(Integer.parseInt(m.group(2)), Integer.parseInt(m.group(3)));
+            if (s.offset() < 0 || s.length() < 8 || s.offset() + s.length() > data.length
+                    || ByteBuffer.wrap(data, s.offset(), 8).getLong() != s.length() - 8) {
+                return null;
             }
-            out.add(XiObjectParser.parse(xmlOf(tpt, offset, length), name + "@" + offset));
+            segments.add(s);
+        }
+        List<XiObject> out = new ArrayList<>();
+        for (Segment s : segments) {
+            out.add(XiObjectParser.parse(xmlOf(data, s.offset(), s.length()), name + "@" + s.offset()));
         }
         return out;
+    }
+
+    /** The payload without the 8-byte markers (at file offset BLOCK, then after every further BLOCK bytes). */
+    private static byte[] deblock(byte[] tpt) {
+        ByteArrayOutputStream out = new ByteArrayOutputStream(tpt.length);
+        out.write(tpt, 0, Math.min(BLOCK, tpt.length));
+        int pos = BLOCK;
+        while (pos + 8 < tpt.length) {
+            out.write(tpt, pos + 8, Math.min(BLOCK, tpt.length - pos - 8));
+            pos += BLOCK + 8;
+        }
+        return out.toByteArray();
+    }
+
+    /** File offset → payload offset: 8 bytes less per marker before it. */
+    private static long payloadOffset(long fileOffset) {
+        long marker = BLOCK;
+        long shift = 0;
+        while (marker < fileOffset) {
+            shift += 8;
+            marker += BLOCK + 8;
+        }
+        return fileOffset - shift;
     }
 
     /** XML payload of a segment: skips the 8-byte length (and an optional CRC) up to the first {@code <}. */

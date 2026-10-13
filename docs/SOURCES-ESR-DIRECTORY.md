@@ -152,7 +152,8 @@ Prefix `!zip!` / `!jar!` / `!xml!` must be stripped before base64 decoding. Use 
 ## 5. TPZ export format (offline transport)
 - Zip (SDA). ESR: `softwaresubtype: ESRTPZ`, `metadata.esr.710` / `Metadata.properties` (swcv, sourcesystem, release, object count, isDeltaExport, transportID), `<name>.tpt`, optional `.dlt` (delta for target release 711 — identical XML, dedupe by VID). Directory: `systemtype=IBC 7.1`, `contenttype=changelist`, `swcv=000…`.
 - `.tpt`: magic `00000000 dc358a91`; **last 8 bytes = catalog offset** (big-endian long). Catalog = XML `<catalog><segments><segment type offset length/>…<objectList>…`.
-- Segment = 8-byte big-endian length + payload; some (header, catalog) have additional 8-byte CRC before XML.
+- Segment = 8-byte big-endian length + payload; some (header, catalog) have additional 8-byte CRC before XML. The segment length prefix is always `catalog length - 8` (used to tell the layouts below apart).
+- **Containers over 1 MiB are written in 1 MiB payload blocks separated by 8-byte markers** (verified on PO 7.50 production exports, 13+ MB): a marker sits at file offset 1 MiB and after every further 1 MiB of payload (file offsets `k*1MiB + (k-1)*8`). **Catalog `offset`/`length` count payload bytes (markers removed); the trailing catalog pointer counts file bytes** (`file = payload + 8 * (payload / 1MiB)`). Small exports (≤ 1 MiB) have no markers, so payload = file.
 - Segment types: `header`, `metaModel-PVC` (XSD), `metaModel-Model` (ESR: `nonXiObj` = SWCV definition incl. underlying SWCVs), `pvcVersionSet`, `modelGeneralData` (`p1:metaData`), per object `pvcElement` (400 B binary version record) + `modelElement` (**`p1:xiObj`**), `knownDevlines`.
 - Directory individual export of ICO contains only the ICO; export of iFlow contains IFLOW + channels + services + folder (not the generated ICO).
 - Deleted-object flag not found in XML (probably in binary `pvcElement`) — unverified.

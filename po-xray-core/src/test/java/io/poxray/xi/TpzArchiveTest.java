@@ -29,6 +29,22 @@ class TpzArchiveTest {
     }
 
     @Test
+    void readsBlockedContainerOfLargeExports(@TempDir Path dir) {
+        // objects before, across and after the 1 MiB block boundary
+        String big = XiObjectParserTest.XIOBJ.replace("</messageType>",
+                "<Pad>" + "x".repeat(io.poxray.SyntheticTpz.BLOCK + 200_000) + "</Pad></messageType>");
+        String second = XiObjectParserTest.XIOBJ.replace("OrderCreate", "OrderChange");
+        Path tpz = io.poxray.SyntheticTpz.writeBlocked(dir.resolve("big.tpz"),
+                "swcv=aaaabbbb\nsystemtype=IBD 7.1\n", java.util.List.of(big, second));
+
+        TpzArchive a = TpzArchive.open(tpz);
+
+        assertThat(a.objects()).hasSize(2);
+        assertThat(a.objects().getFirst().content().getTextContent()).hasSizeGreaterThan(1_000_000);
+        assertThat(a.objects().get(1).id().key(0)).isEqualTo("OrderChange");
+    }
+
+    @Test
     void readsDirectoryExport() {
         TpzArchive a = TpzArchive.open(TestData.require("XI7_1_directory-objs.tpz"));
 
