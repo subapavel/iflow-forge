@@ -38,6 +38,8 @@ java -jar po-xray-cli/target/po-xray-cli-0.1.0-SNAPSHOT-runner.jar --help
 | `json <file.sca> [-o file]` | Inventory as JSON (standard output by default) |
 | `doc <file.sca> [-f markdown\|jira\|all] [-l cs\|en] [-o dir]` | Documentation (Markdown and/or Jira wiki markup) |
 | `export <file.sca> [-l cs\|en] [-o dir]` | JSON + both documentation formats into a directory |
+| `iflow <path> [--json]` | Integration Suite artifacts (iFlow folder or zip, package export, or a folder of these): channels, steps in flow order, parameters, resources |
+| `unpack <package> <out-dir> [--strip a,b]` | Package export into `<out-dir>/<symbolic-name>/` + `CHANGELOG.txt`, without `parameters.prop` and `Configured_Custom_Tags.txt`; tokens stripped from symbolic names |
 
 A one-line summary and written files are reported on standard error; standard output carries only command
 output (JSON). Exit code 0 = success, non-zero = error.

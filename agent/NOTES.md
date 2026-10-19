@@ -58,3 +58,14 @@ Facts only; the next exact action and the state live in `agent/HANDOFF.md`.
 - CLI: `po-xray` group command (`PoXrayCommand.groupCommands`), Quarkus + Aesh, uber-jar
   `po-xray-cli/target/po-xray-cli-0.1.0-SNAPSHOT-runner.jar`; MCP server in `po-xray-mcp`;
   reflection registration for native images in `po-xray-native`.
+- iFlow reader (KB-02): `io.poxray.cpi` — `IFlowReader.read/readAll`, `PackageExport`, `PackageUnpacker`, `IFlowDump`;
+  CLI `iflow <path> [--json]` is the reading surface for the pages, `unpack <package> <out> [--strip a,b]`
+  stages a package export. Step order per D-016; `Participant` carries endpoint + adapter properties (F-1).
+  Follow-ups: the reader does not yet report dangling references (a `processId` naming no process, a
+  flow to a missing id) — add an `issues` list to `IFlow` when one is first observed in a source;
+  the unpacker ignores `File` and unknown entry types silently; `iflow --json` prints one JSON object
+  per iFlow (not an array); `UnpackCommand` counts by re-reading every artifact (count the export entries instead);
+  a missing `Bundle-SymbolicName` gives `id = null` in the reader but throws in the unpacker; the Receiver
+  fallback of the main-process choice and a subProcess reached by a flow are untested; `cycleTerminates`
+  would hang rather than fail (consider `@Timeout`); the synthetic strip token `.CZTEST` in the tests is
+  to be checked against the owner's forbidden list (rename to `.TENANT` if it hits). A PROGRESS heading takes its commit hash from the following task's commit.

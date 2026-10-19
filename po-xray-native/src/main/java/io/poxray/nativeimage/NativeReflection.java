@@ -1,5 +1,10 @@
 package io.poxray.nativeimage;
 
+import io.poxray.cpi.IFlow;
+import io.poxray.cpi.PackageExport;
+import io.poxray.cpi.Param;
+import io.poxray.cpi.Participant;
+import io.poxray.cpi.Step;
 import io.poxray.model.BpmComponent;
 import io.poxray.model.BuiltinFunction;
 import io.poxray.model.DataType;
@@ -26,8 +31,8 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
 
 /**
  * Native image: classes (de)serialised reflectively by Jackson 3 (no Quarkus extension for Jackson 3).
- * Output model = all of {@code io.poxray.model} (checked by NativeReflectionTest); catalog records of the built-in
- * function catalog loader are package-private, hence by name.
+ * Output model = all of {@code io.poxray.model} (checked by NativeReflectionTest) plus the iFlow reader records of
+ * {@code io.poxray.cpi}; catalog records of the built-in function catalog loader are package-private, hence by name.
  */
 @RegisterForReflection(
         targets = {
@@ -70,7 +75,8 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
             IntegrationInventory.MappingParameter.class, IntegrationInventory.FunctionLibrary.class,
             IntegrationInventory.UserFunction.class, IntegrationInventory.FunctionArgument.class,
             IntegrationInventory.MessageType.class, IntegrationInventory.DataType.class,
-            IntegrationInventory.ExternalDefinition.class
+            IntegrationInventory.ExternalDefinition.class,
+            IFlow.class, Participant.class, Step.class, Param.class, PackageExport.class, PackageExport.Entry.class
         },
         classNames = {
             "io.poxray.bpm.BuiltinFunctionCatalog$Data",
