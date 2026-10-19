@@ -30,3 +30,10 @@ Durable facts only (build quirks, verified APIs, recurring findings). Never task
 - Step08 entry parameters: ProcessDirect_Address (IDoc) vs ProcessDirect_EndPoint (XI); templates call {{GenericIDocEndpoint}} / {{GenericXIEndpoint}}.
 - BudgetTest applies to every *.md. Since F-3, open questions go to open-questions/<task>.md (one page per content task, <= 1,500 words), not pitfalls.md; kb-04.md was 1,460 words.
 - Fast routing read: a scratchpad awk script over the .iflw (sequenceFlow sourceRef/targetRef/name + conditionExpression, messageFlow source -> participant) with dump step ids mapped to numbers (`jq '.steps|to_entries[]|"\(.value.id) \(.key+1)"'`).
+
+## Templates (learned on KB-05 B1, 2026-06-trial)
+- Templates have no script folder; script steps carry scriptBundleId = the script collection; cite `[<collection id>, scripts/<file>#L<n>]`. MANIFEST Require-Capability (resolution optional) names the collection; Step01 sync has none. No Bundle-Description in B1 manifests (join continuation lines before grepping).
+- Step01 templates have an unconnected participant "Sender" (no message flow): cite `[<id>, resource "<iflw path>"]`.
+- Dump quirk: an IdempotentProcessCall's local process is not inlined (Step01 eo: Send listed as step 1, depth 0); a local process called three times is inlined only under the first call (Step01 sync).
+- The template id folders are `...step01.inbound.processing.<qos>`, not `...step01.<qos>`; take ids from `ls templates/`.
+- Coverage log repeats each `missing page:` line ~4 times; count distinct with `sort -u`.

@@ -90,3 +90,4 @@ Facts only; the next exact action and the state live in `agent/HANDOFF.md`.
   C6 scans contents only — a value in a file name is not found and a hit in such a file would leak it through the path
   (spec-level question, open); the coverage message `artifact without id in package <folder>` is untested; limits are
   tested at 1501 / 5200 only; `io.poxray.cpi.SyntheticArtifact` splits the package across modules (classpath only).
+- Reader follow-up (KB-05 B1, dump order D-016): the local process of an `IdempotentProcessCall` is not inlined (template step01 eo: Send "Send" is step 1 at depth 0, outside the call), and a local process called from several places is inlined only under its first call (template step01 sync: steps 13 and 16 call the process inlined under step 6). Pages follow the dump numbering and say where the step sits; a later reader task may inline idempotent calls and mark repeated calls.

@@ -29,3 +29,6 @@ _Stub, filled in Task 8._
 - `{{tenant.xi.receiver.keyalias}}`: default private key alias for client certificates (parameter XI_PrivateKeyAlias)
 - `{{tenant.xi.sender.default}}`: default XI sender component and party (parameters XI_Sender, XI_SenderParty)
 - `{{tenant.xi.receiver.default}}`: default XI receiver component and party (parameters XI_Receiver, XI_ReceiverParty)
+- `{{tenant.jms.queue.inbound}}`: pipeline inbound queue a Step01 template copy writes to (parameter JMS_Outgoing, templates step01 eo and alo)
+- `{{tenant.endpoint.pipeline.sync}}`: ProcessDirect address of the synchronous pipeline entry a Step01 synchronous template copy calls (parameter Sync_Pipeline_Endpoint)
+- `{{tenant.endpoint.inbound.conversion}}`: ProcessDirect address of a scenario's inbound conversion flow, registered as Partner Directory InboundConversionEndpoint (parameter ProcessDirect_EndPoint, template step03)
