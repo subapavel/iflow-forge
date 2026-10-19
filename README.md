@@ -14,6 +14,8 @@ scheduler jobs), and produces a JSON inventory plus generated documentation.
 Docs: [output model](docs/OUTPUT-MODEL.md), [built-in function catalog](docs/BPM-BUILTIN-FUNCTIONS.md),
 [exploration handoff](docs/HANDOFF.md).
 
+This repository also hosts iflow-forge, which builds SAP Integration Suite iFlows on the SAP pipeline concept from SAP PO Integrated Configurations (read by po-xray) and from existing point-to-point iFlows. Its first part is a pipeline knowledge base under `knowledge/pipeline/`, derived from SAP's own packages and offered to agents as the skill `sap-is-pipeline`. Design: [knowledge base spec](docs/superpowers/specs/2026-10-19-pipeline-knowledge-base-design.md); build plan: [knowledge base plan](docs/superpowers/plans/2026-10-19-pipeline-knowledge-base.md).
+
 ## Build
 
 Requirements: JDK 25, Maven 3.9.

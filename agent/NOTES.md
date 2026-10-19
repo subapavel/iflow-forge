@@ -69,3 +69,5 @@ Facts only; the next exact action and the state live in `agent/HANDOFF.md`.
   fallback of the main-process choice and a subProcess reached by a flow are untested; `cycleTerminates`
   would hang rather than fail (consider `@Timeout`); the synthetic strip token `.CZTEST` in the tests is
   to be checked against the owner's forbidden list (rename to `.TENANT` if it hits). A PROGRESS heading takes its commit hash from the following task's commit.
+- KB-01 follow-up for Task 11: `knowledge/pipeline/SKILL.md` says "load nothing else"; spec §6 loads SKILL + overview +
+  contracts + scenario-contribution together — fix the wording when SKILL.md is rewritten (kb-reviewer remark).
