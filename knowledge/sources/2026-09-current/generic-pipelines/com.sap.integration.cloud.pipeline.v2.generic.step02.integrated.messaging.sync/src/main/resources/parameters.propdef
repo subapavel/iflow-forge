@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><parameters><parameter>
+    <key/>
+    <name>CustomXError_Endpoint</name>
+    <type>xsd:string</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description>Maintain ProcessDirect end point of custom error handling flow in case of custom error handling instead of standard error handling.</description>
+    <additionalMetadata/>
+  </parameter><parameter>
+    <key/>
+    <name>CustomXError_Enabled</name>
+    <type>xsd:string</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description>Set parameter to true if you like to use custom error handling instead of standard error handling.</description>
+    <additionalMetadata/>
+  </parameter><parameter>
+    <key/>
+    <name>PipelinePrefix</name>
+    <type>xsd:string</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description>Change the prefix if you like to setup an additional pipeline.</description>
+    <additionalMetadata/>
+  </parameter><parameter>
+    <key/>
+    <name>CustomXPid_SwitchOffTilde</name>
+    <type>xsd:string</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description>Switch parameter to false if you like to use the so called tilde option to determine the partner ID (not recommended).</description>
+    <additionalMetadata/>
+  </parameter><parameter>
+    <key/>
+    <name>CustomXPreGlobal_Endpoint</name>
+    <type>xsd:string</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description>Maintain ProcessDirect end point of global custom exit flow if you like to use custom exit across all scenarios.</description>
+    <additionalMetadata/>
+  </parameter><parameter>
+    <key/>
+    <name>CustomXPreGlobal_Enabled</name>
+    <type>xsd:string</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description>Set parameter to true if you like to use custom exit across all scenarios.</description>
+    <additionalMetadata/>
+  </parameter><param_references><reference attribute_category="CustomErrorFlow" attribute_id="ctype::Adapter/cname::ProcessDirect/vendor::SAP/version::1.1.2/attrId::address" attribute_uilabel="Address" param_key="CustomXError_Endpoint"/><reference attribute_category="InboundProcessingSync" attribute_id="ctype::Adapter/cname::ProcessDirect/vendor::SAP/version::1.1.2/attrId::address" attribute_uilabel="Address" param_key="PipelinePrefix"/></param_references></parameters>

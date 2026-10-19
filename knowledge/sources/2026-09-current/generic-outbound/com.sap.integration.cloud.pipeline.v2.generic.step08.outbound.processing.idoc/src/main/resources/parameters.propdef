@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><parameters><parameter>
+    <key/>
+    <name>ProcessDirect_Address</name>
+    <type>xsd:string</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description>Maintain address of ProcessDirect adapter.</description>
+    <additionalMetadata/>
+  </parameter><parameter>
+    <key/>
+    <name>IDoc_Address</name>
+    <type>xsd:string</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description>Maintain IDoc endpoint of the receiving system, e.g., https://&lt;host name&gt;:&lt;port&gt;/sap/bc/idoc_xml?sap-client=&lt;client&gt; </description>
+    <additionalMetadata/>
+  </parameter><parameter>
+    <key/>
+    <name>LocationID</name>
+    <type>xsd:string</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description>Maintain Cloud Connector location ID in case of proxy type On-Premise.</description>
+    <additionalMetadata/>
+  </parameter><parameter>
+    <key/>
+    <name>IDoc_AuthenticationType</name>
+    <type>xsd:string</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description>Maintain authentication type: None | Basic | ClientCertificate | PrincipalPropagation.</description>
+    <additionalMetadata/>
+  </parameter><parameter>
+    <key/>
+    <name>IDoc_ProxyType</name>
+    <type>xsd:string</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description>Maintain proxy type: On-Premise | Internet.</description>
+    <additionalMetadata/>
+  </parameter><parameter>
+    <key/>
+    <name>IDoc_ContentType</name>
+    <type>xsd:string</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description>Maintain IDoc content type: Application/x-sap.idoc | Text/XML.</description>
+    <additionalMetadata/>
+  </parameter><parameter>
+    <key/>
+    <name>IDoc_PrivateKeyAlias</name>
+    <type>xsd:string</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description>Maintain private key alias in case of Client Certificate authentication.</description>
+    <additionalMetadata/>
+  </parameter><parameter>
+    <key/>
+    <name>IDoc_CredentialName</name>
+    <type>xsd:string</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description>Maintain credential alias in case of Basic authentication.</description>
+    <additionalMetadata/>
+  </parameter><parameter>
+    <key/>
+    <name>Default_SNDPRN</name>
+    <type>xsd:string</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description>Maintain sender partner name, e.g., &lt;SID&gt;CLNT&lt;Client&gt;.</description>
+    <additionalMetadata/>
+  </parameter><parameter>
+    <key/>
+    <name>Default_SNDPRT</name>
+    <type>xsd:string</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description>Maintain sender partner type, e.g., LS, LI, KU.</description>
+    <additionalMetadata/>
+  </parameter><parameter>
+    <key/>
+    <name>Default_SNDPOR</name>
+    <type>xsd:string</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description>Maintain sender port.</description>
+    <additionalMetadata/>
+  </parameter><parameter>
+    <key/>
+    <name>Default_RCVPRN</name>
+    <type>xsd:string</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description>Maintain receiver partner number, e.g., &lt;SID&gt;CLNT&lt;Client&gt;.</description>
+    <additionalMetadata/>
+  </parameter><parameter>
+    <key/>
+    <name>Default_RCVPRT</name>
+    <type>xsd:string</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description>Maintain receiver partner type, e.g., LS, LI, KU.</description>
+    <additionalMetadata/>
+  </parameter><parameter>
+    <key/>
+    <name>Default_RCVPOR</name>
+    <type>xsd:string</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description>Maintain receiver port.</description>
+    <additionalMetadata/>
+  </parameter><parameter>
+    <key/>
+    <name>Exception_LoggingConfiguration</name>
+    <type>xsd:string</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description>Maintain log level to create MPL Attachments in case of processing errors. Possible values: AuditLog,Payload,Property,Header,Exception</description>
+    <additionalMetadata/>
+  </parameter><parameter>
+    <key/>
+    <name>IDoc_Timeout</name>
+    <type>xsd:integer</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description/>
+    <additionalMetadata/>
+  </parameter><parameter>
+    <key/>
+    <name>IDoc_KeepAlive</name>
+    <type>xsd:boolean</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description/>
+    <additionalMetadata>
+      <isCombobox>false</isCombobox>
+    </additionalMetadata>
+  </parameter><parameter>
+    <key/>
+    <name>IDoc_CompressMessage</name>
+    <type>xsd:boolean</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description/>
+    <additionalMetadata>
+      <isCombobox>false</isCombobox>
+    </additionalMetadata>
+  </parameter><parameter>
+    <key/>
+    <name>IDoc_AllowChunking</name>
+    <type>xsd:boolean</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description/>
+    <additionalMetadata>
+      <isCombobox>false</isCombobox>
+    </additionalMetadata>
+  </parameter><parameter>
+    <key/>
+    <name>IDoc_ReturnHTTPResponseCodeAsHeader</name>
+    <type>xsd:boolean</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description/>
+    <additionalMetadata>
+      <isCombobox>false</isCombobox>
+    </additionalMetadata>
+  </parameter><parameter>
+    <key/>
+    <name>IDoc_CleanUpRequestHeaders</name>
+    <type>xsd:boolean</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description/>
+    <additionalMetadata>
+      <isCombobox>false</isCombobox>
+    </additionalMetadata>
+  </parameter><parameter>
+    <key/>
+    <name>Default_EDIDC_List_Names</name>
+    <type>xsd:string</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description>Specify the names of the control record fields for which default values may need to be assigned. The field names must be provided as a comma-separated string, e.g., SNDPFC,RCVPFC.</description>
+    <additionalMetadata/>
+  </parameter><parameter>
+    <key/>
+    <name>Default_EDIDC_List_Values</name>
+    <type>xsd:string</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description>Specify the default values to be assigned to the corresponding control record fields. The values must be provided as a comma-separated string matching the order of the field names, e.g., LF,AG.</description>
+    <additionalMetadata/>
+  </parameter><parameter>
+    <key/>
+    <name>pidParameterReadSuffixPattern</name>
+    <type>xsd:string</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description>If SAP_ReceiverInterface header is not supplied, this pattern will be used to read control record related String Parameters from Partner Directory.</description>
+    <additionalMetadata/>
+  </parameter><parameter>
+    <key/>
+    <name>AllowedHeadersList</name>
+    <type>xsd:string</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description>Enhance allowed header list to your needs.</description>
+    <additionalMetadata/>
+  </parameter><parameter>
+    <key/>
+    <name>HTTPSessionReuse</name>
+    <type>xsd:string</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description/>
+    <additionalMetadata>
+      <isCombobox>true</isCombobox>
+    </additionalMetadata>
+  </parameter><parameter>
+    <key/>
+    <name>IDocIndividualHeaderInBulk</name>
+    <type>xsd:string</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description>Attach IDoc Numbers from Bulk as separate Custom Headers with name "idoc" (default, "true") or attach IDoc Numbers as one Custom Header and all values in Array ("false")</description>
+    <additionalMetadata/>
+  </parameter><param_references><reference attribute_category="OnPremise" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::cleanupHeaders" attribute_uilabel="Clean-up Request Headers" param_key="IDoc_CleanUpRequestHeaders"/><reference attribute_category="OnPremise" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::CompressMessage" attribute_uilabel="Compress Message" param_key="IDoc_CompressMessage"/><reference attribute_category="OnPremise" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::allowChunking" attribute_uilabel="Allow Chunking" param_key="IDoc_AllowChunking"/><reference attribute_category="OnPremise" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::sendHttpResponseCode" attribute_uilabel="Return HTTP Response Code as Header" param_key="IDoc_ReturnHTTPResponseCodeAsHeader"/><reference attribute_category="OnPremise" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::requestTimeout" attribute_uilabel="Timeout (in ms)" param_key="IDoc_Timeout"/><reference attribute_category="OnPremise" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::KeepConnectionAlive" attribute_uilabel="Keep-Alive" param_key="IDoc_KeepAlive"/><reference attribute_category="Internet" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::cleanupHeaders" attribute_uilabel="Clean-up Request Headers" param_key="IDoc_CleanUpRequestHeaders"/><reference attribute_category="Internet" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::CompressMessage" attribute_uilabel="Compress Message" param_key="IDoc_CompressMessage"/><reference attribute_category="Internet" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::allowChunking" attribute_uilabel="Allow Chunking" param_key="IDoc_AllowChunking"/><reference attribute_category="Internet" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::sendHttpResponseCode" attribute_uilabel="Return HTTP Response Code as Header" param_key="IDoc_ReturnHTTPResponseCodeAsHeader"/><reference attribute_category="Internet" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::requestTimeout" attribute_uilabel="Timeout (in ms)" param_key="IDoc_Timeout"/><reference attribute_category="Internet" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::KeepConnectionAlive" attribute_uilabel="Keep-Alive" param_key="IDoc_KeepAlive"/><reference attribute_category="Internet" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::cleanupHeaders" attribute_uilabel="Clean-up Request Headers" param_key="IDoc_CleanUpRequestHeaders"/><reference attribute_category="Internet" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::CompressMessage" attribute_uilabel="Compress Message" param_key="IDoc_CompressMessage"/><reference attribute_category="Internet" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::allowChunking" attribute_uilabel="Allow Chunking" param_key="IDoc_AllowChunking"/><reference attribute_category="Internet" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::sendHttpResponseCode" attribute_uilabel="Return HTTP Response Code as Header" param_key="IDoc_ReturnHTTPResponseCodeAsHeader"/><reference attribute_category="Internet" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::requestTimeout" attribute_uilabel="Timeout (in ms)" param_key="IDoc_Timeout"/><reference attribute_category="Internet" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::KeepConnectionAlive" attribute_uilabel="Keep-Alive" param_key="IDoc_KeepAlive"/><reference attribute_category="Internet" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::cleanupHeaders" attribute_uilabel="Clean-up Request Headers" param_key="IDoc_CleanUpRequestHeaders"/><reference attribute_category="Internet" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::CompressMessage" attribute_uilabel="Compress Message" param_key="IDoc_CompressMessage"/><reference attribute_category="Internet" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::allowChunking" attribute_uilabel="Allow Chunking" param_key="IDoc_AllowChunking"/><reference attribute_category="Internet" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::sendHttpResponseCode" attribute_uilabel="Return HTTP Response Code as Header" param_key="IDoc_ReturnHTTPResponseCodeAsHeader"/><reference attribute_category="Internet" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::requestTimeout" attribute_uilabel="Timeout (in ms)" param_key="IDoc_Timeout"/><reference attribute_category="Internet" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::KeepConnectionAlive" attribute_uilabel="Keep-Alive" param_key="IDoc_KeepAlive"/><reference attribute_category="Internet" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::cleanupHeaders" attribute_uilabel="Clean-up Request Headers" param_key="IDoc_CleanUpRequestHeaders"/><reference attribute_category="Internet" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::CompressMessage" attribute_uilabel="Compress Message" param_key="IDoc_CompressMessage"/><reference attribute_category="Internet" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::allowChunking" attribute_uilabel="Allow Chunking" param_key="IDoc_AllowChunking"/><reference attribute_category="Internet" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::sendHttpResponseCode" attribute_uilabel="Return HTTP Response Code as Header" param_key="IDoc_ReturnHTTPResponseCodeAsHeader"/><reference attribute_category="Internet" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::requestTimeout" attribute_uilabel="Timeout (in ms)" param_key="IDoc_Timeout"/><reference attribute_category="Internet" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::KeepConnectionAlive" attribute_uilabel="Keep-Alive" param_key="IDoc_KeepAlive"/><reference attribute_category="Internet" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::cleanupHeaders" attribute_uilabel="Clean-up Request Headers" param_key="IDoc_CleanUpRequestHeaders"/><reference attribute_category="Internet" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::CompressMessage" attribute_uilabel="Compress Message" param_key="IDoc_CompressMessage"/><reference attribute_category="Internet" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::allowChunking" attribute_uilabel="Allow Chunking" param_key="IDoc_AllowChunking"/><reference attribute_category="Internet" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::sendHttpResponseCode" attribute_uilabel="Return HTTP Response Code as Header" param_key="IDoc_ReturnHTTPResponseCodeAsHeader"/><reference attribute_category="Internet" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::requestTimeout" attribute_uilabel="Timeout (in ms)" param_key="IDoc_Timeout"/><reference attribute_category="Internet" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::KeepConnectionAlive" attribute_uilabel="Keep-Alive" param_key="IDoc_KeepAlive"/><reference attribute_category="Internet" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::cleanupHeaders" attribute_uilabel="Clean-up Request Headers" param_key="IDoc_CleanUpRequestHeaders"/><reference attribute_category="Internet" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::CompressMessage" attribute_uilabel="Compress Message" param_key="IDoc_CompressMessage"/><reference attribute_category="Internet" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::allowChunking" attribute_uilabel="Allow Chunking" param_key="IDoc_AllowChunking"/><reference attribute_category="Internet" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::sendHttpResponseCode" attribute_uilabel="Return HTTP Response Code as Header" param_key="IDoc_ReturnHTTPResponseCodeAsHeader"/><reference attribute_category="Internet" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::requestTimeout" attribute_uilabel="Timeout (in ms)" param_key="IDoc_Timeout"/><reference attribute_category="Internet" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::KeepConnectionAlive" attribute_uilabel="Keep-Alive" param_key="IDoc_KeepAlive"/><reference attribute_category="OnPremise" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::cleanupHeaders" attribute_uilabel="Clean-up Request Headers" param_key="IDoc_CleanUpRequestHeaders"/><reference attribute_category="OnPremise" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::CompressMessage" attribute_uilabel="Compress Message" param_key="IDoc_CompressMessage"/><reference attribute_category="OnPremise" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::allowChunking" attribute_uilabel="Allow Chunking" param_key="IDoc_AllowChunking"/><reference attribute_category="OnPremise" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::sendHttpResponseCode" attribute_uilabel="Return HTTP Response Code as Header" param_key="IDoc_ReturnHTTPResponseCodeAsHeader"/><reference attribute_category="OnPremise" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::requestTimeout" attribute_uilabel="Timeout (in ms)" param_key="IDoc_Timeout"/><reference attribute_category="OnPremise" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::KeepConnectionAlive" attribute_uilabel="Keep-Alive" param_key="IDoc_KeepAlive"/><reference attribute_category="OnPremise" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::cleanupHeaders" attribute_uilabel="Clean-up Request Headers" param_key="IDoc_CleanUpRequestHeaders"/><reference attribute_category="OnPremise" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::CompressMessage" attribute_uilabel="Compress Message" param_key="IDoc_CompressMessage"/><reference attribute_category="OnPremise" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::allowChunking" attribute_uilabel="Allow Chunking" param_key="IDoc_AllowChunking"/><reference attribute_category="OnPremise" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::sendHttpResponseCode" attribute_uilabel="Return HTTP Response Code as Header" param_key="IDoc_ReturnHTTPResponseCodeAsHeader"/><reference attribute_category="OnPremise" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::requestTimeout" attribute_uilabel="Timeout (in ms)" param_key="IDoc_Timeout"/><reference attribute_category="OnPremise" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::KeepConnectionAlive" attribute_uilabel="Keep-Alive" param_key="IDoc_KeepAlive"/><reference attribute_category="Pipeline" attribute_id="ctype::Adapter/cname::ProcessDirect/vendor::SAP/version::1.1.2/attrId::address" attribute_uilabel="Address" param_key="ProcessDirect_Address"/><reference attribute_category="OnPremise" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::cleanupHeaders" attribute_uilabel="Clean-up Request Headers" param_key="IDoc_CleanUpRequestHeaders"/><reference attribute_category="OnPremise" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::CompressMessage" attribute_uilabel="Compress Message" param_key="IDoc_CompressMessage"/><reference attribute_category="OnPremise" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::allowChunking" attribute_uilabel="Allow Chunking" param_key="IDoc_AllowChunking"/><reference attribute_category="OnPremise" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::sendHttpResponseCode" attribute_uilabel="Return HTTP Response Code as Header" param_key="IDoc_ReturnHTTPResponseCodeAsHeader"/><reference attribute_category="OnPremise" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::requestTimeout" attribute_uilabel="Timeout (in ms)" param_key="IDoc_Timeout"/><reference attribute_category="OnPremise" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::KeepConnectionAlive" attribute_uilabel="Keep-Alive" param_key="IDoc_KeepAlive"/><reference attribute_category="OnPremise" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::cleanupHeaders" attribute_uilabel="Clean-up Request Headers" param_key="IDoc_CleanUpRequestHeaders"/><reference attribute_category="OnPremise" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::CompressMessage" attribute_uilabel="Compress Message" param_key="IDoc_CompressMessage"/><reference attribute_category="OnPremise" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::allowChunking" attribute_uilabel="Allow Chunking" param_key="IDoc_AllowChunking"/><reference attribute_category="OnPremise" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::sendHttpResponseCode" attribute_uilabel="Return HTTP Response Code as Header" param_key="IDoc_ReturnHTTPResponseCodeAsHeader"/><reference attribute_category="OnPremise" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::requestTimeout" attribute_uilabel="Timeout (in ms)" param_key="IDoc_Timeout"/><reference attribute_category="OnPremise" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::KeepConnectionAlive" attribute_uilabel="Keep-Alive" param_key="IDoc_KeepAlive"/><reference attribute_category="OnPremise" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::cleanupHeaders" attribute_uilabel="Clean-up Request Headers" param_key="IDoc_CleanUpRequestHeaders"/><reference attribute_category="OnPremise" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::CompressMessage" attribute_uilabel="Compress Message" param_key="IDoc_CompressMessage"/><reference attribute_category="OnPremise" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::allowChunking" attribute_uilabel="Allow Chunking" param_key="IDoc_AllowChunking"/><reference attribute_category="OnPremise" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::sendHttpResponseCode" attribute_uilabel="Return HTTP Response Code as Header" param_key="IDoc_ReturnHTTPResponseCodeAsHeader"/><reference attribute_category="OnPremise" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::requestTimeout" attribute_uilabel="Timeout (in ms)" param_key="IDoc_Timeout"/><reference attribute_category="OnPremise" attribute_id="ctype::AdapterVariant/cname::IDOC/tp::HTTP/mp::IDoc SOAP/direction::Receiver/version::1.8.2/attrId::KeepConnectionAlive" attribute_uilabel="Keep-Alive" param_key="IDoc_KeepAlive"/></param_references></parameters>

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><parameters><parameter>
+    <key/>
+    <name>CustomXError_Endpoint</name>
+    <type>xsd:string</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description>Maintain ProcessDirect end point of custom error handling flow in case of custom error handling instead of standard error handling.</description>
+    <additionalMetadata/>
+  </parameter><parameter>
+    <key/>
+    <name>DLQ_EndEvent</name>
+    <type>xsd:string</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description>Maintain type of end event if a message is stored in the dead letter queue. You can choose between Escalated and Completed.</description>
+    <additionalMetadata/>
+  </parameter><parameter>
+    <key/>
+    <name>JMS_DLQ</name>
+    <type>xsd:boolean</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description/>
+    <additionalMetadata>
+      <isCombobox>false</isCombobox>
+    </additionalMetadata>
+  </parameter><parameter>
+    <key/>
+    <name>DLQ_ExpirationPeriod</name>
+    <type>xsd:integer</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description/>
+    <additionalMetadata/>
+  </parameter><parameter>
+    <key/>
+    <name>DLQ_EncryptStoredMessage</name>
+    <type>xsd:boolean</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description/>
+    <additionalMetadata>
+      <isCombobox>false</isCombobox>
+    </additionalMetadata>
+  </parameter><parameter>
+    <key/>
+    <name>DLQ_CompressStoredMessage</name>
+    <type>xsd:boolean</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description/>
+    <additionalMetadata>
+      <isCombobox>false</isCombobox>
+    </additionalMetadata>
+  </parameter><parameter>
+    <key/>
+    <name>CustomXError_Enabled</name>
+    <type>xsd:string</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description>Set parameter to true if you like to use custom error handling instead of standard error handling.</description>
+    <additionalMetadata/>
+  </parameter><parameter>
+    <key/>
+    <name>PipelineJMSQueuePrefix</name>
+    <type>xsd:string</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description>Change the prefix if you like to setup an additional pipeline.</description>
+    <additionalMetadata/>
+  </parameter><parameter>
+    <key/>
+    <name>JMS_MaxRetryInterval</name>
+    <type>xsd:integer</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description/>
+    <additionalMetadata/>
+  </parameter><parameter>
+    <key/>
+    <name>JMS_ExponentialBackoff</name>
+    <type>xsd:boolean</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description/>
+    <additionalMetadata>
+      <isCombobox>false</isCombobox>
+    </additionalMetadata>
+  </parameter><parameter>
+    <key/>
+    <name>DLQ_RetentionThreshold</name>
+    <type>xsd:integer</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description/>
+    <additionalMetadata/>
+  </parameter><parameter>
+    <key/>
+    <name>JMS_ConcurrentProcesses</name>
+    <type>xsd:integer</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description/>
+    <additionalMetadata/>
+  </parameter><parameter>
+    <key/>
+    <name>JMS_RetryInterval</name>
+    <type>xsd:integer</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description/>
+    <additionalMetadata/>
+  </parameter><parameter>
+    <key/>
+    <name>CustomXPreGlobal_Enabled</name>
+    <type>xsd:string</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description>Set parameter to true if you like to use custom exit across all scenarios.</description>
+    <additionalMetadata/>
+  </parameter><parameter>
+    <key/>
+    <name>CustomXPreGlobal_Endpoint</name>
+    <type>xsd:string</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description>Maintain ProcessDirect end point of global custom exit flow if you like to use custom exit across all scenarios.</description>
+    <additionalMetadata/>
+  </parameter><parameter>
+    <key/>
+    <name>PipelineJMSQueueSuffix</name>
+    <type>xsd:string</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description>Maintain the suffix if you like to define a receiver-specific outbound processing flow. Otherwise keep the suffix empty.</description>
+    <additionalMetadata/>
+  </parameter><parameter>
+    <key/>
+    <name>PayloadSizeMeasurement</name>
+    <type>xsd:string</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description>If true, measures the message body size in bytes and stores it as exchange header 'originalPayloadSizeBytes' and MPL custom header property.</description>
+    <additionalMetadata/>
+  </parameter><parameter>
+    <key/>
+    <name>SkipRetriesGlobal_Enabled</name>
+    <type>xsd:string</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description>Configures the Integration Flow whether to retry an error or not depending on the exception class. By default, the skip retry handling equals true.</description>
+    <additionalMetadata/>
+  </parameter><parameter>
+    <key/>
+    <name>SkipRetriesGlobal_Source</name>
+    <type>xsd:string</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description>Sets the control from where the configuration is read for skipping retries.
+- Default: uses local hardcoded script.
+- ValueMapping: lookup from one pre-defined Value Mapping.
+- PartnerDirectory: lookup from a global Partner ID from SkipRetriesProfile.</description>
+    <additionalMetadata/>
+  </parameter><parameter>
+    <key/>
+    <name>SkipRetriesGlobal_SourcePidProfile</name>
+    <type>xsd:string</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description>In case of PartnerDirectory source only: Sets the name of the Profile (PID) to use Partner Directory to read the global configuration.</description>
+    <additionalMetadata/>
+  </parameter><param_references><reference attribute_category="CustomErrorFlow" attribute_id="ctype::Adapter/cname::ProcessDirect/vendor::SAP/version::1.1.2/attrId::address" attribute_uilabel="Address" param_key="CustomXError_Endpoint"/><reference attribute_category="OutboundProcessingQueue" attribute_id="ctype::AdapterVariant/cname::JMS/tp::Not Applicable/mp::Not Applicable/direction::Receiver/version::1.5.0/attrId::NumberConcurrentProcesses" attribute_uilabel="" param_key="JMS_ConcurrentProcesses"/><reference attribute_category="OutboundProcessingQueue" attribute_id="ctype::AdapterVariant/cname::JMS/tp::Not Applicable/mp::Not Applicable/direction::Receiver/version::1.5.0/attrId::QueueName_inbound" attribute_uilabel="PipelineJMSQueuePrefix" param_key="PipelineJMSQueuePrefix"/><reference attribute_category="OutboundProcessingQueue" attribute_id="ctype::AdapterVariant/cname::JMS/tp::Not Applicable/mp::Not Applicable/direction::Receiver/version::1.5.0/attrId::QueueName_inbound" attribute_uilabel="PipelineJMSQueueSuffix" param_key="PipelineJMSQueueSuffix"/><reference attribute_category="OutboundProcessingQueue" attribute_id="ctype::AdapterVariant/cname::JMS/tp::Not Applicable/mp::Not Applicable/direction::Receiver/version::1.5.0/attrId::MaxRetryInterval" attribute_uilabel="" param_key="JMS_MaxRetryInterval"/><reference attribute_category="OutboundProcessingQueue" attribute_id="ctype::AdapterVariant/cname::JMS/tp::Not Applicable/mp::Not Applicable/direction::Receiver/version::1.5.0/attrId::RetryInterval" attribute_uilabel="" param_key="JMS_RetryInterval"/><reference attribute_category="OutboundProcessingQueue" attribute_id="ctype::AdapterVariant/cname::JMS/tp::Not Applicable/mp::Not Applicable/direction::Receiver/version::1.5.0/attrId::useDeadLetterQueue" attribute_uilabel="" param_key="JMS_DLQ"/><reference attribute_category="OutboundProcessingQueue" attribute_id="ctype::AdapterVariant/cname::JMS/tp::Not Applicable/mp::Not Applicable/direction::Receiver/version::1.5.0/attrId::ExponentialBackoff" attribute_uilabel="" param_key="JMS_ExponentialBackoff"/><reference attribute_category="DeadLetterQueue" attribute_id="ctype::AdapterVariant/cname::JMS/tp::Not Applicable/mp::Not Applicable/direction::Receiver/version::1.6.3/attrId::QueueName_outbound" attribute_uilabel="PipelineJMSQueuePrefix" param_key="PipelineJMSQueuePrefix"/><reference attribute_category="DeadLetterQueue" attribute_id="ctype::AdapterVariant/cname::JMS/tp::Not Applicable/mp::Not Applicable/direction::Receiver/version::1.6.3/attrId::QueueName_outbound" attribute_uilabel="PipelineJMSQueueSuffix" param_key="PipelineJMSQueueSuffix"/><reference attribute_category="DeadLetterQueue" attribute_id="ctype::AdapterVariant/cname::JMS/tp::Not Applicable/mp::Not Applicable/direction::Receiver/version::1.6.3/attrId::EncryptMessage" attribute_uilabel="Encrypt Stored Message" param_key="DLQ_EncryptStoredMessage"/><reference attribute_category="DeadLetterQueue" attribute_id="ctype::AdapterVariant/cname::JMS/tp::Not Applicable/mp::Not Applicable/direction::Receiver/version::1.6.3/attrId::RetentionThresholdAlerting" attribute_uilabel="Retention Threshold for Alerting (in d)" param_key="DLQ_RetentionThreshold"/><reference attribute_category="DeadLetterQueue" attribute_id="ctype::AdapterVariant/cname::JMS/tp::Not Applicable/mp::Not Applicable/direction::Receiver/version::1.6.3/attrId::ExpirationPeriod" attribute_uilabel="Expiration Period (in d)" param_key="DLQ_ExpirationPeriod"/><reference attribute_category="DeadLetterQueue" attribute_id="ctype::AdapterVariant/cname::JMS/tp::Not Applicable/mp::Not Applicable/direction::Receiver/version::1.6.3/attrId::UseMessageCompression" attribute_uilabel="Compress Stored Message" param_key="DLQ_CompressStoredMessage"/></param_references></parameters>

@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Pipeline V2 - Value Mapping - Skip Retry Configuration
+Bundle-SymbolicName: com.sap.integration.cloud.pipeline.v2.value.mapping
+ .skipretry
+Bundle-Version: 1.0.1
+SAP-BundleType: ValueMapping
+SAP-NodeType: IFLMAP
+Import-Package: com.sap.xi.mapping.camel.valmap
+Bundle-Activator: com.sap.xi.mapping.camel.valmap.ValueMappingActivator
+Origin-Bundle-Name: Pipeline V2 - Value Mapping - Skip Retry Configurati
+ on
+Origin-Bundle-Version: 1.0.1
+Origin-Bundle-SymbolicName: com.sap.integration.cloud.pipeline.v2.value.
+ mapping.skipretry
+Origin-ModifiedDate: 1784096494704
+

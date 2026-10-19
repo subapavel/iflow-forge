@@ -1,0 +1,30 @@
+Change log for "Cloud Integration Pipeline - Templates"
+Date format: dd/mm/yyyy
+Version format: Major.Minor.Micro
+
+07/07/2026 - 1.2.0
+- New template "Pipeline v2 Template Step07 - Outbound Processing One-to-Many to Generic IDoc Outbound" has been added that allows you to create a scenario-specific outbound processing flow which splits an IDoc bulk message and calls the generic IDoc outbound processing flow.
+- New value mapping "Pipeline V2 - Value Mapping - Skip Retry Configuration" that allows you to configure the skip retry handling.
+- New integration flow "Pipeline v2 - Partner Directory Upload Helper - Skip Retry Configuration" that helps you to synchronize the value mapping entries from the value mapping "Pipeline V2 - Value Mapping - Skip Retry Configuration" to a partner ID in the Partner Directory.
+- The script logMessage.groovy within the script collection "Pipeline v2 - Script Collection" has been updated to be able to log exceptions in the MPL attachment.
+
+02/03/2026 - 1.1.1
+- Fixed an issue with a wrong type in a content modifier of the template "Pipeline v2 Template Step01 - Inbound Processing Synchronous": was Constant before, is Expression now.
+
+16/12/2025 - 1.1.0
+- The allowed headers list of the template flow "Pipeline v2 Template - Custom Exit" has been extended to support header SapQualityOfService.
+- New template "Pipeline v2 Template Step07 - Outbound Processing Point-to-Point to Generic XI Outbound" has been added that allows you to create a scenario-specific outbound processing flow that calls the generic XI outbound processing flow. The template can be used for both synchronous and asynchronous communication.
+- New template "Pipeline v2 Template Step07 - Outbound Processing Point-to-Point to Generic IDoc Outbound" has been added that allows you to create a scenario-specific outbound processing flow that calls the generic IDoc outbound processing flow.
+
+29/10/2025 - 1.0.1
+- A script collection has been added with those scripts which you may require to setup your scenario-specific integration flows based on the templates.
+- The templates which may require scripts have been changed to use the script collection instead of local scripts.
+
+04/08/2025 - 1.0.0
+- The package "Process Integration Pipeline - Generic Integration Flows and Templates" has been split up into multiple packages to be more flexible in setting up multiple pipelines, sender-specific IDoc and XI inbound flows, receiver-specific outbound flows.
+- For the same reason, the script collection has been replaced by local scripts.
+- New template "Pipeline v2 Template Step04 - Custom Receiver and Interface Determination via Exchange Properties" has been added for an option to implement custom receiver and interface determination by maintaining exchange properties.
+- New template "Pipeline v2 Template Step04 - Custom Receiver and Interface Determination via Extended Receiver Determination" has been added as an alternative to the template "Pipeline v2 Template Step04 - Reuse Extended Receiver Determination" for an option to implement custom receiver determination based on a message mapping and by maintaining exchange properties for the interface determination.
+- New template "Pipeline v2 Template - Custom Exit" has been added that allows you to implement custom exits without the need to alter the standard generic flows of the pipeline.
+- For the Outbound Processing templates (step 07) version 1.0.1, an option to call custom post-processing has been added.
+- The rest of the integration flow templates have been copied from soon to be deprecated package "Process Integration Pipeline - Generic Integration Flows and Templates".

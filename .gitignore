@@ -34,3 +34,7 @@ __pycache__/
 .DS_Store
 Thumbs.db
 dist/
+
+# SAP package sources: configured values and tenant tags never enter git
+knowledge/sources/**/parameters.prop
+knowledge/sources/**/Configured_Custom_Tags.txt

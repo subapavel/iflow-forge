@@ -1,0 +1,889 @@
+<?xml version="1.0" encoding="UTF-8"?><bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:ifl="http:///com.sap.ifl.model/Ifl.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1">
+    <bpmn2:collaboration id="Collaboration_1" name="Default Collaboration">
+        <bpmn2:extensionElements>
+            <ifl:property>
+                <key>namespaceMapping</key>
+                <value/>
+            </ifl:property>
+            <ifl:property>
+                <key>httpSessionHandling</key>
+                <value>None</value>
+            </ifl:property>
+            <ifl:property>
+                <key>accessControlMaxAge</key>
+                <value/>
+            </ifl:property>
+            <ifl:property>
+                <key>returnExceptionToSender</key>
+                <value>false</value>
+            </ifl:property>
+            <ifl:property>
+                <key>log</key>
+                <value>All events</value>
+            </ifl:property>
+            <ifl:property>
+                <key>corsEnabled</key>
+                <value>false</value>
+            </ifl:property>
+            <ifl:property>
+                <key>exposedHeaders</key>
+                <value/>
+            </ifl:property>
+            <ifl:property>
+                <key>componentVersion</key>
+                <value>1.2</value>
+            </ifl:property>
+            <ifl:property>
+                <key>allowedHeaderList</key>
+                <value>SAP_Sender(.*)|SAP_Receiver(.*)|maxJMSRetries|SAP_MessageType|SAP_ApplicationID|customX(.*)|testMode|partnerID|customHeaderProperties|dc(.*)|auditLogHeader|tenantStage|SapQualityOfService</value>
+            </ifl:property>
+            <ifl:property>
+                <key>ServerTrace</key>
+                <value>false</value>
+            </ifl:property>
+            <ifl:property>
+                <key>allowedOrigins</key>
+                <value/>
+            </ifl:property>
+            <ifl:property>
+                <key>accessControlAllowCredentials</key>
+                <value>false</value>
+            </ifl:property>
+            <ifl:property>
+                <key>allowedHeaders</key>
+                <value/>
+            </ifl:property>
+            <ifl:property>
+                <key>allowedMethods</key>
+                <value/>
+            </ifl:property>
+            <ifl:property>
+                <key>cmdVariantUri</key>
+                <value>ctype::IFlowVariant/cname::IFlowConfiguration/version::1.2.4</value>
+            </ifl:property>
+        </bpmn2:extensionElements>
+        <bpmn2:participant id="Participant_1" ifl:type="EndpointSender" name="Sender">
+            <bpmn2:extensionElements>
+                <ifl:property>
+                    <key>enableBasicAuthentication</key>
+                    <value>false</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>ifl:type</key>
+                    <value>EndpointSender</value>
+                </ifl:property>
+            </bpmn2:extensionElements>
+        </bpmn2:participant>
+        <bpmn2:participant id="Participant_Process_1" ifl:type="IntegrationProcess" name="Integration Process" processRef="Process_1">
+            <bpmn2:extensionElements/>
+        </bpmn2:participant>
+        <bpmn2:messageFlow id="MessageFlow_4" name="ProcessDirect" sourceRef="Participant_1" targetRef="StartEvent_2">
+            <bpmn2:extensionElements>
+                <ifl:property>
+                    <key>ComponentType</key>
+                    <value>ProcessDirect</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>Description</key>
+                    <value/>
+                </ifl:property>
+                <ifl:property>
+                    <key>address</key>
+                    <value>{{ProcessDirect_EndPoint}}</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>ComponentNS</key>
+                    <value>sap</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>Vendor</key>
+                    <value>SAP</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>componentVersion</key>
+                    <value>1.1</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>Name</key>
+                    <value>ProcessDirect</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>TransportProtocolVersion</key>
+                    <value>1.1.2</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>ComponentSWCVName</key>
+                    <value>external</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>system</key>
+                    <value>Sender</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>TransportProtocol</key>
+                    <value>Not Applicable</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>cmdVariantUri</key>
+                    <value>ctype::AdapterVariant/cname::ProcessDirect/vendor::SAP/tp::Not Applicable/mp::Not Applicable/direction::Sender/version::1.1.2</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>MessageProtocol</key>
+                    <value>Not Applicable</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>MessageProtocolVersion</key>
+                    <value>1.1.2</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>ComponentSWCVId</key>
+                    <value>1.1.2</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>direction</key>
+                    <value>Sender</value>
+                </ifl:property>
+            </bpmn2:extensionElements>
+        </bpmn2:messageFlow>
+    </bpmn2:collaboration>
+    <bpmn2:process id="Process_1" name="Integration Process">
+        <bpmn2:extensionElements>
+            <ifl:property>
+                <key>transactionTimeout</key>
+                <value>30</value>
+            </ifl:property>
+            <ifl:property>
+                <key>componentVersion</key>
+                <value>1.2</value>
+            </ifl:property>
+            <ifl:property>
+                <key>cmdVariantUri</key>
+                <value>ctype::FlowElementVariant/cname::IntegrationProcess/version::1.2.1</value>
+            </ifl:property>
+            <ifl:property>
+                <key>transactionalHandling</key>
+                <value>Not Required</value>
+            </ifl:property>
+        </bpmn2:extensionElements>
+        <bpmn2:subProcess id="SubProcess_7" name="Exception Subprocess">
+            <bpmn2:extensionElements>
+                <ifl:property>
+                    <key>componentVersion</key>
+                    <value>1.1</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>activityType</key>
+                    <value>ErrorEventSubProcessTemplate</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>cmdVariantUri</key>
+                    <value>ctype::FlowstepVariant/cname::ErrorEventSubProcessTemplate/version::1.1.0</value>
+                </ifl:property>
+            </bpmn2:extensionElements>
+            <bpmn2:endEvent id="EndEvent_88" name="Error End 1">
+                <bpmn2:incoming>SequenceFlow_91</bpmn2:incoming>
+                <bpmn2:errorEventDefinition>
+                    <bpmn2:extensionElements>
+                        <ifl:property>
+                            <key>cmdVariantUri</key>
+                            <value>ctype::FlowstepVariant/cname::ErrorEndEvent</value>
+                        </ifl:property>
+                        <ifl:property>
+                            <key>activityType</key>
+                            <value>EndErrorEvent</value>
+                        </ifl:property>
+                    </bpmn2:extensionElements>
+                </bpmn2:errorEventDefinition>
+            </bpmn2:endEvent>
+            <bpmn2:callActivity id="CallActivity_90" name="Set custom status">
+                <bpmn2:extensionElements>
+                    <ifl:property>
+                        <key>bodyType</key>
+                        <value>expression</value>
+                    </ifl:property>
+                    <ifl:property>
+                        <key>propertyTable</key>
+                        <value>&lt;row&gt;&lt;cell id='Action'&gt;Create&lt;/cell&gt;&lt;cell id='Type'&gt;constant&lt;/cell&gt;&lt;cell id='Value'&gt;RetryViaParentFlow&lt;/cell&gt;&lt;cell id='Default'&gt;&lt;/cell&gt;&lt;cell id='Name'&gt;SAP_MessageProcessingLogCustomStatus&lt;/cell&gt;&lt;cell id='Datatype'&gt;&lt;/cell&gt;&lt;/row&gt;</value>
+                    </ifl:property>
+                    <ifl:property>
+                        <key>headerTable</key>
+                        <value/>
+                    </ifl:property>
+                    <ifl:property>
+                        <key>wrapContent</key>
+                        <value/>
+                    </ifl:property>
+                    <ifl:property>
+                        <key>componentVersion</key>
+                        <value>1.5</value>
+                    </ifl:property>
+                    <ifl:property>
+                        <key>activityType</key>
+                        <value>Enricher</value>
+                    </ifl:property>
+                    <ifl:property>
+                        <key>cmdVariantUri</key>
+                        <value>ctype::FlowstepVariant/cname::Enricher/version::1.5.3</value>
+                    </ifl:property>
+                </bpmn2:extensionElements>
+                <bpmn2:incoming>SequenceFlow_81</bpmn2:incoming>
+                <bpmn2:outgoing>SequenceFlow_91</bpmn2:outgoing>
+            </bpmn2:callActivity>
+            <bpmn2:startEvent id="StartEvent_8" name="Error Start 1">
+                <bpmn2:outgoing>SequenceFlow_81</bpmn2:outgoing>
+                <bpmn2:errorEventDefinition>
+                    <bpmn2:extensionElements>
+                        <ifl:property>
+                            <key>cmdVariantUri</key>
+                            <value>ctype::FlowstepVariant/cname::ErrorStartEvent</value>
+                        </ifl:property>
+                        <ifl:property>
+                            <key>activityType</key>
+                            <value>StartErrorEvent</value>
+                        </ifl:property>
+                    </bpmn2:extensionElements>
+                </bpmn2:errorEventDefinition>
+            </bpmn2:startEvent>
+            <bpmn2:sequenceFlow id="SequenceFlow_91" sourceRef="CallActivity_90" targetRef="EndEvent_88"/>
+            <bpmn2:sequenceFlow id="SequenceFlow_81" sourceRef="StartEvent_8" targetRef="CallActivity_90"/>
+        </bpmn2:subProcess>
+        <bpmn2:callActivity id="CallActivity_120" name="Add called by step">
+            <bpmn2:extensionElements>
+                <ifl:property>
+                    <key>scriptFunction</key>
+                    <value/>
+                </ifl:property>
+                <ifl:property>
+                    <key>scriptBundleId</key>
+                    <value>com.sap.integration.cloud.pipeline.v2.script.collection</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>componentVersion</key>
+                    <value>1.1</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>activityType</key>
+                    <value>Script</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>cmdVariantUri</key>
+                    <value>ctype::FlowstepVariant/cname::GroovyScript/version::1.1.2</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>subActivityType</key>
+                    <value>GroovyScript</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>script</key>
+                    <value>addCalledByPipelineStep.groovy</value>
+                </ifl:property>
+            </bpmn2:extensionElements>
+            <bpmn2:incoming>SequenceFlow_3</bpmn2:incoming>
+            <bpmn2:outgoing>SequenceFlow_121</bpmn2:outgoing>
+        </bpmn2:callActivity>
+        <bpmn2:endEvent id="EndEvent_2" name="End">
+            <bpmn2:extensionElements>
+                <ifl:property>
+                    <key>componentVersion</key>
+                    <value>1.1</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>cmdVariantUri</key>
+                    <value>ctype::FlowstepVariant/cname::MessageEndEvent/version::1.1.0</value>
+                </ifl:property>
+            </bpmn2:extensionElements>
+            <bpmn2:incoming>SequenceFlow_119</bpmn2:incoming>
+            <bpmn2:incoming>SequenceFlow_118</bpmn2:incoming>
+            <bpmn2:incoming>SequenceFlow_113</bpmn2:incoming>
+            <bpmn2:incoming>SequenceFlow_117</bpmn2:incoming>
+            <bpmn2:incoming>SequenceFlow_116</bpmn2:incoming>
+            <bpmn2:incoming>SequenceFlow_105</bpmn2:incoming>
+            <bpmn2:incoming>SequenceFlow_115</bpmn2:incoming>
+            <bpmn2:incoming>SequenceFlow_114</bpmn2:incoming>
+            <bpmn2:messageEventDefinition/>
+        </bpmn2:endEvent>
+        <bpmn2:callActivity id="CallActivity_96" name="Content Modifier 1">
+            <bpmn2:extensionElements>
+                <ifl:property>
+                    <key>bodyType</key>
+                    <value>constant</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>propertyTable</key>
+                    <value/>
+                </ifl:property>
+                <ifl:property>
+                    <key>headerTable</key>
+                    <value/>
+                </ifl:property>
+                <ifl:property>
+                    <key>wrapContent</key>
+                    <value/>
+                </ifl:property>
+                <ifl:property>
+                    <key>componentVersion</key>
+                    <value>1.6</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>activityType</key>
+                    <value>Enricher</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>cmdVariantUri</key>
+                    <value>ctype::FlowstepVariant/cname::Enricher/version::1.6.1</value>
+                </ifl:property>
+            </bpmn2:extensionElements>
+            <bpmn2:incoming>SequenceFlow_106</bpmn2:incoming>
+            <bpmn2:outgoing>SequenceFlow_113</bpmn2:outgoing>
+        </bpmn2:callActivity>
+        <bpmn2:callActivity id="CallActivity_100" name="Content Modifier 3">
+            <bpmn2:extensionElements>
+                <ifl:property>
+                    <key>bodyType</key>
+                    <value>constant</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>propertyTable</key>
+                    <value/>
+                </ifl:property>
+                <ifl:property>
+                    <key>headerTable</key>
+                    <value/>
+                </ifl:property>
+                <ifl:property>
+                    <key>wrapContent</key>
+                    <value/>
+                </ifl:property>
+                <ifl:property>
+                    <key>componentVersion</key>
+                    <value>1.6</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>activityType</key>
+                    <value>Enricher</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>cmdVariantUri</key>
+                    <value>ctype::FlowstepVariant/cname::Enricher/version::1.6.1</value>
+                </ifl:property>
+            </bpmn2:extensionElements>
+            <bpmn2:incoming>SequenceFlow_108</bpmn2:incoming>
+            <bpmn2:outgoing>SequenceFlow_115</bpmn2:outgoing>
+        </bpmn2:callActivity>
+        <bpmn2:callActivity id="CallActivity_99" name="Content Modifier 2">
+            <bpmn2:extensionElements>
+                <ifl:property>
+                    <key>bodyType</key>
+                    <value>constant</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>propertyTable</key>
+                    <value/>
+                </ifl:property>
+                <ifl:property>
+                    <key>headerTable</key>
+                    <value/>
+                </ifl:property>
+                <ifl:property>
+                    <key>wrapContent</key>
+                    <value/>
+                </ifl:property>
+                <ifl:property>
+                    <key>componentVersion</key>
+                    <value>1.6</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>activityType</key>
+                    <value>Enricher</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>cmdVariantUri</key>
+                    <value>ctype::FlowstepVariant/cname::Enricher/version::1.6.1</value>
+                </ifl:property>
+            </bpmn2:extensionElements>
+            <bpmn2:incoming>SequenceFlow_107</bpmn2:incoming>
+            <bpmn2:outgoing>SequenceFlow_114</bpmn2:outgoing>
+        </bpmn2:callActivity>
+        <bpmn2:callActivity id="CallActivity_102" name="Content Modifier 5">
+            <bpmn2:extensionElements>
+                <ifl:property>
+                    <key>bodyType</key>
+                    <value>constant</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>propertyTable</key>
+                    <value/>
+                </ifl:property>
+                <ifl:property>
+                    <key>headerTable</key>
+                    <value/>
+                </ifl:property>
+                <ifl:property>
+                    <key>wrapContent</key>
+                    <value/>
+                </ifl:property>
+                <ifl:property>
+                    <key>componentVersion</key>
+                    <value>1.6</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>activityType</key>
+                    <value>Enricher</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>cmdVariantUri</key>
+                    <value>ctype::FlowstepVariant/cname::Enricher/version::1.6.1</value>
+                </ifl:property>
+            </bpmn2:extensionElements>
+            <bpmn2:incoming>SequenceFlow_110</bpmn2:incoming>
+            <bpmn2:outgoing>SequenceFlow_117</bpmn2:outgoing>
+        </bpmn2:callActivity>
+        <bpmn2:callActivity id="CallActivity_101" name="Content Modifier 4">
+            <bpmn2:extensionElements>
+                <ifl:property>
+                    <key>bodyType</key>
+                    <value>constant</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>propertyTable</key>
+                    <value/>
+                </ifl:property>
+                <ifl:property>
+                    <key>headerTable</key>
+                    <value/>
+                </ifl:property>
+                <ifl:property>
+                    <key>wrapContent</key>
+                    <value/>
+                </ifl:property>
+                <ifl:property>
+                    <key>componentVersion</key>
+                    <value>1.6</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>activityType</key>
+                    <value>Enricher</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>cmdVariantUri</key>
+                    <value>ctype::FlowstepVariant/cname::Enricher/version::1.6.1</value>
+                </ifl:property>
+            </bpmn2:extensionElements>
+            <bpmn2:incoming>SequenceFlow_109</bpmn2:incoming>
+            <bpmn2:outgoing>SequenceFlow_116</bpmn2:outgoing>
+        </bpmn2:callActivity>
+        <bpmn2:callActivity id="CallActivity_104" name="Content Modifier 7">
+            <bpmn2:extensionElements>
+                <ifl:property>
+                    <key>bodyType</key>
+                    <value>constant</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>propertyTable</key>
+                    <value/>
+                </ifl:property>
+                <ifl:property>
+                    <key>headerTable</key>
+                    <value/>
+                </ifl:property>
+                <ifl:property>
+                    <key>wrapContent</key>
+                    <value/>
+                </ifl:property>
+                <ifl:property>
+                    <key>componentVersion</key>
+                    <value>1.6</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>activityType</key>
+                    <value>Enricher</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>cmdVariantUri</key>
+                    <value>ctype::FlowstepVariant/cname::Enricher/version::1.6.1</value>
+                </ifl:property>
+            </bpmn2:extensionElements>
+            <bpmn2:incoming>SequenceFlow_112</bpmn2:incoming>
+            <bpmn2:outgoing>SequenceFlow_119</bpmn2:outgoing>
+        </bpmn2:callActivity>
+        <bpmn2:callActivity id="CallActivity_103" name="Content Modifier 6">
+            <bpmn2:extensionElements>
+                <ifl:property>
+                    <key>bodyType</key>
+                    <value>constant</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>propertyTable</key>
+                    <value/>
+                </ifl:property>
+                <ifl:property>
+                    <key>headerTable</key>
+                    <value/>
+                </ifl:property>
+                <ifl:property>
+                    <key>wrapContent</key>
+                    <value/>
+                </ifl:property>
+                <ifl:property>
+                    <key>componentVersion</key>
+                    <value>1.6</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>activityType</key>
+                    <value>Enricher</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>cmdVariantUri</key>
+                    <value>ctype::FlowstepVariant/cname::Enricher/version::1.6.1</value>
+                </ifl:property>
+            </bpmn2:extensionElements>
+            <bpmn2:incoming>SequenceFlow_111</bpmn2:incoming>
+            <bpmn2:outgoing>SequenceFlow_118</bpmn2:outgoing>
+        </bpmn2:callActivity>
+        <bpmn2:exclusiveGateway default="SequenceFlow_105" id="ExclusiveGateway_92" name="Which pipeline step?">
+            <bpmn2:extensionElements>
+                <ifl:property>
+                    <key>componentVersion</key>
+                    <value>1.1</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>activityType</key>
+                    <value>ExclusiveGateway</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>cmdVariantUri</key>
+                    <value>ctype::FlowstepVariant/cname::ExclusiveGateway/version::1.1.2</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>throwException</key>
+                    <value>false</value>
+                </ifl:property>
+            </bpmn2:extensionElements>
+            <bpmn2:incoming>SequenceFlow_121</bpmn2:incoming>
+            <bpmn2:outgoing>SequenceFlow_109</bpmn2:outgoing>
+            <bpmn2:outgoing>SequenceFlow_108</bpmn2:outgoing>
+            <bpmn2:outgoing>SequenceFlow_107</bpmn2:outgoing>
+            <bpmn2:outgoing>SequenceFlow_112</bpmn2:outgoing>
+            <bpmn2:outgoing>SequenceFlow_111</bpmn2:outgoing>
+            <bpmn2:outgoing>SequenceFlow_110</bpmn2:outgoing>
+            <bpmn2:outgoing>SequenceFlow_106</bpmn2:outgoing>
+            <bpmn2:outgoing>SequenceFlow_105</bpmn2:outgoing>
+        </bpmn2:exclusiveGateway>
+        <bpmn2:startEvent id="StartEvent_2" name="Start">
+            <bpmn2:extensionElements>
+                <ifl:property>
+                    <key>componentVersion</key>
+                    <value>1.0</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>cmdVariantUri</key>
+                    <value>ctype::FlowstepVariant/cname::MessageStartEvent/version::1.0</value>
+                </ifl:property>
+            </bpmn2:extensionElements>
+            <bpmn2:outgoing>SequenceFlow_3</bpmn2:outgoing>
+            <bpmn2:messageEventDefinition/>
+        </bpmn2:startEvent>
+        <bpmn2:sequenceFlow id="SequenceFlow_121" sourceRef="CallActivity_120" targetRef="ExclusiveGateway_92"/>
+        <bpmn2:sequenceFlow id="SequenceFlow_113" sourceRef="CallActivity_96" targetRef="EndEvent_2"/>
+        <bpmn2:sequenceFlow id="SequenceFlow_115" sourceRef="CallActivity_100" targetRef="EndEvent_2"/>
+        <bpmn2:sequenceFlow id="SequenceFlow_114" sourceRef="CallActivity_99" targetRef="EndEvent_2"/>
+        <bpmn2:sequenceFlow id="SequenceFlow_117" sourceRef="CallActivity_102" targetRef="EndEvent_2"/>
+        <bpmn2:sequenceFlow id="SequenceFlow_116" sourceRef="CallActivity_101" targetRef="EndEvent_2"/>
+        <bpmn2:sequenceFlow id="SequenceFlow_119" sourceRef="CallActivity_104" targetRef="EndEvent_2"/>
+        <bpmn2:sequenceFlow id="SequenceFlow_118" sourceRef="CallActivity_103" targetRef="EndEvent_2"/>
+        <bpmn2:sequenceFlow id="SequenceFlow_109" name="Route 4" sourceRef="ExclusiveGateway_92" targetRef="CallActivity_101">
+            <bpmn2:extensionElements>
+                <ifl:property>
+                    <key>expressionType</key>
+                    <value>NonXML</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>componentVersion</key>
+                    <value>1.0</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>cmdVariantUri</key>
+                    <value>ctype::FlowstepVariant/cname::GatewayRoute/version::1.0.0</value>
+                </ifl:property>
+            </bpmn2:extensionElements>
+            <bpmn2:conditionExpression id="FormalExpression_SequenceFlow_109_1764936489542" xsi:type="bpmn2:tFormalExpression">${header.customXPipelineStep} = '04'</bpmn2:conditionExpression>
+        </bpmn2:sequenceFlow>
+        <bpmn2:sequenceFlow id="SequenceFlow_108" name="Route 3" sourceRef="ExclusiveGateway_92" targetRef="CallActivity_100">
+            <bpmn2:extensionElements>
+                <ifl:property>
+                    <key>expressionType</key>
+                    <value>NonXML</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>componentVersion</key>
+                    <value>1.0</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>cmdVariantUri</key>
+                    <value>ctype::FlowstepVariant/cname::GatewayRoute/version::1.0.0</value>
+                </ifl:property>
+            </bpmn2:extensionElements>
+            <bpmn2:conditionExpression id="FormalExpression_SequenceFlow_108_1764936489542" xsi:type="bpmn2:tFormalExpression">${header.customXPipelineStep} = '03'</bpmn2:conditionExpression>
+        </bpmn2:sequenceFlow>
+        <bpmn2:sequenceFlow id="SequenceFlow_107" name="Route 2" sourceRef="ExclusiveGateway_92" targetRef="CallActivity_99">
+            <bpmn2:extensionElements>
+                <ifl:property>
+                    <key>expressionType</key>
+                    <value>NonXML</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>componentVersion</key>
+                    <value>1.0</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>cmdVariantUri</key>
+                    <value>ctype::FlowstepVariant/cname::GatewayRoute/version::1.0.0</value>
+                </ifl:property>
+            </bpmn2:extensionElements>
+            <bpmn2:conditionExpression id="FormalExpression_SequenceFlow_107_1764936489542" xsi:type="bpmn2:tFormalExpression">${header.customXPipelineStep} = '02'</bpmn2:conditionExpression>
+        </bpmn2:sequenceFlow>
+        <bpmn2:sequenceFlow id="SequenceFlow_112" name="Route 7" sourceRef="ExclusiveGateway_92" targetRef="CallActivity_104">
+            <bpmn2:extensionElements>
+                <ifl:property>
+                    <key>expressionType</key>
+                    <value>NonXML</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>componentVersion</key>
+                    <value>1.0</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>cmdVariantUri</key>
+                    <value>ctype::FlowstepVariant/cname::GatewayRoute/version::1.0.0</value>
+                </ifl:property>
+            </bpmn2:extensionElements>
+            <bpmn2:conditionExpression id="FormalExpression_SequenceFlow_112_1764936489542" xsi:type="bpmn2:tFormalExpression">${header.customXPipelineStep} = '07'</bpmn2:conditionExpression>
+        </bpmn2:sequenceFlow>
+        <bpmn2:sequenceFlow id="SequenceFlow_111" name="Route 6" sourceRef="ExclusiveGateway_92" targetRef="CallActivity_103">
+            <bpmn2:extensionElements>
+                <ifl:property>
+                    <key>expressionType</key>
+                    <value>NonXML</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>componentVersion</key>
+                    <value>1.0</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>cmdVariantUri</key>
+                    <value>ctype::FlowstepVariant/cname::GatewayRoute/version::1.0.0</value>
+                </ifl:property>
+            </bpmn2:extensionElements>
+            <bpmn2:conditionExpression id="FormalExpression_SequenceFlow_111_1764936489542" xsi:type="bpmn2:tFormalExpression">${header.customXPipelineStep} = '06'</bpmn2:conditionExpression>
+        </bpmn2:sequenceFlow>
+        <bpmn2:sequenceFlow id="SequenceFlow_110" name="Route 5" sourceRef="ExclusiveGateway_92" targetRef="CallActivity_102">
+            <bpmn2:extensionElements>
+                <ifl:property>
+                    <key>expressionType</key>
+                    <value>NonXML</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>componentVersion</key>
+                    <value>1.0</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>cmdVariantUri</key>
+                    <value>ctype::FlowstepVariant/cname::GatewayRoute/version::1.0.0</value>
+                </ifl:property>
+            </bpmn2:extensionElements>
+            <bpmn2:conditionExpression id="FormalExpression_SequenceFlow_110_1764936489542" xsi:type="bpmn2:tFormalExpression">${header.customXPipelineStep} = '05'</bpmn2:conditionExpression>
+        </bpmn2:sequenceFlow>
+        <bpmn2:sequenceFlow id="SequenceFlow_106" name="Route 1" sourceRef="ExclusiveGateway_92" targetRef="CallActivity_96">
+            <bpmn2:extensionElements>
+                <ifl:property>
+                    <key>expressionType</key>
+                    <value>NonXML</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>componentVersion</key>
+                    <value>1.0</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>cmdVariantUri</key>
+                    <value>ctype::FlowstepVariant/cname::GatewayRoute/version::1.0.0</value>
+                </ifl:property>
+            </bpmn2:extensionElements>
+            <bpmn2:conditionExpression id="FormalExpression_SequenceFlow_106_1764936489542" xsi:type="bpmn2:tFormalExpression">${header.customXPipelineStep} = '01'</bpmn2:conditionExpression>
+        </bpmn2:sequenceFlow>
+        <bpmn2:sequenceFlow id="SequenceFlow_105" name="Default Route" sourceRef="ExclusiveGateway_92" targetRef="EndEvent_2">
+            <bpmn2:extensionElements>
+                <ifl:property>
+                    <key>expressionType</key>
+                    <value>XML</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>componentVersion</key>
+                    <value>1.0</value>
+                </ifl:property>
+                <ifl:property>
+                    <key>cmdVariantUri</key>
+                    <value>ctype::FlowstepVariant/cname::GatewayRoute/version::1.0.0</value>
+                </ifl:property>
+            </bpmn2:extensionElements>
+        </bpmn2:sequenceFlow>
+        <bpmn2:sequenceFlow id="SequenceFlow_3" sourceRef="StartEvent_2" targetRef="CallActivity_120"/>
+    </bpmn2:process>
+    <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="Default Collaboration Diagram">
+        <bpmndi:BPMNPlane bpmnElement="Collaboration_1" id="BPMNPlane_1">
+            <bpmndi:BPMNShape bpmnElement="CallActivity_99" id="BPMNShape_CallActivity_99">
+                <dc:Bounds height="60.0" width="100.0" x="681.0" y="331.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="CallActivity_104" id="BPMNShape_CallActivity_104">
+                <dc:Bounds height="60.0" width="100.0" x="681.0" y="823.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="CallActivity_96" id="BPMNShape_CallActivity_96">
+                <dc:Bounds height="60.0" width="100.0" x="681.0" y="228.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="SubProcess_7" id="BPMNShape_SubProcess_7">
+                <dc:Bounds height="150.0" width="513.0" x="1369.0" y="740.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="StartEvent_8" id="BPMNShape_StartEvent_8">
+                <dc:Bounds height="32.0" width="32.0" x="1412.0" y="796.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="CallActivity_90" id="BPMNShape_CallActivity_90">
+                <dc:Bounds height="60.0" width="100.0" x="1568.0" y="782.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="EndEvent_88" id="BPMNShape_EndEvent_88">
+                <dc:Bounds height="32.0" width="32.0" x="1788.0" y="796.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Participant_1" id="BPMNShape_Participant_1">
+                <dc:Bounds height="140.0" width="100.0" x="14.0" y="88.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="EndEvent_2" id="BPMNShape_EndEvent_2">
+                <dc:Bounds height="32.0" width="32.0" x="1777.0" y="146.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="StartEvent_2" id="BPMNShape_StartEvent_2">
+                <dc:Bounds height="32.0" width="32.0" x="197.0" y="142.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="CallActivity_101" id="BPMNShape_CallActivity_101">
+                <dc:Bounds height="60.0" width="100.0" x="681.0" y="526.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="CallActivity_100" id="BPMNShape_CallActivity_100">
+                <dc:Bounds height="60.0" width="100.0" x="681.0" y="429.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="CallActivity_103" id="BPMNShape_CallActivity_103">
+                <dc:Bounds height="60.0" width="100.0" x="681.0" y="727.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Participant_Process_1" id="BPMNShape_Participant_Process_1">
+                <dc:Bounds height="877.0" width="1776.0" x="152.0" y="60.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="ExclusiveGateway_92" id="BPMNShape_ExclusiveGateway_92">
+                <dc:Bounds height="40.0" width="40.0" x="442.0" y="142.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="CallActivity_102" id="BPMNShape_CallActivity_102">
+                <dc:Bounds height="60.0" width="100.0" x="681.0" y="628.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="CallActivity_120" id="BPMNShape_CallActivity_120">
+                <dc:Bounds height="60.0" width="100.0" x="283.0" y="128.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge bpmnElement="SequenceFlow_91" id="BPMNEdge_SequenceFlow_91" sourceElement="BPMNShape_CallActivity_90" targetElement="BPMNShape_EndEvent_88">
+                <di:waypoint x="1618.0" xsi:type="dc:Point" y="812.0"/>
+                <di:waypoint x="1804.0" xsi:type="dc:Point" y="812.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="SequenceFlow_81" id="BPMNEdge_SequenceFlow_81" sourceElement="BPMNShape_StartEvent_8" targetElement="BPMNShape_CallActivity_90">
+                <di:waypoint x="1428.0" xsi:type="dc:Point" y="812.0"/>
+                <di:waypoint x="1618.0" xsi:type="dc:Point" y="812.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="SequenceFlow_108" id="BPMNEdge_SequenceFlow_108" sourceElement="BPMNShape_ExclusiveGateway_92" targetElement="BPMNShape_CallActivity_100">
+                <di:waypoint x="462.0" xsi:type="dc:Point" y="162.0"/>
+                <di:waypoint x="462.0" xsi:type="dc:Point" y="459.0"/>
+                <di:waypoint x="681.5" xsi:type="dc:Point" y="459.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="SequenceFlow_109" id="BPMNEdge_SequenceFlow_109" sourceElement="BPMNShape_ExclusiveGateway_92" targetElement="BPMNShape_CallActivity_101">
+                <di:waypoint x="462.0" xsi:type="dc:Point" y="162.0"/>
+                <di:waypoint x="462.0" xsi:type="dc:Point" y="556.0"/>
+                <di:waypoint x="681.5" xsi:type="dc:Point" y="556.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="SequenceFlow_105" id="BPMNEdge_SequenceFlow_105" sourceElement="BPMNShape_ExclusiveGateway_92" targetElement="BPMNShape_EndEvent_2">
+                <di:waypoint x="462.0" xsi:type="dc:Point" y="162.0"/>
+                <di:waypoint x="1793.0" xsi:type="dc:Point" y="162.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="SequenceFlow_106" id="BPMNEdge_SequenceFlow_106" sourceElement="BPMNShape_ExclusiveGateway_92" targetElement="BPMNShape_CallActivity_96">
+                <di:waypoint x="462.0" xsi:type="dc:Point" y="162.0"/>
+                <di:waypoint x="581.5" xsi:type="dc:Point" y="162.0"/>
+                <di:waypoint x="581.5" xsi:type="dc:Point" y="258.0"/>
+                <di:waypoint x="731.0" xsi:type="dc:Point" y="258.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="SequenceFlow_107" id="BPMNEdge_SequenceFlow_107" sourceElement="BPMNShape_ExclusiveGateway_92" targetElement="BPMNShape_CallActivity_99">
+                <di:waypoint x="462.0" xsi:type="dc:Point" y="162.0"/>
+                <di:waypoint x="581.5" xsi:type="dc:Point" y="162.0"/>
+                <di:waypoint x="581.5" xsi:type="dc:Point" y="361.0"/>
+                <di:waypoint x="731.0" xsi:type="dc:Point" y="361.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="SequenceFlow_121" id="BPMNEdge_SequenceFlow_121" sourceElement="BPMNShape_CallActivity_120" targetElement="BPMNShape_ExclusiveGateway_92">
+                <di:waypoint x="333.0" xsi:type="dc:Point" y="160.0"/>
+                <di:waypoint x="462.0" xsi:type="dc:Point" y="160.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="SequenceFlow_119" id="BPMNEdge_SequenceFlow_119" sourceElement="BPMNShape_CallActivity_104" targetElement="BPMNShape_EndEvent_2">
+                <di:waypoint x="780.5" xsi:type="dc:Point" y="853.0"/>
+                <di:waypoint x="1279.0" xsi:type="dc:Point" y="853.0"/>
+                <di:waypoint x="1279.0" xsi:type="dc:Point" y="162.0"/>
+                <di:waypoint x="1777.5" xsi:type="dc:Point" y="162.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="SequenceFlow_115" id="BPMNEdge_SequenceFlow_115" sourceElement="BPMNShape_CallActivity_100" targetElement="BPMNShape_EndEvent_2">
+                <di:waypoint x="780.5" xsi:type="dc:Point" y="459.0"/>
+                <di:waypoint x="1279.0" xsi:type="dc:Point" y="459.0"/>
+                <di:waypoint x="1279.0" xsi:type="dc:Point" y="164.0"/>
+                <di:waypoint x="1784.0" xsi:type="dc:Point" y="164.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="SequenceFlow_116" id="BPMNEdge_SequenceFlow_116" sourceElement="BPMNShape_CallActivity_101" targetElement="BPMNShape_EndEvent_2">
+                <di:waypoint x="783.0" xsi:type="dc:Point" y="555.0"/>
+                <di:waypoint x="1280.0" xsi:type="dc:Point" y="555.0"/>
+                <di:waypoint x="1280.0" xsi:type="dc:Point" y="162.0"/>
+                <di:waypoint x="1777.5" xsi:type="dc:Point" y="162.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="SequenceFlow_117" id="BPMNEdge_SequenceFlow_117" sourceElement="BPMNShape_CallActivity_102" targetElement="BPMNShape_EndEvent_2">
+                <di:waypoint x="780.5" xsi:type="dc:Point" y="658.0"/>
+                <di:waypoint x="1279.0" xsi:type="dc:Point" y="658.0"/>
+                <di:waypoint x="1279.0" xsi:type="dc:Point" y="162.0"/>
+                <di:waypoint x="1793.0" xsi:type="dc:Point" y="162.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="SequenceFlow_118" id="BPMNEdge_SequenceFlow_118" sourceElement="BPMNShape_CallActivity_103" targetElement="BPMNShape_EndEvent_2">
+                <di:waypoint x="780.5" xsi:type="dc:Point" y="757.0"/>
+                <di:waypoint x="1279.0" xsi:type="dc:Point" y="757.0"/>
+                <di:waypoint x="1279.0" xsi:type="dc:Point" y="162.0"/>
+                <di:waypoint x="1793.0" xsi:type="dc:Point" y="162.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="SequenceFlow_111" id="BPMNEdge_SequenceFlow_111" sourceElement="BPMNShape_ExclusiveGateway_92" targetElement="BPMNShape_CallActivity_103">
+                <di:waypoint x="462.0" xsi:type="dc:Point" y="162.0"/>
+                <di:waypoint x="462.0" xsi:type="dc:Point" y="757.0"/>
+                <di:waypoint x="681.5" xsi:type="dc:Point" y="757.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="SequenceFlow_112" id="BPMNEdge_SequenceFlow_112" sourceElement="BPMNShape_ExclusiveGateway_92" targetElement="BPMNShape_CallActivity_104">
+                <di:waypoint x="462.0" xsi:type="dc:Point" y="162.0"/>
+                <di:waypoint x="462.0" xsi:type="dc:Point" y="853.0"/>
+                <di:waypoint x="681.5" xsi:type="dc:Point" y="853.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="SequenceFlow_113" id="BPMNEdge_SequenceFlow_113" sourceElement="BPMNShape_CallActivity_96" targetElement="BPMNShape_EndEvent_2">
+                <di:waypoint x="780.5" xsi:type="dc:Point" y="258.0"/>
+                <di:waypoint x="1279.0" xsi:type="dc:Point" y="258.0"/>
+                <di:waypoint x="1279.0" xsi:type="dc:Point" y="162.0"/>
+                <di:waypoint x="1793.0" xsi:type="dc:Point" y="162.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="SequenceFlow_3" id="BPMNEdge_SequenceFlow_3" sourceElement="BPMNShape_StartEvent_2" targetElement="BPMNShape_CallActivity_120">
+                <di:waypoint x="213.0" xsi:type="dc:Point" y="158.0"/>
+                <di:waypoint x="333.0" xsi:type="dc:Point" y="158.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="SequenceFlow_114" id="BPMNEdge_SequenceFlow_114" sourceElement="BPMNShape_CallActivity_99" targetElement="BPMNShape_EndEvent_2">
+                <di:waypoint x="780.0" xsi:type="dc:Point" y="361.0"/>
+                <di:waypoint x="1279.0" xsi:type="dc:Point" y="361.0"/>
+                <di:waypoint x="1279.0" xsi:type="dc:Point" y="162.0"/>
+                <di:waypoint x="1793.0" xsi:type="dc:Point" y="162.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="SequenceFlow_110" id="BPMNEdge_SequenceFlow_110" sourceElement="BPMNShape_ExclusiveGateway_92" targetElement="BPMNShape_CallActivity_102">
+                <di:waypoint x="462.0" xsi:type="dc:Point" y="162.0"/>
+                <di:waypoint x="462.0" xsi:type="dc:Point" y="658.0"/>
+                <di:waypoint x="681.5" xsi:type="dc:Point" y="658.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="MessageFlow_4" id="BPMNEdge_MessageFlow_4" sourceElement="BPMNShape_Participant_1" targetElement="BPMNShape_StartEvent_2">
+                <di:waypoint x="64.0" xsi:type="dc:Point" y="158.0"/>
+                <di:waypoint x="213.0" xsi:type="dc:Point" y="158.0"/>
+            </bpmndi:BPMNEdge>
+        </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn2:definitions>

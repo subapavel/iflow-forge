@@ -1,0 +1,48 @@
+Change log for "Cloud Integration Pipeline - Generic Inbound"
+Date format: dd/mm/yyyy
+Version format: Major.Minor.Micro
+
+07/07/2026 - 1.0.8
+- In the integration flow "Pipeline v2 Generic Step01 - Inbound Processing for XI", flexible landscape stages is now also supported for the Point-to-Point bypass option.
+- For asynchronous messages using the integration flow "Pipeline v2 Generic Step01 - Inbound Processing for XI", the body of the response is nulled after having stored the message in the JMS queue to avoid runtime issues in case of large messages.
+- To ensure upgrade readiness, the system environment to fetch the tenant name has been changed towards an expression in the content modifier instead of using an unsupported class in groovy script. This applies to both integration flows "Pipeline v2 Generic Step01 - Inbound Processing for Idoc" and "Pipeline v2 Generic Step01 - Inbound Processing for XI".
+- The allowed header list of the inbound processing flows "Pipeline v2 Generic Step01 - Inbound Processing for XI" and "Pipeline v2 Generic Step01 - Inbound Processing for Idoc" has been enhanced based on customer demand.
+- For both, the inbound processing flows "Pipeline v2 Generic Step01 - Inbound Processing for XI" and "Pipeline v2 Generic Step01 - Inbound Processing for Idoc", the receiver queue name has been added to the custom header attributes.
+
+17/03/2026 - 1.0.7
+- Fixed an error "No such property: Pid for class: determinePartnerIDForIDocInbound__Script@ line 546" in the integration flow "Pipeline v2 Generic Step01 - Inbound Processing for Idoc" in case that externalized parameter CustomXPid_ResolveVirtualReceiver was set to false which is actually the default.
+
+02/03/2026 - 1.0.6
+- The integration flow "Pipeline v2 Generic Step01 - Inbound Processing for Idoc" has been extended to be able to determine partner ID based on sender partner of partner type not equal LS in addition to LS as well as taking virtual receiver into account.
+- The integration flows "Pipeline v2 Generic Step01 - Inbound Processing for Idoc" and "Pipeline v2 Generic Step01 - Inbound Processing for XI" have been extended to support flexible landscape stages. You have the option to define multiple stages per tenant. Furthermore, different options to determine the stage are supported: via authorized user, via header passed to the pipeline steps or via configuration parameter in the Partner Directory.
+- The new features required major changes of the Groovy script "determinePartnerIDForIDocInbound" within the integration flow "Pipeline v2 Generic Step01 - Inbound Processing for Idoc".
+- The new features required major changes of the Groovy script "determinePartnerID" within the integration flow "Pipeline v2 Generic Step01 - Inbound Processing for XI".
+
+16/12/2025 - 1.0.5
+- Changed the duplicate handling for the XI and IDoc inbound processing flows "Pipeline v2 Generic Step01 - Inbound Processing for XI" and "Pipeline v2 Generic Step01 - Inbound Processing for Idoc": In case of duplicates, the message processing logs end with Completed instead of Escalated to avoid that an http error code 500 is returned to the sending system.
+- For the IDoc inbound processing flow "Pipeline v2 Generic Step01 - Inbound Processing for Idoc", the duplicate check can be switch off via integration flow configuration for testing purposes. By default, the duplicate handling is enabled.
+- The XI inbound processing flow "Pipeline v2 Generic Step01 - Inbound Processing for XI" now supports dynamic adapter specific configuration.
+- An EOIO check has been added to the IDoc inbound processing flow "Pipeline v2 Generic Step01 - Inbound Processing for Idoc".
+
+19/11/2025 - 1.0.4
+- The definition of alternative partners for IDoc inbound scenarios using the integration flow "Pipeline v2 Generic Step01 - Inbound Processing for Idoc" has been extended to be able to determine partner ID based on sender component name, sender interface name, and sender interface namespace urn:sap-com:document:sap:idoc:messages.
+
+29/10/2025 - 1.0.3
+- The audit log which is attached to the message processing log in case of message retry exceeded has been updated.
+- Support for sender parties has been improved in the integration flow "Pipeline v2 Generic Step01 - Inbound Processing for XI".
+
+26/08/2025 - 1.0.2
+- Fixed a bug in the script "displayBulkIDs" with missing int declaration.
+
+07/08/2025 - 1.0.1
+- Fixed a bug with both inbound flows when using custom error handling.
+
+04/08/2025 - 1.0.0
+- The package "Process Integration Pipeline - Generic Integration Flows and Templates" has been split up into multiple packages to be more flexible in setting up multiple pipelines, sender-specific IDoc and XI inbound flows, receiver-specific outbound flows.
+- For the same reason, the script collection has been replaced by local scripts.
+- The integration flow "Pipeline v2 Generic Step01 - Inbound Processing for Idoc" supports an option to keep IDoc bulks, i.e., the bulk message is not split into single messages but passed to the next pipeline step as a bulk message.
+- Custom exits for pre-processing has been added with the options to call a custom flow across all scenarios or scenario-specific without the need to alter the standard flows provided.
+- All flow steps and adapters in the flows have been updated to their latest version.
+- For the pipeline related externalized parameters, descriptions have been added that provide you with more detailed information when configuring the flows.
+- "Pipeline v2 Generic Step01 - Inbound Processing for Idoc" version 1.0.1 and "Pipeline v2 Generic Step01 - Inbound Processing for XI" version 1.0.1 contain the new features mentioned above.
+- "Pipeline v2 Generic Step01 - Inbound Processing for Idoc" version 1.0.0 and "Pipeline v2 Generic Step01 - Inbound Processing for XI" version 1.0.0 copied from soon to be deprecated package "Process Integration Pipeline - Generic Integration Flows and Templates".

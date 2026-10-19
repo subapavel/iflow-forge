@@ -3,3 +3,6 @@
 *.bat text eol=crlf
 *.sca binary
 *.jar binary
+
+# SAP package sources are stored byte-for-byte (no EOL conversion)
+knowledge/sources/** -text

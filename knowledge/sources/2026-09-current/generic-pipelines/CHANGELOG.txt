@@ -1,0 +1,46 @@
+Change log for "Cloud Integration Pipeline - Generic Pipelines"
+Date format: dd/mm/yyyy
+Version format: Major.Minor.Micro
+
+07/07/2026 - 1.0.5
+- For all asynchronous pipeline flows, the sender and receiver queue names have been added to the custom header attributes.
+- For the "Pipeline v2 Generic Step02 - Integrated Messaging Runtime Async" flow, the retry behavior has been slightly changed. For some errors where an automatic message retry would not make sense, the retry is skipped and the message is directly stored in the dead letter queue.
+- For the "Pipeline v2 Generic Step02 - Integrated Messaging Runtime Async", "Pipeline v2 Generic Step04 - Receiver Determination" and "Pipeline v2 Generic Step05 - Interface Determination" flows, you have the option to configure the OData API token URL, the OData API URL as well as the credentials to read the original error text of your message exchange once the maximum number of retries have been exceeded.
+- In case that an erroneous message is stored in the dead letter queue, the payload, all headers, and all attachments if any are restored to ensure that they are in the state that they had at the JMS queue inbound.
+
+02/03/2026 - 1.0.4
+- The integration flows "Pipeline v2 Generic Step02 - Inbound Processing", "Pipeline v2 Generic Step02 - Integrated Messaging Runtime Async", "Pipeline v2 Generic Step02 - Integrated Messaging Runtime Sync" and "Pipeline v2 Generic Step04 - Receiver Determination" have been extended to support flexible landscape stages. You have the option to define multiple stages per tenant and to define so called stage rules in case that you like to route a message from one stage to another. Furthermore, different options to determine the stage are supported: via authorized user, via header passed to the pipeline steps or via configuration parameter in the Partner Directory.
+- The integration flow "Pipeline v2 Generic Step02 - Integrated Messaging Runtime Async" now ends with an error end event in case of misconfiguration or not supported configuration, before it ended with an Escalation end event.
+- The new features required major changes of the Groovy script "determinePartnerID" within the integration flows "Pipeline v2 Generic Step02 - Inbound Processing", "Pipeline v2 Generic Step02 - Integrated Messaging Runtime Async" and "Pipeline v2 Generic Step02 - Integrated Messaging Runtime Sync".
+- For supporting the stage rules, especially if duplicating the message to multiple receiver stages, the integration flows "Pipeline v2 Generic Step02 - Integrated Messaging Runtime Async" and "Pipeline v2 Generic Step04 - Receiver Determination" have been extended with another potential receiver split. This has been implemented for both cases, the default route for the Recipient List or Content-based Routing pattern and the Point-to-Point bypass option. Furthermore, a new Groovy script "mapSenderStageToReceiverStage" has been added.
+- For supporting the stage rules, the integration flow "Pipeline v2 Generic Step02 - Integrated Messaging Runtime Sync" has been extended to map from one stage to another. This has been implemented for both cases, the default route for the Content-based Routing pattern and the Point-to-Point bypass option. Furthermore, a new Groovy script "mapSenderStageToReceiverStage" has been added.
+
+16/12/2025 - 1.0.3
+- The definition of alternative partners has been extended to be able to determine partner ID based on sender component name, sender interface name, and sender interface namespace. This impacts the flows "Pipeline v2 Generic Step02 - Inbound Processing", "Pipeline v2 Generic Step02 - Integrated Messaging Runtime Async", and "Pipeline v2 Generic Step02 - Integrated Messaging Runtime Sync".
+- Fixed an issue with a wrong reference to a script in "Pipeline v2 Generic Step02 - Integrated Messaging Runtime Sync".
+
+19/11/2025 - 1.0.2
+- Fixed an issue in the integration flows "Pipeline v2 Generic Step02 - Inbound Processing" and "Pipeline v2 Generic Step02 - Integrated Messaging Runtime Async" in case that a partner ID could not be determined. Before, such errors went into an endless retry, now message is directly persisted in the dead letter queue.
+- Fixed and issue when using custom error handling for the integration flows "Pipeline v2 Generic Step02 - Integrated Messaging Runtime Async", "Pipeline v2 Generic Step04 - Receiver Determination", and "Pipeline v2 Generic Step05 - Interface Determination". In some situations, the payload sent to the custom error flow was empty. Now, it is ensured that the original payload at the generic integration flow inbound is forwarded to the custom error flow.
+- When saving non-XML payloads in an exchange property in the integration flow "Pipeline v2 Generic Step02 - Inbound Processing", the payload is encoded to avoid that payload gets corrupted when retrieving from the exchange property.
+
+29/10/2025 - 1.0.1
+- The audit log which is attached to the message processing log in case of message retry exceeded has been updated.
+- Support for sender and receiver parties has been improved.
+- When saving non-XML payloads in an exchange property, the payload is encoded to avoid that payload gets corrupted when retrieving from the exchange property.
+- Custom configuration scenario settings are supported to be able to run scenarios without the need of the Partner Directory.
+- The configuration options of receiver-specific queues has been enhanced to be more flexible in the definition of receiver-specific processing.
+- The configuration options of the inbound conversion has been enhanced to support sender-specific inbound conversion integration flows.
+
+04/08/2025 - 1.0.0
+- The package "Process Integration Pipeline - Generic Integration Flows and Templates" has been split up into multiple packages to be more flexible in setting up multiple pipelines, sender-specific IDoc and XI inbound flows, receiver-specific outbound flows.
+- For the same reason, the script collection has been replaced by local scripts.
+- Custom exits for pre-processing has been added with the options to call a custom flow across all scenarios or scenario-specific without the need to alter the standard flows provided.
+- All flow steps and adapters in the flows have been updated to their latest version.
+- For the pipeline related externalized parameters, descriptions have been added that provide you with more detailed information when configuring the flows.
+- Integration flows in version 1.0.1 contain the new features mentioned above.
+- "Pipeline v2 Generic Step02 - Inbound Processing" version 1.0.0 copied from soon to be deprecated package "Process Integration Pipeline - Generic Integration Flows and Templates".
+- "Pipeline v2 Generic Step02 - Integrated Messaging Runtime Async" version 1.0.0 copied from soon to be deprecated package "Process Integration Pipeline - Generic Integration Flows and Templates".
+- "Pipeline v2 Generic Step02 - Integrated Messaging Runtime Sync" version 1.0.0 copied from soon to be deprecated package "Process Integration Pipeline - Generic Integration Flows and Templates".
+- "Pipeline v2 Generic Step04 - Receiver Determination" version 1.0.0 copied from soon to be deprecated package "Process Integration Pipeline - Generic Integration Flows and Templates".
+- "Pipeline v2 Generic Step05 - Interface Determination" version 1.0.0 copied from soon to be deprecated package "Process Integration Pipeline - Generic Integration Flows and Templates".

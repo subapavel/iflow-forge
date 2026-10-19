@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><parameters><parameter>
+    <key/>
+    <name>PartnerDirectory_PID</name>
+    <type>xsd:string</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description>Define which PartnerID to configure in the Partner Directory</description>
+    <additionalMetadata/>
+  </parameter><parameter>
+    <key/>
+    <name>ValueMapping_Version</name>
+    <type>xsd:string</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description>The version of the Value Mapping where the exception classes are maintained for retry skipping configuration</description>
+    <additionalMetadata/>
+  </parameter><parameter>
+    <key/>
+    <name>ValueMapping_TechnicalID</name>
+    <type>xsd:string</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description>The technical ID of the Value Mapping where the exception classes are maintained for retry skipping configuration</description>
+    <additionalMetadata/>
+  </parameter><parameter>
+    <key/>
+    <name>API_Credential_Alias</name>
+    <type>xsd:string</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description>The alias of the Security Material with type OAuth2 Client Credentials where the api plan based service key for Process Integration Runtime is maintained to access the Value Mappings and Partner Directory</description>
+    <additionalMetadata/>
+  </parameter><parameter>
+    <key/>
+    <name>API_URL</name>
+    <type>xsd:string</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description>The URL from the api plan based service key for Process Integration Runtime is maintained to access the Value Mappings and Partner Directory</description>
+    <additionalMetadata/>
+  </parameter><param_references/></parameters>

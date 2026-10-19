@@ -1,0 +1,42 @@
+Change log for "Cloud Integration Pipeline - Generic Outbound"
+Date format: dd/mm/yyyy
+Version format: Major.Minor.Micro
+
+20/07/2026 - 1.0.5
+- Fixed a bug in the integration flow "Pipeline v2 Generic Step08 - Outbound Processing for XI" where the source message id of the id mapper could exceed the maximum length of 120 characters. Now, the source message id is concatenated based on the unique ID header and the receiver interface name cut off at 120 characters, and the context equals the receiver interface namespace cut off at 40 characters.
+
+07/07/2026 - 1.0.4
+- For the integration flows "Pipeline v2 Generic Step08 - Outbound Processing for XI" and "Pipeline v2 Generic Step08 - Outbound Processing for IDoc", the option maintaining the connection parameters in the Partner Directory has been enhanced. The parameters can be now maintained as string parameters of a partner ID representing a business system. Furthermore, some connection parameters can be also maintained as string parameters of a partner ID representing a configuration scenario. So far, this was only supported via string parameters in the corresponding business system alias.
+- For the "Pipeline v2 Generic Step06 - Outbound Processing" flow, the sender queue name has been added to the custom header attributes.
+- For the integration flow "Pipeline v2 Generic Step08 - Outbound Processing for XI", the delivery assurance settings to determine the XI Message ID have been revised to ensure that a proper Universally Unique Identifier (UUID) is passed to the receiver system. For this, the value of the UniqueID header is mapped to the header SapMessageIdEx and the XI adapter now uses Reuse instead of Map. Furthermore, in case of an XI to XI scenario, you have the option to pass the sender XI message ID from end-to-end.
+- For the integration flow "Pipeline v2 Generic Step08 - Outbound Processing for IDoc", the processing settings to determine a unique ID have been revised. For this, the value of the UniqueID header is mapped to the header SapMessageId and the IDoc adapter now uses Reuse instead of Map.
+- For the "Pipeline v2 Generic Step06 - Outbound Processing" flow, the retry behavior has been revised. For some errors where an automatic message retry would not make sense, the retry is skipped and the message is directly stored in the dead letter queue.
+- For the "Pipeline v2 Generic Step06 - Outbound Processing" flow, you have the option to measure and display the size of the original payload.
+
+02/03/2026 - 1.0.3
+- For the integration flow "Pipeline v2 Generic Step08 - Outbound Processing for XI", you can now override the headers SAP_Sender and SAP_Receiver from the default externalized parameters. For this, the Groovy script "readPDValuesForXI" has been extended. If the scenario-specific inbound processing flow passes empty header values to the generic XI outbound flow, the values of the externalized parameters are used.
+- The integration flow "Pipeline v2 Generic Step08 - Outbound Processing for XI" now supports dynamic XI headers. For this, a new Groovy script "createSapDynamicConfigurationFromHeaders" has been added. This script converts the headers passed from the scenario-specific inbound processing flow into exchange properties that the XI receiver adapter expects to add corresponding dynamic XI headers to the message sent out to the receiving system.
+- The integration flow "Pipeline v2 Generic Step08 - Outbound Processing for Idoc" has been enhanced to display the partner functions SNDPFC and RCVPFC in the custom header properties section of the message processing log in the message monitor. For this, the Groovy script "setIDocMonitoringProperties" has been enhanced.
+- The integration flow "Pipeline v2 Generic Step08 - Outbound Processing for Idoc" now fails if any mandatory control record field is empty or missing. This check has been implemented in the Groovy script "setIDocMonitoringProperties".
+
+19/11/2025 - 1.0.2
+- The integration flow "Pipeline v2 Generic Step08 - Outbound Processing for IDoc" has been enhanced to display all IDoc numbers in the message processing log in case of processing IDoc bulk messages.
+- Fixed a typo in the readPDValuesForXI.groovy script in the integration flow "Pipeline v2 Generic Step08 - Outbound Processing for XI".
+- When saving non-XML payloads in an exchange property in the integration flow "Pipeline v2 Generic Step06 - Outbound Processing", the payload is encoded to avoid that payload gets corrupted when retrieving from the exchange property.
+
+29/10/2025 - 1.0.1
+- The audit log which is attached to the message processing log in case of message retry exceeded has been updated.
+- Support for sender and receiver parties has been improved.
+- The configuration options of receiver-specific queues has been enhanced to be more flexible in the definition of receiver-specific processing.
+- For the name of the outbound processing queue, you can now define a prefix and a suffix which gives you more flexibility in defining receiver-specific outbound queues.
+- New integration flow "Pipeline v2 Generic Step08 - Outbound Processing for Idoc" has been added to handle IDoc outbound scenarios.
+- New integration flow "Pipeline v2 Generic Step08 - Outbound Processing for XI" has been added to handle XI outbound scenarios.
+
+04/08/2025 - 1.0.0
+- The package "Process Integration Pipeline - Generic Integration Flows and Templates" has been split up into multiple packages to be more flexible in setting up multiple pipelines, sender-specific IDoc and XI inbound flows, receiver-specific outbound flows.
+- For the same reason, the script collection has been replaced by local scripts.
+- Custom exits for pre-processing has been added with the options to call a custom flow across all scenarios or scenario-specific without the need to alter the standard flows provided.
+- All flow steps and adapters in the flow has been updated to their latest version.
+- For the pipeline related externalized parameters, descriptions have been added that provide you with more detailed information when configuring the flows.
+- "Pipeline v2 Generic Step06 - Outbound Processing" version 1.0.1 contains the new features mentioned above.
+- "Pipeline v2 Generic Step06 - Outbound Processing" version 1.0.0 copied from soon to be deprecated package "Process Integration Pipeline - Generic Integration Flows and Templates".
