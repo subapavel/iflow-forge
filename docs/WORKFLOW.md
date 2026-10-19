@@ -85,7 +85,7 @@ A content task's `Test first:` line reads `none — content task; kb-reviewer PA
 - Tags are not pushed from the cloud session; gates are recorded as commit hashes in
   `PROGRESS.md` and `HANDOVER.md`.
 
-## 4. Checks (no CI yet, D-011)
+## 4. Checks (CI since KB-02b, D-018)
 
 | Check | Command | Blocking |
 | --- | --- | --- |
@@ -94,8 +94,8 @@ A content task's `Test first:` line reads `none — content task; kb-reviewer PA
 | forbidden values | `-Dkb.forbidden=testdata/pipeline/forbidden-values.txt`, local only (the file is not in git) | yes locally, `ENVIRONMENT_BLOCKED` in the cloud |
 | CLI smoke | `java -jar po-xray-cli/target/po-xray-cli-*-runner.jar iflow knowledge/sources/<label>/generic-pipelines` | when the row names it |
 
-A GitHub Actions workflow running `mvn -B verify` on every push is a `chore(build)` row added
-when the first code task lands (KB-02); until then the verifier's log is the evidence.
+The GitHub Actions workflow `.github/workflows/verify.yml` runs `mvn -B -ntp verify` on every push (JDK 25,
+Temurin, Maven cache; KB-02b, D-018); the run on GitHub and the verifier's log are both evidence.
 
 ## 5. TDD and the review checklists
 

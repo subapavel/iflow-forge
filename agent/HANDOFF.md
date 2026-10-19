@@ -1,10 +1,10 @@
 # Handoff
 
-state: RUNNING — KB-02 and KB-01 done; KB-02b (CI workflow) written, review pending, commits next; then KB-03 (knowledge module, ready)
-last commit: kb: knowledge base skeleton and sap-is-pipeline skill wrapper (KB-01); before it f9b5373 feat(cpi) KB-02, 465c4ec bootstrap
+state: RUNNING — KB-02, KB-01, KB-02b done; next KB-03 (knowledge module, ready; acceptance spec drafted), then KB-04 (needs KB-01 + KB-03)
+last commit: chore(build): GitHub Actions verify workflow (KB-02b); before it a084eba kb skeleton (KB-01), f9b5373 feat(cpi) (KB-02), 465c4ec bootstrap
 branch: claude/eager-brown-uw61ft (D-017: the cloud session's designated branch; the owner fast-forwards main) — all commits pushed
-next exact action: commit KB-02b (.github/workflows/verify.yml, chore(build)) after reviewer PASS, push, record the GitHub run; then KB-03 from the drafted acceptance spec
-then: KB-03 (acceptance spec → test-author → implementer; module iflow-forge-knowledge); KB-04 needs KB-01 + KB-03
+next exact action: record the GitHub run of KB-02b (actions list via the GitHub tools) in KB-03's PROGRESS entry; KB-03: acceptance spec → test-author → packet → implementer
+then: KB-04 (Pass A generic iFlow pages, kb-author from the `iflow` dumps); KB-05, KB-06 follow
 reader: io.poxray.cpi per plan Task 2 + F-1 (Participant: endpoint, adapter properties); order D-016; ScriptCollection: 0 steps; propdef: no defaults (D-015)
 dump surface: `java -jar po-xray-cli/target/po-xray-cli-0.1.0-SNAPSHOT-runner.jar iflow <dir> [--json]` — reading surface for KB-04; JSON carries properties
 plan: docs/superpowers/plans/2026-10-19-pipeline-knowledge-base.md (changelog at top); spec: docs/superpowers/specs/2026-10-19-pipeline-knowledge-base-design.md
