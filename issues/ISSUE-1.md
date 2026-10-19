@@ -24,3 +24,7 @@ Nothing changed. The files are untouched; no KB task depends on them.
 Leave them as they are; the part-1 gate review records them as a known pre-existing deviation.
 
 ## Owner's answer
+2026-10-19, owner (in the session): option (a) — delete the three prototypes under `docs/prototype/` and port
+`tools/gen_bpm_builtin_functions.py` to a Java tool; then remove the Python file. Backlog row KB-13 added (code task, red
+test first); the generator's output check against the NWDS plugins directory runs locally with the owner (`NOT_RUN` in the
+cloud is accepted, as for KB-02's byte-identity check).

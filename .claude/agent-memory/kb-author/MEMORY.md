@@ -68,3 +68,12 @@ Durable facts only (build quirks, verified APIs, recurring findings). Never task
 - Error-flow callers: the same 8, Request Reply "Send to custom error flow" at `{{CustomXError_Endpoint}}`; only Step02 inbound/async, Step04, Step05, Step06 set incomingQueue; caller "End event?" tests only 'Completed'/'Escalated'.
 - Generic .iflw script steps carry an empty scriptBundleId; 8 templates Require-Capability the collection (p2p.to.idoc without a Script step).
 - Fast authoring: write with @XX@ shorthand ids and expand with a scratchpad sed file; verify step/adapter/parameter cites in bulk against TSVs built from the dump JSON.
+
+## Script pages (learned on KB-06 B1, 2026-06-trial)
+- Script steps per artifact: `jq -r '.id as $a | .steps | to_entries[] | select(.value.activityType=="Script") | "\($a)\t\(.key+1)\t\(.value.name)\t\(.value.properties.script)"'` over target/kb-04/*.json; the md dumps only list `- resource:` lines.
+- Enclosing local process of a script step: awk the .iflw (`<bpmn2:process name=` then `<value>X.groovy</value>`); names are XML-escaped (`&amp;`).
+- PD readers: all but readReceiverSpecificQueueFromPD throw IllegalStateException on missing service/partnerID; most write `?: null` (property set to null though comments say "not created"); readCustomInterfaceDetermination/readReceiverNotDetermined use the legacy logger (getAuditLog + setHeader auditLogHeader), same header as saveToMessage (PipelineLogger#L25/#L69/#L73).
+- All 8 readCustomXFromPD callers set CustomXType = CustomXPre in Enricher "Initialize pre-processing exit" (step 5; 2a 7; 2s 3; 4/5 6).
+- Header overrides customXInboundConversionEndpoint, customXRDEndpoint, CustomXPreEnabled/Endpoint are set nowhere in the label.
+- The collection has no .iflw: cite "not referenced" with `[collection, manifest "SAP-BundleType"]`.
+- Write pages with `~L<n>`/`~P<n>` + @id@ shorthand, expand per stem with sed; verify cites in bulk (line non-blank, step TSV, process name in .iflw).

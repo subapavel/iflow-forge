@@ -1,0 +1,39 @@
+# readBypassOptionFromPD
+
+## Purpose
+
+Reads the bypass option of a scenario from the Partner Directory: String parameter receiverDetermination names a fixed receiver, `interfaceDetermination_<receiver>` its outbound endpoint, and property bypassOption tells the caller to skip both determinations ('p2p') or only the receiver determination ('skipRcvDet') [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/readBypassOptionFromPD.groovy#L22] [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/readBypassOptionFromPD.groovy#L30] [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/readBypassOptionFromPD.groovy#L36].
+Script step "Read bypass option" in the main process of Step02 inbound, both Step02 integrated messaging runtimes and Step01 XI; each follows it with the router "Bypass option?" [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, step 38 "Bypass option?"] [com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async, step 44 "Bypass option?"] [com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync, step 30 "Bypass option?"] [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi, step 41 "Bypass option?"].
+
+## Inputs
+
+- Header partnerID: Partner ID of both lookups [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/readBypassOptionFromPD.groovy#L15].
+- Partner Directory String receiverDetermination of partnerID [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/readBypassOptionFromPD.groovy#L22].
+- Partner Directory String `interfaceDetermination_<receiverDetermination value>` of partnerID, read only when receiverDetermination is not null [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/readBypassOptionFromPD.groovy#L28] [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/readBypassOptionFromPD.groovy#L29] [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/readBypassOptionFromPD.groovy#L30]; its value becomes header SAP_OutboundProcessingEndpoint, the scenario outbound address `{{tenant.endpoint.outbound.scenario}}` [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/readBypassOptionFromPD.groovy#L33].
+
+## Outputs
+
+- Header SAP_ReceiverAlias = the receiverDetermination value, or null [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/readBypassOptionFromPD.groovy#L25].
+- Header SAP_OutboundProcessingEndpoint = the `interfaceDetermination_<receiver>` value, or null; set only when receiverDetermination is not null [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/readBypassOptionFromPD.groovy#L28] [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/readBypassOptionFromPD.groovy#L33].
+- Property bypassOption = 'p2p' when the endpoint exists, else 'skipRcvDet'; not set when receiverDetermination is missing [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/readBypassOptionFromPD.groovy#L28] [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/readBypassOptionFromPD.groovy#L36].
+- Header auditLogHeader: four entries through PipelineLogger [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/readBypassOptionFromPD.groovy#L41] [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/readBypassOptionFromPD.groovy#L47] [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/PipelineLogger.groovy#L25] [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/PipelineLogger.groovy#L69].
+- IllegalStateException "Partner Directory Service not found" [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/readBypassOptionFromPD.groovy#L10]; IllegalStateException "Partner ID not found in sent message" when partnerID is missing [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/readBypassOptionFromPD.groovy#L18].
+
+## Gotchas
+
+- Precedence: receiverDetermination first [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/readBypassOptionFromPD.groovy#L22], then `interfaceDetermination_<receiver>` [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/readBypassOptionFromPD.groovy#L30]; both come only from the Partner Directory, no header override is read [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/readBypassOptionFromPD.groovy#L14] [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/readBypassOptionFromPD.groovy#L22].
+- Header SAP_ReceiverAlias is always written, so a value set upstream is replaced by null when receiverDetermination is missing [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/readBypassOptionFromPD.groovy#L25].
+- L25 uses `?:` (an empty value counts as missing) but L28 tests `!= null`: an empty receiverDetermination sets SAP_ReceiverAlias to null and still looks up `interfaceDetermination_` with an empty suffix [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/readBypassOptionFromPD.groovy#L25] [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/readBypassOptionFromPD.groovy#L28] [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/readBypassOptionFromPD.groovy#L29].
+- `String id` is declared outside the branch and assigned only inside it [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/readBypassOptionFromPD.groovy#L16] [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/readBypassOptionFromPD.groovy#L29].
+- Log entries 3 and 4 use the key "readBypassOptionFromPDe" (typo in the artifact) [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/readBypassOptionFromPD.groovy#L44] [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/readBypassOptionFromPD.groovy#L45].
+- The `?: "n/a"` fallback is applied after `.toString()`, so a missing bypassOption is logged as "null", not "n/a" [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/readBypassOptionFromPD.groovy#L43].
+- Lines 50 to 61 are a commented-out older logger [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/readBypassOptionFromPD.groovy#L50].
+
+## Used by
+
+- `com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi`: [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi, step 40 "Read bypass option"].
+- `com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing`: [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, step 37 "Read bypass option"].
+- `com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async`: [com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async, step 43 "Read bypass option"].
+- `com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync`: [com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync, step 29 "Read bypass option"].
+
+Copies: byte-identical in 4 artifacts (`com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi`, `com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing`, `com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async`, `com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync`).

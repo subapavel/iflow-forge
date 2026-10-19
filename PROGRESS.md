@@ -61,7 +61,7 @@ Decisions: D-019 (Pass A fact base = kb.sources label; citation forms), D-020 (S
 Deviation: F-3 (open questions moved to open-questions/kb-04.md; pitfalls.md kept within budget; spec §6 edited). The ≤ 1,350-word aim was missed on the 99-step async page, limit respected
 Next: KB-05 (template pages), then KB-06 (script pages; clears the pom default kb.skip=coverage, F-2)
 
-## KB-05 · 2026-10-19 · (hash: the commit of batch B5 `kb: template pages custom exit, custom error handling, script collection (KB-05 B5)`; recorded in the next entry)
+## KB-05 · 2026-10-19 · 1731c25 (the commit of batch B5 `kb: template pages custom exit, custom error handling, script collection (KB-05 B5)`)
 Context compacted once during B1; re-read HANDOFF, `git status`, `git log -3` before continuing.
 Test first: content task (D-014) — acceptance = kb-reviewer PASS per batch + green knowledge module (headings, placeholders, names, budget on the real pages).
 Changed: knowledge/pipeline/templates/ (19 pages: 18 template iFlows + the script collection, from 2026-06-trial), open-questions/kb-05.md and kb-05-outbound.md, naming.md (+9 placeholders, 34), SKILL.md row and pitfalls.md pointer (F-3 ext), agent ledger, agent/NOTES.md, issues/ISSUE-1.md, .claude/agent-memory.
