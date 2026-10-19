@@ -1,0 +1,22 @@
+# Decisions
+
+One line each: id, date, decision, reason. Reversible decisions the architect makes during
+autonomous execution go here (WORKFLOW §6). Spec changes go to `docs/findings/` and the spec's
+changelog instead. Decisions marked `draft — review at hand-over` are listed in HANDOVER.md.
+
+| Id | Date | Decision | Reason |
+| --- | --- | --- | --- |
+| D-001 | 2026-10-19 | po-xray is extended in place into iflow-forge: same repository, multi-module Maven, one MCP server; repository `github.com/subapavel/iflow-forge`, private | the agent needs both sides (PO readers and the Integration Suite side) in one context; one server deploys simpler than two |
+| D-002 | 2026-10-19 | Way of working taken from `subapavel/flottila`: architect session on Fable 5.1 that delegates everything, agents in `.claude/agents/`, BACKLOG / HANDOFF / PROGRESS ledger, evidence vocabulary | owner's choice; proven on flottila |
+| D-003 | 2026-10-19 | `main` only, direct commits, no PRs; commit author = owner, `Co-Authored-By: Claude <model>` trailer, no DCO | private repository with one writer; PROGRESS.md is the review surface |
+| D-004 | 2026-10-19 | Everything in the repository is English; no Czech, no customer data; `testdata/` is the only place for both | the owner's rule; cloud sessions clone the repository |
+| D-005 | 2026-10-19 | Java only: all tooling as Maven modules with JUnit tests; no Python | the owner cannot read Python; the iFlow reader is the seed of part 3 and would otherwise be written twice |
+| D-006 | 2026-10-19 | Five parts in order 1 → 2 → 3 → 4 with 5 parallel to 4; the scenario specification is the spine; the agent never hand-writes iFlow BPMN XML; output is always an importable package | brainstorm with the owner; E.ON grants no API users, manual import must always work |
+| D-007 | 2026-10-19 | Knowledge base = Markdown under `knowledge/pipeline/`, skill wrapper `.claude/skills/sap-is-pipeline`; derived from `knowledge/sources/` with citations; `knowledge/inputs/en/` are drafts | spec §5–§7 |
+| D-008 | 2026-10-19 | Source labels are export dates: `2026-06-trial` (SAP trial tenant export), `2026-09-current` (tenant export scrubbed); a clean catalogue download replaces the latter when the owner provides it | both versions exist as artifacts (spec §13); packages carry individual versions |
+| D-009 | 2026-10-19 | Scrubbing rule: never `parameters.prop`, never `Configured_Custom_Tags.txt`, tenant suffix stripped from symbolic names, manifests and `.project`; `.gitattributes` stores sources byte-for-byte; `core.longpaths` on Windows | spec §12.3, §13.2 |
+| D-010 | 2026-10-19 | Models: architect Fable 5.1 high; test-author, implementer, kb-author, reviewer, kb-reviewer Opus 5.5 high; verifier Sonnet 5.5 low; scout Haiku 5.5 medium; gate-reviewer Fable 5.1; two agents at most, one writer | the plan carries the design; Fable where judgement is dearest |
+| D-011 | 2026-10-19 | No CI workflow at bootstrap; the verifier's log is the evidence; a GitHub Actions `mvn verify` workflow is a `chore(build)` row after KB-02 | nothing to run before the first code task |
+| D-012 | 2026-10-19 | No coverage or mutation floors in part 1; `mvn verify` green and `review: PASS` are the floor; floors are introduced by decision when part 4 starts | part 1 is mostly content; po-xray has no JaCoCo configured |
+| D-013 | 2026-10-19 | The owner interview foreseen in plan Task 11 step 1 (scenario attribute set) is replaced in autonomous execution by an architect decision marked `draft — review at hand-over` | never ask the owner during execution (WORKFLOW §8); the owner reviews at the gate |
+| D-014 | 2026-10-19 | Content tasks have no red test; acceptance = kb-reviewer `PASS` + green knowledge module; code tasks keep TDD | a page cannot be red-tested; the fact check against artifacts is the equivalent gate |

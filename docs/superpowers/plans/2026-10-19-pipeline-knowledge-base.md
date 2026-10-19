@@ -21,7 +21,7 @@
 - Loaded set (`SKILL.md` + `overview.md` + `contracts.md` + `scenario-contribution.md`) ≤ 5,000 words; any single page ≤ 1,500 words (spec §6, §12.8).
 - Checklists are decision tables keyed on scenario attributes (quality of service, sender type, mapping kind, receiver count), not one linear path (spec §12.8).
 - All tooling is Java inside the Maven modules with JUnit tests, in the style of the existing code (records, static readers, `io.poxray.json.Json` for JSON). Build: `mvn -q verify`; a single module: `mvn -q -pl <module> -am test`.
-- Commit after every task; commit only the files the task names (never `git add -A`; `testdata/` must stay untracked).
+- Commit after every task, direct to `main` (no branches, no PRs; `docs/WORKFLOW.md` §3): Conventional Commits with the message the task gives as the subject, trailer `Task: KB-nn`; commit only the files the task names (never `git add -A`; `testdata/` must stay untracked).
 - **Where tasks run:** Task 0 ran locally (it touched confidential folders) and is done. Tasks 1 to 13 run in Claude Code cloud sessions from the private GitHub repository `subapavel/iflow-forge`, so everything they need is committed: sources under `knowledge/sources/`, English inputs under `knowledge/inputs/en/`. Task 9 (tenant diff) is the one exception and runs locally. Cloud environment: JDK 25 and Maven 3.9 (setup script), network for Maven Central.
 - Version labels are export dates, not package versions (each package carries its own): `2026-06-trial` (older, SAP trial tenant export), `2026-09-current` (current, scrubbed tenant export, to be replaced by the clean catalogue download `2026-10-catalog` when Pavol provides it). Spec §13.
 
