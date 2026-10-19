@@ -10,7 +10,7 @@
 
 **Spec:** `docs/superpowers/specs/2026-10-19-pipeline-knowledge-base-design.md`
 
-**Changelog:** 2026-10-19 · F-1 · Task 2 `Participant` widened with `endpoint` and `properties` (the message-flow name alone does not identify the adapter; the dump is the reading surface for the pages). 2026-10-19 · D-016 · Task 2 step order covers local processes (inlined under the step whose `processId` names them) and event subprocesses (no incoming flow, `reached = true`). 2026-10-19 · D-015 · `parameters.propdef` carries no defaults; `Param.defaultValue` is the `<value>` child when present, else empty.
+**Changelog:** 2026-10-19 · F-1 · Task 2 `Participant` widened with `endpoint` and `properties` (the message-flow name alone does not identify the adapter; the dump is the reading surface for the pages). 2026-10-19 · D-016 · Task 2 step order covers local processes (inlined under the step whose `processId` names them) and event subprocesses (no incoming flow, `reached = true`). 2026-10-19 · D-015 · `parameters.propdef` carries no defaults; `Param.defaultValue` is the `<value>` child when present, else empty. 2026-10-19 · F-2 · Task 3 module pom defaults `kb.skip` to `coverage` until Task 6 clears it (the real-KB coverage check is red until the pages exist; `mvn verify` and CI must stay green); a relative `kb.forbidden` resolves against the repository root; Task 4 step 4 and Task 5 step 4 run coverage with `-Dkb.skip=`.
 
 ## Global Constraints
 
@@ -129,7 +129,7 @@
 ### Task 3: `iflow-forge-knowledge`: knowledge base checks as a Maven test module
 
 **Files:**
-- Create: `iflow-forge-knowledge/pom.xml` (packaging `jar`, no main sources, test dependencies `po-xray-core`, JUnit 5, AssertJ; surefire system properties `kb.root` = `${maven.multiModuleProjectDirectory}/knowledge`, `kb.sources` = `2026-06-trial`; `kb.skip` and `kb.forbidden` passed through from the command line)
+- Create: `iflow-forge-knowledge/pom.xml` (packaging `jar`, no main sources, test dependencies `po-xray-core`, JUnit 5, AssertJ; surefire system properties `kb.root` = `${maven.multiModuleProjectDirectory}/knowledge`, `kb.sources` = `2026-06-trial`; `kb.skip` and `kb.forbidden` passed through from the command line; `kb.skip` defaults to `coverage` until Task 6 clears it, F-2)
 - Create: `iflow-forge-knowledge/src/test/java/io/iflowforge/knowledge/KnowledgeBase.java` (paths, page loading, skip handling), `Checks.java` (the check functions), `ChecksTest.java` (unit tests on a synthetic knowledge base in a `@TempDir`), and one JUnit class per check run against the real `knowledge/`: `CoverageTest`, `HeadingsTest`, `PlaceholdersTest`, `NamesTest`, `BudgetTest`, `ForbiddenValuesTest`
 - Modify: `pom.xml` (root: add `<module>iflow-forge-knowledge</module>`)
 
@@ -165,7 +165,7 @@
 - [ ] **Step 1: Dump every generic iFlow.** `mvn -q package -DskipTests` once, then for each of the three generic packages `java -jar po-xray-cli/target/po-xray-cli-0.1.0-SNAPSHOT-runner.jar iflow knowledge/sources/<label>/<package> >> /tmp/dump-generic.md`.
 - [ ] **Step 2: Write each page** with the ten H2 headings from Task 3, in message-path order (inbound XI and IDoc first, then Step02 variants, Step04, Step05, Step06, Step08 XI and IDoc). Start from the matching page in `knowledge/inputs/en/confluence-2026-10/` as a draft, then check every statement against the dump and the scripts, keep it only with a citation, and note in `pitfalls.md` where the draft and the artifact disagree. Under *Steps*: numbered list, one line per step `n. <activity type> "<name>": what it does [cite]`, subprocess steps indented. Under *Headers and properties*: two tables, `Set` (name, value or source, step) and `Read` (name, step, used for). Under *Partner directory*: every PD lookup (key pattern, value type, what happens when missing). Under *Externalized parameters*: name, default from `.propdef`, meaning, placeholder `{{tenant.<path>}}` if tenant-specific. *Extension points*: steps SAP visibly intends for customization (named "Custom", exit routers, ProcessDirect calls to configurable endpoints) plus "none found" if none. *Version notes*: empty until Task 10. ≤ 1,500 words each.
 - [ ] **Step 3: Check after every three pages.** `mvn -q -pl iflow-forge-knowledge -am test -Dkb.skip=coverage` → Expected: BUILD SUCCESS. Commit each batch: `git add knowledge/pipeline/iflows knowledge/pipeline/pitfalls.md` then `KB: generic iFlow pages <ids>`.
-- [ ] **Step 4: Coverage for generic.** Run without `-Dkb.skip`; expected failures mention only `templates/` and `scripts/`.
+- [ ] **Step 4: Coverage for generic.** Run with `-Dkb.skip=` (empty, overriding the pom default of F-2); expected failures mention only `templates/` and `scripts/`.
 
 ---
 
@@ -180,7 +180,7 @@
 - [ ] **Step 1: Dump templates:** `java -jar ... iflow knowledge/sources/<label>/templates > /tmp/dump-templates.md`.
 - [ ] **Step 2: Write each page** with the same ten headings. Additionally, under *Purpose*, one sentence "A scenario copies this template when: <condition on scenario attributes>", and under *Externalized parameters* mark which parameters the scenario author must set (bold) versus leave (plain). Drafts: the one-page template entries in `knowledge/inputs/en/confluence-2026-10/step0*.md` and `templates.md`.
 - [ ] **Step 3: Check and commit** as in Task 4; commit `KB: template pages`.
-- [ ] **Step 4: Coverage:** run without `-Dkb.skip`; expected failures mention only `scripts/`.
+- [ ] **Step 4: Coverage:** run with `-Dkb.skip=` (empty, overriding the pom default of F-2); expected failures mention only `scripts/`.
 
 ---
 

@@ -71,3 +71,21 @@ Facts only; the next exact action and the state live in `agent/HANDOFF.md`.
   to be checked against the owner's forbidden list (rename to `.TENANT` if it hits). A PROGRESS heading takes its commit hash from the following task's commit.
 - KB-01 follow-up for Task 11: `knowledge/pipeline/SKILL.md` says "load nothing else"; spec §6 loads SKILL + overview +
   contracts + scenario-contribution together — fix the wording when SKILL.md is rewritten (kb-reviewer remark).
+
+## Knowledge module (KB-03)
+
+- `iflow-forge-knowledge` has no `src/main`; `Checks` and `KnowledgeBase` live in `src/test/java/io/iflowforge/knowledge/`.
+  Run: `mvn -B -ntp -q -pl iflow-forge-knowledge -am test [-Dkb.skip=a,b] [-Dkb.forbidden=<file>]`.
+- `kb.skip` defaults to `coverage` in the module pom (F-2) until KB-06 clears it; `-Dkb.skip=` (empty) runs every check,
+  so the 74 missing pages can be listed any time. `kb.root` = `<repo>/knowledge`, `kb.sources` = `2026-06-trial`.
+- `ForbiddenValuesTest` skips unless `-Dkb.forbidden` names an existing file; a relative value resolves against the
+  repository root. The owner's file stays under `testdata/` (gitignored). Messages never contain the value.
+- Synthetic sources for checks tests: `io.poxray.cpi.SyntheticArtifact` (public bridge to the package-private
+  `IFlowFixture` of the po-xray-core test-jar), one Script step plus the given resources.
+- Follow-ups: coverage treats a `generic-*` package by folder prefix and `templates` by exact name; a new package kind
+  needs a rule. Headings also reports `unexpected "X" at position N` for extra H2s (beyond the spec, kept).
+- Reviewer remarks (KB-03, not blocking): without a `.mvn` folder `maven.multiModuleProjectDirectory` is where mvn starts, so
+  from the module folder the real-KB tests see an empty KB and pass (add an assume on `Files.isDirectory(pipeline())`);
+  C6 scans contents only — a value in a file name is not found and a hit in such a file would leak it through the path
+  (spec-level question, open); the coverage message `artifact without id in package <folder>` is untested; limits are
+  tested at 1501 / 5200 only; `io.poxray.cpi.SyntheticArtifact` splits the package across modules (classpath only).

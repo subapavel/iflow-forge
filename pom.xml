@@ -17,6 +17,7 @@
         <module>po-xray-native</module>
         <module>po-xray-cli</module>
         <module>po-xray-mcp</module>
+        <module>iflow-forge-knowledge</module>
     </modules>
 
     <properties>

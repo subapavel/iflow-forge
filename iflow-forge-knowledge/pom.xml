@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>io.poxray</groupId>
+        <artifactId>po-xray-parent</artifactId>
+        <version>0.1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>iflow-forge-knowledge</artifactId>
+    <packaging>jar</packaging>
+    <name>iflow-forge knowledge checks</name>
+    <description>Consistency checks of the pipeline knowledge base (knowledge/pipeline), run as tests</description>
+
+    <properties>
+        <!-- Passed through from the command line; empty = unset (KnowledgeBase treats a blank value as unset). -->
+        <!-- F-2: the real-KB coverage check is red until the pages of KB-04..KB-06 exist; KB-06 clears this default.
+             `-Dkb.skip=` (empty) runs every check. -->
+        <kb.skip>coverage</kb.skip>
+        <kb.forbidden></kb.forbidden>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.poxray</groupId>
+            <artifactId>po-xray-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.poxray</groupId>
+            <artifactId>po-xray-core</artifactId>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <systemPropertyVariables combine.children="append">
+                        <kb.root>${maven.multiModuleProjectDirectory}/knowledge</kb.root>
+                        <kb.sources>2026-06-trial</kb.sources>
+                        <kb.skip>${kb.skip}</kb.skip>
+                        <kb.forbidden>${kb.forbidden}</kb.forbidden>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

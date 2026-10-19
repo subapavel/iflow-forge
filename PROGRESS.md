@@ -32,7 +32,7 @@ Decisions: none
 Deviation: none
 Next: KB-02b (commit of the CI workflow after its review), then KB-03
 
-## KB-02b · 2026-10-19 · (hash: the commit `chore(build): GitHub Actions verify workflow`; recorded in the next entry)
+## KB-02b · 2026-10-19 · f627a21
 Test first: none — a workflow file has no red test; acceptance = the run observed green on GitHub for this commit (recorded in the next entry) plus reviewer PASS
 Changed: .github/workflows/verify.yml (new), docs/WORKFLOW.md §4 (CI wording), docs/DECISIONS.md (D-018), agent ledger
 Checks: mvn verify VERIFIED_PASS (target/kb-02b-verify.log, exit 0, implementer) · YAML load VERIFIED_PASS (ruby -ryaml) · GitHub run NOT_RUN at commit time (triggered by this push; result in the next entry) · action versions checkout@v7 / setup-java@v6 taken from the actions' main README (Context7 unreachable; fallback v4/v5 if the run cannot resolve them)
@@ -40,3 +40,13 @@ Review: PASS (reviewer; remarks: D-011/WORKFLOW §4 wording updated in this comm
 Decisions: D-018 (CI exists; supersedes D-011)
 Deviation: none
 Next: KB-03 (knowledge module)
+
+## KB-03 · 2026-10-19 · (hash: the commit `test(knowledge): consistency checks as a test module`; recorded in the next entry)
+Context compacted during this task (before the test-author's hand-back); HANDOFF re-read, git status and log re-verified.
+Test first: ChecksTest (12: coverageReportsMissingPages, coveragePassesWhenEveryPageExists, headingsOrderMatters, headingsAcceptTheExactContract, placeholdersReportsMissingAndExtra, placeholdersPassWhenSetsMatch, namesReportsUnknownScript, budgetSkipsStubs, forbiddenValueFound, skipIfRequestedAbortsOnlyTheNamedChecks, forbiddenFileIsPresentOnlyWhenThePropertyIsSet, forbiddenFileResolvesRelativeValuesAgainstTheRepositoryRoot — the last added in review round 1, green on first run against the existing code), real-KB classes CoverageTest, HeadingsTest, PlaceholdersTest, NamesTest, BudgetTest, ForbiddenValuesTest; red observed as compile errors (target/kb-03-red.log)
+Changed: iflow-forge-knowledge (new module: pom.xml, src/test io.iflowforge.knowledge Checks, KnowledgeBase, tests; io.poxray.cpi.SyntheticArtifact bridge), root pom.xml (module), docs/findings/F-2.md, plan (changelog, Task 3/4/5), BACKLOG (KB-06), NOTES, HANDOFF, .claude/agent-memory
+Checks: mvn verify VERIFIED_PASS (target/kb-03-v-verify.log; knowledge module ChecksTest 12/0, CoverageTest and ForbiddenValuesTest skipped) · `-Dkb.skip=coverage,headings` VERIFIED_PASS (target/kb-03-v-skip.log) · `-Dkb.skip=` EXECUTED_FAIL as intended (target/kb-03-noskip.log, CoverageTest: 74 missing pages = 10 iflows, 19 templates, 45 scripts) · relative `-Dkb.forbidden` VERIFIED_PASS (target/kb-03-forbidden.log, 1 run 0 skipped) · KB-02b GitHub run 39293209159 VERIFIED_PASS (conclusion success on f627a21, 2026-10-19T17:21Z)
+Review: PASS (round 2; round 1 FAIL: missing test for the relative kb.forbidden path, two evidence runs not shown, plan Task 4/5 steps stale — all fixed)
+Decisions: none new (checks semantics C1–C6 as the acceptance spec in the architect's scratchpad; D-018 unchanged)
+Deviation: F-2 (coverage check red until KB-06: module pom defaults `kb.skip=coverage`, KB-06 clears it; relative `kb.forbidden` resolves against the repo root; plan Task 3/4/5 and BACKLOG KB-06 edited)
+Next: KB-04 (Pass A generic iFlow pages)
