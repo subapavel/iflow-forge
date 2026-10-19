@@ -77,3 +77,11 @@ Durable facts only (build quirks, verified APIs, recurring findings). Never task
 - Header overrides customXInboundConversionEndpoint, customXRDEndpoint, CustomXPreEnabled/Endpoint are set nowhere in the label.
 - The collection has no .iflw: cite "not referenced" with `[collection, manifest "SAP-BundleType"]`.
 - Write pages with `~L<n>`/`~P<n>` + @id@ shorthand, expand per stem with sed; verify cites in bulk (line non-blank, step TSV, process name in .iflw).
+
+## IDoc scripts (learned on KB-06 B2, 2026-06-trial)
+- Canonical copy for stems in neither collection nor Step02 inbound: first id of the alphabetically sorted *Used by* list (step01.idoc < step01.xi < step08).
+- Many IDoc scripts lack a trailing newline: `cat` of several files glues lines; number each file separately (`awk '{print NR": "$0}'`, tab-indented lines break `cut -f`).
+- Step08 IDoc: setEdidcFromParamsForIDoc sets properties Receiver_IDoc* (router "Content Type?" step 29 reads them); validation steps 8/12 force header SAP_Receiver_IDocContentType. Text/XML path 30 -> 42 -> 43, X-SAP.IDOC 45 -> 43 (no node list).
+- determinePartnerIDForIDocInbound: HeaderStateTracker rollback covers only tracker.setHeader; step-4 writes use message.setHeader. 1,065 tokens with precedence as nested ordered list.
+- Adapter cite form for JMS receivers: `[<id>, adapter "JMS" "<participant>"]`.
+- Review B2 lessons: check that a rollback/restore claim matches what the tracker actually stores (for an IDoc sender, SAP_Sender and SAP_SenderAlias are tracked); cross-reference the page's own list numbers, not the code-comment numbers; a ProcessCallElement name is not the local process name (cite `process "<name>"`); before writing "not in the artifact", follow the flow to the next step (Step08 step 44 addCustomHeaderProperties turns customHeader_* into MPL headers); write Groovy runtime effects (null concatenation, GPath truth, .text() on lists) as what the line does, not as a result.
