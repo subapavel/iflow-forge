@@ -61,3 +61,10 @@ Durable facts only (build quirks, verified APIs, recurring findings). Never task
 - moar step 6 "Call Exception Handling" has an empty processId (SAP bug): the dump then inlines the exception process under the next call with a processId (step 11).
 - Idempotency key there is property SplitMessageID (`${header.UniqueID}_..`), not header UniqueID.
 - Verify step cites in bulk: awk the dump section per id and grep `^ *[n.] Type "name"$` (count must be 1 when no step number).
+
+## Custom exit, error handling, collection (learned on KB-05 B5, 2026-06-trial)
+- The dump JSON is a stream of objects: `jq 'select(.id==...)'`, never `.[]`.
+- Exit callers: the 8 generic iFlows except Step08 ("Call custom exit": CustomXScenario `${property.CustomXEndpoint}`, CustomXGlobal; customXPipelineStep from readCustomXFromPD.groovy#L29, byte-identical in all 8) and the 7 Step07 templates ('07', CustomExit). No caller sends '03'.
+- Error-flow callers: the same 8, Request Reply "Send to custom error flow" at `{{CustomXError_Endpoint}}`; only Step02 inbound/async, Step04, Step05, Step06 set incomingQueue; caller "End event?" tests only 'Completed'/'Escalated'.
+- Generic .iflw script steps carry an empty scriptBundleId; 8 templates Require-Capability the collection (p2p.to.idoc without a Script step).
+- Fast authoring: write with @XX@ shorthand ids and expand with a scratchpad sed file; verify step/adapter/parameter cites in bulk against TSVs built from the dump JSON.

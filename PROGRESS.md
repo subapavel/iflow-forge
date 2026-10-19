@@ -60,3 +60,16 @@ Review: PASS (kb-reviewer, per batch; recurring findings recorded in .claude/age
 Decisions: D-019 (Pass A fact base = kb.sources label; citation forms), D-020 (Steps lines self-cited; pages ≤ 1,500 words without splitting)
 Deviation: F-3 (open questions moved to open-questions/kb-04.md; pitfalls.md kept within budget; spec §6 edited). The ≤ 1,350-word aim was missed on the 99-step async page, limit respected
 Next: KB-05 (template pages), then KB-06 (script pages; clears the pom default kb.skip=coverage, F-2)
+
+## KB-05 · 2026-10-19 · (hash: the commit of batch B5 `kb: template pages custom exit, custom error handling, script collection (KB-05 B5)`; recorded in the next entry)
+Context compacted once during B1; re-read HANDOFF, `git status`, `git log -3` before continuing.
+Test first: content task (D-014) — acceptance = kb-reviewer PASS per batch + green knowledge module (headings, placeholders, names, budget on the real pages).
+Changed: knowledge/pipeline/templates/ (19 pages: 18 template iFlows + the script collection, from 2026-06-trial), open-questions/kb-05.md and kb-05-outbound.md, naming.md (+9 placeholders, 34), SKILL.md row and pitfalls.md pointer (F-3 ext), agent ledger, agent/NOTES.md, issues/ISSUE-1.md, .claude/agent-memory.
+Batches: B1 7dabf99 (step01 eo, alo, sync, step03; round 1 FAIL 2 + 4 minor → PASS), B2 0e659e2 (step04 ×4, step05; FAIL 3 + 3, FAIL 1, PASS), B3 876f706 (step07 p2p, p2p.to.idoc, p2p.to.xi, sync; FAIL 2 + 5 → PASS), B4 04422e7 (step07 o2mo, o2mm, moar; FAIL 3 + 2 → PASS), B5 (custom exit, custom error handling, script collection; FAIL 3 + 4 → PASS).
+Checks: mvn verify VERIFIED_PASS per batch (target/kb-05-b<n>-verify.log; knowledge module 18 run, 0 fail) · coverage run with -Dkb.skip= EXECUTED_FAIL as intended, after B5 only the 45 scripts/ pages missing (target/kb-05-b5-coverage.log) · pages 700–1,469 words · customer-data and shortened-cite greps empty · GitHub Actions: B1 39317116137, B2 39321394110, B3 39325107963, B4 39327875094 all success; B5 run recorded in the next entry.
+Review: PASS (kb-reviewer, per batch; rounds in the commit bodies).
+Decisions: D-019 amended (B2) with the `[<id>, process "<name>"]` citation form; value mapping and Partner Directory upload helper exist only in 2026-09-current and get pages after KB-00a (D-019 label scope).
+Deviation: F-3 extended (B3): a task's open questions may split per batch group as `open-questions/<task>[-<group>].md`; spec §6 layout line, SKILL.md row, pitfalls.md pointer updated.
+Issues: ISSUE-1 (four tracked .py files from 2026-10-09 pre-date the Java-only rule; owner decision, nothing blocked).
+Reader follow-ups (agent/NOTES.md): IdempotentProcessCall local process not inlined by the dump; a repeated local process inlined under its first call only; the known `[Fatal Error] :1:9` stderr line.
+Next: KB-06 (45 script pages in five batches; the implementer clears the pom default kb.skip=coverage, F-2, after the last batch).
