@@ -1,19 +1,20 @@
 # Handoff
 
-state: RUNNING — KB-03 done (6138223); KB-04 in progress: B1 25f362c, B2 committed (3 pages each); B3 (step05, step06, step08 idoc, step08 xi) with the kb-author
-last commit: test(knowledge): consistency checks as a test module (KB-03); before it f627a21 CI workflow (KB-02b), a084eba KB-01, f9b5373 KB-02
-branch: claude/eager-brown-uw61ft (D-017: the cloud session's designated branch; the owner fast-forwards main) — all commits pushed; CI green on f627a21
-next exact action: KB-04 packet: scratchpad kb-04/page-packet.md (B1–B3); per batch kb-author → kb-reviewer PASS → commit `kb: generic iFlow pages <ids>`
-then: KB-05 (template pages), KB-06 (script pages; clears the pom default `kb.skip=coverage`, F-2); KB-07 adds Checks.contractNames
-checks: `mvn -B -ntp -q -pl iflow-forge-knowledge -am test [-Dkb.skip=] [-Dkb.forbidden=<file>]`; `-Dkb.skip=` lists the 74 missing pages (10/19/45)
-reader: io.poxray.cpi per plan Task 2 + F-1 (Participant: endpoint, adapter properties); order D-016; ScriptCollection: 0 steps; propdef: no defaults (D-015)
-dump surface: `java -jar po-xray-cli/target/po-xray-cli-0.1.0-SNAPSHOT-runner.jar iflow <dir> [--json]` — reading surface for KB-04; JSON carries properties
-plan: docs/superpowers/plans/2026-10-19-pipeline-knowledge-base.md (changelog: F-1, D-016, D-015, F-2); spec: docs/superpowers/specs/ (same date, -design.md)
-sources: knowledge/sources/2026-06-trial (29 artifacts, 28 with an .iflw) and 2026-09-current (32); INDEX.md + CHANGELOG.txt per package; never parameters.prop
+state: RUNNING — KB-04 done (B1 25f362c, B2 67862af, B3 (hash in the next entry)); next KB-05 (19 template pages, content, ready; packet drafted), then KB-06
+last commit: kb: generic iFlow pages step05, step06, step08 idoc/xi (KB-04 B3); before it 67862af B2, 25f362c B1, 6138223 KB-03
+branch: claude/eager-brown-uw61ft (D-017: the cloud session's designated branch; the owner fast-forwards main) — all commits pushed; CI green through B2
+next exact action: KB-05 B1 (step01 eo, alo, sync, step03): packet in scratchpad kb-05/page-packet.md; kb-author → kb-reviewer PASS → commit
+then: KB-05 B2–B5 (step04 ×4 + step05; step07 ×4; step07 ×3; custom exit, custom error, script collection); KB-06 clears pom kb.skip=coverage (F-2)
+pages: ten-heading contract, D-019 citation forms, D-020 self-cited Steps lines, ≤ 1,500 words (aim 1,350); open questions → open-questions/<task>.md (F-3)
+reader: io.poxray.cpi per plan Task 2 + F-1; order D-016; ScriptCollection: 0 steps; propdef: no defaults (D-015); iFlow-level ifl:property not exposed
+reader: io.poxray.cpi per plan Task 2 + F-1; order D-016; ScriptCollection: 0 steps; propdef: no defaults (D-015); iFlow-level ifl:property not exposed (NOTES)
+plan: docs/superpowers/plans/2026-10-19-pipeline-knowledge-base.md (changelog F-1, D-016, D-015, F-2); spec: same date -design.md (changelog F-3)
+sources: knowledge/sources/2026-06-trial (29 artifacts; fact base, D-019) and 2026-09-current (32; value mapping + upload helper only there, after KB-00a)
+sources: knowledge/sources/2026-06-trial (29 artifacts; fact base, D-019) and 2026-09-current (32; value mapping + upload helper only there, pages after KB-00a)
 owner inputs pending: KB-00a clean catalogue download, KB-00b benchmark questions (rows carry `owner`; write an ISSUE if a task needs them)
 local-only: KB-09 (tenant diff), the unpack byte-identity check of KB-02, ForbiddenValuesTest (-Dkb.forbidden) need testdata/; NOT_RUN in the cloud
-open issues: none; follow-ups in agent/NOTES.md ("Build and environment", "Knowledge module")
-decisions pending review at hand-over: D-016 (step order rule, public io.poxray.cpi records), F-1 (Participant shape)
+open issues: none; follow-ups in agent/NOTES.md ("Build and environment", "Knowledge module"); reviewer memories in .claude/agent-memory/
+decisions pending review at hand-over: D-016 (step order rule), F-1 (Participant shape), D-019 (fact base label), D-020 (self-cited Steps lines)
 roles: architect only; test-author, implementer, kb-author, reviewer, kb-reviewer on Opus 5.5; verifier Sonnet 5.5; scout Haiku 5.5; gate-reviewer Fable 5.1
 build: `mvn -B -ntp -q verify > target/<task>-verify.log 2>&1`; JDK 25, Maven 3.9; counts in <module>/target/surefire-reports; CI: .github/workflows/verify.yml
 notes: agent/NOTES.md (sources, iFlow format, inputs, build and reader follow-ups, knowledge module); PROGRESS headings take the hash from the next entry

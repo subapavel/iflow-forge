@@ -7,3 +7,5 @@ Durable facts only (build quirks, verified APIs, recurring findings). Never task
 - KB-04 B2: (3) a lookup-precedence summary on a page is often compressed out of order against the script (stage rules →
   exact stage → tenant rules → exception in mapSenderStageToReceiverStage.groovy); check the if-order line by line;
   (4) a cross-iFlow "X calls Y" claim must name the route (gateway branch) on which the call happens.
+- KB-04 B3: (5) a claim about several iFlows needs a cite per iFlow, one shared cite covers only its own artifact;
+  (6) same-named Content Modifiers on different paths (custom-error vs DLQ): check which path the cited step is on.

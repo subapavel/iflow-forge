@@ -22,3 +22,11 @@ Durable facts only (build quirks, verified APIs, recurring findings). Never task
 
 ## Budget (cont.)
 - Bare step lines cost ~5 tokens each (99 steps = 495); a table row costs 5 pipe tokens plus cells. 1,350 is out of reach above ~90 steps; group script rows and point to "Partner directory" instead of repeating cites.
+
+## Generic outbound (learned on Step05, Step06, Step08 IDoc/XI, 2026-06-trial)
+- Step08 message-flow names are the channel names (CC_IDOC_Receiver_OnPremBasic, CC_XI_Receiver_InternetNone, CC_ProcessDirect_Sender); endpoints repeat (OnPremise, Internet), so cite by flow name. Step08 XI and Step05/06 receivers hang on end events, Step08 IDoc on ExternalCall steps.
+- `checkWellFormedXML.groovy` sets a property in Step08 but a header in Step04-06 (different md5); verify per flow.
+- Step06's .iflw is named PIP_02_Generic_InboundProcessing.iflw; its retry gateway is `SAPJMSRetries = maxJMSRetries or maxJMSRetries = '0'` (Step04/05 use `>` in the main flow).
+- Step08 entry parameters: ProcessDirect_Address (IDoc) vs ProcessDirect_EndPoint (XI); templates call {{GenericIDocEndpoint}} / {{GenericXIEndpoint}}.
+- BudgetTest applies to every *.md. Since F-3, open questions go to open-questions/<task>.md (one page per content task, <= 1,500 words), not pitfalls.md; kb-04.md was 1,460 words.
+- Fast routing read: a scratchpad awk script over the .iflw (sequenceFlow sourceRef/targetRef/name + conditionExpression, messageFlow source -> participant) with dump step ids mapped to numbers (`jq '.steps|to_entries[]|"\(.value.id) \(.key+1)"'`).

@@ -50,3 +50,13 @@ Review: PASS (round 2; round 1 FAIL: missing test for the relative kb.forbidden 
 Decisions: none new (checks semantics C1–C6 as the acceptance spec in the architect's scratchpad; D-018 unchanged)
 Deviation: F-2 (coverage check red until KB-06: module pom defaults `kb.skip=coverage`, KB-06 clears it; relative `kb.forbidden` resolves against the repo root; plan Task 3/4/5 and BACKLOG KB-06 edited)
 Next: KB-04 (Pass A generic iFlow pages)
+
+## KB-04 · 2026-10-19 · (hash: the commit `kb: generic iFlow pages step05, step06, step08 idoc, step08 xi (KB-04 B3)`; recorded in the next entry)
+Test first: content task (D-014) — acceptance = kb-reviewer PASS per batch + green knowledge module (HeadingsTest, PlaceholdersTest, NamesTest, BudgetTest on the real pages)
+Changed: knowledge/pipeline/iflows/ (10 pages, one per generic iFlow of 2026-06-trial), naming.md (placeholders section, 25 tokens), open-questions/kb-04.md (32 bullets, F-3), pitfalls.md (pointer), docs/DECISIONS.md (D-019 fact base and citation forms, D-020 self-cited Steps lines), agent/NOTES.md (reader follow-up: iFlow-level properties), agent ledger, .claude/agent-memory
+Batches: B1 25f362c (step01 xi, step01 idoc, step02 inbound; review round 1 FAIL 11 findings → round 2 PASS), B2 67862af (step02 async, step02 sync, step04; round 1 FAIL 2 defects → round 2 PASS), B3 (step05, step06, step08 idoc, step08 xi; round 1 FAIL 5 citation findings → round 2 PASS; hash in the next entry)
+Checks: mvn verify VERIFIED_PASS per batch (target/kb-04-b{1,2,3}-verify.log) · coverage run with -Dkb.skip= EXECUTED_FAIL as intended with 0 iflows pages missing after B3 (target/kb-04-b3-coverage.log; templates/ and scripts/ remain for KB-05/KB-06) · pages 1077–1481 words, all ≤ 1,500 · customer-data grep over the pages empty · GitHub Actions: B1 run 39304922469 success, B2 run 39309826894 success, B3 run recorded in the next entry
+Review: PASS (kb-reviewer, per batch; recurring findings recorded in .claude/agent-memory/kb-reviewer/MEMORY.md)
+Decisions: D-019 (Pass A fact base = kb.sources label; citation forms), D-020 (Steps lines self-cited; pages ≤ 1,500 words without splitting)
+Deviation: F-3 (open questions moved to open-questions/kb-04.md; pitfalls.md kept within budget; spec §6 edited). The ≤ 1,350-word aim was missed on the 99-step async page, limit respected
+Next: KB-05 (template pages), then KB-06 (script pages; clears the pom default kb.skip=coverage, F-2)

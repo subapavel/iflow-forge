@@ -2,6 +2,8 @@
 
 Design, 2026-10-19. Status: reviewed, open questions answered, awaiting Pavol's approval.
 
+**Changelog:** 2026-10-19 · F-3 · §6 layout gains `open-questions/<task>.md` (uncited draft claims per content task, triaged in pass B); `pitfalls.md` keeps lessons learned and contradictions and points to the folder — one page could not hold the open questions within the 1,500-word budget.
+
 ## 1. Where this sits
 
 po-xray is being extended into **iflow-forge**: a tool that produces SAP Integration Suite iFlows built on the
@@ -147,6 +149,7 @@ knowledge/
       README.md                 # which SAP version is current, what each version folder holds
       <version>/changelog.md    # diff to the previous version: iFlows added/removed/changed, contract changes
     pitfalls.md                 # lessons learned, contradictions found, things SAP does not document
+    open-questions/<task>.md    # uncited draft claims per content task (F-3), triaged in pass B
     glossary.md
   sources/                      # unpacked SAP packages per version (see §10 for git status)
     <version>/
