@@ -85,3 +85,15 @@ Durable facts only (build quirks, verified APIs, recurring findings). Never task
 - determinePartnerIDForIDocInbound: HeaderStateTracker rollback covers only tracker.setHeader; step-4 writes use message.setHeader. 1,065 tokens with precedence as nested ordered list.
 - Adapter cite form for JMS receivers: `[<id>, adapter "JMS" "<participant>"]`.
 - Review B2 lessons: check that a rollback/restore claim matches what the tracker actually stores (for an IDoc sender, SAP_Sender and SAP_SenderAlias are tracked); cross-reference the page's own list numbers, not the code-comment numbers; a ProcessCallElement name is not the local process name (cite `process "<name>"`); before writing "not in the artifact", follow the flow to the next step (Step08 step 44 addCustomHeaderProperties turns customHeader_* into MPL headers); write Groovy runtime effects (null concatenation, GPath truth, .text() on lists) as what the line does, not as a result.
+
+## XI and mapping scripts (learned on KB-06 B3, 2026-06-trial)
+- mapSenderStageToReceiverStage.groovy has CRLF endings and no final newline: `wc -l` says 300, awk 301; strip `\r` before the non-blank check.
+- `SapDynamicConfiguration_` occurs only in the two dc scripts (L5); dc(.*) is in the allowedHeaderList of Step02-05; Step08 XI uses {{AllowedHeadersList}} (no propdef default) and deletes `dc_*` in step 10.
+- Step08 XI order: 1 dc props, 2 defaults (location XIGenericOutbound), 4 "XML?" (non-XML skips step 5 root XPath), 6 readPDValuesForXI, 7 setValuesForXI, 8 custom headers, 11 "Location & Auth?".
+- Virtual-stage path: router "Virtual Stage Routing?" (`tenantStageVirtual = 'true'`) -> "Map to Receiver Stage" -> "Multiple Stages?" (async, Step04 only; sync goes straight to "Map to Business Name").
+- All B3 script steps sit in the main process; Step02 async/sync/Step04 main process names are long ("Integration Process - ..."): copy them from the .iflw.
+- Cite forms that passed earlier: `[<id>, property "allowedHeaderList"]`, `[<id>, parameter "<name>"]`, `[<id>, manifest "Require-Capability"]` for templates using the collection.
+- Write "throws no exception of its own" rather than "no exception leaves the script".
+- CHANGELOG cite form (D-019 amended): `[<package-folder>/CHANGELOG.txt#L<n>]` (generic-inbound, generic-outbound, generic-pipelines, templates). Read them before any version claim or "open" question: B3 r1 lost 3 bullets the change log answered.
+- "Who sets X" questions: check the step-1 Content Modifier of the iFlow first (Step02 sync step 1 "Set custom extensions" sets SapQualityOfService = BestEffort), and grep the whole label before writing "no setter" (the mirror script may set it).
+- A negative ("no template names it") needs "grep of every <scope> .iflw" stated or a resource cite.

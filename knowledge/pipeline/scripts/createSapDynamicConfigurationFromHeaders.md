@@ -1,0 +1,29 @@
+# createSapDynamicConfigurationFromHeaders
+
+## Purpose
+
+Copies every header whose name starts with `dc_SapDynamicConfiguration_` into an exchange property `SapDynamicConfiguration_<rest of the name>` [com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi, scripts/createSapDynamicConfigurationFromHeaders.groovy#L5] [com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi, scripts/createSapDynamicConfigurationFromHeaders.groovy#L7] [com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi, scripts/createSapDynamicConfigurationFromHeaders.groovy#L15] [com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi, scripts/createSapDynamicConfigurationFromHeaders.groovy#L17] [com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi, scripts/createSapDynamicConfigurationFromHeaders.groovy#L26].
+Script step "Create dynamic configurations", the first step of the main process of Step08 XI, before "Set Default Properties" [com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi, step 1 "Create dynamic configurations"] [com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi, step 2 "Set Default Properties"]; the Content Modifier "Remove headers" deletes the headers `dc_*` before the receiver call [com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi, step 10 "Remove headers"].
+
+## Inputs
+
+- Headers with a String name starting with `dc_SapDynamicConfiguration_` [com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi, scripts/createSapDynamicConfigurationFromHeaders.groovy#L9] [com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi, scripts/createSapDynamicConfigurationFromHeaders.groovy#L14] [com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi, scripts/createSapDynamicConfigurationFromHeaders.groovy#L15]. Step08 XI admits headers through its allowedHeaderList, which is the iFlow parameter AllowedHeadersList [com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi, property "allowedHeaderList"] [com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi, parameter "AllowedHeadersList"].
+
+## Outputs
+
+- Property `SapDynamicConfiguration_<key>` per such header, with the header value unchanged [com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi, scripts/createSapDynamicConfigurationFromHeaders.groovy#L17] [com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi, scripts/createSapDynamicConfigurationFromHeaders.groovy#L18] [com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi, scripts/createSapDynamicConfigurationFromHeaders.groovy#L26].
+- The headers stay; the script only reads them [com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi, scripts/createSapDynamicConfigurationFromHeaders.groovy#L14].
+- The script throws no exception of its own and writes no audit log entry; it imports only Message [com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi, scripts/createSapDynamicConfigurationFromHeaders.groovy#L1].
+
+## Gotchas
+
+- Any exception while collecting the headers is caught and ignored [com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi, scripts/createSapDynamicConfigurationFromHeaders.groovy#L20] [com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi, scripts/createSapDynamicConfigurationFromHeaders.groovy#L21]; the properties for the headers collected before it are still written [com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi, scripts/createSapDynamicConfigurationFromHeaders.groovy#L24] [com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi, scripts/createSapDynamicConfigurationFromHeaders.groovy#L26].
+- No matching header: no property is set [com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi, scripts/createSapDynamicConfigurationFromHeaders.groovy#L24].
+- Mirror of the Step01 XI script `createHeadersFromSapDynamicConfiguration.groovy`, with the same two prefixes [com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi, scripts/createSapDynamicConfigurationFromHeaders.groovy#L5] [com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi, scripts/createSapDynamicConfigurationFromHeaders.groovy#L7] [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi, scripts/createHeadersFromSapDynamicConfiguration.groovy#L5] [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi, scripts/createHeadersFromSapDynamicConfiguration.groovy#L7]: there properties become headers [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi, scripts/createHeadersFromSapDynamicConfiguration.groovy#L25], here headers become properties [com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi, scripts/createSapDynamicConfigurationFromHeaders.groovy#L26].
+- SAP's change log for 1.0.3: the script converts the headers passed from the scenario-specific inbound flow into exchange properties that the XI receiver adapter expects to add dynamic XI headers to the outgoing message [generic-outbound/CHANGELOG.txt#L5] [generic-outbound/CHANGELOG.txt#L7].
+
+## Used by
+
+- `com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi`: [com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi, step 1 "Create dynamic configurations"] in [com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi, process "Integration Process"].
+
+Copies: one copy (`com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi`).

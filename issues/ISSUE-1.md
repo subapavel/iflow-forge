@@ -28,3 +28,11 @@ Leave them as they are; the part-1 gate review records them as a known pre-exist
 `tools/gen_bpm_builtin_functions.py` to a Java tool; then remove the Python file. Backlog row KB-13 added (code task, red
 test first); the generator's output check against the NWDS plugins directory runs locally with the owner (`NOT_RUN` in the
 cloud is accepted, as for KB-02's byte-identity check).
+
+2026-10-20, owner (local, KB-13 Phase A, before the port): NWDS plugins `com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar`
+and `com.sap.tc.ap.bpemcontent_7.3.0.250825003525.jar` (one of each). `python -I tools/gen_bpm_builtin_functions.py <plugins>
+testdata/bpm/reference.json` printed `224 functions, 11 triggers, 91 XSD types, 78 SAP types`, exit 0; `cmp` against
+`po-xray-core/src/main/resources/io/poxray/bpm/bpm-builtin-functions.json` silent → byte-identical (197,606 bytes, SHA-256
+f4680de9a8a422e58a29a7ed271707cab71390648e34390587589c1c3fd36b24). The two jars are kept locally under `testdata/bpm/plugins/`
+(gitignored, verified) for Phase B. Nothing committed. Phase B (Java tool against the same jars) runs after KB-13 is pushed;
+the KB-13 acceptance spec takes these counts and the SHA-256 as the reference the Java tool must reproduce.
