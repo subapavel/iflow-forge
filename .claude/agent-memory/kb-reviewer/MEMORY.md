@@ -13,3 +13,4 @@ Durable facts only (build quirks, verified APIs, recurring findings). Never task
 - (8) A copy-condition sentence cites the realising element; a manifest header that does not exist is never cited "(absent)".
 - (9) Open-question bullets cite the wrong script line more often than pages do: check that the cited line is the assignment/read, not the comparison above it. "The Step01 templates" usually means eo + alo only (sync has no script step).
 - (10) Count claims ("four exception subprocesses", "nine headers") against the .iflw element count; XPath paths differ between Step02 sync "Get interface" (/Interfaces/Interface/Service) and Step04/Step05 (/Interface/Service); default gateway flows are named "No (Default)".
+- (11) A copy condition with an idempotency clause tends to cite the Idempotent Process Call (sourceMessageID `${property.SplitMessageID}`) but not the Content Modifier that builds the key (`${header.UniqueID}_...`); both are needed.

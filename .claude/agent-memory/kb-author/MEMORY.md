@@ -54,3 +54,10 @@ Durable facts only (build quirks, verified APIs, recurring findings). Never task
 - Callers: Step06 end event "End" -> `${header.SAP_OutboundProcessingEndpoint}`; Step02 sync step 59 "ScenarioSpecificOutbound"; Step01 XI step 49 "ActualReceiver" on bypass p2p (gateway 41).
 - Step08 takes a present SAP_<key> header by containsKey (setEdidcFromParamsForIDoc.groovy#L32, setValuesForXI.groovy#L42); EDIDC field headers only when listed in SAP_IDoc_EDIDC_overrideControlRecordParameters (#L50, #L54, #L61).
 - Open questions of B3-B5 go to open-questions/kb-05-outbound.md (kb-05.md is full, ~1,150 tokens).
+
+## One-to-many templates (learned on KB-05 B4, 2026-06-trial)
+- o2mo, o2mm, moar keep P2P_ASYNC_0001.iflw, same 3 params and allowedHeaderList as p2p; no Bundle-Description; no mapping file (Mapping step mappinguri empty: cite the iflw resource).
+- o2mm/moar: two branches ("Branch 1"/"Branch 2" sequenceFlow names) share message end event "End", no Join/Gather; receivers are participants Receiver1/Receiver2. moar SequentialMulticast routingSequenceTable gives the order.
+- moar step 6 "Call Exception Handling" has an empty processId (SAP bug): the dump then inlines the exception process under the next call with a processId (step 11).
+- Idempotency key there is property SplitMessageID (`${header.UniqueID}_..`), not header UniqueID.
+- Verify step cites in bulk: awk the dump section per id and grep `^ *[n.] Type "name"$` (count must be 1 when no step number).

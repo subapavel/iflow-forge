@@ -1,11 +1,11 @@
 # Handoff
 
-state: RUNNING — KB-05 in progress: B1 7dabf99, B2 0e659e2, B3 (this commit; step07 p2p, p2p.to.idoc, p2p.to.xi, sync); B4 (o2mo, o2mm, moar) next; B5 follows
+state: RUNNING — KB-05 in progress: B1 7dabf99, B2 0e659e2, B3 876f706, B4 (this commit; o2mo, o2mm, moar); B5 (custom exit, custom error, script collection) next
 last commit: 7dabf99 kb: template pages inbound (KB-05 B1); before it 598e578 KB-04 B3, 67862af B2, 25f362c B1, 6138223 KB-03
-branch: claude/eager-brown-uw61ft (D-017; the owner fast-forwards main) — all commits pushed; CI green through KB-05 B2 (run 39321394110)
-next exact action: KB-05 B4 (step07 o2mo, o2mm, moar): packet + addenda in scratchpad kb-05/page-packet.md; author → review → verify → commit
-then: KB-05 B5 (custom exit, custom error, script collection); close KB-05 (PROGRESS, BACKLOG done); KB-06 clears pom kb.skip=coverage (F-2)
-pages: ten-heading contract, D-019 citation forms, D-020 self-cited Steps lines, ≤ 1,500 words (aim 1,350); open questions → open-questions/<task>[-<group>].md (F-3)
+branch: claude/eager-brown-uw61ft (D-017; the owner fast-forwards main) — all commits pushed; CI green through KB-05 B3 (run 39325107963)
+next exact action: KB-05 B5 (custom exit, custom error handling, script collection): packet + addenda in scratchpad kb-05/page-packet.md; author → review → verify
+then: close KB-05 (PROGRESS entry from scratchpad kb-05/ledger-draft.md, BACKLOG done, HANDOFF rewrite); KB-06 script pages clear pom kb.skip=coverage (F-2)
+pages: ten-heading contract, D-019 cite forms, D-020 self-cited Steps lines, ≤ 1,500 words (aim 1,350); open questions → open-questions/<task>[-<group>].md
 reader: io.poxray.cpi per plan Task 2 + F-1; order D-016; ScriptCollection: 0 steps; propdef: no defaults (D-015); iFlow-level ifl:property not exposed (NOTES)
 plan: docs/superpowers/plans/2026-10-19-pipeline-knowledge-base.md (changelog F-1, D-016, D-015, F-2); spec: same date -design.md (changelog F-3)
 sources: knowledge/sources/2026-06-trial (29 artifacts; fact base, D-019) and 2026-09-current (32; value mapping + upload helper only there, pages after KB-00a)
