@@ -259,8 +259,9 @@ Original questions, kept for the record:
 - Exact file names of `iflows/` pages (use the iFlow technical ID from the manifest).
 - Whether skill `references/` is a symlink, a copy, or the skill folder itself (§6).
 - Mermaid versus a hand-drawn ASCII diagram in `overview.md`.
-- Tooling for pass A (a small script that unpacks iFlow zips and dumps step lists is welcome but not required; it
-  may later become the seed of part 3).
+- Tooling for pass A: an iFlow reader in Java in `po-xray-core` (package `io.poxray.cpi`) that unpacks package
+  exports and dumps step lists; it is the seed of part 3. Everything in the repository is Java (Pavol's rule,
+  2026-10-19: no Python).
 - Wording and depth of per-script pages; a short script may get three lines.
 
 ## 12. Decisions made during review
