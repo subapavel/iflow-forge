@@ -22,6 +22,12 @@
 - Checklists are decision tables keyed on scenario attributes (quality of service, sender type, mapping kind, receiver count), not one linear path (spec §12.8).
 - Python tools: stdlib only, run as `python -I tools/<tool>.py`, tests with `python -I -m unittest discover -s tools/tests`.
 - Commit after every task; commit only the files the task names (never `git add -A`; `testdata/` must stay untracked).
+- **Where tasks run:** Task 0 runs locally on Pavol's machine (it touches confidential folders). Tasks 1 to 13 run in
+  Claude Code cloud sessions from the private GitHub repository, so everything they need must be committed by
+  Task 0: sources under `knowledge/sources/`, Czech inputs under `knowledge/inputs/cs/`. Task 9 (tenant diff) is
+  the one exception and runs locally.
+- Version labels are export dates, not package versions (each package carries its own): `2026-06-trial` (older,
+  SAP trial tenant export), `2026-10-catalog` (current, clean catalogue download once Pavol provides it). Spec §13.
 
 ## Review Focus
 
@@ -33,23 +39,35 @@
 
 ---
 
-### Task 0: Inputs (Pavol, no code)
+### Task 0 (local): data collection, scrubbing, staging, push
 
 **Files:**
-- Create (untracked): `testdata/pipeline/README.md` listing what is where
+- Create (untracked): `testdata/pipeline/README.md`, `testdata/pipeline/trial-2026-06/`, `testdata/pipeline/czint-2026-09/`, `testdata/pipeline/confluence-2026-10/{pdf,txt}/`, `testdata/pipeline/forbidden-values.txt`, `testdata/pipeline/stage.py` (throwaway unpack/scrub script)
+- Create (committed): `knowledge/sources/2026-06-trial/<package>/<artifact-id>/...`, `knowledge/sources/README.md`, `knowledge/inputs/cs/README.md`, `knowledge/inputs/cs/*.md`
+- Modify: `.gitignore` (`knowledge/sources/**/parameters.prop`, `knowledge/sources/**/Configured_Custom_Tags.txt`)
 
-Everything below lives under `testdata/pipeline/` (gitignored). The version label `<version>` used throughout this plan is the `Bundle-Version` from the clean download's generic package manifest, e.g. `1.0.6`; write it into `testdata/pipeline/README.md` and use it for the folder names.
+**Interfaces:**
+- Produces: the committed source tree Task 2's `unpack_package.py` must reproduce byte-for-byte from the zips (its acceptance test), and the Czech input pages Tasks 4, 5, 10 read.
 
-- [ ] **Step 1: Clean download of the current pipeline packages**
-  In the Integration Suite tenant: Discover → Integrations → the SAP pipeline packages (the generic iFlows package and the scenario templates package) → download each as a package zip. Save as `testdata/pipeline/download/<version>/generic.zip` and `templates.zip`. These are the only files that later go to `knowledge/sources/`.
-- [ ] **Step 2: Tenant exports**
-  Copy the existing E.ON exports (per country) to `testdata/pipeline/tenant-export/<country>/`. Not committed, ever.
-- [ ] **Step 3: Chat exports**
-  Claude Code session on v1: in the desktop app use the session's export (or the `/export` command in the CLI) → `testdata/pipeline/chats/claude-v1.md`. ChatGPT session on the update: open the conversation, copy as Markdown or use Settings → Data controls → Export → `testdata/pipeline/chats/chatgpt-update.md`. Split into parts of at most ~60,000 words if longer (`-part1.md`, `-part2.md`).
-- [ ] **Step 4: Czech document**
-  Download → `testdata/pipeline/docs/pipeline-v1-cs.<ext>`. If it no longer exists, note that in the README; Task 10 then works from the chats only.
-- [ ] **Step 5: Benchmark questions**
-  Write ~20 questions with expected answers (what a migrator must know: message path, generic iFlow roles, which headers decide routing, what a scenario contributes for async XI → IDoc, what changes for sync, where the mapping goes with and without XSLT). Save as `testdata/pipeline/benchmark-questions.md`; Task 12 moves them into the repository.
+Inputs found on disk (spec §13): trial-tenant package exports at `C:\Users\pavol\Documents\sap-is-pipeline` (zips + loose scripts + 13 Czech Markdown pages), CZINT exports at `C:\Users\pavol\Documents\SAP\Integration Suite\Pipeline concept` (zips, unpacked copy under `analyza/`, ChatGPT analysis), 41 Confluence PDFs in `C:\Users\pavol\Downloads\*191026-14*.pdf`.
+
+- [ ] **Step 1: GitHub (Pavol confirms, then done here)**
+  The repository has no remote. Create the private repository `iflow-forge` on GitHub (`gh repo create iflow-forge --private --source . --push`), which is also the rename decided in the brainstorm. Cloud sessions cannot start without it.
+- [ ] **Step 2: Collect into `testdata/pipeline/`**
+  Copy the three input locations as they are into `trial-2026-06/`, `czint-2026-09/`, `confluence-2026-10/pdf/`. Convert every PDF to text with `pypdf` (scratch install, not a repo dependency) into `confluence-2026-10/txt/<page-title>.txt`. Write `README.md` with the table "what, from where, which version, customer data yes/no".
+- [ ] **Step 3: Forbidden-values list**
+  From `czint-2026-09/analyza/**/parameters.prop` (right-hand sides), `Configured_Custom_Tags.txt` (IDs) and the tokens `CZINT`, `czint`: one value per line, generic values dropped (`true`, `false`, numbers, `PIP`, `/pip/...` SAP defaults that also appear in the trial export). This file is the input of `kb_check --forbidden` for the rest of the project.
+- [ ] **Step 4: Stage the older sources**
+  `stage.py`: for each of the four trial package zips, decode `resources.cnt` (Base64 JSON) to map `<id>_content` → artifact name and type, unpack each IFlow / ScriptCollection / ValueMapping zip into `knowledge/sources/2026-06-trial/<package-short-name>/<Bundle-SymbolicName>/`, copy `Change log` text as `<package-short-name>/CHANGELOG.txt`, skip `parameters.prop`. Package short names: `generic-inbound`, `generic-pipelines`, `generic-outbound`, `templates`.
+  Verify: `find knowledge/sources -name parameters.prop | wc -l` → `0`; `grep -ril czint knowledge/sources | wc -l` → `0`.
+- [ ] **Step 5: Stage the Czech inputs**
+  Into `knowledge/inputs/cs/`: `a-claude-2026-06/` (the 13 local Markdown pages), `b-confluence-2026-10/` (text of the 39 generic pages, named by title), `c-chatgpt-2026-09/` (the analysis Markdown). Replace `CZINT`/`czint` with `TENANT`/`tenant` in the copies and run the forbidden check (`grep -F -f testdata/pipeline/forbidden-values.txt -r knowledge/inputs` → empty). The two CZINT pages (`CZINT - Integrated messaging runtime...`, `CZINT - Partner Directory konfigurace...`) stay in `testdata/` only (part 2 input). `README.md` states provenance, generation, and that these are drafts, not sources of facts.
+- [ ] **Step 6: Commit and push**
+  `git add knowledge/sources knowledge/inputs .gitignore` then commit `Sources: SAP pipeline packages 2026-06 (trial export), Czech inputs` and push. Verify `git status --short | grep testdata` is empty before committing.
+- [ ] **Step 7: Current version (Pavol, when convenient)**
+  Clean catalogue download of the four packages from Discover → Integrations → `testdata/pipeline/catalog-2026-10/*.zip`; then rerun `stage.py` into `knowledge/sources/2026-10-catalog/` and commit. Until then every cloud task uses `2026-06-trial` as the primary version and the CZINT change logs for what changed since.
+- [ ] **Step 8: Benchmark questions (Pavol)**
+  Write ~20 questions with expected answers (message path, generic iFlow roles, which headers decide routing, what a scenario contributes for async XI → IDoc, what changes for sync, where the mapping goes with and without XSLT). Commit as `knowledge/pipeline/benchmark/questions.md` directly (no customer data in it).
 
 ---
 
@@ -68,12 +86,11 @@ Everything below lives under `testdata/pipeline/` (gitignored). The version labe
   Each stub page: H1 title and one line `_Stub, filled in Task N._` with the task number from this plan. `SKILL.md` frontmatter: `name: sap-is-pipeline`, `description: SAP Integration Suite pipeline concept: generic iFlows, contracts, what a scenario contributes, migration procedures from PO ICO or point-to-point iFlow. Load when designing or generating pipeline-based iFlows.` Body: table "when you need X, read Y" over the pages (filled now, pages come later).
 - [ ] **Step 2: Skill wrapper**
   `.claude/skills/sap-is-pipeline/SKILL.md` has the same frontmatter and the body: "The content lives in `knowledge/pipeline/`. Read `knowledge/pipeline/SKILL.md` first." (My call per spec §11: pointer, not symlink; Windows-safe, one copy of content.)
-- [ ] **Step 3: Unpack the clean download**
-  `python -I tools/unpack_package.py testdata/pipeline/download/<version>/generic.zip knowledge/sources/<version>/generic` and the same for templates. This tool is written in Task 2; until then unpack by hand (package zip → one zip per artifact → unpack each into `<artifact-id>/`). Delete every `parameters.prop` in the unpacked tree (configured values); keep `parameters.propdef`.
+- [ ] **Step 3: Sources are already staged by Task 0** (`knowledge/sources/2026-06-trial/`, later `2026-10-catalog/`). Add `knowledge/sources/README.md` if Task 0 did not: version labels, package short names, what was removed.
 - [ ] **Step 4: Verify the tree**
-  Run: `git status --short | grep -c testdata` → Expected: `0`. Run: `find knowledge/sources -name parameters.prop | wc -l` → Expected: `0`.
+  Run: `find knowledge/sources -name parameters.prop | wc -l` → Expected: `0`.
 - [ ] **Step 5: Commit**
-  `git add knowledge .claude/skills/sap-is-pipeline .gitignore README.md` then commit `Knowledge base skeleton and sap-is-pipeline skill wrapper`.
+  `git add knowledge/pipeline .claude/skills/sap-is-pipeline README.md` then commit `Knowledge base skeleton and sap-is-pipeline skill wrapper`.
 
 ---
 
@@ -117,8 +134,8 @@ Everything below lives under `testdata/pipeline/` (gitignored). The version labe
   Parse with `xml.etree.ElementTree`; step order by depth-first walk over `sequenceFlow` from each `startEvent`, visited set for cycles, recursing into `subProcess` children with depth+1, then appending unreached steps at the end (marked `properties["unreached"]="true"`). Package zip detection: contains `resources.cnt` or every top-level entry is a zip.
 - [ ] **Step 4: Run tests, verify they pass**
   Run: `python -I -m unittest discover -s tools/tests -v` → Expected: all OK.
-- [ ] **Step 5: Smoke run on the real sources**
-  Run: `python -I tools/iflow_dump.py knowledge/sources/<version>/generic | head -80` → Expected: manifest line and a numbered step list for the first generic iFlow, no traceback. Fix parser gaps the real content reveals, adding a test per gap with a synthetic fixture.
+- [ ] **Step 5: Acceptance on the real sources**
+  Run: `python -I tools/iflow_dump.py knowledge/sources/2026-06-trial/generic-pipelines | head -80` → Expected: manifest line and a numbered step list for the first generic iFlow, no traceback. Fix parser gaps the real content reveals, adding a test per gap with a synthetic fixture. The package zips themselves are not in git; `unpack_package.py` is instead checked by Pavol locally once: `python -I tools/unpack_package.py "testdata/pipeline/trial-2026-06/Cloud Integration Pipeline - Generic Pipelines.zip" /tmp/gp && diff -r /tmp/gp knowledge/sources/2026-06-trial/generic-pipelines` → Expected: no differences.
 - [ ] **Step 6: Commit**
   `git add tools/iflow_dump.py tools/unpack_package.py tools/tests` then commit `tools: iflow_dump and unpack_package`.
 
@@ -165,7 +182,7 @@ Everything below lives under `testdata/pipeline/` (gitignored). The version labe
 
 - [ ] **Step 1: Dump every generic iFlow**
   Run: `python -I tools/iflow_dump.py knowledge/sources/<version>/generic > testdata/pipeline/dump-generic.md`.
-- [ ] **Step 2: Write each page** with the ten H2 headings from Task 3, in this order of work: the inbound/entry iFlow first, then in message-path order. Under *Steps*: numbered list, one line per step `n. <activity type> "<name>": what it does [cite]`, subprocess steps indented. Under *Headers and properties*: two tables, `Set` (name, value or source, step) and `Read` (name, step, used for). Under *Partner directory*: every PD lookup (key pattern, value type, what happens when missing). Under *Externalized parameters*: name, default from `.propdef`, meaning, placeholder `{{tenant.<path>}}` if tenant-specific. *Extension points*: steps SAP visibly intends for customization (named "Custom", empty script hooks, routers with a disabled branch) plus "none found" if none. *Version notes*: empty until Task 10. ≤ 1,500 words each.
+- [ ] **Step 2: Write each page** with the ten H2 headings from Task 3, in this order of work: the inbound/entry iFlow first, then in message-path order. Start from the matching Czech page in `knowledge/inputs/cs/` (generations a and b exist per generic iFlow) as a draft: translate, then check every statement against the dump and the scripts, keep it only with a citation, and note in `pitfalls.md` where the draft and the artifact disagree. Under *Steps*: numbered list, one line per step `n. <activity type> "<name>": what it does [cite]`, subprocess steps indented. Under *Headers and properties*: two tables, `Set` (name, value or source, step) and `Read` (name, step, used for). Under *Partner directory*: every PD lookup (key pattern, value type, what happens when missing). Under *Externalized parameters*: name, default from `.propdef`, meaning, placeholder `{{tenant.<path>}}` if tenant-specific. *Extension points*: steps SAP visibly intends for customization (named "Custom", empty script hooks, routers with a disabled branch) plus "none found" if none. *Version notes*: empty until Task 10. ≤ 1,500 words each.
 - [ ] **Step 3: Check after every three pages**
   Run: `python -I tools/kb_check.py --kb knowledge/pipeline --sources knowledge/sources/<version> --forbidden testdata/pipeline/forbidden-values.txt --skip coverage` → Expected: exit 0. Commit each batch: `git add knowledge/pipeline/iflows` then `KB: generic iFlow pages <ids>`.
 - [ ] **Step 4: Coverage for generic**
@@ -234,7 +251,7 @@ Everything below lives under `testdata/pipeline/` (gitignored). The version labe
 - Create (untracked): `testdata/pipeline/deviations-<country>.md` per tenant export
 - Modify: `knowledge/pipeline/iflows/*.md` (*Extension points* only, if the diff reveals a customization point)
 
-- [ ] **Step 1: Dump the tenant export**: `python -I tools/iflow_dump.py --json testdata/pipeline/tenant-export/<country> > testdata/pipeline/dump-<country>.json` and the clean sources the same way.
+- [ ] **Step 1: Dump the tenant export** (local): `python -I tools/iflow_dump.py --json testdata/pipeline/czint-2026-09/analyza > testdata/pipeline/dump-czint.json` and the clean sources the same way.
 - [ ] **Step 2: Diff** step lists and participants (a 20-line script in `testdata/pipeline/` or a manual compare is fine; `to_json` output is stable-ordered for this reason). Record per iFlow: identical / steps added or removed / parameters configured. Write `deviations-<country>.md`.
 - [ ] **Step 3: Feed back only structure**: where the tenant added a step at a place SAP left open, add that place to the generic page's *Extension points* described generically ("after step n, before the router"), without the tenant's step name or logic. Run the checker with `--forbidden`.
 - [ ] **Step 4: Commit** only `knowledge/pipeline/iflows` changes: `KB: extension points from tenant comparison`. Verify `git status --short | grep testdata` is empty.
@@ -248,7 +265,7 @@ Everything below lives under `testdata/pipeline/` (gitignored). The version labe
 - Modify: any `knowledge/pipeline/**/*.md` (enrichment), `pitfalls.md`
 - Create: `knowledge/pipeline/versions/<version>/changelog.md`
 
-- [ ] **Step 1: Extract claims**: for each file in `testdata/pipeline/chats/` and `docs/`, a fresh agent session (or ChatGPT) with Appendix A of the spec as the prompt and the export attached; save the output as `claims/<export>.md`. For multi-part exports run the merge instruction from the appendix.
+- [ ] **Step 1: Extract claims**: inputs are the documents in `knowledge/inputs/cs/` (three generations) and, locally only, the two CZINT pages in `testdata/pipeline/confluence-2026-10/txt/`. For each generation a fresh agent session with Appendix A of the spec as the prompt and the documents attached; save the output as `claims/<generation>.md` (in the cloud: under `knowledge/inputs/claims/`, committed, since they contain no tenant values after Task 0's scrubbing; the CZINT pages' claims stay in `testdata/`). Chat transcripts are optional extras if Pavol exports the ChatGPT one; the Claude Code one is not on disk.
 - [ ] **Step 2: Triage table** `claims/triage.md`: columns claim id, export, disposition ∈ {`fact→<page>`, `rationale→<page>`, `procedure→Task 11`, `pitfall`, `changelog`, `tenant→profile`, `dropped (reason)`}. Every claim gets a row.
 - [ ] **Step 3: Apply**: `fact→` rows: locate the artifact, add the sentence with its cite; if the artifact disagrees, row becomes `pitfall` ("chat said X, artifact shows Y"). `rationale→` rows: add with tag `[rationale, from analysis 2026]`. `changelog` rows: entries in `versions/<version>/changelog.md` with the `[source: analysis chat, unverified against v1 artifacts]` mark and the inline "(v1: was X)" note on the affected page under *Version notes*. `tenant→profile` rows: copy to `testdata/pipeline/profile-draft-<country>.md` (input to part 2).
 - [ ] **Step 4: Verify**: `grep -c "" testdata/pipeline/claims/triage.md` equals total claims + header lines; full checker → exit 0 (budget!). Commit `KB: enrichment from analysis chats, changelog <version>` (only `knowledge/pipeline`).

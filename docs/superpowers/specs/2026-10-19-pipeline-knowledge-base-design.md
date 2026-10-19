@@ -316,6 +316,43 @@ Settled by the author after the builder check; Pavol can overrule any of them.
    variants move to `migration/variants.md`. The attribute set itself is provisional until pass C and is finalized
    with Pavol once the artifacts have been read.
 
+## 13. Revision after the input survey (2026-10-19, same day)
+
+A look at what is actually on disk changed three assumptions. These override the earlier sections where they
+conflict.
+
+**13.1 Both versions exist as artifacts.** `C:\Users\pavol\Documents\sap-is-pipeline` holds package exports of
+all four pipeline packages from a **SAP trial tenant** (June 2026; e.g. Step02 1.0.5, Step04 1.0.4, Step05 1.0.3,
+Templates 1.1.1): clean SAP content, not customer data. `C:\Users\pavol\Documents\SAP\Integration Suite\Pipeline
+concept` holds the **CZINT (E.ON CZ) exports** of the same packages (September 2026; Step02 1.0.6, Step04 1.0.5,
+Templates 1.2.0) plus an unpacked copy and a ChatGPT analysis. SAP's own `Change log` files are inside every
+package. Consequence: §12.7 is withdrawn; `versions/<current>/changelog.md` is built from artifact diff plus
+SAP's change logs, and chat claims only annotate it.
+
+**13.2 Where customer content sits in the CZINT export.** Only in `MANIFEST.MF` / `.project` (symbolic names carry a
+`.CZINT` suffix), `parameters.prop` (configured values), `Configured_Custom_Tags.txt` (personnel IDs), and the
+analysis text. The `.iflw`, `.propdef`, Groovy, XSLT and mapping files contain no tenant marker. The trial export
+is committed as the older version. For the current version a clean catalogue download (§12.6) is still the
+source committed to git; until it exists, cloud sessions work on the older version and the change logs, and the
+CZINT export stays local.
+
+**13.3 The "Czech document" is a documentation tree, in three generations.** (a) Local Markdown from the first
+Claude Code analysis (11 per-iFlow pages + templates + a 3,000-word extract of SAP's Pipeline Concept guide, at
+1.0.4/1.0.5), (b) a Confluence export of 41 PDF pages (the same material revised at 1.0.5, plus a decision matrix,
+template pages, custom exit / error handling, and **two CZINT-specific pages**: runtime configuration with naming
+conventions, and partner directory configuration), (c) the ChatGPT analysis of the 1.0.6 export (2,300 words,
+with version diff and deviations). The original Claude Code transcript is not on this machine; its output (a) is.
+Consequence for pass B: the inputs are these documents, not chat transcripts; the extraction prompt (Appendix A)
+is run over documents. Pass A becomes **verification and translation**: the Czech pages are a draft per iFlow, the
+artifacts remain the only source of facts, and the citation rule is unchanged.
+
+**13.4 The two CZINT pages are tenant-profile material** (part 2), not knowledge base material. They go to
+`testdata/` and later to the E.ON CZ profile. All other pages are generic and may be committed to the private
+repository as inputs (Pavol's own writing; see §10 answer below), with tenant markers replaced.
+
+**13.5 Division of labour.** Local (this machine): collect, scrub, stage, commit sources and inputs, push.
+Cloud sessions: every content and tooling task. The plan's Task 0 is rewritten accordingly.
+
 ## Appendix A: chat extraction prompt
 
 Use once per export (Claude Code transcript, ChatGPT conversation, the Czech document). Paste the export after the
