@@ -41,7 +41,7 @@ Decisions: D-018 (CI exists; supersedes D-011)
 Deviation: none
 Next: KB-03 (knowledge module)
 
-## KB-03 · 2026-10-19 · (hash: the commit `test(knowledge): consistency checks as a test module`; recorded in the next entry)
+## KB-03 · 2026-10-19 · 6138223
 Context compacted during this task (before the test-author's hand-back); HANDOFF re-read, git status and log re-verified.
 Test first: ChecksTest (12: coverageReportsMissingPages, coveragePassesWhenEveryPageExists, headingsOrderMatters, headingsAcceptTheExactContract, placeholdersReportsMissingAndExtra, placeholdersPassWhenSetsMatch, namesReportsUnknownScript, budgetSkipsStubs, forbiddenValueFound, skipIfRequestedAbortsOnlyTheNamedChecks, forbiddenFileIsPresentOnlyWhenThePropertyIsSet, forbiddenFileResolvesRelativeValuesAgainstTheRepositoryRoot — the last added in review round 1, green on first run against the existing code), real-KB classes CoverageTest, HeadingsTest, PlaceholdersTest, NamesTest, BudgetTest, ForbiddenValuesTest; red observed as compile errors (target/kb-03-red.log)
 Changed: iflow-forge-knowledge (new module: pom.xml, src/test io.iflowforge.knowledge Checks, KnowledgeBase, tests; io.poxray.cpi.SyntheticArtifact bridge), root pom.xml (module), docs/findings/F-2.md, plan (changelog, Task 3/4/5), BACKLOG (KB-06), NOTES, HANDOFF, .claude/agent-memory
