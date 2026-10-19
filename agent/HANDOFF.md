@@ -1,6 +1,6 @@
 # Handoff
 
-state: RUNNING — KB-03 done (6138223, CI green); KB-04 in progress: B1 (step01 xi, step01 idoc, step02 inbound) with the kb-author; B2, B3 follow (D-019)
+state: RUNNING — KB-03 done (6138223); KB-04 in progress: B1 25f362c, B2 committed (3 pages each); B3 (step05, step06, step08 idoc, step08 xi) with the kb-author
 last commit: test(knowledge): consistency checks as a test module (KB-03); before it f627a21 CI workflow (KB-02b), a084eba KB-01, f9b5373 KB-02
 branch: claude/eager-brown-uw61ft (D-017: the cloud session's designated branch; the owner fast-forwards main) — all commits pushed; CI green on f627a21
 next exact action: KB-04 packet: scratchpad kb-04/page-packet.md (B1–B3); per batch kb-author → kb-reviewer PASS → commit `kb: generic iFlow pages <ids>`

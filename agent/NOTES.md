@@ -82,6 +82,7 @@ Facts only; the next exact action and the state live in `agent/HANDOFF.md`.
   repository root. The owner's file stays under `testdata/` (gitignored). Messages never contain the value.
 - Synthetic sources for checks tests: `io.poxray.cpi.SyntheticArtifact` (public bridge to the package-private
   `IFlowFixture` of the po-xray-core test-jar), one Script step plus the given resources.
+- Reader follow-up (KB-04 B2): `IFlow` does not expose the iFlow-level `ifl:property` entries of the collaboration/process (e.g. `allowedHeaderList`); pages cite them by grep of the .iflw (D-019). Expose them in a later reader task.
 - Follow-ups: coverage treats a `generic-*` package by folder prefix and `templates` by exact name; a new package kind
   needs a rule. Headings also reports `unexpected "X" at position N` for extra H2s (beyond the spec, kept).
 - Reviewer remarks (KB-03, not blocking): without a `.mvn` folder `maven.multiModuleProjectDirectory` is where mvn starts, so

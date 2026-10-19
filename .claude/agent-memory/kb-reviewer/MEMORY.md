@@ -4,3 +4,6 @@ Durable facts only (build quirks, verified APIs, recurring findings). Never task
 - KB-04 B1 (2026-10-19): recurring findings on iFlow pages — (1) duplicate-named Send steps: check each step's
   message flow and participant in the .iflw (grep the ServiceTask id, then the messageFlow sourceRef), the page often
   swaps them; (2) "library, unused" claims for helper scripts: grep the step scripts for `import` of the helper first.
+- KB-04 B2: (3) a lookup-precedence summary on a page is often compressed out of order against the script (stage rules →
+  exact stage → tenant rules → exception in mapSenderStageToReceiverStage.groovy); check the if-order line by line;
+  (4) a cross-iFlow "X calls Y" claim must name the route (gateway branch) on which the call happens.
