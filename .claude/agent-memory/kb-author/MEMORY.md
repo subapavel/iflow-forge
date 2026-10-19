@@ -45,3 +45,12 @@ Durable facts only (build quirks, verified APIs, recurring findings). Never task
 - SAP-Operation / SAP-OperationSpecific are read by the collection's custom*ViaXProperties scripts but set nowhere in the label.
 - open-questions/kb-05.md reached ~1,020 tokens after B2: later batches must write short bullets.
 - Review B2 lessons: a claim about "the Step04 templates" needs one cite per template; check BPMN process names (`[<id>, process "<name>"]`, D-019) before writing "not found in the artifact"; mapMessageTypeToOperation.groovy sets SAP_SenderOperation at L24 (L18 is the comparison); a Read-table row covering several names needs the step per name.
+
+## Step07 templates (learned on KB-05 B3, 2026-06-trial)
+- File names are reused: p2p, p2p.to.idoc, p2p.to.xi keep P2P_ASYNC_0001.iflw; sync keeps PIP_01_InboundProcessing4Scenario1.iflw; custom.exit keeps PIP_03_InboundConversion4Scenario1.iflw.
+- The IdempotentProcessCall of Step07 p2p IS inlined (17 -> 18): the Step01 eo non-inlining is not general; check per flow.
+- All Step07 templates share the post-processing exit (Initialize: customXPipelineStep 07; "Exit?" Yes on CustomXPost_Enabled = 'true'; CustomExit `${property.CustomXPost_Endpoint}`); it runs BEFORE the receiver call; custom exit routes '07' to "Content Modifier 7".
+- p2p and sync leave participant "Receiver" unconnected; p2p.to.idoc/xi call {{GenericIDocEndpoint}}/{{GenericXIEndpoint}} (placeholders tenant.endpoint.idoc/xi.outbound).
+- Callers: Step06 end event "End" -> `${header.SAP_OutboundProcessingEndpoint}`; Step02 sync step 59 "ScenarioSpecificOutbound"; Step01 XI step 49 "ActualReceiver" on bypass p2p (gateway 41).
+- Step08 takes a present SAP_<key> header by containsKey (setEdidcFromParamsForIDoc.groovy#L32, setValuesForXI.groovy#L42); EDIDC field headers only when listed in SAP_IDoc_EDIDC_overrideControlRecordParameters (#L50, #L54, #L61).
+- Open questions of B3-B5 go to open-questions/kb-05-outbound.md (kb-05.md is full, ~1,150 tokens).

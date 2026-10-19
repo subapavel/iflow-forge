@@ -23,6 +23,6 @@ This skill is the knowledge base for the SAP Integration Suite pipeline concept:
 | how PO modules and Java mappings are converted | `conversion/README.md` |
 | which SAP version is current, and what changed between versions | `versions/README.md`, `versions/<label>/changelog.md` |
 | lessons learned, contradictions, open questions | `pitfalls.md` |
-| open questions per content task (uncited draft claims) | `open-questions/<task>.md` |
+| open questions per content task (uncited draft claims) | `open-questions/<task>[-<group>].md` |
 | a term explained | `glossary.md` |
 | the benchmark questions and the sample ICO | `benchmark/` |
