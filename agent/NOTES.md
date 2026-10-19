@@ -71,6 +71,7 @@ Facts only; the next exact action and the state live in `agent/HANDOFF.md`.
   to be checked against the owner's forbidden list (rename to `.TENANT` if it hits). A PROGRESS heading takes its commit hash from the following task's commit.
 - KB-01 follow-up for Task 11: `knowledge/pipeline/SKILL.md` says "load nothing else"; spec §6 loads SKILL + overview +
   contracts + scenario-contribution together — fix the wording when SKILL.md is rewritten (kb-reviewer remark).
+- Every `mvn` log carries one stderr line `[Fatal Error] :1:9: XML document structures must start and end within the same entity.` — the JDK parser reporting the malformed-XML fixture of a po-xray-core negative test (present since KB-03 logs); not a failure, the build exit code decides.
 
 ## Knowledge module (KB-03)
 

@@ -37,3 +37,11 @@ Durable facts only (build quirks, verified APIs, recurring findings). Never task
 - Dump quirk: an IdempotentProcessCall's local process is not inlined (Step01 eo: Send listed as step 1, depth 0); a local process called three times is inlined only under the first call (Step01 sync).
 - The template id folders are `...step01.inbound.processing.<qos>`, not `...step01.<qos>`; take ids from `ls templates/`.
 - Coverage log repeats each `missing page:` line ~4 times; count distinct with `sort -u`.
+
+## Determination templates (learned on KB-05 B2, 2026-06-trial)
+- All step04/step05 templates keep the Step03 file name PIP_03_InboundConversion4Scenario1.iflw; one ProcessDirect sender `{{ProcessDirect_EndPoint}}`, allowedHeaderList set (step05 adds SAP_Receiver(.*)).
+- Callers: Step04 step 71 / async step 48 / sync step 34 Request Reply "ReceiverXRD" (`${property.customXRDEndpoint}`); Step05 step 53 "ReceiverXID". Integrated runtimes reject reuseXRD (async 49, sync 35: ConfigurationOptionNotSupported).
+- Template Content Modifiers carry SAP's angle-bracket placeholder text as values; Mapping steps have empty mappinguri. Empty skeletons have Start->End only: cite the iflw resource.
+- SAP-Operation / SAP-OperationSpecific are read by the collection's custom*ViaXProperties scripts but set nowhere in the label.
+- open-questions/kb-05.md reached ~1,020 tokens after B2: later batches must write short bullets.
+- Review B2 lessons: a claim about "the Step04 templates" needs one cite per template; check BPMN process names (`[<id>, process "<name>"]`, D-019) before writing "not found in the artifact"; mapMessageTypeToOperation.groovy sets SAP_SenderOperation at L24 (L18 is the comparison); a Read-table row covering several names needs the step per name.

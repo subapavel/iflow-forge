@@ -11,3 +11,4 @@ Durable facts only (build quirks, verified APIs, recurring findings). Never task
   (6) same-named Content Modifiers on different paths (custom-error vs DLQ): check which path the cited step is on.
 - (7) Templates (KB-05): a "only the payload comes from outside the flow" claim needs `[<id>, property "allowedHeaderList"]` (empty); a cross-iFlow Partner Directory lookup claim covering several Step02 iFlows needs a script-line cite and the gateway/route cite per iFlow.
 - (8) A copy-condition sentence cites the realising element; a manifest header that does not exist is never cited "(absent)".
+- (9) Open-question bullets cite the wrong script line more often than pages do: check that the cited line is the assignment/read, not the comparison above it. "The Step01 templates" usually means eo + alo only (sync has no script step).
