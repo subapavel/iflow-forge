@@ -38,3 +38,11 @@ input for the designs of parts 3, 4 and 5, not a design. Restated in English; no
    questions and the specification, then — with the pipeline and Integration Suite knowledge — a
    migration proposal, and only then the migration itself. po-xray already reads EJB modules; the owner
    can provide an EJB adapter-module example locally if the inputs lack one.
+
+## Third statement, same session
+
+7. Human tasks are out of scope: the owner has not met them at any client. The owner pictures the
+   migration front end as a brainstorming skill (like `superpowers:brainstorming`) with SAP PO, Integration
+   Suite and pipeline knowledge: every question answered one by one, a question may raise a new question,
+   the round ends when nothing is unclear between agent and migrator; only then the migration plan, refined
+   iteratively; after the final approval the artifacts are created.
