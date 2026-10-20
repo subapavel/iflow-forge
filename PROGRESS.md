@@ -211,3 +211,12 @@ Review: kb-reviewer set A (A, V, template) r1 FAIL 4 (Step02 sync "Not found typ
 Findings: none new beyond the 16 (all closed; the residue is in open-questions/kb-11b.md). Not a deviation.
 Decisions: none new. Issues: none new. KB-11b done.
 Next: no ready row — KB-12b waits for KB-00b (owner), KB-GATE for KB-09 (owner, local) and KB-12b → IDLE_NO_READY_TASK. A real migration starts at SKILL.md "Start here" → migration/po-ico-to-pipeline.md, branches in migration/variants.md.
+
+## KB-00b (draft, owner approves) · 2026-10-20 · (hash in the next entry)
+Task: owner asked in the session for a draft of the benchmark questions (D-028). benchmark/questions.md = the 20 questions the benchmark session reads (groups: message path 3, iFlow roles 3, routing headers and partner IDs 3, async XI → IDoc contribution 4, sync 2, mapping 3, versions and conventions 2); benchmark/expected-answers-1.md (items 1–13) and -2.md (14–20) = the owner's key: Q, Expected (every fact derived from and cited to the 2026-06-trial artifacts, not the pages), Page. questions.md does not name the key; a transcript that reads it voids the run.
+Ledger: KB-11b hash a51989f, CI 39446947709 green.
+Checks: knowledge module VERIFIED_PASS (target/kb-00b-kb-r4.log, 32/0/0/1); `mvn -B -ntp -q verify` VERIFIED_PASS exit 0 (target/kb-00b-verify-r2.log; baseline counts); words: key 1,057 + 511 by the checker, questions 331; Q lines identical in both (diff 0); no H2.
+Review: kb-reviewer r1 FAIL 12 (listener cites on every ProcessDirect hop; script cites on the line that does what the sentence says; "no default" unsupported since parameters.prop is never staged; the key named on the questions page), r2 FAIL 6 (Page lines cut for budget → key split in two files), r3 PASS. Reviewer memory 64–71.
+Findings: five page gaps surfaced by deriving the key from the artifacts + the stale SKILL.md benchmark row → BACKLOG KB-11c (ready). Not a deviation (spec §9.5 "with expected answers" read as two files, D-028).
+Decisions: D-028. Issues: none new. KB-00b in-progress until the owner approves the questions; KB-12b then ready.
+Next: KB-11c (kb-author, page packet from the BACKLOG row) — then IDLE_NO_READY_TASK unless the owner approves KB-00b.

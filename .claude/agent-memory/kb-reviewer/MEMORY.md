@@ -66,3 +66,11 @@ Durable facts only (build quirks, verified APIs, recurring findings). Never task
 61. A "keys X, Y must be absent" row cited only by gateways fails: it needs the script lines that set the tested properties (readBypassOptionFromPD#L36, readCustomReceiverDeterminationFromPD#L29/#L38).
 62. XSLT content on proposals: the pipeline iFlows bind ns0 = http://sap.com/xi/XI/System (namespaceMapping, Receivers.xsd). An ICO condition prefix reused for the Receivers result is a namespace clash.
 63. When the verifier diff is absent in a closure round, compare the cite lists row by row with the round-1 read of the page.
+64. (KB-00b) An Expected answer "no default" taken from propdef descriptions fails: parameters.prop is never staged (knowledge/sources/README.md#L14). Write "not stated in the artifacts".
+65. (KB-00b) Q04 has two shapes: the writers (Step02 inbound L509, async L195, Step04 L195, Step05 L567) use `{{PipelineJMSQueuePrefix}}Q04` or receiverSpecificQueueName on receiver-specific routes; only Step06 (L249) adds `{{PipelineJMSQueueSuffix}}`.
+66. (KB-00b) setEdidcFromParamsForIDoc: #L32 is the precedence for the connection headers (p2p.to.idoc step 13), #L61 for the EDIDC headers (step 12). determinePartnerIDForIDocInbound#L476 sets SAP_Sender to `<party>.<sender>` for SNDPRT ≠ LS.
+67. (KB-00b) Hop lists in benchmark keys repeat the caller-only cite (35, 45) on every ProcessDirect hop; check each hop for the listener cite first.
+68. (KB-00b) A file the benchmark session reads must not name or link the key file.
+69. (KB-00b r2) When a writer cuts for budget, check the Page lines first: cutting second entries removed the only page carrying part of an answer, and the qualifiers left directory-only Pages.
+70. (KB-00b r2) Q04 writers: Step02 inbound L509, async L195, Step04 L195, Step05 L567 (JMS_Default); only Step06 L249 adds the suffix. templates/CHANGELOG.txt#L10: p2p.to.xi also serves synchronous calls.
+71. (KB-00b r3) When a page is split for budget, compare each item and Page line with the previous round, and check that every decision naming the old file is updated.
