@@ -7,7 +7,7 @@ Durable facts only (build quirks, verified APIs, recurring findings). Never task
 - Queue prefix parameter has three names: PipelinePrefix (Step01 XI, Step02 sync address), DefaultJMSQueuePrefix (Step01 IDoc), PipelineJMSQueuePrefix (Step02+).
 - The JSON dump's Content Modifier tables are `<row><cell id='Name'>...` strings; flatten with jq gsub into `ROW[...]` to read them.
 ## Budget
-- BudgetTest counts whitespace tokens: table pipes and the `—` default cells count; `wc -w` undercounts by ~8. Measure with `tr -s ' \t\n\r\f\v' '\n' < page | grep -c .`. - A step line with the full `[<id>, step "<name>"]` cite costs ~11 tokens; a 55-step iFlow leaves ~850 for the other nine sections. Write terse from the start; script-step cites (`[scripts/...#Ln]`) are 1 token.
+- BudgetTest counts whitespace tokens: table pipes and the `—` default cells count; `wc -w` undercounts by ~8. Measure with `tr -s ' \t\n\r\f\v' '\n' < page | grep -c .`. SKILL.md is held at <= 450 tokens: an added row needs an equal prose trim. - A step line with the full `[<id>, step "<name>"]` cite costs ~11 tokens; a 55-step iFlow leaves ~850 for the other nine sections. Write terse from the start; script-step cites (`[scripts/...#Ln]`) are 1 token.
 ## Reading the routing (learned on Step02 async/sync, Step04)
 - The JSON dump's step `id` is the BPMN element id: grep the `.iflw` `sequenceFlow` lines (sourceRef/targetRef/name + conditionExpression) and map ids to dump step numbers; messageFlow sourceRef=ServiceTask_/EndEvent_ gives the adapter per step.
 - Dump order is not flow order: in Step02 sync the two "Request Reply" exit calls are #9 = CustomXScenario, #10 = CustomXGlobal (reverse of async). Always map ServiceTask id -> messageFlow -> participant.

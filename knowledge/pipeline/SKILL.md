@@ -30,7 +30,7 @@ Knowledge of the SAP Integration Suite pipeline, from SAP's packages.
 | draft claims the artifacts contradict | `pitfalls-drafts.md` |
 | open questions per content task (uncited draft claims) | `open-questions/<task>[-<group>].md` |
 | a term explained | `glossary.md` |
-| the benchmark questions and the sample ICO (empty until Task 12) | `benchmark/` |
+| the benchmark inputs | `benchmark/questions.md`, `benchmark/sample-ico.json` |
 
 ## Conventions
 

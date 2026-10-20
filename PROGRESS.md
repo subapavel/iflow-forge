@@ -220,3 +220,11 @@ Review: kb-reviewer r1 FAIL 12 (listener cites on every ProcessDirect hop; scrip
 Findings: five page gaps surfaced by deriving the key from the artifacts + the stale SKILL.md benchmark row → BACKLOG KB-11c (ready). Not a deviation (spec §9.5 "with expected answers" read as two files, D-028).
 Decisions: D-028. Issues: none new. KB-00b in-progress until the owner approves the questions; KB-12b then ready.
 Next: KB-11c (kb-author, page packet from the BACKLOG row) — then IDLE_NO_READY_TASK unless the owner approves KB-00b.
+
+## KB-11c · 2026-10-20 · (hash in the next entry)
+Task: the six page gaps found while deriving the benchmark key (BACKLOG row 32): overview.md:39 async XI → IDoc chain cited caller and listener per hop; message-path.md:36 synchronous return leg (Step02 sync steps 56/59, Step07 sync template listener and its step 14 without a message flow, InboundProcessingSync back to Step01 XI step 43); "default X01" → "implied by its description" on message-path.md:30 and partner-directory.md:24; partner-directory.md:51 no default queue prefix stated (sources/README.md#L14) and the "Which queue?" fallback on both Step01 copies; migration/variants.md:40 and open-questions/kb-11b.md:5 note o2m.to.idoc of 2026-09-current (D-023 form, trial default kept); SKILL.md:33 routes only to the benchmark inputs.
+Ledger: KB-00b hash 6d69048, CI 39463123245 green.
+Checks: knowledge module VERIFIED_PASS (target/kb-11c-kb-r2.log, 32/0/0/1); `mvn -B -ntp -q verify` VERIFIED_PASS exit 0 (target/kb-11c-verify-r2.log; baseline counts); loaded set 4,565 by the checker (SKILL 443, overview 1,181, contracts 1,463, SC 1,478); H2 lines unchanged (diff grep 0).
+Review: kb-reviewer r1 FAIL 1 — my packet's SKILL.md row named the key and expected-proposal.md, making the benchmark open-book (D-028); fixed to the inputs only; r2 PASS. D-028 amended (expected-proposal.md also voids the run; SKILL routes only to inputs). Reviewer memory 72–75.
+Findings: none new. Not a deviation. Decisions: D-028 amended. Issues: none new. KB-11c done.
+Next: no ready row — KB-00b awaits the owner's approval of questions.md, then KB-12b; KB-GATE after KB-09 (owner, local) and KB-12b → IDLE_NO_READY_TASK.
