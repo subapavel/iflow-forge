@@ -22,6 +22,11 @@ Durable facts only (build quirks, verified APIs, recurring findings). Never task
 - Jackson 3.2.3: `JsonNode.asString()` / `stringValue()` (`asText()` is the legacy final alias), `readTree(byte[])`,
   JsonNode is Iterable; `Json` NON_EMPTY keeps primitive 0 / false (IFlowDumpTest), drops "" and empty lists.
 - `io.poxray.sca.ZipArchive.open/of` throw UncheckedIOException; nested zip bytes via `ZipArchive.of(bytes, name)`.
+- CLI stdout: `invocation.println(...)` (LaunchResult.getOutput); stderr notes via System.err; user errors as
+  `ScaService.CliException` inside `service.run` (exit 1, "Error: <msg>").
+- `XmlDocs.parse(bytes, name)`: namespace-aware DOM, DOCTYPE disallowed, IllegalArgumentException on bad XML.
+- `git diff` misses untracked files and staged `git rm`: build target/<task>.diff from `git diff HEAD -- <paths>`
+  plus `git diff --no-index /dev/null <new file>`.
 
 ## .iflw / SAP artifact facts (knowledge/sources/2026-06-trial)
 - Some `.iflw` file names contain spaces: quote paths in shell loops (`find -print0 | xargs -0`).

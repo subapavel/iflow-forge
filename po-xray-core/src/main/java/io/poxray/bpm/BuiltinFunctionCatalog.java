@@ -14,7 +14,7 @@ import tools.jackson.databind.JsonNode;
 
 /**
  * NW BPM built-in function and standard trigger catalog (resource {@value #RESOURCE}, generated from NWDS by
- * {@code tools/gen_bpm_builtin_functions.py}, see {@code docs/BPM-BUILTIN-FUNCTIONS.md}).
+ * {@code po-xray bpm-functions} (BuiltinFunctionGenerator), see {@code docs/BPM-BUILTIN-FUNCTIONS.md}).
  * Always keyed by MOF ID: the same name exists in several type categories with different IDs.
  * Derived from SAP software: private repositories only.
  */
@@ -113,7 +113,7 @@ final class BuiltinFunctionCatalog {
         try (InputStream in = BuiltinFunctionCatalog.class.getResourceAsStream(RESOURCE)) {
             if (in == null) {
                 throw new IllegalStateException("Missing resource io/poxray/bpm/" + RESOURCE
-                        + " (generate it with tools/gen_bpm_builtin_functions.py)");
+                        + " (generate it with po-xray bpm-functions <nwds-plugins-dir> <output.json>)");
             }
             Data data = Json.mapper().rebuild()
                     .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)

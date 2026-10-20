@@ -3,7 +3,7 @@
 Supersedes the partial operator table in `HANDOFF.md` section 2.5.
 
 - Resource: `po-xray-core/src/main/resources/io/poxray/bpm/bpm-builtin-functions.json`
-- Generator: `tools/gen_bpm_builtin_functions.py <nwds-plugins-dir> <output.json>`
+- Generator: `po-xray bpm-functions <nwds-plugins-dir> <output.json>`
 - Sources (NWDS build 2025-08):
   - `com.sap.tc.ap.servicecomp_7.3.0.250825003525.jar` → DC `sap.com/tc/bpem/content/predefs/types`
     (`rep/functions/sap.com/bpem/glx/built-in/<category>/*.function`, 220 functions, + `rep/wsdl/xml_schema.types`)

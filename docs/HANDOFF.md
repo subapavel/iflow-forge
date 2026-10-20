@@ -124,10 +124,7 @@ Missing: infix `<` (numeric-less-than) and others — extend from more samples. 
 - Runtime-only items (NWA): Service Groups, JCo destinations, scheduler jobs, table data, keystores.
 
 ## 7. Prototype
-`prototype/` contains the Python exploration scripts (reference only, not product code):
-- `moin.py` — MOIN partition loader (elements + associations).
-- `proc.py <dc-src-dir> <process.bpmn> [-v]` — renders scopes, nodes, edges with conditions, boundary events, input mappings.
-- `cmp.py <process.bpmn> <process.bpmn2>` — compares graph with BPMN 2.0 export, contracts artificial joins, derives operator table.
+The Python exploration prototypes formerly in `prototype/` (`moin.py`, `proc.py`, `cmp.py`) were removed by KB-13 (ISSUE-1).
 
 ## 8. Working preferences
 - Pavel prefers step-by-step, concise answers; Czech in conversation.
