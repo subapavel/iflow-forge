@@ -1,8 +1,8 @@
 # Handoff
 
-state: RUNNING — KB-08 done (HEAD, this commit; D-022; kb-reviewer PASS r2); KB-13 4d7ee0f (ISSUE-2 CI, ISSUE-1 Phase B owner); KB-07 ae72101; next KB-10 (Pass B claims, pitfalls, changelog)
-last commit: HEAD kb: naming.md, versions/README.md, glossary.md (KB-08); before it 4d7ee0f (KB-13), ae72101 (KB-07)
-branch: claude/eager-brown-uw61ft (D-017; owner fast-forwards main) — all pushed; CI green through ae72101 (run 39358167204); 4d7ee0f: ISSUE-2
+state: RUNNING — KB-08 done (e145a84; D-022; kb-reviewer PASS r2); KB-13 4d7ee0f (ISSUE-2 CI; ISSUE-1 Phase B owner); KB-07 ae72101; next KB-10 (Pass B)
+last commit: e145a84 kb: naming.md, versions/README.md, glossary.md (KB-08); before it 4d7ee0f (KB-13), ae72101 (KB-07)
+branch: claude/eager-brown-uw61ft (D-017; owner fast-forwards main) — all pushed; CI green through ae72101 (run 39358167204); 4d7ee0f, e145a84: ISSUE-2
 next exact action: KB-10 — scout plan Task 10 + spec Appendix A by section; write the page packet (claims triage, pitfalls.md, versions/<label>/changelog.md)
 then: kb-author (batches by input group) → kb-reviewer per batch → verifier → commit per batch; KB-09 stays owner/local; KB-11 after KB-10
 pages: iflows/templates ten headings; scripts/ five; registry pages cite full ids; D-019 forms (process, CHANGELOG.txt#L); ≤ 1,500 words; all checks on verify

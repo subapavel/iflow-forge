@@ -109,11 +109,11 @@ Decisions: none new. Deviation: none.
 Issues: ISSUE-1 waits for the owner's Phase B (`po-xray bpm-functions <plugins> <out>` vs the committed JSON); six caveats for reading a difference recorded in the issue; docs/START_PROMPT.md:6 (owner's document) still points to docs/prototype/ — hand-over note.
 Next: KB-08 (naming.md, versions/README.md, glossary.md).
 
-## KB-08 · 2026-10-20 · (hash in the next entry)
+## KB-08 · 2026-10-20 · e145a84 (`kb: naming.md, versions/README.md, glossary.md (KB-08)`)
 Context compacted and the container restarted mid-review; HANDOFF, `git status`, `git log -3` re-read before continuing (tree as left, HEAD 4d7ee0f).
 Task: `naming.md` (SAP's own naming + 35 tenant placeholders grouped by prefix, D-022; `tenant.deviations.*` reserved), `versions/README.md` (current label, labels table, folder contents, new-version procedure per spec §13.1), `glossary.md` (pipeline / PO / Integration Suite terms); stubs replaced; `open-questions/kb-08.md` (TENANT_NAME source). `knowledge/sources/README.md` lines 28, 30–31 corrected (version source, `po-xray unpack` syntax).
 Content task: no red test; acceptance = kb-reviewer PASS + green knowledge module (PlaceholdersTest declared 35 = used 35).
-Checks: `mvn -B -ntp -q verify` VERIFIED_PASS (target/kb-08-verify-final-r2.log: core 118/22 skipped, cli 12/1, knowledge 25/1, mcp 8/1, native 2/0); words naming 1,421 / versions 392 / glossary 799 (target/kb-08-wc-r2.txt); `_Stub,` 0. CI run <id>.
+Checks: `mvn -B -ntp -q verify` VERIFIED_PASS (target/kb-08-verify-final-r2.log: core 118/22 skipped, cli 12/1, knowledge 25/1, mcp 8/1, native 2/0); words naming 1,421 / versions 392 / glossary 799 (target/kb-08-wc-r2.txt); `_Stub,` 0. CI run 39365787352: failed before any step (3 s, no runner) — ISSUE-2 third occurrence, not re-run.
 Review: kb-reviewer FAIL r1 (5 blocking: second-side parameter cites missing on five placeholders; behaviour clauses cited only by template parameters; sources/README line for "stripped"; versions 439 > 400; template claim over-broad for Step01) → PASS r2 (~60 changed cites re-checked, 0 failed; 30 unchanged spot-checked).
 Decisions: D-022 (placeholder names kept, prefix grouping; cite forms `[<label>/INDEX.md#L<n>]` and `[knowledge/sources/README.md#L<n>]`) — draft, review at hand-over. Deviation: plan Task 8 step 1 grouping adjusted (changelog line).
 Issues: ISSUE-2 (CI run 39361570407 for 4d7ee0f: no runner twice; owner); ISSUE-1 Phase B pending (owner).

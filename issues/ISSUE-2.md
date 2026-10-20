@@ -28,3 +28,9 @@ API available to this session shows none of these; the owner sees the reason on 
 WORKFLOW §3 ("fix main" is the only ready task when main is red) is read as a red *build*; here no build ran and the
 local reactor verify is green, so the loop continues with KB-08. Every later push will re-trigger `verify`; its result is
 recorded as soon as a run completes.
+
+## Update 2026-10-20 03:43Z — third occurrence
+Run 39365787352 (push of e145a84, KB-08): job 118442203458 created 03:43:31Z, completed 03:43:33Z, conclusion `failure`,
+no steps, label `ubuntu-latest`. Same picture as the two attempts above; not re-run (the one re-run is spent). Every
+commit since ae72101 (02:18Z) fails this way; the condition is persistent, not transient. Local verify for e145a84:
+exit 0 (target/kb-08-verify-final-r2.log). The session continues; later runs are recorded here as they complete.
