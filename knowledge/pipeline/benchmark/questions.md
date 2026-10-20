@@ -9,7 +9,7 @@ The owner scores the answers; the owner holds the key.
 4. **Q:** Which queue does each Step01 copy write, and when?
 5. **Q:** Where does each Step02 copy send the message, and which call the inbound conversion?
 6. **Q:** What do Step04, Step05, Step06 and Step08 IDoc do?
-7. **Q:** Which sender headers does Step01 set, from what, in each copy?
+7. **Q:** Which SAP_Sender, SAP_SenderInterface and namespace values does Step01 set, from what, in each copy?
 8. **Q:** How is the partner ID derived for XI and IDoc senders?
 9. **Q:** Which Partner Directory keys does Step04 read, and how is "no receiver" handled per copy?
 10. **Q:** What does an async XI → IDoc scenario contribute?
@@ -21,5 +21,5 @@ The owner scores the answers; the owner holds the key.
 16. **Q:** Where is a determination XSLT stored, how is it referenced, and which iFlows apply it?
 17. **Q:** Where does a message mapping go for async XI → IDoc, and for sync?
 18. **Q:** Which templates serve one-to-many and ordered delivery, and what is their limit?
-19. **Q:** What does 2026-09-current change in how Step01 records the target queue?
+19. **Q:** What does 2026-09-current change for a migration (Step01 queue fallback, new templates, error handling)?
 20. **Q:** Which values on the async XI → IDoc path are tenant-specific, and how do pages write them?

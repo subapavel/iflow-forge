@@ -6,7 +6,7 @@ Context carried over from the exploration session (2026-10-09). Read this before
 
 Long-term: a tool that reads SAP PO content (ESR, Integration Directory, NW BPM, EJB/adapter modules) into a local snapshot / model, as the basis for migration to SAP Integration Suite (assessment, documentation, (semi)automatic conversion).
 
-**Current focus (phase 1): BPM reader + EJB reader**, driven by a real client project: several NW BPM processes for DigiSign (E.ON) are being unified and **redesigned** in Integration Suite. The reader does NOT convert 1:1; it produces a **complete, readable process model** (JSON) + generated documentation that a human/LLM uses for the redesign.
+**Current focus (phase 1): BPM reader + EJB reader**, driven by a real client project: several NW BPM processes for a client's DigiSign are being unified and **redesigned** in Integration Suite. The reader does NOT convert 1:1; it produces a **complete, readable process model** (JSON) + generated documentation that a human/LLM uses for the redesign.
 
 Principles agreed:
 - Don't over-engineer. One input format per reader, no generic abstraction layers up front.

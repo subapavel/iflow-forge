@@ -29,12 +29,12 @@ Architectural decisions already taken (not re-opened here):
   Both inputs produce it, the human approves a proposal built on it, the generator consumes it. The agent never
   hand-writes iFlow BPMN XML.
 - Output is always an **importable package**. Pushing it through the tenant API is an optional last delivery step,
-  because some customers (E.ON) do not grant API users; manual import must always work.
+  because some customers do not grant API users; manual import must always work.
 - One repository (po-xray, to be renamed iflow-forge), multi-module Maven, Java 25, one MCP server exposing both
   the PO readers and the new tools.
 - Development moves to Claude Code cloud sessions. Those work from the GitHub repository only, so **customer data
   never enters the repository** and tests in the repository run on synthetic or anonymized fixtures. Verification
-  against real E.ON data stays a local step.
+  against real tenant data stays a local step.
 - Knowledge is **files in git**, never chat history. The knowledge base grows after every migration
   (self-improvement, see §8).
 
@@ -51,7 +51,7 @@ maintain. It is the single part where Pavol's own understanding is irreplaceable
 
 Why pipeline rather than what SAP Migration Tooling produces: SAP's migration generates stand-alone point-to-point
 iFlows and does not use the generic XI / IDoc inbound and outbound iFlows at all. Customers that run the pipeline
-(E.ON, per country) want scenarios wired into it, with only the scenario-specific pieces generated.
+(the customer, per country) want scenarios wired into it, with only the scenario-specific pieces generated.
 
 ## 3. Goals, non-goals, anti-goals
 
@@ -82,7 +82,7 @@ Anti-goals (would make this a failure even if it "works"):
   header name costs more than a gap.
 - Knowledge frozen at version 1 with version 2 as an appendix. The current version is primary; older versions are
   history.
-- Customer data (E.ON queue names, URLs, package names) anywhere in the knowledge base.
+- Customer data (tenant queue names, URLs, package names) anywhere in the knowledge base.
 
 ## 4. Constraints
 
@@ -235,7 +235,7 @@ Part 1 is done when:
 Answered 2026-10-19; consequences in §12.6 to §12.8.
 
 1. Private repository.
-2. The copies on disk are **tenant exports** (E.ON), not catalogue downloads. The current version is on disk; the
+2. The copies on disk are **tenant exports** (the customer tenant), not catalogue downloads. The current version is on disk; the
    older version probably is not, only the chat history and the Czech document describe it.
 3. Variants: asynchronous and synchronous both occur; XI and IDoc generic senders are always used; XSLT in the
    partner directory sometimes, sometimes not needed. Pavol expects the picture to sharpen once the knowledge base
@@ -278,7 +278,7 @@ Settled by the author after the builder check; Pavol can overrule any of them.
    next to `iflows/`, same page structure, and derive the contribution checklist from the templates, not by
    inference from the generic side. Pass A covers both packages. Done criterion §9.1 extends to templates.
 2. **Standard pipeline is the subject; deviations live in the tenant profile.** Customers copy the SAP packages so
-   they can take SAP updates; the structure is standard, the parameters differ (confirmed for E.ON). The knowledge
+   they can take SAP updates; the structure is standard, the parameters differ (confirmed on the customer tenant). The knowledge
    base therefore documents the SAP standard and, for each generic iFlow, its **extension points** (where a customer
    could legitimately add steps). Whether a given tenant did, and how, is tenant data: part 2's profile gets a
    `deviations` section, and the placeholder list in `naming.md` reserves `{{tenant.deviations.*}}` for it. Pass A
@@ -301,10 +301,10 @@ Settled by the author after the builder check; Pavol can overrule any of them.
    test input.
 6. **Sources: clean download for git, tenant export for local use only.** The repository is private, so SAP
    packages may be committed under `knowledge/sources/`, but the copies on disk are tenant exports and carry
-   E.ON's configured values. Therefore the builder downloads the current pipeline packages fresh from the
+   the tenant's configured values. Therefore the builder downloads the current pipeline packages fresh from the
    Integration Suite content catalogue (Discover → Integrations, or the SAP Business Accelerator Hub) and commits
-   those. The E.ON exports stay local: they feed the deviations diff (§12.2) and later the E.ON tenant profiles
-   (part 2). Cloud sessions see only the clean download. If the clean download and the E.ON export differ in
+   those. The tenant exports stay local: they feed the deviations diff (§12.2) and later the tenant profiles
+   (part 2). Cloud sessions see only the clean download. If the clean download and the tenant export differ in
    structure, that difference is recorded in the (local, uncommitted) profile draft, not in `knowledge/`.
 7. **Older version: chat-sourced changelog.** The older version's artifacts are gone, so
    `versions/<current>/changelog.md` is built from pass B claims (chats and the Czech document), each entry marked
@@ -329,30 +329,30 @@ conflict.
 **13.1 Both versions exist as artifacts.** `C:\Users\pavol\Documents\sap-is-pipeline` holds package exports of
 all four pipeline packages from a **SAP trial tenant** (June 2026; e.g. Step02 1.0.5, Step04 1.0.4, Step05 1.0.3,
 Templates 1.1.1): clean SAP content, not customer data. `C:\Users\pavol\Documents\SAP\Integration Suite\Pipeline
-concept` holds the **CZINT (E.ON CZ) exports** of the same packages (September 2026; Step02 1.0.6, Step04 1.0.5,
+concept` holds the **tenant exports** (the customer's CZ tenant) of the same packages (September 2026; Step02 1.0.6, Step04 1.0.5,
 Templates 1.2.0) plus an unpacked copy and a ChatGPT analysis. SAP's own `Change log` files are inside every
 package. Consequence: §12.7 is withdrawn; `versions/<current>/changelog.md` is built from artifact diff plus
 SAP's change logs, and chat claims only annotate it.
 
-**13.2 Where customer content sits in the CZINT export.** Only in `MANIFEST.MF` / `.project` (symbolic names carry a
-`.CZINT` suffix), `parameters.prop` (configured values), `Configured_Custom_Tags.txt` (personnel IDs), and the
+**13.2 Where customer content sits in the tenant export.** Only in `MANIFEST.MF` / `.project` (symbolic names carry a
+tenant suffix), `parameters.prop` (configured values), `Configured_Custom_Tags.txt` (personnel IDs), and the
 analysis text. The `.iflw`, `.propdef`, Groovy, XSLT and mapping files contain no tenant marker. The trial export
 is committed as the older version. For the current version a clean catalogue download (§12.6) is still the
 source committed to git; until it exists, cloud sessions work on the older version and the change logs, and the
-CZINT export stays local.
+The tenant export stays local.
 
 **13.3 The "Czech document" is a documentation tree, in three generations.** (a) Local Markdown from the first
 Claude Code analysis (11 per-iFlow pages + templates + a 3,000-word extract of SAP's Pipeline Concept guide, at
 1.0.4/1.0.5), (b) a Confluence export of 41 PDF pages (the same material revised at 1.0.5, plus a decision matrix,
-template pages, custom exit / error handling, and **two CZINT-specific pages**: runtime configuration with naming
+template pages, custom exit / error handling, and **two tenant-specific pages**: runtime configuration with naming
 conventions, and partner directory configuration), (c) the ChatGPT analysis of the 1.0.6 export (2,300 words,
 with version diff and deviations). The original Claude Code transcript is not on this machine; its output (a) is.
 Consequence for pass B: the inputs are these documents, not chat transcripts; the extraction prompt (Appendix A)
 is run over documents. Pass A becomes **verification and translation**: the Czech pages are a draft per iFlow, the
 artifacts remain the only source of facts, and the citation rule is unchanged.
 
-**13.4 The two CZINT pages are tenant-profile material** (part 2), not knowledge base material. They go to
-`testdata/` and later to the E.ON CZ profile. All other pages are generic and may be committed to the private
+**13.4 The two tenant pages are tenant-profile material** (part 2), not knowledge base material. They go to
+`testdata/` and later to the tenant profile. All other pages are generic and may be committed to the private
 repository as inputs (Pavol's own writing; see §10 answer below), with tenant markers replaced.
 
 **13.5 Division of labour.** Local (this machine): collect, scrub, stage, commit sources and inputs, push.

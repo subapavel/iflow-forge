@@ -40,7 +40,7 @@
 ### Task 0 (local, done 2026-10-19): data collection, scrubbing, staging, push
 
 **Files:**
-- Created (untracked): `testdata/pipeline/README.md`, `testdata/pipeline/trial-2026-06/`, `testdata/pipeline/czint-2026-09/`, `testdata/pipeline/confluence-2026-10/{pdf,txt}/`, `testdata/pipeline/forbidden-values.txt`, local throwaway staging scripts
+- Created (untracked): `testdata/pipeline/README.md`, `testdata/pipeline/trial-2026-06/`, `testdata/pipeline/<tenant>-2026-09/`, `testdata/pipeline/confluence-2026-10/{pdf,txt}/`, `testdata/pipeline/forbidden-values.txt`, local throwaway staging scripts
 - Created (committed): `knowledge/sources/2026-06-trial/<package>/<symbolic-name>/...`, `knowledge/sources/2026-09-current/...`, `knowledge/sources/README.md`, `knowledge/inputs/en/README.md`, `knowledge/inputs/en/confluence-2026-10/*.md` (39 pages), `knowledge/inputs/en/tenant-export-review-2026-09.md`
 - Modified: `.gitignore`, `.gitattributes` (`knowledge/sources/** -text`)
 
@@ -227,11 +227,11 @@
 ### Task 9: Local tenant comparison (not committed)
 
 **Files:**
-- Create (untracked): `testdata/pipeline/deviations-czint.md`
+- Create (untracked): `testdata/pipeline/deviations-<tenant>.md`
 - Modify: `knowledge/pipeline/iflows/*.md` (*Extension points* only, if the comparison reveals a customization point)
 
-- [ ] **Step 1: Dump the tenant export** (local): `po-xray iflow --json testdata/pipeline/czint-2026-09/analyza/<package> > testdata/pipeline/dump-czint-<package>.json` and the staged sources the same way.
-- [ ] **Step 2: Compare** step lists and participants (`IFlowDump.json` is stable-ordered for this reason). Record per iFlow: identical / steps added or removed / parameters configured. Write `deviations-czint.md`.
+- [ ] **Step 1: Dump the tenant export** (local): `po-xray iflow --json testdata/pipeline/<tenant>-2026-09/analyza/<package> > testdata/pipeline/dump-<tenant>-<package>.json` and the staged sources the same way.
+- [ ] **Step 2: Compare** step lists and participants (`IFlowDump.json` is stable-ordered for this reason). Record per iFlow: identical / steps added or removed / parameters configured. Write `deviations-<tenant>.md`.
 - [ ] **Step 3: Feed back only structure**: where the tenant added a step at a place SAP left open, add that place to the generic page's *Extension points* described generically ("after step n, before the router"), without the tenant's step name or logic. Run the tests with `-Dkb.forbidden=testdata/pipeline/forbidden-values.txt`.
 - [ ] **Step 4: Commit** only `knowledge/pipeline/iflows` changes: `KB: extension points from tenant comparison`. Verify `git status --short | grep testdata` is empty.
 
@@ -241,13 +241,13 @@
 
 **Files:**
 - Create: `knowledge/inputs/claims/confluence-2026-10.md`, `knowledge/inputs/claims/tenant-export-review-2026-09.md`, `knowledge/inputs/claims/triage.md`
-- Create (untracked): `testdata/pipeline/claims/czint-pages.md`
+- Create (untracked): `testdata/pipeline/claims/<tenant>-pages.md`
 - Modify: any `knowledge/pipeline/**/*.md` (enrichment), `pitfalls.md`
 - Create: `knowledge/pipeline/versions/<label>/changelog.md`
 
-- [ ] **Step 1: Extract claims**: inputs are the documents in `knowledge/inputs/en/` (Confluence pages and the 2026-09 review) and, locally only, the two tenant pages in `testdata/pipeline/confluence-2026-10/txt/czint-*.txt`. For each input set a fresh agent session with Appendix A of the spec as the prompt and the documents attached; save the output under `knowledge/inputs/claims/` (committed; no tenant values after Task 0's scrubbing) and the tenant pages' claims under `testdata/`.
+- [ ] **Step 1: Extract claims**: inputs are the documents in `knowledge/inputs/en/` (Confluence pages and the 2026-09 review) and, locally only, the two tenant pages in `testdata/pipeline/confluence-2026-10/txt/<tenant>-*.txt`. For each input set a fresh agent session with Appendix A of the spec as the prompt and the documents attached; save the output under `knowledge/inputs/claims/` (committed; no tenant values after Task 0's scrubbing) and the tenant pages' claims under `testdata/`.
 - [ ] **Step 2: Triage table** `claims/triage.md`: columns claim id, source, disposition ∈ {`fact→<page>`, `rationale→<page>`, `procedure→Task 11`, `pitfall`, `changelog`, `tenant→profile`, `dropped (reason)`}. Every claim gets a row.
-- [ ] **Step 3: Apply**: `fact→` rows: locate the artifact, add the sentence with its cite; if the artifact disagrees, the row becomes `pitfall` ("doc said X, artifact shows Y"). `rationale→` rows: add with tag `[rationale, from analysis 2026]`. `changelog` rows: entries in `versions/<label>/changelog.md` alongside the artifact diff (`2026-06-trial` versus `2026-09-current`, compared with `po-xray iflow --json` on both) and SAP's `CHANGELOG.txt`; the inline "(v1: was X)" note on the affected page under *Version notes*. `tenant→profile` rows: copy to `testdata/pipeline/profile-draft-czint.md` (input to part 2).
+- [ ] **Step 3: Apply**: `fact→` rows: locate the artifact, add the sentence with its cite; if the artifact disagrees, the row becomes `pitfall` ("doc said X, artifact shows Y"). `rationale→` rows: add with tag `[rationale, from analysis 2026]`. `changelog` rows: entries in `versions/<label>/changelog.md` alongside the artifact diff (`2026-06-trial` versus `2026-09-current`, compared with `po-xray iflow --json` on both) and SAP's `CHANGELOG.txt`; the inline "(v1: was X)" note on the affected page under *Version notes*. `tenant→profile` rows: copy to `testdata/pipeline/profile-draft-<tenant>.md` (input to part 2).
 - [ ] **Step 4: Verify**: every claim has a triage row; full test run → BUILD SUCCESS (budget!). Commit `KB: enrichment from prior documentation, changelog <label>` (only `knowledge/`).
 
 ---
@@ -293,5 +293,5 @@
 
 ### Task 13: Done check against the spec
 
-- [ ] **Step 1: Walk spec §9** criteria 1 to 7, each with the command or file that proves it (test run output, `versions/<label>/changelog.md`, `naming.md`, `benchmark/results-<date>.md`, triage table with no unhandled rows, `grep -ri czint knowledge/` empty).
+- [ ] **Step 1: Walk spec §9** criteria 1 to 7, each with the command or file that proves it (test run output, `versions/<label>/changelog.md`, `naming.md`, `benchmark/results-<date>.md`, triage table with no unhandled rows, `grep -ri <tenant> knowledge/` empty).
 - [ ] **Step 2: Update the spec status line** to `Status: implemented <date>` and `README.md` to mention the skill. Commit `KB: part 1 done`.
