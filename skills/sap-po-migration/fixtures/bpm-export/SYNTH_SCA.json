@@ -1,0 +1,79 @@
+{
+  "schemaVersion" : "0.1",
+  "generator" : {
+    "name" : "po-xray",
+    "version" : "0.1.0-SNAPSHOT",
+    "readAt" : "2026-01-01T00:00:00Z"
+  },
+  "source" : {
+    "file" : "SYNTH_SCA.sca",
+    "softwareComponent" : {
+      "name" : "SYNTH_SCA",
+      "vendor" : "example.com"
+    }
+  },
+  "bpm" : [ {
+    "dc" : "synth/bpm",
+    "processes" : [ {
+      "id" : "00000000-0000-0000-0000-000000000101",
+      "name" : "OrderApproval",
+      "source" : "src/bpmn/OrderApproval.bpmn",
+      "nodes" : [ {
+        "id" : "00000000-0000-0000-0000-000000000201",
+        "kind" : "startEvent",
+        "name" : "Start"
+      }, {
+        "id" : "00000000-0000-0000-0000-000000000202",
+        "kind" : "automatedActivity",
+        "name" : "Check credit"
+      }, {
+        "id" : "00000000-0000-0000-0000-000000000203",
+        "kind" : "mappingActivity",
+        "name" : "Map order"
+      }, {
+        "id" : "00000000-0000-0000-0000-000000000204",
+        "kind" : "exclusiveGateway",
+        "name" : "Approval needed?"
+      }, {
+        "id" : "00000000-0000-0000-0000-000000000205",
+        "kind" : "unknown",
+        "metaclass" : "HumanActivity",
+        "name" : "Approve order"
+      }, {
+        "id" : "00000000-0000-0000-0000-000000000206",
+        "kind" : "automatedActivity",
+        "name" : "Book order"
+      }, {
+        "id" : "00000000-0000-0000-0000-000000000207",
+        "kind" : "endEvent",
+        "name" : "End"
+      } ]
+    } ]
+  } ],
+  "ejb" : [ {
+    "dc" : "synth/ejb",
+    "ear" : "synth/ear",
+    "application" : "synth/ear~ejb",
+    "beans" : [ {
+      "name" : "CheckCreditBean",
+      "class" : "com.example.synth.CheckCreditBean",
+      "type" : "stateless",
+      "roles" : [ "bpmFunction" ]
+    }, {
+      "name" : "BookOrderBean",
+      "class" : "com.example.synth.BookOrderBean",
+      "type" : "stateless",
+      "roles" : [ "bpmFunction" ]
+    }, {
+      "name" : "SynthModuleBean",
+      "class" : "com.example.synth.SynthModuleBean",
+      "type" : "stateless",
+      "roles" : [ "adapterModule" ]
+    }, {
+      "name" : "SynthHelperBean",
+      "class" : "com.example.synth.SynthHelperBean",
+      "type" : "stateless",
+      "roles" : [ "other" ]
+    } ]
+  } ]
+}

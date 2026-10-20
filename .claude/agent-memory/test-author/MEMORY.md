@@ -18,3 +18,8 @@ Durable facts only (build quirks, verified APIs, recurring findings). Never task
 - iflow-forge-knowledge `Checks`/`KnowledgeBase` live in src/test (the module's "production"); the implementer edits them, the test-author only the *Test classes.
 - Never overload a fixed `m(Path, Path)` with `m(Path, Path...)` of swapped meaning: a 2-arg call binds to the fixed one (phase 1). Use a new name (MIG-01: `Checks.forbiddenIn`).
 - Reference check of expectations: tar the repo (minus .git, testdata, target) into the scratchpad, add a throwaway impl there, `mvn -o -pl <module> -am test -Dtest=... -Dsurefire.failIfNoSpecifiedTests=false`, then delete the copy.
+- Committed synthetic migration fixtures (MIG-02): `skills/sap-po-migration/fixtures/` (icos-SND_SYS.json, bpm-export/SYNTH_SCA.json, bpm-export/notes.json); po-xray-cli tests reach them as `Path.of("..", "skills", ...)` (surefire cwd = module dir).
+- `IntegrationInventory.Module` clashes with `java.lang.Module` under a wildcard nested import; import it by name or qualify it.
+- Real reader `Channel.adapter` = `transportProtocol + "/" + messageProtocol` (XI sender on Java PO: `SOAP/XI`); NW BPM `Node.metaclass` is set only for kind `unknown` (values like `Galaxy.Workflow.*`).
+- An overload `m(Receiver...)` next to `m(DirRef, X, Receiver...)` makes `m(null, null, r)` ambiguous; cast the first null.
+- `io.poxray.json.Json` mapper uses NON_EMPTY value inclusion (empty lists/maps omitted, round-trip to null) and default pretty printer (`"issues" : [ ]`); a field that must always appear needs its own inclusion override.

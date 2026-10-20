@@ -1,0 +1,288 @@
+{
+  "schemaVersion" : "0.1",
+  "generator" : {
+    "name" : "po-xray",
+    "version" : "0.1.0-SNAPSHOT",
+    "readAt" : "2026-01-01T00:00:00Z"
+  },
+  "source" : {
+    "files" : [ "synthetic-directory-objs.tpz" ]
+  },
+  "query" : {
+    "component" : "SND_SYS",
+    "direction" : "out"
+  },
+  "components" : [ {
+    "name" : "SND_SYS"
+  }, {
+    "name" : "RCV_SYS"
+  }, {
+    "name" : "RCV2_SYS"
+  } ],
+  "icos" : [ {
+    "oid" : "00000000000000000000000000000011",
+    "description" : "Synthetic sync ICO, order query from SND_SYS to RCV_SYS over XI. Generated for dir://IFLOW/00000000000000000000000000000011 'IF_OrderQuery_to_RCV_SYS'",
+    "generatedFrom" : "IF_OrderQuery_to_RCV_SYS",
+    "sender" : {
+      "component" : "SND_SYS",
+      "iface" : {
+        "type" : "ifmmessif",
+        "name" : "OrderQuery_Sync",
+        "namespace" : "urn:example:orders",
+        "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+      },
+      "operations" : [ "OrderQuery_Sync" ],
+      "channel" : {
+        "component" : "SND_SYS",
+        "name" : "CC_SND_XI"
+      }
+    },
+    "receivers" : [ {
+      "component" : "RCV_SYS",
+      "qualityOfService" : "BE",
+      "interfaces" : [ {
+        "operation" : "OrderQuery_Sync",
+        "mapping" : {
+          "type" : "MAPPING",
+          "name" : "OM_OrderQuery_to_RCV_SYS",
+          "namespace" : "urn:example:orders",
+          "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+        },
+        "targets" : [ {
+          "iface" : {
+            "type" : "ifmmessif",
+            "name" : "OrderQuery_In",
+            "namespace" : "urn:example:orders",
+            "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+          },
+          "multiplicity" : "1"
+        } ]
+      } ],
+      "channels" : [ {
+        "component" : "RCV_SYS",
+        "name" : "CC_RCV_XI"
+      } ]
+    } ],
+    "noReceiverBehaviour" : "error",
+    "modifiedBy" : "USER_SYNTH",
+    "modifiedAt" : "2026-01-01T00:00:00Z"
+  }, {
+    "oid" : "00000000000000000000000000000012",
+    "description" : "Synthetic async ICO, orders from SND_SYS as IDoc to RCV_SYS and RCV2_SYS. Generated for dir://IFLOW/00000000000000000000000000000012 'IF_OrderIDoc_to_RCV_SYS_RCV2_SYS'",
+    "generatedFrom" : "IF_OrderIDoc_to_RCV_SYS_RCV2_SYS",
+    "sender" : {
+      "component" : "SND_SYS",
+      "iface" : {
+        "type" : "ifmmessif",
+        "name" : "ORDERS.ORDERS05",
+        "namespace" : "urn:example:idoc",
+        "swc" : "SC_EXAMPLE_IDOC, 1.0 of example"
+      },
+      "operations" : [ "ORDERS.ORDERS05" ],
+      "channel" : {
+        "component" : "SND_SYS",
+        "name" : "CC_SND_IDOC"
+      }
+    },
+    "receivers" : [ {
+      "component" : "RCV_SYS",
+      "qualityOfService" : "EO",
+      "interfaces" : [ {
+        "operation" : "ORDERS.ORDERS05",
+        "mapping" : {
+          "type" : "MAPPING",
+          "name" : "OM_ORDERS05_to_Order",
+          "namespace" : "urn:example:orders",
+          "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+        },
+        "targets" : [ {
+          "iface" : {
+            "type" : "ifmmessif",
+            "name" : "Order_In",
+            "namespace" : "urn:example:orders",
+            "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+          },
+          "multiplicity" : "1"
+        } ]
+      } ],
+      "channels" : [ {
+        "component" : "RCV_SYS",
+        "name" : "CC_RCV_XI"
+      } ]
+    }, {
+      "component" : "RCV2_SYS",
+      "condition" : {
+        "text" : "/ORDERS05/IDOC/E1EDK01/BSART = \"NB\"",
+        "lines" : [ {
+          "group" : 1,
+          "left" : "/ORDERS05/IDOC/E1EDK01/BSART",
+          "operator" : "EQ",
+          "right" : "\"NB\""
+        } ]
+      },
+      "qualityOfService" : "EO",
+      "interfaces" : [ {
+        "operation" : "ORDERS.ORDERS05",
+        "mapping" : {
+          "type" : "MAPPING",
+          "name" : "OM_ORDERS05_to_OrderFile",
+          "namespace" : "urn:example:orders",
+          "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+        },
+        "targets" : [ {
+          "iface" : {
+            "type" : "ifmmessif",
+            "name" : "OrderFile_In",
+            "namespace" : "urn:example:orders",
+            "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+          },
+          "multiplicity" : "1"
+        } ]
+      } ],
+      "channels" : [ {
+        "component" : "RCV2_SYS",
+        "name" : "CC_RCV2_FILE"
+      } ]
+    } ],
+    "noReceiverBehaviour" : "error",
+    "modifiedBy" : "USER_SYNTH",
+    "modifiedAt" : "2026-01-01T00:00:00Z"
+  }, {
+    "oid" : "00000000000000000000000000000013",
+    "description" : "Synthetic async ICO, order batches from SND_SYS over SOAP with extended receiver determination. Generated for dir://IFLOW/00000000000000000000000000000013 'IF_OrderBatch_to_RCV_SYS'",
+    "generatedFrom" : "IF_OrderBatch_to_RCV_SYS",
+    "sender" : {
+      "component" : "SND_SYS",
+      "iface" : {
+        "type" : "ifmmessif",
+        "name" : "OrderBatch_Async",
+        "namespace" : "urn:example:orders",
+        "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+      },
+      "operations" : [ "OrderBatch_Async" ],
+      "channel" : {
+        "component" : "SND_SYS",
+        "name" : "CC_SND_SOAP"
+      }
+    },
+    "receivers" : [ {
+      "component" : "RCV_SYS",
+      "qualityOfService" : "EO",
+      "interfaces" : [ {
+        "operation" : "OrderBatch_Async",
+        "mapping" : {
+          "type" : "MAPPING",
+          "name" : "OM_OrderBatch_to_Orders",
+          "namespace" : "urn:example:orders",
+          "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+        },
+        "targets" : [ {
+          "iface" : {
+            "type" : "ifmmessif",
+            "name" : "Order_In",
+            "namespace" : "urn:example:orders",
+            "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+          },
+          "multiplicity" : "1"
+        }, {
+          "iface" : {
+            "type" : "ifmmessif",
+            "name" : "Order_In",
+            "namespace" : "urn:example:orders",
+            "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+          },
+          "multiplicity" : "1"
+        } ]
+      } ],
+      "channels" : [ {
+        "component" : "RCV_SYS",
+        "name" : "CC_RCV_XI"
+      } ]
+    } ],
+    "dynamicRouting" : {
+      "operationSpecific" : false,
+      "mappings" : [ {
+        "type" : "MAPPING",
+        "name" : "OM_OrderBatch_Routing",
+        "namespace" : "urn:example:orders",
+        "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+      } ]
+    },
+    "noReceiverBehaviour" : "error",
+    "modifiedBy" : "USER_SYNTH",
+    "modifiedAt" : "2026-01-01T00:00:00Z"
+  } ],
+  "channels" : [ {
+    "id" : {
+      "component" : "SND_SYS",
+      "name" : "CC_SND_XI"
+    },
+    "direction" : "sender",
+    "adapter" : "XI/XI",
+    "transportProtocol" : "XI",
+    "messageProtocol" : "XI",
+    "description" : "Synthetic XI sender channel of SND_SYS"
+  }, {
+    "id" : {
+      "component" : "SND_SYS",
+      "name" : "CC_SND_IDOC"
+    },
+    "direction" : "sender",
+    "adapter" : "IDoc/IDoc XML",
+    "transportProtocol" : "IDoc",
+    "messageProtocol" : "IDoc XML",
+    "description" : "Synthetic IDoc sender channel of SND_SYS"
+  }, {
+    "id" : {
+      "component" : "SND_SYS",
+      "name" : "CC_SND_SOAP"
+    },
+    "direction" : "sender",
+    "adapter" : "SOAP/SOAP 1.1",
+    "transportProtocol" : "SOAP",
+    "messageProtocol" : "SOAP 1.1",
+    "modules" : [ {
+      "position" : 1,
+      "name" : "localejbs/MyPreModule",
+      "type" : "L",
+      "namespace" : "pre"
+    }, {
+      "position" : 2,
+      "name" : "CallSapAdapter",
+      "type" : "L",
+      "namespace" : "0"
+    } ],
+    "description" : "Synthetic SOAP sender channel of SND_SYS"
+  }, {
+    "id" : {
+      "component" : "RCV_SYS",
+      "name" : "CC_RCV_XI"
+    },
+    "direction" : "receiver",
+    "adapter" : "XI/XI",
+    "transportProtocol" : "XI",
+    "messageProtocol" : "XI",
+    "description" : "Synthetic XI receiver channel of RCV_SYS"
+  }, {
+    "id" : {
+      "component" : "RCV2_SYS",
+      "name" : "CC_RCV2_FILE"
+    },
+    "direction" : "receiver",
+    "adapter" : "File/File",
+    "transportProtocol" : "File",
+    "messageProtocol" : "File",
+    "modules" : [ {
+      "position" : 1,
+      "name" : "CallSapAdapter",
+      "type" : "L",
+      "namespace" : "0"
+    }, {
+      "position" : 2,
+      "name" : "MyCustomModule",
+      "type" : "L",
+      "namespace" : "post"
+    } ],
+    "description" : "Synthetic File receiver channel of RCV2_SYS"
+  } ]
+}

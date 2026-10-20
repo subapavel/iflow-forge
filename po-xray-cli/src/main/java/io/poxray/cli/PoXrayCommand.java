@@ -14,13 +14,14 @@ import org.aesh.command.invocation.CommandInvocation;
         generateHelp = true,
         groupCommands = {JsonCommand.class, DocCommand.class, ExportCommand.class, ComponentsCommand.class,
             IcoCommand.class, SearchCommand.class, ShowCommand.class, WhereUsedCommand.class, IflowCommand.class,
-            UnpackCommand.class, BpmFunctionsCommand.class})
+            UnpackCommand.class, BpmFunctionsCommand.class, AttributesCommand.class, BpmInventoryCommand.class})
 public class PoXrayCommand implements Command<CommandInvocation> {
 
     @Override
     public CommandResult execute(CommandInvocation invocation) {
         System.err.println("Usage: po-xray <json|doc|export> <file.sca> [options]  |  po-xray components -s <system>"
-                + "  |  po-xray ico -s <system> -c <component>   (po-xray --help, po-xray <command> --help)");
+                + "  |  po-xray ico -s <system> -c <component>  |  po-xray attributes <ico.json>... [--json]"
+                + "  |  po-xray bpm-inventory <export-dir> [--json]   (po-xray --help, po-xray <command> --help)");
         return CommandResult.USAGE_ERROR;
     }
 }

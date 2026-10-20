@@ -5,7 +5,9 @@ import io.poxray.cpi.PackageExport;
 import io.poxray.cpi.Param;
 import io.poxray.cpi.Participant;
 import io.poxray.cpi.Step;
+import io.poxray.model.AttributesReport;
 import io.poxray.model.BpmComponent;
+import io.poxray.model.BpmInventoryReport;
 import io.poxray.model.BuiltinFunction;
 import io.poxray.model.DataType;
 import io.poxray.model.DcRef;
@@ -76,6 +78,11 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
             IntegrationInventory.UserFunction.class, IntegrationInventory.FunctionArgument.class,
             IntegrationInventory.MessageType.class, IntegrationInventory.DataType.class,
             IntegrationInventory.ExternalDefinition.class,
+            AttributesReport.class, AttributesReport.Scenario.class,
+            AttributesReport.IcoRef.class, AttributesReport.Attribute.class,
+            AttributesReport.ModuleRef.class,
+            BpmInventoryReport.class, BpmInventoryReport.ProcessRow.class,
+            BpmInventoryReport.EjbRow.class, BpmInventoryReport.Totals.class,
             IFlow.class, Participant.class, Step.class, Param.class, PackageExport.class, PackageExport.Entry.class
         },
         classNames = {

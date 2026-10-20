@@ -264,3 +264,13 @@ Checks: knowledge module VERIFIED_PASS (target/mig-01-green.log; knowledge 54/0/
 Review: reviewer PASS (gap noted: canonical without frontmatter untested → MIG-04 row); kb-reviewer r1 FAIL 2 (SKILL.md:68 commit split vs §9; :37 "if any") → fixed; r2 PASS. Reviewer memory 88.
 Findings: none. Not a deviation. Decisions: none new (P-1, P-9, P-10 applied; D-030 unchanged). Issues: none new. MIG-01 done.
 Next: MIG-02 ready (helpers `po-xray attributes`, `po-xray bpm-inventory` on committed synthetic fixtures under skills/sap-po-migration/fixtures/); KB-11e, KB-11d ready.
+
+## MIG-02 · 2026-10-20 · (hash in the next entry)
+Test first: ScenarioAttributesTest (40→47), BpmInventoryTest (12→13), AttributesCommandTest (5), BpmInventoryCommandTest (5); red as compile errors (target/mig-02-red.log); §8 tests added after the code (green first run); §9 test red (target/mig-02-red3.log) then green.
+Changed: io.poxray.migration.{ScenarioAttributes,BpmInventory}; io.poxray.model.{AttributesReport,BpmInventoryReport}; AttributesCommand, BpmInventoryCommand, PoXrayCommand; NativeReflection; docs/OUTPUT-MODEL.md "Migration helpers"; fixtures skills/sap-po-migration/fixtures/ (synthetic).
+Rules: D-025 attributes with the source field or `?` + candidates + question; adapter class on either part of transport/message (SOAP/XI → XI); sender MessageTransformBean → inbound_conversion custom, not an exit; `custom` (receiver and interface determination), `ordered`, `ALO` never derived; error_handling always `?` (tenant-level).
+Checks: mvn verify exit 0 (verifier target/mig-02-verify-r4.log); surefire core 178/0/0/22 (was 118), cli 22/0/0/1 (was 12), native 2/0/0/0, knowledge 54/0/0/2; CLI smoke exit 0 on both fixtures, exit 1 on a missing path (target/mig-02-smoke-*.md); sample-ico.json: custom_exit none, inbound_conversion custom (= expected-proposal.md); forbidden-pattern grep 0.
+Review: reviewer r1 PASS, r2 PASS on the delta (r1 PASS with observations → mapping one-type needs name+namespace, decided §9, red test r3 then green; nits taken; not taken: untested honesty branches, null-name NPE in BpmInventory — non-blocking)
+Findings: the §6.3 rules were under-specified for Java-PO XI channels (`SOAP/XI`) and for MessageTransformBean; decided in the acceptance spec §8, documented in OUTPUT-MODEL — no spec text contradicted, no deviation.
+Ledger: MIG-01 hash 144bcc5, CI 39508095025 green.
+Next: MIG-03 needs KB-11e (versions/features.md) → KB-11e next, then MIG-03.

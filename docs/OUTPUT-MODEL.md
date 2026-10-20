@@ -521,3 +521,72 @@ Facts verified on xipod (PO 7.50 SP28):
 - SimpleQuery: case-insensitive matching is refused for `SERVICE`, `FROMSRVC`, `TOSRVC`, `MODIFYUSER`; `TOSRVC` does
   not find ICO receivers (they are in the ICO content) → components and ICOs are listed and filtered locally.
 - The JDK HTTP client must use HTTP/1.1: the h2c upgrade request is answered with 403 by SAP AS Java.
+
+## Migration helpers
+
+Two read-only helpers of the migration skill (`sap-po-migration`) turn po-xray outputs into decision inputs. Both
+write Markdown by default and JSON with `--json`; `schemaVersion` "0.1", `generator` as in the other outputs, maps
+sorted by key, `issues` always written (`[]` = none found), other nulls and empty lists omitted.
+
+### `po-xray attributes <ico.json>...` → `AttributesReport`
+
+```jsonc
+{
+  "schemaVersion": "0.1", "generator": { … }, "inputs": [ "icos-SND_SYS.json" ],   // paths as given
+  "scenarios": [ {                                   // one per icos[i], in file order
+    "file": "icos-SND_SYS.json",
+    "ico": { "oid", "generatedFrom", "description", "senderComponent", "senderInterface", "senderNamespace",
+             "receiverComponents": [ … ] },
+    "attributes": [                                  // always 11, D-025 order: runtime, qos, sender_type,
+                                                     // receiver_type, receiver_count, receiver_determination,
+                                                     // interface_determination, mapping, error_handling,
+                                                     // custom_exit, inbound_conversion
+      { "name": "runtime", "value": "?", "source": "icos[2].receivers[0].qualityOfService",
+        "candidates": [ "integrated-async", "decoupled" ], "question": "tenant or scenario choice" },
+      { "name": "qos", "value": "EO", "source": "icos[2].receivers[0].qualityOfService" }
+    ],
+    "modules": [ { "side": "sender", "channel": "CC_SND_SOAP", "position": 1, "name": "localejbs/MyPreModule" } ]
+  } ],
+  "issues": [ ]
+}
+```
+Row contract: a resolved row has a `value` from the D-025 set and a `source`; an open row has `value` `?`, the
+`candidates` still possible (in D-025 order) and a non-blank `question`, `source` = the path looked at or null.
+`note` is optional (e.g. "from qos BE"). The tool never guesses: what the inventory cannot decide is `?`.
+`source` is a path into the input file: `icos[i]…` for ICO fields, `channels[k].adapter` /
+`channels[k].modules[m].name` for the channel a `DirRef` resolves to (same `oid` when both carry one, else same
+party, component and name; an unresolvable reference counts as missing).
+Rules in short: QoS normalised (ExactlyOnce → EO, ExactlyOnceInOrder → EOIO, BestEffort → BE; ALO never derived);
+BE → `integrated-sync`, EO/EOIO → `?`; adapter `transport/message`, a part starting with XI → XI, with IDoc → IDOC,
+else OTHER (`SOAP/XI` → XI); dynamic routing → `n` receivers and `reuse-xrd`; a receiver or assignment condition →
+`xpath`; mapping shape from targets and multiplicities, "one type" only when every target interface has the
+same name and namespace (`ordered` and receiver_determination `custom` are never derived);
+`error_handling` is always `?` (tenant switch, D-025); exit modules = channel modules that are not adapter beans
+(`CallSapAdapter`, `CallAdapterWithMessageAsXMB`, `XISOAPAdapterBean`, `CallXIAdapter`, optional `localejbs/`) →
+`pre` / `post` / `pre+post`; `AF_Modules/MessageTransformBean` on the sender channel is `inbound_conversion` `custom`,
+not an exit. `modules` lists every non-adapter module with its raw name.
+Markdown: `# Scenario attributes`, per scenario `## <generatedFrom, else oid>`, the description, `sender … → receivers
+…`, a table `| attribute | value | source |` (open rows show `? (candidates)`), `### Questions` and `### Modules`
+(omitted when empty), `## Issues` when any. A file that cannot be read or parsed fails the command (exit 1).
+
+### `po-xray bpm-inventory <export-dir>` → `BpmInventoryReport`
+
+```jsonc
+{
+  "schemaVersion": "0.1", "generator": { … }, "inputs": [ "export/SYNTH_SCA.json" ],  // files read as inventories
+  "processes": [ { "file", "dc": "synth/bpm", "id", "name": "OrderApproval", "source": "src/bpmn/….bpmn",
+                   "steps": { "automatedActivity": 2, "unknown": 1, … }, "stepsTotal": 7, "humanTasks": 1,
+                   "unknownMetaclasses": [ "HumanActivity" ] } ],
+  "ejb": [ { "file", "dc": "synth/ejb", "beansByRole": { "bpmFunction": [ "BookOrderBean", "CheckCreditBean" ] } } ],
+  "totals": { "processes": 1, "steps": 7, "humanTasks": 1, "beansByRole": { "bpmFunction": 2, … } },
+  "issues": [ { "severity": "warning", "code": "NOT_SCA_INVENTORY", "message": "…/notes.json is not …; skipped" } ]
+}
+```
+Input: every `*.json` directly in the directory, sorted by name (non-json files and subdirectories are ignored), or
+the one file given. A `*.json` that does not parse as `ScaInventory` or has neither `bpm` nor `ejb` is skipped with
+issue `NOT_SCA_INVENTORY` (warning, `source` = the file). No usable inventory → the command exits 1.
+`steps` counts nodes per `kind`; `humanTasks` is a heuristic: nodes whose `metaclass` contains "human"
+(case-insensitive). The SCA reader has no human-task kind, so these nodes are kind `unknown` today and their
+metaclass also appears in `unknownMetaclasses`. A bean with two roles is listed under both in `beansByRole`.
+Markdown: `# BPM inventory`, `## Processes` table `| dc | process | steps | human tasks | unknown metaclasses |`,
+`### <process>` with `| kind | count |`, `## EJB roles` table `| dc | role | beans |`, `## Totals`, `## Issues` when any.

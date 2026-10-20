@@ -14,6 +14,7 @@ Durable facts only (build quirks, verified APIs, recurring findings). Never task
   `poxray.testdata` / `iflowforge.sources`; `-Dkb.skip=...` / `-Dkb.forbidden=...` pass through; `-Dkb.skip=` (empty) overrides the pom default; relative kb.forbidden resolves against the repo root.
   Synthetic CPI artifacts from there via the public bridge `io.poxray.cpi.SyntheticArtifact` (its test sources).
 - `[Fatal Error] :1:9: XML document structures...` on stderr is a po-xray-core test's expected parse error.
+- CLI jar after `verify`: `po-xray-cli/target/po-xray-cli-<version>-runner.jar` (uber-jar, no `quarkus-app/`).
 
 ## APIs (verified)
 - JUnit Jupiter is 6.1.3 (javap): `Assumptions.assumeFalse(boolean, Supplier<String>)` exists.
@@ -21,6 +22,11 @@ Durable facts only (build quirks, verified APIs, recurring findings). Never task
   `ProcessedCommand.addArgument`, `validatePositionalIndexes`; exercised by CpiCommandsTest).
 - Jackson 3.2.3: `JsonNode.asString()` / `stringValue()` (`asText()` is the legacy final alias), `readTree(byte[])`,
   JsonNode is Iterable; `Json` NON_EMPTY keeps primitive 0 / false (IFlowDumpTest), drops "" and empty lists.
+- Aesh 3.18.2 `@Arguments List<String>` (javap) takes several positional values; `required = true` with none
+  given exits 2 before `execute`.
+- Json NON_EMPTY drops an empty `issues` list, so a CLI test reading the JSON back sees null: a report whose
+  consumers assert on `issues()` carries `@JsonInclude(NON_NULL)` on that component (AttributesReport, BpmInventoryReport).
+- `tools.jackson.core.JacksonException` (unchecked) has `getOriginalMessage()` without the location suffix.
 - `io.poxray.sca.ZipArchive.open/of` throw UncheckedIOException; nested zip bytes via `ZipArchive.of(bytes, name)`.
 - CLI stdout: `invocation.println(...)` (LaunchResult.getOutput); stderr notes via System.err; user errors as
   `ScaService.CliException` inside `service.run` (exit 1, "Error: <msg>").
