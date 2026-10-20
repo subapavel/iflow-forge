@@ -189,8 +189,10 @@ run under the same `CLAUDE.md`.
   (`rm -f target/.batch-in-review && git commit …`). `target/` is gitignored. The gated stop hook
   in `.claude/hooks/stop-hook-git-check.gated.sh` stays silent while the marker exists, skips the
   dirty-tree reminder on `claude/*` branches, and throttles the rest to one reminder per 30
-  minutes; the owner installs it from the cloud environment's Setup script (the two `cp` lines in
-  the file's header). The agent never installs or edits its own hooks.
+  minutes. The environment manager writes the original hook at every container start, after the
+  environment's Setup script ran (once, at snapshot time), so the swap is done by the `startup|resume`
+  SessionStart hook in `.claude/settings.json`, committed by the owner (a6bfbef). The agent never
+  installs or edits its own hooks; it may edit the committed files only through the owner.
 - **One review round per batch is the target.** The author's self-check list in
   `.claude/agents/kb-author.md` mirrors the reviewer's memory; when a review FAIL repeats a
   lesson, the lesson goes into both files in the same commit. A fix packet names file:line, the

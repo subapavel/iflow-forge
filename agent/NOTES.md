@@ -21,6 +21,7 @@ Facts only; the next exact action and the state live in `agent/HANDOFF.md`.
   (a zip for deployable artifacts, plain text for the change log) + `contentmetadata.md` (Base64
   properties, carries the tenant environment name — never staged).
 
+- Windows clones: the longest `.iflw` paths under `knowledge/sources/` are about 230 characters below the repository root, so a clone fails with "Filename too long" unless `git config --global core.longpaths true` is set first (owner, 2026-10-20); a short clone location such as `C:\src\iflow-forge` also helps. After a failed checkout, `git reset --hard HEAD` repairs the clone.
 ## iFlow file format (observed in the sources)
 
 - `.iflw` is BPMN 2.0 XML (`bpmn2:` namespace) with SAP extensions as `ifl:property` elements
