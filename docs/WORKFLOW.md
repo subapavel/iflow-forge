@@ -25,7 +25,8 @@ pages) rather than code. This file is binding for every session working on iflow
    module included), plus the checks the row names. The verifier reports exit codes and the
    failing section; the architect reads the log tail itself and records each check with its
    evidence state.
-6. Review: code by the reviewer, pages by the kb-reviewer, the material handed over by path.
+6. Review: code by the reviewer, pages by the kb-reviewer, the material handed over by path. The
+   architect runs `touch target/.batch-in-review` when the batch leaves for review (§10).
    `FAIL` reopens the task at step 4; a second `FAIL` reopens it at step 3 with a rewritten packet.
    A gate row is reviewed by the gate-reviewer (Fable 5.1) instead.
 7. Commit and push to `main`. Append the PROGRESS entry, rewrite HANDOFF, set the row to `done`.
@@ -170,3 +171,36 @@ worked around silently:
 Nothing is reported outside the repository. The owner reads `HANDOVER.md` at the gate, and
 `agent/HANDOFF.md` + `PROGRESS.md` at any time. Chat messages per task are fine but carry nothing
 that is not also in the files.
+
+## 10. Turn economy (D-024)
+
+Every turn of the architect is priced over the whole session context. In an autonomous session
+most turns did no work: a stop-hook reminder answered with "not yet", or a subagent hand-back that
+only triggered the next hand-off. The rules below cut them; they are portable to any repository
+run under the same `CLAUDE.md`.
+
+- **Wait in the foreground.** When the architect would otherwise go idle waiting for one
+  subagent, it launches that subagent in the foreground (`run_in_background: false`): the turn
+  stays open, no stop hook fires, no "not yet" turn is spent. With two subagents in flight the
+  first runs in the background and the second in the foreground. Background only when the
+  architect has other work to do while waiting.
+- **Mark the batch under review.** When a batch leaves for the reviewer the architect runs
+  `touch target/.batch-in-review`; the command that commits the batch removes it
+  (`rm -f target/.batch-in-review && git commit …`). `target/` is gitignored. The gated stop hook
+  in `.claude/hooks/stop-hook-git-check.gated.sh` stays silent while the marker exists, skips the
+  dirty-tree reminder on `claude/*` branches, and throttles the rest to one reminder per 30
+  minutes; the owner installs it from the cloud environment's Setup script (the two `cp` lines in
+  the file's header). The agent never installs or edits its own hooks.
+- **One review round per batch is the target.** The author's self-check list in
+  `.claude/agents/kb-author.md` mirrors the reviewer's memory; when a review FAIL repeats a
+  lesson, the lesson goes into both files in the same commit. A fix packet names file:line, the
+  evidence to open and the sentence to write, nothing else; the closure check is limited to the
+  fix list and runs as a resume of the same reviewer, never a fresh review.
+- **Split reviews by file set, not by round.** Two read-only reviewers in parallel (≈ 80 turns
+  each) finish a batch in one wall-clock round; a single reviewer that hits its turn limit without
+  a verdict costs a resume turn and a partial re-read.
+- **Scripted ledger fills.** Triage columns, hashes in PROGRESS and HANDOFF, and word counts are
+  filled by one `awk`/`sed` command the verifier or the architect runs, not by a subagent reading
+  the table.
+- **Stop-hook messages are advisory.** When one still arrives mid-batch, the architect answers in
+  one sentence and does not commit: a batch commits only after review PASS and a green verify.
