@@ -72,3 +72,15 @@ input for the designs of parts 3, 4 and 5, not a design. Restated in English; no
     anonymised form (a migration code, never the customer), the strict split between the sellable generic
     content and the customer's local files kept as it is, and the licence of the SAP package sources inside
     `knowledge/sources/` as an owner-only question before any sale.
+
+## Seventh statement, same session
+
+11. For a sellable product the owner proposes that `knowledge/sources/` hold not the SAP packages but their
+    extracted logic — the owner's own analysis, in the agent-readable form po-xray already produces (the
+    `po-xray iflow` dump: participants with adapter type, direction and endpoint; the ordered steps with
+    activity type, depth and properties; the parameters; the resource list) — and asks whether that removes
+    the SAP-licence question. Architect's note: the dump is derived structure, not a copy; what would remain
+    SAP text are the Groovy scripts, the XSDs and the propdef descriptions the pages quote, so a derived
+    source layer needs a script-summary form (what a script reads and writes, by line reference the customer
+    verifies on their own download) and a change to the cite forms of D-019/D-020 — an expensive-to-reverse
+    decision, to be designed and marked draft, and still an owner-only licence call.
