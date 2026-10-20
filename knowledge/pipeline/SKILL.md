@@ -10,7 +10,8 @@ This skill is the knowledge base for the SAP Integration Suite pipeline concept:
 | When you need … | Read |
 |---|---|
 | the pipeline in one page: purpose, message path, generic iFlows, diagram | `overview.md` |
-| headers, exchange properties, JMS queues and ProcessDirect endpoints between steps | `contracts.md` |
+| registry of every header and exchange-property name between steps: set by, read by, cite | `contracts.md` |
+| the message path hop by hop, JMS queues, ProcessDirect endpoints, synchronous-path differences | `message-path.md` |
 | what is stored per scenario in the Partner Directory, key scheme, value types | `partner-directory.md` |
 | the checklist of what a scenario adds and must not touch | `scenario-contribution.md` |
 | SAP's own naming in the package and the tenant naming placeholders | `naming.md` |

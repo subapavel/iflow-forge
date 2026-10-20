@@ -11,7 +11,11 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import org.opentest4j.TestAbortedException;
@@ -191,6 +195,169 @@ class ChecksTest {
         assertThat(Checks.names(kb, sources)).containsExactlyInAnyOrder(
                 "unknown name: Unknown.groovy (in contracts.md)",
                 "unknown name: com.sap.integration.cloud.pipeline.v2.nope (in contracts.md)");
+    }
+
+    // --- C7 contract names ----------------------------------------------------------------------------------------
+
+    /** The Groovy resource of the contract-names fixture: seven call sites, one commented out, one dynamic name. */
+    private static final String CONTRACT_SCRIPT = String.join("\n",
+            "message.setHeader(\"SAP_Sender\", \"x\")",
+            "def rc = message.getProperty(\"retryCount\")",
+            "message.getHeaders().get(\"isWellFormedXml\")",
+            "// message.setHeader(\"Commented\", 1)",
+            "message.setProperty(\"customHeader_\" + key, v)",
+            "message.setHeader('SingleQuoted', 1)",
+            "def headers = message.getHeaders(); headers.get(\"fromMap\")") + "\n";
+
+    /** The seven contract names of the fixture, in sorted (natural String) order. */
+    private static final List<String> CONTRACT_NAMES = List.of("SAP_Receiver", "SAP_Sender", "SingleQuoted",
+            "fromMap", "incomingQueue", "isWellFormedXml", "retryCount");
+
+    /** The five fixture names not backticked in the {@link #contractsWithTwoNames()} page, sorted. */
+    private static final List<String> FIVE_MISSING = List.of("SAP_Sender", "SingleQuoted", "fromMap",
+            "incomingQueue", "isWellFormedXml");
+
+    /** One content-modifier table row as the real {@code .iflw} has it (before entity encoding). */
+    private static String tableRow(String name) {
+        return "<row><cell id='Action'>Create</cell><cell id='Type'>constant</cell><cell id='Value'>v</cell>"
+                + "<cell id='Default'></cell><cell id='Name'>" + name + "</cell><cell id='Datatype'></cell></row>";
+    }
+
+    /** A content-modifier Delete row (the Name cell is a pattern, not a name), cells otherwise as {@link #tableRow}. */
+    private static String deleteRow(String pattern) {
+        return "<row><cell id='Action'>Delete</cell><cell id='Type'>constant</cell><cell id='Value'>v</cell>"
+                + "<cell id='Default'></cell><cell id='Name'>" + pattern + "</cell><cell id='Datatype'></cell></row>";
+    }
+
+    /**
+     * A label folder with one package {@code generic-pipelines/<ID1>}: one Enricher step "Set names" whose
+     * {@code headerTable} row names {@code SAP_Receiver} and whose {@code propertyTable} row names
+     * {@code incomingQueue}, each table followed by a Delete row whose Name cell is a pattern
+     * ({@code $name=SAP_Receiver}, {@code $include=custom*}), and the resource {@code script/S.groovy} with
+     * {@link #CONTRACT_SCRIPT}.
+     */
+    private static Path contractSources(Path dir) throws IOException {
+        Path label = dir.resolve("2026-06-trial");
+        Map<String, String> stepProperties = new LinkedHashMap<>();
+        stepProperties.put("headerTable", tableRow("SAP_Receiver") + deleteRow("$name=SAP_Receiver"));
+        stepProperties.put("propertyTable", tableRow("incomingQueue") + deleteRow("$include=custom*"));
+        SyntheticArtifact.withStep(label.resolve("generic-pipelines").resolve(ID1), ID1, "Set names", "Enricher",
+                stepProperties, Map.of("script/S.groovy", CONTRACT_SCRIPT));
+        return label;
+    }
+
+    /** A contracts page that backticks {@code SAP_Receiver} and {@code retryCount} only, in a table row. */
+    private static String contractsWithTwoNames() {
+        return "# Contracts\n\n## Headers\n\n| Name | Set by |\n|---|---|\n"
+                + "| `SAP_Receiver` | the step |\n| `retryCount` | the script |\n";
+    }
+
+    private static List<String> missing(List<String> names) {
+        return names.stream().map(n -> "missing contract name: " + n + " (" + ID1 + ")").toList();
+    }
+
+    private static String backticked(List<String> names) {
+        return names.stream().map(n -> "- `" + n + "`\n").collect(Collectors.joining());
+    }
+
+    @Test
+    void contractNamesReportsMissing() throws IOException {
+        Path kb = kb(dir.resolve("pipeline"));
+        Path sources = contractSources(dir.resolve("sources"));
+        write(kb.resolve("contracts.md"), contractsWithTwoNames());
+
+        List<String> messages = Checks.contractNames(kb, sources);
+
+        assertThat(messages).containsExactlyElementsOf(missing(FIVE_MISSING));
+        assertThat(messages).noneMatch(m -> m.contains("Commented")).noneMatch(m -> m.contains("customHeader_"));
+    }
+
+    @Test
+    void contractNamesPassesWhenEveryNameIsListed() throws IOException {
+        Path kb = kb(dir.resolve("pipeline"));
+        Path sources = contractSources(dir.resolve("sources"));
+        write(kb.resolve("contracts.md"), "# Contracts\n\n" + backticked(CONTRACT_NAMES));
+
+        assertThat(Checks.contractNames(kb, sources)).isEmpty();
+    }
+
+    @Test
+    void contractNamesCountsOnlyContractsPage() throws IOException {
+        Path kb = kb(dir.resolve("pipeline"));
+        Path sources = contractSources(dir.resolve("sources"));
+        write(kb.resolve("contracts.md"), contractsWithTwoNames());
+        write(kb.resolve("overview.md"), "# Overview\n\n" + backticked(FIVE_MISSING));
+        write(kb.resolve("partner-directory.md"), "# Partner directory\n\n" + backticked(FIVE_MISSING));
+
+        assertThat(Checks.contractNames(kb, sources)).containsExactlyElementsOf(missing(FIVE_MISSING));
+    }
+
+    @Test
+    void contractNamesTreatsStubAsEmpty() throws IOException {
+        Path kb = kb(dir.resolve("pipeline"));
+        Path sources = contractSources(dir.resolve("sources"));
+        write(kb.resolve("contracts.md"), "# Contracts\n\n_Stub, filled in Task 7._ `SAP_Sender`\n");
+
+        assertThat(Checks.contractNames(kb, sources)).containsExactlyElementsOf(missing(CONTRACT_NAMES));
+    }
+
+    @Test
+    void contractNamesSkipsDeletePatternRows() throws IOException {
+        Path kb = kb(dir.resolve("pipeline"));
+        Path sources = contractSources(dir.resolve("sources"));
+        write(kb.resolve("contracts.md"), "# Contracts\n\n_Stub, filled in Task 7._\n");
+
+        List<String> messages = Checks.contractNames(kb, sources);
+
+        assertThat(messages).noneMatch(m -> m.contains("$"));
+        assertThat(messages).containsExactlyElementsOf(missing(CONTRACT_NAMES));
+    }
+
+    /**
+     * The Groovy resource of the second contract-names artifact: the four call forms the first script lacks, a
+     * GString name and an empty name.
+     */
+    private static final String CONTRACT_SCRIPT_TWO = String.join("\n",
+            "message.getHeader(\"GotHeader\")",
+            "message.setProperty(\"SetProp\", 1)",
+            "message.getProperties().get(\"PropsGet\")",
+            "def properties = message.getProperties(); properties.get(\"PropsMap\")",
+            "message.setHeader(\"${p}_x\", v)",
+            "message.setHeader(\"\", v)",
+            "message.setHeader(\"a${p}\", v)") + "\n";
+
+    /** The four names only {@link #CONTRACT_SCRIPT_TWO} contributes, sorted. */
+    private static final List<String> ID2_NAMES = List.of("GotHeader", "PropsGet", "PropsMap", "SetProp");
+
+    /**
+     * {@link #contractSources} plus a second package {@code templates/<ID2>} (read after {@code generic-pipelines}):
+     * one Enricher step whose {@code headerTable} rows name {@code SAP_Receiver} (as ID1 does), {@code Has Space} and
+     * {@code {{tenant.x}}}, and the resource {@code script/T.groovy} with {@link #CONTRACT_SCRIPT_TWO}.
+     */
+    private static Path contractSourcesTwo(Path dir) throws IOException {
+        Path label = contractSources(dir);
+        Map<String, String> stepProperties = new LinkedHashMap<>();
+        stepProperties.put("headerTable",
+                tableRow("SAP_Receiver") + tableRow("Has Space") + tableRow("{{tenant.x}}"));
+        SyntheticArtifact.withStep(label.resolve("templates").resolve(ID2), ID2, "More names", "Enricher",
+                stepProperties, Map.of("script/T.groovy", CONTRACT_SCRIPT_TWO));
+        return label;
+    }
+
+    @Test
+    void contractNamesCoversEveryCallFormAndFirstArtifact() throws IOException {
+        Path kb = kb(dir.resolve("pipeline"));
+        Path sources = contractSourcesTwo(dir.resolve("sources"));
+        write(kb.resolve("contracts.md"), "# Contracts\n\n_Stub, filled in Task 7._\n");
+
+        List<String> messages = Checks.contractNames(kb, sources);
+
+        List<String> expected = Stream.concat(missing(CONTRACT_NAMES).stream(),
+                ID2_NAMES.stream().map(n -> "missing contract name: " + n + " (" + ID2 + ")")).sorted().toList();
+        assertThat(messages).containsExactlyElementsOf(expected);
+        assertThat(messages).contains("missing contract name: SAP_Receiver (" + ID1 + ")");
+        assertThat(messages).noneMatch(m -> m.contains("$")).noneMatch(m -> m.contains("{{"))
+                .noneMatch(m -> m.contains("Has Space")).noneMatch(m -> m.startsWith("missing contract name:  ("));
     }
 
     // --- C5 budget ------------------------------------------------------------------------------------------------

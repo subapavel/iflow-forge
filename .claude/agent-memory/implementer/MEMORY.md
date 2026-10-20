@@ -29,3 +29,10 @@ Durable facts only (build quirks, verified APIs, recurring findings). Never task
 - `IdempotentProcessCall` steps also carry `processId` (a local process); the reader inlines under ANY step with a
   `processId` naming a process of the file (architect decision on KB-02).
 - MANIFEST.MF: CRLF, folded at 72 bytes (continuation = one space + 71 bytes), like java.util.jar.Manifest.
+- `IFlow` record (id, name, version, participants, steps, parameters, resources) keeps no source path and no resource
+  bytes; `resources()` are paths relative to `src/main/resources/`. To read a resource's text, find artifact folders
+  (dir with `META-INF/MANIFEST.MF`) yourself and `IFlowReader.read(dir)` each (Checks.artifacts does this).
+- `Step.properties()` values are entity-decoded (`headerTable` = `<row><cell id='Name'>X</cell>...</row>`, single
+  quotes). Delete-action rows carry patterns as Name: `$name=SAP_Sender`, `$include=SAP_*`, `$include=dc(.*)`.
+- Mutation checks: `git diff | grep -c '^[-+] '` does not change when the mutated line is already an added line;
+  restore from a baseline copy in the scratchpad and compare `sha1sum` instead.

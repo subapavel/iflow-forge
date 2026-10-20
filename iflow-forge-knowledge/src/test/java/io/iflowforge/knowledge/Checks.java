@@ -2,14 +2,18 @@ package io.iflowforge.knowledge;
 
 import io.poxray.cpi.IFlow;
 import io.poxray.cpi.IFlowReader;
+import io.poxray.cpi.Step;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
@@ -40,6 +44,16 @@ final class Checks {
     private static final Pattern BACKTICKED = Pattern.compile("`([^`\\n]+)`");
     private static final Pattern WHITESPACE = Pattern.compile("\\s+");
     private static final int MIN_FORBIDDEN_LENGTH = 4;
+    private static final String MANIFEST = "META-INF/MANIFEST.MF";
+    private static final String RESOURCES = "src/main/resources";
+    /** The {@code Name} cell of a content-modifier table row. */
+    private static final Pattern NAME_CELL = Pattern.compile("<cell id=['\"]Name['\"]>([^<]*)</cell>");
+    /** A header or property call whose first argument is a plain single- or double-quoted string literal. */
+    private static final Pattern CONTRACT_CALL = Pattern.compile("(?:"
+            + "\\b(?:setHeader|getHeader|setProperty|getProperty)"
+            + "|\\bgetHeaders\\(\\)\\.get|\\bgetProperties\\(\\)\\.get"
+            + "|\\bheaders\\.get|\\bproperties\\.get)"
+            + "\\(\\s*(?:\"([^\"\\\\]*)\"|'([^'\\\\]*)')\\s*[,)]");
 
     private Checks() {
     }
@@ -263,6 +277,108 @@ final class Checks {
             }
         }
         return messages;
+    }
+
+    // --- C7 contract names --------------------------------------------------------------------------------------
+
+    /**
+     * Every contract name of {@code sources} is a backticked token of {@code contracts.md} (D-021). A contract name
+     * is the {@code Name} cell of every {@code headerTable} / {@code propertyTable} row of every step, and the
+     * string-literal first argument of a header or property call in every {@code .groovy} resource; names that
+     * contain a GString or placeholder opener (dollar-brace or double brace) or whitespace are skipped, and so are
+     * names starting with a dollar sign (a Content Modifier Delete pattern such as {@code $name=...} or
+     * {@code $include=...}, D-021). A stub or missing {@code contracts.md} documents nothing. Messages
+     * {@code missing contract name: <name> (<first artifact id>)}, sorted, one per distinct name.
+     */
+    static List<String> contractNames(Path kb, Path sources) throws IOException {
+        Map<String, String> firstSeen = new LinkedHashMap<>();
+        for (Path pkg : packages(sources)) {
+            for (Artifact artifact : artifacts(pkg)) {
+                Path dir = artifact.dir();
+                IFlow flow = artifact.flow();
+                String where = flow.id() == null ? dir.getFileName().toString() : flow.id();
+                List<String> names = new ArrayList<>();
+                for (Step step : flow.steps()) {
+                    for (String key : List.of("headerTable", "propertyTable")) {
+                        String table = step.properties().get(key);
+                        if (table != null) {
+                            Matcher m = NAME_CELL.matcher(table);
+                            while (m.find()) {
+                                names.add(m.group(1));
+                            }
+                        }
+                    }
+                }
+                for (String resource : flow.resources()) {
+                    if (resource.endsWith(".groovy")) {
+                        names.addAll(scriptContractNames(read(dir.resolve(RESOURCES).resolve(resource))));
+                    }
+                }
+                for (String name : names) {
+                    String trimmed = name.strip();
+                    if (isContractName(trimmed)) {
+                        firstSeen.putIfAbsent(trimmed, where);
+                    }
+                }
+            }
+        }
+        Set<String> documented = new HashSet<>();
+        Path contracts = kb.resolve("contracts.md");
+        if (Files.isRegularFile(contracts)) {
+            String text = read(contracts);
+            if (!isStub(text)) {
+                backticked(text).forEach(t -> documented.add(t.strip()));
+            }
+        }
+        Set<String> messages = new TreeSet<>();
+        firstSeen.forEach((name, where) -> {
+            if (!documented.contains(name)) {
+                messages.add("missing contract name: " + name + " (" + where + ")");
+            }
+        });
+        return new ArrayList<>(messages);
+    }
+
+    /** An unpacked artifact folder and its parsed model. */
+    private record Artifact(Path dir, IFlow flow) {
+    }
+
+    /**
+     * The unpacked artifact folders (folders holding {@code META-INF/MANIFEST.MF} under the package folder, sorted),
+     * each read and the list sorted by artifact id; the folder is kept because the Groovy text is read from it.
+     */
+    private static List<Artifact> artifacts(Path pkg) throws IOException {
+        List<Path> dirs;
+        try (Stream<Path> walk = Files.walk(pkg)) {
+            dirs = walk.filter(Files::isDirectory).filter(d -> Files.isRegularFile(d.resolve(MANIFEST))).sorted()
+                    .toList();
+        }
+        List<Artifact> out = new ArrayList<>();
+        for (Path dir : dirs) {
+            out.add(new Artifact(dir, IFlowReader.read(dir)));
+        }
+        out.sort(Comparator.comparing((Artifact a) -> a.flow().id(), Comparator.nullsFirst(Comparator.naturalOrder())));
+        return out;
+    }
+
+    /** The plain string-literal first arguments of header/property calls, lines starting with {@code //} skipped. */
+    private static List<String> scriptContractNames(String script) {
+        List<String> names = new ArrayList<>();
+        for (String line : script.lines().toList()) {
+            if (line.strip().startsWith("//")) {
+                continue;
+            }
+            Matcher m = CONTRACT_CALL.matcher(line);
+            while (m.find()) {
+                names.add(m.group(1) != null ? m.group(1) : m.group(2));
+            }
+        }
+        return names;
+    }
+
+    private static boolean isContractName(String name) {
+        return !name.isEmpty() && !name.startsWith("$") && !name.contains("${") && !name.contains("{{")
+                && !WHITESPACE.matcher(name).find();
     }
 
     // --- shared -------------------------------------------------------------------------------------------------

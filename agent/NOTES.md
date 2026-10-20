@@ -92,3 +92,9 @@ Facts only; the next exact action and the state live in `agent/HANDOFF.md`.
   (spec-level question, open); the coverage message `artifact without id in package <folder>` is untested; limits are
   tested at 1501 / 5200 only; `io.poxray.cpi.SyntheticArtifact` splits the package across modules (classpath only).
 - Reader follow-up (KB-05 B1, dump order D-016): the local process of an `IdempotentProcessCall` is not inlined (template step01 eo: Send "Send" is step 1 at depth 0, outside the call), and a local process called from several places is inlined only under its first call (template step01 sync: steps 13 and 16 call the process inlined under step 6). Pages follow the dump numbering and say where the step sits; a later reader task may inline idempotent calls and mark repeated calls.
+- `Checks.contractNames` (KB-07, D-021) follow-ups from the reviewer, none affecting today's unpacked sources: `artifacts()`
+  walks folders holding `META-INF/MANIFEST.MF` and so skips zip and package-export artifacts that `readAll` reads; the `$`
+  filter also drops Groovy literals (D-021 names only table cells); property-style access (`message.headers.X`,
+  `message.properties.y`) and router conditions (`${header.X}`) are not extracted; `\bheaders.get` misses `msgheaders.get`.
+  Test 6 (`contractNamesCoversEveryCallFormAndFirstArtifact`) was written after the code; the mutation logs
+  `target/kb-07-mut1..4.log` stand in for its red run.

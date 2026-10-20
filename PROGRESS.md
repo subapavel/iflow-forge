@@ -74,7 +74,7 @@ Issues: ISSUE-1 (four tracked .py files from 2026-10-09 pre-date the Java-only r
 Reader follow-ups (agent/NOTES.md): IdempotentProcessCall local process not inlined by the dump; a repeated local process inlined under its first call only; the known `[Fatal Error] :1:9` stderr line.
 Next: KB-06 (45 script pages in five batches; the implementer clears the pom default kb.skip=coverage, F-2, after the last batch).
 
-## KB-06 · 2026-10-20 · (hash: the closing commit `kb: script pages payload, validation and custom determination; F-2 closed (KB-06 B5)`; recorded in the next entry)
+## KB-06 · 2026-10-20 · daea078 (the closing commit `kb: script pages payload, validation and custom determination; F-2 closed (KB-06 B5)`; CI run 39350932246 success)
 Task: Pass A script pages — 45 `scripts/<stem>.md` (five-H2 contract), one per distinct Groovy stem of 2026-06-trial (152 copies, no XSLT; 3 stems with variants); `open-questions/kb-06.md` (30 bullets, 1,282 words); pom default `kb.skip=coverage` removed (F-2 closed), plain `mvn verify` runs every check.
 Context compacted once after B1's verification (before its commit); re-verified with git status / git log -3.
 Batches: B1 9b9a38f (PD readers; FAIL r1 5 findings → PASS r2), B2 5f12052 (IDoc; FAIL r1 4 → PASS r2), B3 711b5f0 (XI/mapping; FAIL r1 7 → PASS r2), B4 ba478a4 (helpers/logging; r1 turn limit without content defect, follow-up FAIL 1 cite → PASS; throwException has 3 variants), B5 (this commit; payload/validation/custom; FAIL r1 4 → PASS r2; pom edit by the implementer).
@@ -86,3 +86,16 @@ Deviation: none (F-2 closed as the finding foresaw).
 For Task 7 (contracts.md): header/property names spelt as the code does, incl. `customHeader_partnerID` (determinePartnerID) vs `customHeader_PartnerID` (determinePartnerIDForIDocInbound).
 Issues: none open; ISSUE-1 → KB-13 (owner's local Phase A: Python output byte-identical to the committed catalog; Phase B after the port).
 Next: KB-07 (`contracts.md`, `partner-directory.md`, `Checks.contractNames` + `ContractNamesTest`; code+content, red test first) — ready; KB-13 ready as well.
+
+## KB-07 · 2026-10-20 · (hash in the next entry)
+Task: `Checks.contractNames` + `ContractNamesTest` (D-021, draft — review at hand-over); `contracts.md` (registry: Headers, Exchange properties — 222 names, Delete-row notes, 1,336 words), `message-path.md` (Message path, Queues and endpoints, Synchronous path; F-5 split, 650 words), `partner-directory.md` (key scheme, value types, 21 keys, missing-key behaviour, 1,004 words); stubs replaced; `open-questions/kb-07.md` (7 bullets); `naming.md` + `{{tenant.jms.queue.receiver.specific}}`; SKILL.md routing row.
+Context compacted once before the Delete-row decision; re-verified with git status / git log -3.
+Red tests: ChecksTest.contractNamesReportsMissing, contractNamesPassesWhenEveryNameIsListed, contractNamesCountsOnlyContractsPage, contractNamesTreatsStubAsEmpty, ContractNamesTest.everyContractNameIsDocumented — EXECUTED_FAIL compile error (target/kb-07-red.log); round 2 contractNamesSkipsDeletePatternRows — EXECUTED_FAIL five tests (target/kb-07-red2.log); round 3 contractNamesCoversEveryCallFormAndFirstArtifact + stub token written after the code (reviewer r1), red stood in by mutation logs target/kb-07-mut1..4.log (each mutation fails a test); approved by the architect.
+Inventory: 249 names → 222 after D-021 amendment (27 Content Modifier Delete patterns `$name=`/`$include=` skipped; every `$name=` target is also a plain name) — target/kb-07-inventory.txt.
+Checks: `mvn -B -ntp -q verify` with no -D flag VERIFIED_PASS (target/kb-07-verify-final.log): ChecksTest 18/0, ContractNamesTest 1/0 on the real KB, Budget/Coverage/Headings/Names/Placeholders 1/0; ForbiddenValuesTest NOT_RUN (testdata/ absent). CI run <id>.
+Review: reviewer FAIL r1 (four unpinned rules: stub guard, first artifact id, name filter, four call forms) → PASS r2; kb-reviewer FAIL r1 (script cites without id on a page without own artifact, Delete rows missing on name rows, incomplete rows, one-sided hop cites) → FAIL r2 (sync-only claim cited the async copy; two setters uncited) → PASS r3. Memory items 17–18 (kb-reviewer) and one reviewer line written by the architect.
+Decisions: D-021 (contract names: table Name cells + Groovy literal first arguments; `$` Delete patterns skipped; contracts.md the only registry). Cite rule sharpened: a cite names the artifact the claim is about; the canonical copy only for claims true of every copy.
+Deviation: F-4 (contracts.md ≤ 1,500 words, not the plan's 2,000) and F-5 (page split contracts.md + message-path.md; spec §6 layout and plan Task 7 step 5 changelog).
+Follow-ups (agent/NOTES.md): `artifacts()` skips zip/package-export artifacts; property-style access and router `${header.X}` not extracted; `\bheaders.get` misses `msgheaders.get`.
+Issues: none open; ISSUE-1 → KB-13 (owner's Phase A done: 224/11/91/78, SHA-256 f4680de9…).
+Next: KB-13 (ISSUE-1 port of the BPM built-in catalog generator to Java; red test on a synthetic plugin fixture) — first ready row; then KB-08.

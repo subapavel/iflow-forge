@@ -30,6 +30,7 @@ _Stub, filled in Task 8._
 - `{{tenant.xi.sender.default}}`: default XI sender component and party (parameters XI_Sender, XI_SenderParty)
 - `{{tenant.xi.receiver.default}}`: default XI receiver component and party (parameters XI_Receiver, XI_ReceiverParty)
 - `{{tenant.jms.queue.inbound}}`: pipeline inbound queue a Step01 template copy writes to (parameter JMS_Outgoing, templates step01 eo and alo)
+- `{{tenant.jms.queue.receiver.specific}}`: receiver-specific JMS queue, the Partner Directory value ReceiverSpecificQueue_<SAP_ReceiverAlias> (PID partnerID) or ReceiverSpecificQueue (PID receiver alias) read by readReceiverSpecificQueueFromPD (Step02 inbound and async, Step04, Step05)
 - `{{tenant.endpoint.pipeline.sync}}`: ProcessDirect address of the synchronous pipeline entry a Step01 synchronous template copy calls (parameter Sync_Pipeline_Endpoint)
 - `{{tenant.endpoint.inbound.conversion}}`: ProcessDirect address of a scenario's inbound conversion flow, registered as Partner Directory InboundConversionEndpoint (parameter ProcessDirect_EndPoint, template step03)
 - `{{tenant.endpoint.receiver.determination.custom}}`: ProcessDirect address of a scenario's custom receiver determination flow, found by Step04 and the integrated runtimes as header customXRDEndpoint or Partner Directory CustomXRDEndpoint (parameter ProcessDirect_EndPoint, templates step04 custom receiver determination, .scripts, .xrd)

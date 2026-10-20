@@ -112,3 +112,8 @@ Durable facts only (build quirks, verified APIs, recurring findings). Never task
 - The custom*ViaXProperties scripts read exchange properties only (no Partner Directory) and are used only by the Step04 templates .scripts/.xrd; the Step05 custom template names no Groovy script.
 - determinePartnerID writes customHeader_partnerID, the IDoc script customHeader_PartnerID (L604). CustomXPid_SwitchOffTilde has no propdef default.
 - Review B5 lessons: auditLogHeader claims cite PipelineLogger#L25 (name = logTypeName + "Header") plus the caller's "auditLog" line, not only L69; an "every write goes through X" claim must name its exceptions; negatives in open questions state the grep scope, never a read line as support.
+
+## Contracts and Partner Directory pages (learned on KB-07, 2026-06-trial)
+- contracts.md floor: 222 names (~310 tokens) + table pipes (~290) + ~150 full-id cites (~600); every script cite on a page without its own artifact needs the full id (canonical copy: collection, else step02 inbound, else first id); count before writing.
+- Variant script copies (checkWellFormedXML, logMessage, throwException) take the id form `[<id>, scripts/<file>#L<n>]`, never the short form.
+- Mechanical cite verification (step name at dump number, script line contains the claimed token) before handback; BudgetTest counts whitespace tokens, slightly above wc -w.

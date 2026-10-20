@@ -2,7 +2,7 @@
 
 Design, 2026-10-19. Status: reviewed, open questions answered, awaiting Pavol's approval.
 
-**Changelog:** 2026-10-19 · F-3 · §6 layout gains `open-questions/<task>[-<group>].md` (uncited draft claims per content task, triaged in pass B); `pitfalls.md` keeps lessons learned and contradictions and points to the folder — one page could not hold the open questions within the 1,500-word budget.
+**Changelog:** 2026-10-19 · F-3 · §6 layout gains `open-questions/<task>[-<group>].md` (uncited draft claims per content task, triaged in pass B); `pitfalls.md` keeps lessons learned and contradictions and points to the folder — one page could not hold the open questions within the 1,500-word budget. 2026-10-20 · F-5 · §6 layout gains `message-path.md` (message path, queues and endpoints, synchronous path); `contracts.md` keeps the name registry — the 222-name registry with cites and the message path did not fit one 1,500-word page.
 
 ## 1. Where this sits
 
@@ -122,7 +122,8 @@ knowledge/
   pipeline/
     SKILL.md                    # what the skill is for, when to load what, 1 screen
     overview.md                 # the pipeline in one page: purpose, message path, list of generic iFlows, diagram
-    contracts.md                # headers, exchange properties, JMS queues, ProcessDirect endpoints between steps
+    contracts.md                # registry of every header and exchange-property name between steps (set by, read by, cite)
+    message-path.md             # message path hop by hop, JMS queues, ProcessDirect endpoints, synchronous-path differences (F-5; the registry stays in contracts.md)
     partner-directory.md        # what is stored per scenario, key scheme, value types (XSLT, string, binary)
     scenario-contribution.md    # checklist: what a scenario adds (iFlows, PD entries, config), what it must not touch
     naming.md                   # SAP's own naming in the package + placeholders for tenant naming rules
