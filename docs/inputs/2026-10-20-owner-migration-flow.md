@@ -53,3 +53,11 @@ input for the designs of parts 3, 4 and 5, not a design. Restated in English; no
    locally. The owner asks for the whole front end to be prepared: a custom skill, ideally usable with every
    agent (Claude Code, Codex, Gemini CLI); the test itself runs in Claude Code. Recorded as the design row
    MIG-00 in `agent/BACKLOG.md`.
+
+## Fifth statement, same session
+
+9. The owner wants the front end to learn, in the style of a self-improving agent: when a migration meets
+   something fundamental, the skill is improved; context persists across conversations, so the third
+   scenario for the same customer already knows that the customer runs the integrated runtime, which naming
+   convention its iFlows and Partner Directory entries follow, and that a similar scenario was migrated
+   before and can serve as the template.
