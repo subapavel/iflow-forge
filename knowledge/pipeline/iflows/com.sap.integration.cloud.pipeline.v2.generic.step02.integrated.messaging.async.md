@@ -4,7 +4,7 @@ Artifact: `com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messa
 
 ## Purpose
 
-Asynchronous integrated runtime, fed by Step01 queue number X01 [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi, parameter "DefaultJMSQueueNumber"] (prefixes: see pitfalls). One flow: exits, conversion, one Partner Directory XSLT for receivers and interfaces [com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async, step "Get XSLT mapping from Partner Directory"], split per receiver, stage and interface. Output: Q04, read by Step06 with a suffix (see pitfalls) [com.sap.integration.cloud.pipeline.v2.generic.step06.outbound.processing, adapter "JMS" "OutboundProcessingQueue"], or a receiver-specific queue.
+Asynchronous integrated runtime, fed by Step01 queue number X01 [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi, parameter "DefaultJMSQueueNumber"] (prefixes: see message-path.md). One flow: exits, conversion, one Partner Directory XSLT for receivers and interfaces [com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async, step "Get XSLT mapping from Partner Directory"], split per receiver, stage and interface. Output: Q04, read by Step06 with a suffix (see message-path.md) [com.sap.integration.cloud.pipeline.v2.generic.step06.outbound.processing, adapter "JMS" "OutboundProcessingQueue"], or a receiver-specific queue.
 
 ## Adapters
 
@@ -152,7 +152,7 @@ From outside this flow (adapter, earlier or custom flows).
 - Partner ID, stage as Step01 XI [scripts/determinePartnerID.groovy#L323]; stages: parameter `{{tenant.name}}` of SAP_Integration_Suite_Landscape, missing: "PRD" [scripts/determinePartnerID.groovy#L126].
 - Key (missing): CustomXPreEnabled, CustomXPreEndpoint (no exit) [scripts/readCustomXFromPD.groovy#L41]; MaxJMSRetries (5) [scripts/readRetryHandlingFromPD.groovy#L28]; InboundConversionEndpoint_<SAP_SenderAlias>, then InboundConversionEndpoint (no conversion) [scripts/readInboundConversionFromPD.groovy#L31]; receiverDetermination, String (default route) [scripts/readBypassOptionFromPD.groovy#L22]; interfaceDetermination_<receiver>, p2p (skipRcvDet) [scripts/readBypassOptionFromPD.groovy#L36].
 - CustomXRDEndpoint; missing: ReuseXRDEndpoint is read [scripts/readCustomReceiverDeterminationFromPD.groovy#L35]; that missing: XSLT [scripts/readCustomReceiverDeterminationFromPD.groovy#L38].
-- receiverDetermination (Binary): the XSLT (step 53); missing: see pitfalls.
+- receiverDetermination (Binary): the XSLT (step 53); missing: open-questions/kb-12b.md.
 - Receiver stages: alternative partner per stage; none: no stage routing [scripts/mapSenderStageToReceiverStage.groovy#L80].
 - Known stage: stageRule_<stage>~<receiver alias>, stageRule_<stage> (partnerID, then alias) [scripts/mapSenderStageToReceiverStage.groovy#L145]; missing: exact stage [scripts/mapSenderStageToReceiverStage.groovy#L164], then the same with `{{tenant.name}}` [scripts/mapSenderStageToReceiverStage.groovy#L170], else exception [scripts/mapSenderStageToReceiverStage.groovy#L189]; value `>Stage1,Stage2`. Unknown stage: tenant rules, the only stage, else exception [scripts/mapSenderStageToReceiverStage.groovy#L112].
 - ReceiverSpecificQueue_<SAP_ReceiverAlias> of partnerID, then ReceiverSpecificQueue of the alias; missing: Q04 [scripts/readReceiverSpecificQueueFromPD.groovy#L23].

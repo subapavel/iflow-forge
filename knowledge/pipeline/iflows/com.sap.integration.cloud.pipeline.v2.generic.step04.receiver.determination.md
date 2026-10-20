@@ -4,7 +4,7 @@ Artifact: `com.sap.integration.cloud.pipeline.v2.generic.step04.receiver.determi
 
 ## Purpose
 
-Receiver determination of the fully decoupled pipeline [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi, parameter "DefaultJMSQueueNumber"]: consumes `{{PipelineJMSQueuePrefix}}Q02` [com.sap.integration.cloud.pipeline.v2.generic.step04.receiver.determination, adapter "JMS" "ReceiverDeterminationQueue"], written by Step02 inbound [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, adapter "JMS" "ReceiverDeterminationQueue"]. Receivers come from the Partner Directory XSLT, a custom flow or reused PO determination (step 32), split per receiver and stage. Without interfaces in the result: Q03 (step 54), read by Step05 [com.sap.integration.cloud.pipeline.v2.generic.step05.interface.determination, adapter "JMS" "InterfaceDeterminationQueue"]; with them, per interface Q04 (Step06 suffix: see pitfalls) or a receiver-specific queue (step 62).
+Receiver determination of the decoupled pipeline [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi, parameter "DefaultJMSQueueNumber"]: consumes `{{PipelineJMSQueuePrefix}}Q02` [com.sap.integration.cloud.pipeline.v2.generic.step04.receiver.determination, adapter "JMS" "ReceiverDeterminationQueue"], written by Step02 inbound [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, adapter "JMS" "ReceiverDeterminationQueue"]. Receivers: Partner Directory XSLT, custom flow or reused PO determination (step 32), split per receiver and stage. Without interfaces in the result: Q03 (step 54), read by Step05 [com.sap.integration.cloud.pipeline.v2.generic.step05.interface.determination, adapter "JMS" "InterfaceDeterminationQueue"]; with them, per interface Q04 (Step06 suffix: see message-path.md) or a receiver-specific queue (step 62).
 
 ## Adapters
 
@@ -117,8 +117,6 @@ Receiver determination of the fully decoupled pipeline [com.sap.integration.clou
 | SAP_ReceiverAlias, SAP_ReceiverInterface, SAP_ReceiverInterfaceIndex, SAP_OutboundProcessingEndpoint, tenantStage, SAP_Receiver | header | 44, 69, 57, 48, 64, 50 | [com.sap.integration.cloud.pipeline.v2.generic.step04.receiver.determination, step "Get receiver name"] [com.sap.integration.cloud.pipeline.v2.generic.step04.receiver.determination, step "Get interface"] [scripts/mapSenderStageToReceiverStage.groovy#L251] [scripts/mapReceiverAliasToBusinessSystemName.groovy#L55] |
 | incomingQueue | property, header | 25, 17 | `${property.PipelineJMSQueuePrefix}Q02` [com.sap.integration.cloud.pipeline.v2.generic.step04.receiver.determination, step "Define DLQ"] |
 
-PD scripts: see Partner directory.
-
 ### Read
 
 | Name | Kind | Step | Used for |
@@ -132,7 +130,7 @@ PD scripts: see Partner directory.
 
 - CustomXPreEnabled, CustomXPreEndpoint; missing: no exit [scripts/readCustomXFromPD.groovy#L41].
 - CustomXRDEndpoint; missing: ReuseXRDEndpoint [scripts/readCustomReceiverDeterminationFromPD.groovy#L35]; that missing: XSLT [scripts/readCustomReceiverDeterminationFromPD.groovy#L38].
-- receiverDetermination (Binary): the XSLT (step 36); missing: see pitfalls.
+- receiverDetermination (Binary): the XSLT (step 36); missing: open-questions/kb-12b.md. String form (static): read by Step02 inbound [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/readBypassOptionFromPD.groovy#L22], no Step04 script (grep).
 - Reused XRD only: ReceiverNotDeterminedType; missing: 'Error' [scripts/readReceiverNotDeterminedFromPD.groovy#L25]. Type Default: ReceiverNotDeterminedDefault; missing: exception [scripts/readReceiverNotDeterminedFromPD.groovy#L31].
 - Landscape stages: parameter `{{tenant.name}}` of SAP_Integration_Suite_Landscape; missing: "PRD" [scripts/mapSenderStageToReceiverStage.groovy#L40]. Receiver stages: alternative partner per stage; none: no stage routing [scripts/mapSenderStageToReceiverStage.groovy#L80].
 - Known stage: stageRule_<stage>~<receiver alias>, stageRule_<stage> (partnerID, then alias) [scripts/mapSenderStageToReceiverStage.groovy#L145]; missing: exact stage [scripts/mapSenderStageToReceiverStage.groovy#L164], then the same with `{{tenant.name}}` [scripts/mapSenderStageToReceiverStage.groovy#L170], else exception [scripts/mapSenderStageToReceiverStage.groovy#L189]; value `>Stage1,Stage2`. Unknown stage: tenant rules, the only stage, else exception [scripts/mapSenderStageToReceiverStage.groovy#L112].
@@ -144,10 +142,10 @@ PD scripts: see Partner directory.
 | File | Steps | Purpose |
 |---|---|---|
 | `storePayloadInXProperty.groovy`, `fetchPayloadFromXProperty.groovy` | 4; 18, 52, 59 | payload backup, restore [scripts/storePayloadInXProperty.groovy#L13] [scripts/fetchPayloadFromXProperty.groovy#L15] |
-| `readCustomXFromPD.groovy`, `readCustomReceiverDeterminationFromPD.groovy`, `readReceiverNotDeterminedFromPD.groovy`, `readReceiverSpecificQueueFromPD.groovy`, `mapReceiverAliasToBusinessSystemName.groovy`, `mapSenderStageToReceiverStage.groovy` | as in Steps | PD reads (Partner directory) |
+| `readCustomXFromPD.groovy`, `readCustomReceiverDeterminationFromPD.groovy`, `readReceiverNotDeterminedFromPD.groovy`, `readReceiverSpecificQueueFromPD.groovy`, `mapReceiverAliasToBusinessSystemName.groovy`, `mapSenderStageToReceiverStage.groovy` | as in Steps | Partner directory |
 | `checkWellFormedXML.groovy`, `addCustomHeaderProperties.groovy`, `logOutboundProcessingEndpoint.groovy`, `attachAdditionallnformation.groovy` | as in Steps | XML check, MPL headers, audit log, MPL attachment [scripts/checkWellFormedXML.groovy#L7] [scripts/addCustomHeaderProperties.groovy#L69] [scripts/logOutboundProcessingEndpoint.groovy#L9] [scripts/attachAdditionallnformation.groovy#L32] |
 | `PipelineLogger.groovy`, `PipelineHelper.groovy`; `logMessage.groovy`, `auditLogHandler.groovy` | library; none | [scripts/PipelineLogger.groovy#L69] [scripts/PipelineHelper.groovy#L6] [scripts/logMessage.groovy#L11] [scripts/auditLogHandler.groovy#L4] |
-| mapping/AddReceiverNotDeterminedNode.mmap, xsd/Receivers.xsd | 74 | message mapping and its Receivers schema [com.sap.integration.cloud.pipeline.v2.generic.step04.receiver.determination, step "Map to Receivers"] |
+| mapping/AddReceiverNotDeterminedNode.mmap, xsd/Receivers.xsd | 74 | mapping and its schema [com.sap.integration.cloud.pipeline.v2.generic.step04.receiver.determination, step "Map to Receivers"] |
 
 ## Externalized parameters
 
@@ -162,15 +160,13 @@ PD scripts: see Partner directory.
 ## Error handling
 
 - Four event subprocesses; custom if CustomXError_Enabled = 'true' [com.sap.integration.cloud.pipeline.v2.generic.step04.receiver.determination, step 15 "Custom Extension?"].
-- Standard: test messages escalate; status MaxRetriesExceeded (step 79) sends the payload to the DLQ, other errors end in "Error End 1" [com.sap.integration.cloud.pipeline.v2.generic.step04.receiver.determination, step 24 "Max # of retries reached?"].
+- Standard: test messages escalate; status MaxRetriesExceeded (step 79) sends to the DLQ, other errors: "Error End 1" [com.sap.integration.cloud.pipeline.v2.generic.step04.receiver.determination, step 24 "Max # of retries reached?"].
 - Custom: payload, exception headers to `{{CustomXError_Endpoint}}`; customXError_EndEvent picks Completed, Escalated or "Error End 4" [com.sap.integration.cloud.pipeline.v2.generic.step04.receiver.determination, step 21 "End event?"].
 
 ## Extension points
 
-- Parameters: global exit, error flow. PD per partner ID: scenario exit, receiver XSLT, custom determination flow [scripts/readCustomReceiverDeterminationFromPD.groovy#L25], reused PO determination, receiver queue, stage rules.
+- Parameters: global exit, error flow. PD per partner ID: scenario exit, receiver XSLT, custom determination flow [scripts/readCustomReceiverDeterminationFromPD.groovy#L25], reused XRD, receiver queue, stage rules.
 
 ## Version notes
 
-- 2026-09-current 1.0.5: backup and restore of payload, headers, attachments [2026-09-current: com.sap.integration.cloud.pipeline.v2.generic.step04.receiver.determination, scripts/backupMessage.groovy#L32] [2026-09-current: com.sap.integration.cloud.pipeline.v2.generic.step04.receiver.determination, scripts/backupMessage.groovy#L33] [2026-09-current: com.sap.integration.cloud.pipeline.v2.generic.step04.receiver.determination, scripts/backupMessage.groovy#L34] [2026-09-current: com.sap.integration.cloud.pipeline.v2.generic.step04.receiver.determination, scripts/restoreMessage.groovy#L11] [2026-09-current: com.sap.integration.cloud.pipeline.v2.generic.step04.receiver.determination, scripts/restoreMessage.groovy#L12] [2026-09-current: com.sap.integration.cloud.pipeline.v2.generic.step04.receiver.determination, scripts/restoreMessage.groovy#L13] — see versions/2026-09-current/changelog-generic-pipelines-step04-06.md
-- 2026-09-current 1.0.5: retry gateway on stopRetry or skipRetry; after the last retry the MPL error text read [2026-09-current: com.sap.integration.cloud.pipeline.v2.generic.step04.receiver.determination, step 25 "Max # of retries reached?"] [2026-09-current: com.sap.integration.cloud.pipeline.v2.generic.step04.receiver.determination, step 83 "Get Original Exception"] — see versions/2026-09-current/changelog-generic-pipelines-step04-06.md
-- 2026-09-current 1.0.5: queue names as MPL custom headers [2026-09-current: com.sap.integration.cloud.pipeline.v2.generic.step04.receiver.determination, step 3 "Add sender queue to custom headers"] [2026-09-current: com.sap.integration.cloud.pipeline.v2.generic.step04.receiver.determination, step 56 "Add receiver queue to custom headers"] — see versions/2026-09-current/changelog-generic-pipelines-step04-06.md
+- 2026-09-current 1.0.5: backup and restore of payload, headers, attachments [2026-09-current: com.sap.integration.cloud.pipeline.v2.generic.step04.receiver.determination, scripts/backupMessage.groovy#L32] [2026-09-current: com.sap.integration.cloud.pipeline.v2.generic.step04.receiver.determination, scripts/backupMessage.groovy#L33] [2026-09-current: com.sap.integration.cloud.pipeline.v2.generic.step04.receiver.determination, scripts/backupMessage.groovy#L34] [2026-09-current: com.sap.integration.cloud.pipeline.v2.generic.step04.receiver.determination, scripts/restoreMessage.groovy#L11] [2026-09-current: com.sap.integration.cloud.pipeline.v2.generic.step04.receiver.determination, scripts/restoreMessage.groovy#L12] [2026-09-current: com.sap.integration.cloud.pipeline.v2.generic.step04.receiver.determination, scripts/restoreMessage.groovy#L13]; retry gateway on stopRetry or skipRetry; after the last retry the MPL error text read [2026-09-current: com.sap.integration.cloud.pipeline.v2.generic.step04.receiver.determination, step 25 "Max # of retries reached?"] [2026-09-current: com.sap.integration.cloud.pipeline.v2.generic.step04.receiver.determination, step 83 "Get Original Exception"]; queue names as MPL custom headers [2026-09-current: com.sap.integration.cloud.pipeline.v2.generic.step04.receiver.determination, step 3 "Add sender queue to custom headers"] [2026-09-current: com.sap.integration.cloud.pipeline.v2.generic.step04.receiver.determination, step 56 "Add receiver queue to custom headers"] — see versions/2026-09-current/changelog-generic-pipelines-step04-06.md

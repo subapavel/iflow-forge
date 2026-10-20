@@ -4,7 +4,7 @@ Artifact: `com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.process
 
 ## Purpose
 
-Generic IDoc receiver step at `{{ProcessDirect_Address}}` [com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.idoc, adapter "CC_ProcessDirect_Sender" "Pipeline"]; the p2p-to-IDoc template calls `{{GenericIDocEndpoint}}` [com.sap.integration.cloud.pipeline.v2.template.step07.outbound.processing.p2p.to.idoc, parameter "GenericIDocEndpoint"], equal only by configuration (pitfalls). It validates the IDoc XML, completes EDI_DC40 from headers, Partner Directory and parameters, checks mandatory fields and sends over one of twelve channels chosen by content type (bulk forced to Text/XML, single with ARCKEY to x-sap.idoc, steps 7, 29), proxy and authentication type (steps 31, 46).
+Generic IDoc receiver step at `{{ProcessDirect_Address}}` [com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.idoc, adapter "CC_ProcessDirect_Sender" "Pipeline"]; the p2p-to-IDoc template calls `{{GenericIDocEndpoint}}` [com.sap.integration.cloud.pipeline.v2.template.step07.outbound.processing.p2p.to.idoc, parameter "GenericIDocEndpoint"], equal only by configuration (pitfalls). It validates the IDoc XML, completes EDI_DC40 from headers, Partner Directory and parameters, checks mandatory fields and sends over one of twelve channels chosen by content type (bulk forced to Text/XML, single with ARCKEY to x-sap.idoc, steps 7, 29), proxy and authentication type.
 
 ## Adapters
 
@@ -146,13 +146,13 @@ Receiver cells: calling step, IDoc type, authentication. All receivers: `${prope
 
 ## Error handling
 
-- Four event subprocesses call the "Exception Handling Process" (steps 17–22) and end in an Error End [com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.idoc, step 58 "Call Exception Handling Process"].
+- Four event subprocesses call the "Exception Handling Process" and end in an Error End [com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.idoc, step 58 "Call Exception Handling Process"].
 - Raised here: non-XML body, EOIO without ARCKEY (IDocValidationException), unsupported proxy/authentication (NotExpectedConfigurationOption), empty mandatory control record field [scripts/setIDocMonitoringProperties.groovy#L31].
 - No retry or DLQ; what the caller does with the error is not visible (pitfalls).
 
 ## Extension points
 
-- Scenario headers SAP_Receiver_IDoc<key> and SAP_IDoc_EDIDC_* override connectivity and control record [scripts/setEdidcFromParamsForIDoc.groovy#L32]; PD per receiver alias and partner ID (Partner directory).
+- Scenario headers SAP_Receiver_IDoc<key> and SAP_IDoc_EDIDC_* override connectivity and control record [scripts/setEdidcFromParamsForIDoc.groovy#L32] [scripts/setEdidcFromParamsForIDoc.groovy#L61], present even when empty (pitfalls); PD per receiver alias and partner ID (Partner directory).
 - AllowedHeadersList "Enhance allowed header list to your needs" [com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.idoc, parameter "AllowedHeadersList"].
 
 ## Version notes

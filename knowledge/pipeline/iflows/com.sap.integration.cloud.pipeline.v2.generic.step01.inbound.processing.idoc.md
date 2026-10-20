@@ -8,7 +8,7 @@ First pipeline step for IDoc senders [com.sap.integration.cloud.pipeline.v2.gene
 
 - ExactlyOnceInOrder: refused [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc, step 49 "Set custom status"].
 - Otherwise (default ExactlyOnce [scripts/setIDocSenderInterface.groovy#L12]): a single IDoc is keyed SNDPRN_DOCNUM [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc, step 29 "Set unique ID"]; a bulk [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc, step "Bulk?"] is split or, with PD KeepBulk, keyed by transfer ID [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc, step 48 "Set unique ID"]. After the duplicate check it goes to PD InboundQueue or `{{DefaultJMSQueuePrefix}}{{DefaultJMSQueueNumber}}` [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc, adapter "JMS" "DefaultInboundProcessingQueue"].
-- X01 feeds Step02 async [com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async, adapter "JMS" "InboundProcessingQueueX"], Q01 Step02 inbound [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, adapter "JMS" "InboundProcessingQueue"], with equal prefixes (see pitfalls).
+- X01 feeds Step02 async [com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async, adapter "JMS" "InboundProcessingQueueX"], Q01 Step02 inbound [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, adapter "JMS" "InboundProcessingQueue"], with equal prefixes (see message-path.md).
 
 ## Adapters
 
@@ -23,7 +23,7 @@ First pipeline step for IDoc senders [com.sap.integration.cloud.pipeline.v2.gene
 
 ## Steps
 
-1. Enricher "Read partner headers": EDIDC fields, testMode, parameters
+1. Enricher "Read partner headers"
 2. Script "Set sender interface": `setIDocSenderInterface.groovy`
 3. Script "Determine partner ID": `determinePartnerIDForIDocInbound.groovy`
 4. Script "Add custom header properties": `addCustomHeaderProperties.groovy`
@@ -98,7 +98,7 @@ First pipeline step for IDoc senders [com.sap.integration.cloud.pipeline.v2.gene
 
 ### Read
 
-From outside this flow (adapter, earlier or custom flows).
+Set outside this flow.
 
 | Name | Kind | Step | Used for |
 |---|---|---|---|
@@ -111,9 +111,9 @@ From outside this flow (adapter, earlier or custom flows).
 - Stage: as for XI [scripts/determinePartnerIDForIDocInbound.groovy#L178].
 - Sender logical system: SNDPRN if SNDPRT = LS, else `<SNDPOR without SAP>CLNT<MANDT>` [scripts/determinePartnerIDForIDocInbound.groovy#L106].
 - Sender alias: alternative partner, agency stage, scheme LogicalSystemName, then SNDPRN [scripts/determinePartnerIDForIDocInbound.groovy#L437]; business system via scheme BusinessSystemName, missing: logical system [scripts/determinePartnerIDForIDocInbound.groovy#L449].
-- Sender party (SNDPRT not LS): agency alias, scheme `ALE#<SNDPRT>[#<SNDPFC>]`, id SNDPRN [scripts/determinePartnerIDForIDocInbound.groovy#L473].
+- Sender party (SNDPRT not LS): agency alias, scheme `ALE#<SNDPRT>[#<SNDPFC>]`, id SNDPRN [scripts/determinePartnerIDForIDocInbound.groovy#L473]; found: SAP_Sender = `<party>.<sender>` [scripts/determinePartnerIDForIDocInbound.groovy#L476].
 - Virtual receiver, only if CustomXPid_ResolveVirtualReceiver = 'true': same lookups for RCVPRN [scripts/determinePartnerIDForIDocInbound.groovy#L486].
-- Partner ID: alternative partner by interface [scripts/determinePartnerIDForIDocInbound.groovy#L750], agencies `<sender>:<receiver>`, `[party.]alias`, alias, SNDPRN in turn [scripts/determinePartnerIDForIDocInbound.groovy#L528]; missing: `<alias>~<interface>` [scripts/determinePartnerIDForIDocInbound.groovy#L586], or an exception when CustomXPid_SwitchOffTilde = 'true' [scripts/determinePartnerIDForIDocInbound.groovy#L599].
+- Partner ID: alternative partner by interface [scripts/determinePartnerIDForIDocInbound.groovy#L750], agencies `<sender>:<receiver>`, `[party.]alias`, alias, SNDPRN [scripts/determinePartnerIDForIDocInbound.groovy#L528]; missing: `<alias>~<interface>` [scripts/determinePartnerIDForIDocInbound.groovy#L586], or an exception when CustomXPid_SwitchOffTilde = 'true' [scripts/determinePartnerIDForIDocInbound.groovy#L599].
 - Strings of partnerID: CustomXPreEnabled/Endpoint [scripts/readCustomXFromPD.groovy#L41], InboundQueue [scripts/readInboundQueueFromPD.groovy#L21], KeepBulk, missing = false [scripts/readKeepBulkSettingFromPD.groovy#L25].
 
 PD scripts throw when the header partnerID is missing [scripts/readInboundQueueFromPD.groovy#L17].
@@ -152,7 +152,7 @@ PD scripts throw when the header partnerID is missing [scripts/readInboundQueueF
 - Standard: test IDocs get ErrorInTestMode and escalate; otherwise "Error End 3" [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc, step "Test mode?"].
 - Custom: exception headers to `{{CustomXError_Endpoint}}` [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc, adapter "ProcessDirect" "CustomErrorFlow"]; returned customXError_Status is the MPL status [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc, step 18 "Set custom status"], customXError_EndEvent selects Completed, Escalated or "Error End 1" [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc, step "End event?"].
 - EOIO sets ConfigurationOptionNotSupported and throws [scripts/throwException.groovy#L34].
-- Partner ID errors restore the headers, then rethrow [scripts/determinePartnerIDForIDocInbound.groovy#L48].
+- Partner ID errors restore headers and rethrow [scripts/determinePartnerIDForIDocInbound.groovy#L48].
 - Duplicates end with status DuplicateDiscarded [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc, step "Duplicate?"]; a skipped check gets DuplicateCheckSkipped [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc, step 41 "Set custom status"].
 
 ## Extension points

@@ -128,7 +128,7 @@ Headers and properties from outside this flow (Step01 XI, custom flows).
 - CustomXPreEnabled, CustomXPreEndpoint; missing: no exit [scripts/readCustomXFromPD.groovy#L41].
 - receiverDetermination (String); missing: default route [scripts/readBypassOptionFromPD.groovy#L22]. interfaceDetermination_<receiver>: p2p; missing: skipRcvDet [scripts/readBypassOptionFromPD.groovy#L36].
 - CustomXRDEndpoint; missing: ReuseXRDEndpoint is read [scripts/readCustomReceiverDeterminationFromPD.groovy#L35]; that missing: XSLT [scripts/readCustomReceiverDeterminationFromPD.groovy#L38].
-- receiverDetermination (Binary): the XSLT (step 40); missing: see pitfalls.
+- receiverDetermination (Binary): the XSLT (step 40); missing: open-questions/kb-12b.md.
 - Receiver stages: alternative partner per stage; none: no stage routing [scripts/mapSenderStageToReceiverStage.groovy#L80].
 - Known stage: stageRule_<stage>~<receiver alias>, stageRule_<stage> (partnerID, then alias) [scripts/mapSenderStageToReceiverStage.groovy#L145]; missing: exact stage [scripts/mapSenderStageToReceiverStage.groovy#L164], then the same with `{{tenant.name}}` [scripts/mapSenderStageToReceiverStage.groovy#L170], else exception [scripts/mapSenderStageToReceiverStage.groovy#L189]; value `>Stage1,Stage2`. Unknown stage: tenant rules, the only stage, else exception [scripts/mapSenderStageToReceiverStage.groovy#L112]. Several stages throw for BestEffort [scripts/mapSenderStageToReceiverStage.groovy#L260].
 - Receiver system: alternative partner, agency tenantStage or "PRD"; missing: alias kept [scripts/mapReceiverAliasToBusinessSystemName.groovy#L36].
