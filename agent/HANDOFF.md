@@ -2,7 +2,7 @@
 
 state: KB-00b done 287527b (owner reviewed Q1–Q20); next ready: KB-12b, then KB-11d, KB-11e (version gate from change logs)
 last commit: kb: benchmark key corrected after the owner's review (KB-00b); before it 721597b (KB-11c), 6d69048 (KB-00b draft), a51989f
-branch: claude/eager-brown-uw61ft (D-017; owner fast-forwards main) — all pushed; CI green through 721597b (39465906270); check the KB-00b run next
+branch: claude/eager-brown-uw61ft (D-017; owner fast-forwards main); CI green 287527b (39487719616), f609dc7 (39487981477); 3fcc2b8 (39489042472)
 next exact action: KB-12b — fresh session with only the skill answers benchmark/questions.md (plan Task 12 step 3); no read of expected-answers-*.md
 benchmark: questions.md is what the session reads; expected-answers-1/2.md are the key — a transcript that reads them or expected-proposal.md voids the run
 owner's primary target: BPM and complex scenarios (4 BPM pilot); flow in docs/inputs/2026-10-20-owner-migration-flow.md — input to the part 3/5 specs
