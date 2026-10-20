@@ -25,7 +25,7 @@ First pipeline step for XI sender messages [com.sap.integration.cloud.pipeline.v
 
 ## Steps
 
-1. Enricher "Set SAP headers": SAP_* headers, parameters to properties
+1. Enricher "Set SAP headers": SAP_* headers; parameters and customHeader_QualityOfService to properties
 2. Script "Fetch dynamic configuration": `createHeadersFromSapDynamicConfiguration.groovy`
 3. Script "Add party": `addPartyForXIInbound.groovy` prefixes the party [scripts/addPartyForXIInbound.groovy#L15]
 4. Script "Determine partner ID": `determinePartnerID.groovy`
@@ -48,7 +48,7 @@ First pipeline step for XI sender messages [com.sap.integration.cloud.pipeline.v
       21. ExternalCall "Send to custom error flow": [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi, adapter "ProcessDirect" "CustomErrorFlow"]
       22. ExclusiveGateway "End event?": customXError_EndEvent
 23. ExclusiveGateway "QoS?": ExactlyOnce 26, BestEffort 39, ExactlyOnceInOrder 50, default 24
-24. Enricher "Set custom status": QoS empty or unknown
+24. Enricher "Set custom status": QoS empty or unknown; exceptionMessage
 25. Script "Throw exception": `throwException.groovy`
 26. Script "Read inbound queue": `readInboundQueueFromPD.groovy`
 27. Script "Add custom header properties": `addCustomHeaderProperties.groovy`
@@ -69,12 +69,12 @@ First pipeline step for XI sender messages [com.sap.integration.cloud.pipeline.v
 42. Enricher "Remove header": deletes customXPipelineStep
 43. ExternalCall "Request Reply": [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi, adapter "ProcessDirect" "SyncPipeline"]
 44. Enricher "Remove headers from response": deletes eight pipeline headers
-45. Enricher "Set custom status": skipRcvDet unsupported
+45. Enricher "Set custom status": skipRcvDet unsupported; exceptionMessage
 46. Script "Throw exception": `throwException.groovy`
 47. Script "Map to Business Name": `mapReceiverAliasToBusinessSystemName.groovy`
 48. Enricher "Remove header": deletes customXPipelineStep
 49. ExternalCall "Request Reply": then 44 [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi, adapter "ProcessDirect" "ActualReceiver"]
-50. Enricher "Set custom status": EOIO unsupported
+50. Enricher "Set custom status": EOIO unsupported; exceptionMessage
 51. Script "Throw exception": `throwException.groovy`
 52. ErrorEventSubProcessTemplate "Exception Subprocess 1"
   53. ExclusiveGateway "Custom Extension?"
@@ -99,7 +99,7 @@ First pipeline step for XI sender messages [com.sap.integration.cloud.pipeline.v
 
 ### Read
 
-Headers and properties that arrive from outside this flow (sender adapter, earlier flows, custom flows).
+From outside; allowed headers `SapSenderParty|SapSenderService|SapInterfaceName|SapInterfaceNamespace|SapQualityOfService|SapMessageId(.*)|customX(.*)|SapAuthenticatedUserName|tenantStage(.*)` [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi, property "allowedHeaderList"].
 
 | Name | Kind | Step | Used for |
 |---|---|---|---|
@@ -155,7 +155,7 @@ PD scripts throw when the header partnerID is missing [scripts/readInboundQueueF
 - Three event subprocesses use custom error handling if CustomXError_Enabled = 'true', else standard [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi, step 14 "Custom Extension?"].
 - Standard: under BestEffort the caller gets `${exception.message}` as body, status SyncCallFailed; then "Error End 3" [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi, step "Return exception message"].
 - Custom: exception headers to `{{CustomXError_Endpoint}}` [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi, adapter "ProcessDirect" "CustomErrorFlow"]; its header customXError_EndEvent selects Completed, Escalated or, by default, "Error End 1" [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi, step "End event?"].
-- Refused options (EOIO, unknown QoS, skipRcvDet under BestEffort) set ConfigurationOptionNotSupported and throw [scripts/throwException.groovy#L34].
+- Refused options (EOIO, unknown QoS, skipRcvDet under BestEffort) set ConfigurationOptionNotSupported and exceptionMessage (steps 24, 45, 50), which the script reads [scripts/throwException.groovy#L6] and throws [scripts/throwException.groovy#L34].
 - A partner ID error restores the original headers before rethrowing [scripts/determinePartnerID.groovy#L47].
 
 ## Extension points

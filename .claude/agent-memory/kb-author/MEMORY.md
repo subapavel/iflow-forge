@@ -1,16 +1,13 @@
 # kb-author memory
-
 Durable facts only (build quirks, verified APIs, recurring findings). Never task state. Under 120 lines.
 ## Artifacts (generic pipeline iFlows, 2026-06-trial)
 - Message-flow names are only the adapter type ("JMS", "ProcessDirect", "XI", "IDOC"); the participant name (dump `-> <endpoint>`) is what tells flows apart.
 - JMS queue receivers in Step02+ are fed by message end events, not Send steps; find them via `<bpmn2:messageFlow sourceRef="EndEvent_...">`.
-- Gateway conditions and end-event names are not in the dump: grep the `.iflw` for `sequenceFlow`, `conditionExpression`, `endEvent`.
-- Scripts with the same file name in different generic iFlows were byte-identical (md5) in this label; line numbers carry over, check again per label.
+- Gateway conditions and end-event names are not in the dump: grep the `.iflw` for `sequenceFlow`, `conditionExpression`, `endEvent`. - Scripts with the same file name in different generic iFlows were byte-identical (md5) in this label; line numbers carry over, check again per label.
 - Queue prefix parameter has three names: PipelinePrefix (Step01 XI, Step02 sync address), DefaultJMSQueuePrefix (Step01 IDoc), PipelineJMSQueuePrefix (Step02+).
 - The JSON dump's Content Modifier tables are `<row><cell id='Name'>...` strings; flatten with jq gsub into `ROW[...]` to read them.
 ## Budget
-- BudgetTest counts whitespace tokens: table pipes and the `—` default cells count; `wc -w` undercounts by ~8. Measure with `tr -s ' \t\n\r\f\v' '\n' < page | grep -c .`.
-- A step line with the full `[<id>, step "<name>"]` cite costs ~11 tokens; a 55-step iFlow leaves ~850 for the other nine sections. Write terse from the start; script-step cites (`[scripts/...#Ln]`) are 1 token.
+- BudgetTest counts whitespace tokens: table pipes and the `—` default cells count; `wc -w` undercounts by ~8. Measure with `tr -s ' \t\n\r\f\v' '\n' < page | grep -c .`. - A step line with the full `[<id>, step "<name>"]` cite costs ~11 tokens; a 55-step iFlow leaves ~850 for the other nine sections. Write terse from the start; script-step cites (`[scripts/...#Ln]`) are 1 token.
 ## Reading the routing (learned on Step02 async/sync, Step04)
 - The JSON dump's step `id` is the BPMN element id: grep the `.iflw` `sequenceFlow` lines (sourceRef/targetRef/name + conditionExpression) and map ids to dump step numbers; messageFlow sourceRef=ServiceTask_/EndEvent_ gives the adapter per step.
 - Dump order is not flow order: in Step02 sync the two "Request Reply" exit calls are #9 = CustomXScenario, #10 = CustomXGlobal (reverse of async). Always map ServiceTask id -> messageFlow -> participant.
@@ -117,3 +114,6 @@ Durable facts only (build quirks, verified APIs, recurring findings). Never task
 ## Applying triage to pages (learned on KB-10 B3a)
 - `dropped (already on scripts/…)` rows also match `$5 ~ /scripts\//` (they take n/a); a reason with an escaped `\|` gives 9 fields, so write the applied cell as `$(NF-1)`, and `comm` the table ids against the decision file before writing. Verify every cite with `sed -n "${n}p" <file>` on the source itself: a numbered-print helper offsets by one.
 - Drafts invert semantics and name dead properties: CustomXPid_SwitchOffTilde (tilde built when NOT "true", determinePartnerID#L332-L338), stage order (SAP_Sender landscapeStage before user mapping), IDocLogicalSystem_ not LS_, storeOriginal sets originalPayload, Default_LogicalSystemName set but never read. Grep every reader before "used"; a default absent from the propdef becomes an open question.
+## Enriching full iflows pages (KB-10 B3b)
+- Parameter-default claims (PIP, X01, 40/100 MB, RoleBased, switches, /pip/... endpoints) are in no propdef: `open question` (kb-04 L7-L16). The "### Read" intro sentence is not contractual: replace it to buy room; step-line additions are cheapest (D-020).
+- Routing awk: strip `</bpmn2:conditionExpression>.*` BEFORE `.*conditionExpression[^>]*>` (greedy); a name-mapped SF list settles path claims (sync p2p skips "Any Interface?").

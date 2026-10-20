@@ -147,7 +147,7 @@ Headers and properties that arrive from outside this flow (sender adapter, earli
 
 - Both event subprocesses use custom error handling if CustomXError_Enabled = 'true', else standard [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, step 14 "Custom Extension?"].
 - Test messages escalate with ErrorInTestMode and an MPL attachment [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, step "Test mode?"].
-- Below the retry limit: "Error End 2"; at the limit, when the limit is '0', or on a `determinePartnerID.groovy` error, the original payload goes to the DLQ with MaxRetriesExceeded [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, step "Max # of retries reached?"] [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, adapter "JMS" "DeadLetterQueue"].
+- Below the retry limit: "Error End 2"; at the limit, when the limit is '0', or on a `determinePartnerID.groovy` error, the original payload goes to the DLQ with MaxRetriesExceeded [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, step "Max # of retries reached?"] [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, adapter "JMS" "DeadLetterQueue"]. Partner ID clause: retrying cannot repair missing configuration [rationale, from analysis 2026].
 - Custom: original payload and exception headers to `{{CustomXError_Endpoint}}` [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, adapter "ProcessDirect" "CustomErrorFlow"]; returned customXError_Status is the MPL status, customXError_EndEvent selects Completed, Escalated or "Error End 3" [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, step 30 "End event?"].
 
 ## Extension points

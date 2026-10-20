@@ -4,7 +4,7 @@ Artifact: `com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messa
 
 ## Purpose
 
-Synchronous integrated runtime: Step01 XI calls `/{{PipelinePrefix}}/XS01` for BestEffort messages on the default (CBR) route [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi, step 41 "Bypass option?"] [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi, adapter "ProcessDirect" "SyncPipeline"], the address of this flow's sender [com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync, adapter "ProcessDirect" "InboundProcessingSync"]. It runs the exits, determines exactly one receiver and one interface by the Partner Directory XSLT (steps 46, 55) and calls the scenario-specific outbound flow, whose reply it returns without the pipeline headers (step 60) [com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync, adapter "ProcessDirect" "ScenarioSpecificOutbound"]. No JMS queue, no retry; skipRcvDet and reused XRD fail (steps 35, 71).
+Synchronous integrated runtime: Step01 XI calls `/{{PipelinePrefix}}/XS01` for BestEffort messages on the default (CBR) route [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi, step 41 "Bypass option?"] [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi, adapter "ProcessDirect" "SyncPipeline"], the address of this flow's sender [com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync, adapter "ProcessDirect" "InboundProcessingSync"]. It runs the exits, determines exactly one receiver and one interface by the Partner Directory XSLT (steps 46, 55) and calls the scenario-specific outbound flow, whose reply it returns without the pipeline headers (step 60) [com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync, adapter "ProcessDirect" "ScenarioSpecificOutbound"]. No JMS queue, no retry; skipRcvDet and reused XRD fail (steps 35, 71). One receiver only: a synchronous reply cannot fan out [rationale, from analysis 2026]. "Not found type?" offers no Ignore [com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync, step "Not found type?"]: the caller needs a reply [rationale, from analysis 2026].
 
 ## Adapters
 
@@ -74,7 +74,7 @@ Synchronous integrated runtime: Step01 XI calls `/{{PipelinePrefix}}/XS01` for B
 53. ExclusiveGateway "Virtual Stage Routing?": tenantStageVirtual to 64, else 54
 54. Script "Map to Business Name": `mapReceiverAliasToBusinessSystemName.groovy`
 55. ExclusiveGateway "Any Interface?": several to 62, none to 63, else 56
-56. Enricher "Get interface": SAP_ReceiverInterfaceIndex, SAP_OutboundProcessingEndpoint
+56. Enricher "Get interface": SAP_ReceiverInterfaceIndex, SAP_OutboundProcessingEndpoint; bypassOption = skipIfDet
 57. Script "Log outbound processing endpoint": `logOutboundProcessingEndpoint.groovy`
 58. Enricher "Get payload": body from property payload
 59. ExternalCall "Request Reply": [com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync, adapter "ProcessDirect" "ScenarioSpecificOutbound"]
@@ -156,7 +156,7 @@ Headers and properties from outside this flow (Step01 XI, custom flows).
 ## Error handling
 
 - Three event subprocesses; custom if CustomXError_Enabled = 'true', else standard [com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync, step 12 "Custom Extension?"].
-- Standard: test messages get ErrorInTestMode; all get an MPL attachment, lose the pipeline headers and end in "Error End 7" [com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync, step "Test mode?"]. No DLQ, no retry.
+- Standard: test messages get ErrorInTestMode; all get an MPL attachment, lose the pipeline headers and end in "Error End 7" [com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync, step "Test mode?"]. No DLQ, no retry. Under Step01 XI standard handling the caller then gets `${exception.message}`, status SyncCallFailed [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi, step "Return exception message"].
 - Custom: original payload and exception headers to `{{CustomXError_Endpoint}}` [com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync, step "Set headers & fetch original payload"]; customXError_EndEvent picks Escalated, Completed or "Error End 4" [com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync, step 17 "End event?"].
 - Configuration and determination errors set a status and throw (steps 36, 48) [scripts/throwException.groovy#L9].
 

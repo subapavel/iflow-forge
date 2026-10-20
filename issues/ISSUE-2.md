@@ -1,4 +1,4 @@
-# ISSUE-2 — GitHub Actions `verify` run for 4d7ee0f fails before any step runs (owner-only)
+# ISSUE-2 — GitHub Actions `verify` run for 4d7ee0f fails before any step runs (owner-only) — CLOSED 2026-10-20
 
 Date: 2026-10-20 · Task: KB-13 (commit 4d7ee0f) · Severity: blocks the CI evidence line, not the code.
 
@@ -43,3 +43,8 @@ Run 39383547567 (9aae29f, 06:58:31–34Z): same picture, failure in 3 s with no 
 Not re-run (the one allowed re-run is spent); local verify for 9aae29f: exit 0 (target/kb-10-b2-verify.log).
 Re-run requested by the owner (attempt 2 of run 39383547567, 07:14:33–07:15:22Z): a runner picked it up and the run SUCCEEDED. The runner
 problem appears resolved on the owner's side; the next push decides whether ISSUE-2 can be closed.
+
+## Closed 2026-10-20 07:36Z
+Run 39387441607 (push of 5e577ac, 07:34:50–07:35:38Z) got a runner on the first attempt and SUCCEEDED, as did the owner's
+re-run of 9aae29f before it. Six failures (4d7ee0f, ae72101+1 … 9aae29f attempt 1) are explained by the owner-side Actions
+runner problem; the repository was never the cause. ISSUE-2 is closed; CI is evidence again from 5e577ac on.

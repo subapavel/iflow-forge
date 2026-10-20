@@ -4,7 +4,7 @@ Artifact: `com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processi
 
 ## Purpose
 
-First pipeline step for IDoc senders [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc, adapter "IDOC" "Sender"]. It derives sender interface and partner ID [scripts/determinePartnerIDForIDocInbound.groovy#L603], the key of the later Partner Directory reads [scripts/readInboundQueueFromPD.groovy#L21], runs the exits and branches on QoS [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc, step "QoS?"]:
+First pipeline step for IDoc senders [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc, adapter "IDOC" "Sender"]. It derives sender interface and partner ID [scripts/determinePartnerIDForIDocInbound.groovy#L603], the key of later Partner Directory reads [scripts/readInboundQueueFromPD.groovy#L21], runs the exits and branches on QoS [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc, step "QoS?"]:
 
 - ExactlyOnceInOrder: refused [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc, step 49 "Set custom status"].
 - Otherwise (default ExactlyOnce [scripts/setIDocSenderInterface.groovy#L12]): a single IDoc is keyed SNDPRN_DOCNUM [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc, step 29 "Set unique ID"]; a bulk [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc, step "Bulk?"] is split or, with PD KeepBulk, keyed by transfer ID [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc, step 48 "Set unique ID"]. After the duplicate check it goes to PD InboundQueue or `{{DefaultJMSQueuePrefix}}{{DefaultJMSQueueNumber}}` [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc, adapter "JMS" "DefaultInboundProcessingQueue"].
@@ -27,7 +27,7 @@ First pipeline step for IDoc senders [com.sap.integration.cloud.pipeline.v2.gene
 2. Script "Set sender interface": `setIDocSenderInterface.groovy`
 3. Script "Determine partner ID": `determinePartnerIDForIDocInbound.groovy`
 4. Script "Add custom header properties": `addCustomHeaderProperties.groovy`
-5. Enricher "Initialize pre-processing exit": CustomXType = CustomXPre
+5. Enricher "Initialize pre-processing exit": CustomXType = CustomXPre; CustomXTest_SkipDuplicateCheck from its parameter
 6. ProcessCallElement "Call custom exit"
   7. Enricher "Initialize exit"
   8. Script "Check scenario-specific exit": `readCustomXFromPD.groovy` sets CustomXBoolean, CustomXEndpoint [scripts/readCustomXFromPD.groovy#L58]
@@ -98,7 +98,7 @@ First pipeline step for IDoc senders [com.sap.integration.cloud.pipeline.v2.gene
 
 ### Read
 
-Headers and properties that arrive from outside this flow (sender adapter, earlier flows, custom flows).
+From outside this flow (adapter, earlier or custom flows).
 
 | Name | Kind | Step | Used for |
 |---|---|---|---|
@@ -127,7 +127,7 @@ PD scripts throw when the header partnerID is missing [scripts/readInboundQueueF
 | `addCustomHeaderProperties.groovy` | 4 | MPL custom headers [scripts/addCustomHeaderProperties.groovy#L69] |
 | `readCustomXFromPD.groovy` | 8 | scenario exit [scripts/readCustomXFromPD.groovy#L52] |
 | `readInboundQueueFromPD.groovy` | 24 | inbound queue [scripts/readInboundQueueFromPD.groovy#L21] |
-| `displayBulkIDs.groovy` | 26 | IDoc numbers to MPL [scripts/displayBulkIDs.groovy#L62] |
+| `displayBulkIDs.groovy` | 26 | bulk IDoc numbers, zeros stripped, to MPL: one header each if idocBulkIndividualHeader = "true" [scripts/displayBulkIDs.groovy#L40], else a JSON list [scripts/displayBulkIDs.groovy#L62] |
 | `removeLeadingZerosFromApplicationID.groovy` | 30 | strips zeros [scripts/removeLeadingZerosFromApplicationID.groovy#L8] |
 | `readKeepBulkSettingFromPD.groovy` | 45 | keep bulk [scripts/readKeepBulkSettingFromPD.groovy#L21] |
 | `throwException.groovy` | 50 | throws exceptionType [scripts/throwException.groovy#L17] |
@@ -141,19 +141,19 @@ PD scripts throw when the header partnerID is missing [scripts/readInboundQueueF
 | DefaultJMSQueuePrefix, DefaultJMSQueueNumber | — | prefix; X01 or Q01 [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc, parameter "DefaultJMSQueuePrefix"] [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc, parameter "DefaultJMSQueueNumber"] | prefix: `{{tenant.pipeline.prefix}}` |
 | UserRole, SubjectDN, IssuerDN | — | role, certificate [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc, adapter "IDOC" "Sender"] | `{{tenant.security.sender.role}}`, `{{tenant.security.cert.subjectdn}}`, `{{tenant.security.cert.issuerdn}}` |
 | SenderAuthType, InvalidXMLCharHandling, BodySize, AttachmentSize; JMS_CompressStoredMessage, JMS_EncryptStoredMessage, JMS_RetentionThreshold, JMS_ExpirationPeriod | — | sender [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc, adapter "IDOC" "Sender"]; JMS storage [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc, adapter "JMS" "DefaultInboundProcessingQueue"] | no |
-| CustomXPreGlobal_Enabled, CustomXError_Enabled, CustomXPid_SwitchOffTilde, CustomXPid_ResolveVirtualReceiver | — | switches [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc, step "Read partner headers"] | no |
-| CustomXTest_SkipDuplicateCheck, IDocIndividualHeaderInBulk | — | test switch; bulk header form [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc, parameter "CustomXTest_SkipDuplicateCheck"] [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc, parameter "IDocIndividualHeaderInBulk"] | no |
+| CustomXPreGlobal_Enabled, CustomXError_Enabled, CustomXPid_SwitchOffTilde, CustomXPid_ResolveVirtualReceiver | CustomXPid_ResolveVirtualReceiver false [generic-inbound/CHANGELOG.txt#L6] | switches [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc, step "Read partner headers"] | no |
+| CustomXTest_SkipDuplicateCheck, IDocIndividualHeaderInBulk | CustomXTest_SkipDuplicateCheck false [generic-inbound/CHANGELOG.txt#L16]; IDocIndividualHeaderInBulk true (description) [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc, resource "parameters.propdef"] | test switch; bulk header form [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc, parameter "CustomXTest_SkipDuplicateCheck"] [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc, parameter "IDocIndividualHeaderInBulk"] | no |
 | Default_LogicalSystemName | — | set, read by no script [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc, step "Read partner headers"] | `{{tenant.idoc.logicalsystem.default}}` |
 | CustomXPreGlobal_Endpoint, CustomXError_Endpoint | — | global exit, error flow [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc, parameter "CustomXPreGlobal_Endpoint"] [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc, parameter "CustomXError_Endpoint"] | `{{tenant.endpoint.custom.preprocessing.global}}`, `{{tenant.endpoint.custom.error}}` |
 
 ## Error handling
 
-- Three event subprocesses call custom error handling when CustomXError_Enabled = 'true', else standard error handling [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc, step 14 "Custom Extension?"].
-- Standard: a test IDoc gets status ErrorInTestMode and escalates; otherwise "Error End 3" [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc, step "Test mode?"].
+- Three event subprocesses call custom error handling when CustomXError_Enabled = 'true', else standard [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc, step 14 "Custom Extension?"].
+- Standard: test IDocs get ErrorInTestMode and escalate; otherwise "Error End 3" [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc, step "Test mode?"].
 - Custom: exception headers to `{{CustomXError_Endpoint}}` [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc, adapter "ProcessDirect" "CustomErrorFlow"]; returned customXError_Status is the MPL status [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc, step 18 "Set custom status"], customXError_EndEvent selects Completed, Escalated or "Error End 1" [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc, step "End event?"].
 - EOIO sets ConfigurationOptionNotSupported and throws [scripts/throwException.groovy#L34].
 - Partner ID errors restore the headers, then rethrow [scripts/determinePartnerIDForIDocInbound.groovy#L48].
-- Duplicates end with status DuplicateDiscarded [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc, step "Duplicate?"]; a skipped check is marked DuplicateCheckSkipped [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc, step 41 "Set custom status"].
+- Duplicates end with status DuplicateDiscarded [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc, step "Duplicate?"]; a skipped check gets DuplicateCheckSkipped [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc, step 41 "Set custom status"].
 
 ## Extension points
 

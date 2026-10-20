@@ -52,15 +52,15 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | R-046 | tenant-export-review-2026-09.md | fact | fact→scripts/determinePartnerID.md | error when no PD configuration found | already on page |
 | R-047 | tenant-export-review-2026-09.md | fact | fact→partner-directory.md | bypass PD keys | |
 | R-048 | tenant-export-review-2026-09.md | fact | fact→scripts/readBypassOptionFromPD.md | skipRcvDet derivation | already on page |
-| R-049 | tenant-export-review-2026-09.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | integrated variant rejects skipRcvDet | |
-| R-050 | tenant-export-review-2026-09.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | CustomXRDEndpoint support | |
-| R-051 | tenant-export-review-2026-09.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | ReuseXRDEndpoint rejected | |
+| R-049 | tenant-export-review-2026-09.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | integrated variant rejects skipRcvDet | already on page |
+| R-050 | tenant-export-review-2026-09.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | CustomXRDEndpoint support | already on page |
+| R-051 | tenant-export-review-2026-09.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | ReuseXRDEndpoint rejected | already on page |
 | R-052 | tenant-export-review-2026-09.md | pitfall | pitfall | KIND pitfall | |
 | R-053 | tenant-export-review-2026-09.md | fact | fact→partner-directory.md | receiverDetermination Binary key | |
-| R-054 | tenant-export-review-2026-09.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | routing XSLT not in the package | |
+| R-054 | tenant-export-review-2026-09.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | routing XSLT not in the package | already on page |
 | R-055 | tenant-export-review-2026-09.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | stage mapping | already on page |
 | R-056 | tenant-export-review-2026-09.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step04.receiver.determination.md | Multiple Stages branch in async variants | |
-| R-057 | tenant-export-review-2026-09.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | sync rejects multiple receivers/interfaces/stages | |
+| R-057 | tenant-export-review-2026-09.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | sync rejects multiple receivers/interfaces/stages | already on page |
 | R-058 | tenant-export-review-2026-09.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step06.outbound.processing.md | Step06 role | |
 | R-059 | tenant-export-review-2026-09.md | fact | fact→overview.md | Step07 role | |
 | R-060 | tenant-export-review-2026-09.md | fact | fact→overview.md | Step08 role | |
@@ -94,7 +94,7 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | R-088 | tenant-export-review-2026-09.md | fact | changelog | TenantName read only in 2026-09-current scripts | |
 | R-089 | tenant-export-review-2026-09.md | pitfall | pitfall | KIND pitfall | |
 | R-090 | tenant-export-review-2026-09.md | fact | changelog | dc_(.) pattern only in 2026-09-current | |
-| R-091 | tenant-export-review-2026-09.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | allowed header list tenantStage(.*) | |
+| R-091 | tenant-export-review-2026-09.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | allowed header list tenantStage(.*) | added |
 | R-092 | tenant-export-review-2026-09.md | pitfall | pitfall | KIND pitfall | |
 | R-093 | tenant-export-review-2026-09.md | fact | changelog | Generic Inbound changelog addition | |
 | R-094 | tenant-export-review-2026-09.md | fact | changelog | skipRetry only in 2026-09-current | |
@@ -229,33 +229,33 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-027 | generic-inbound.md | procedure | dropped (duplicate of C-004) | same marker statement on another page | |
 | C-028 | generic-inbound.md | fact | fact→overview.md | Step01 role | |
 | C-029 | generic-inbound.md | fact | fact→overview.md | Step01 deployment model | |
-| C-030 | generic-inbound.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | sender type | |
-| C-031 | generic-inbound.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | sender type | |
-| C-032 | generic-inbound.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | flow outline of both Step01 variants (also Step01 IDoc) | |
-| C-033 | generic-inbound.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | shared local process (also Step01 IDoc) | |
+| C-030 | generic-inbound.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | sender type | already on page |
+| C-031 | generic-inbound.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | sender type | omitted (granularity) |
+| C-032 | generic-inbound.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | flow outline of both Step01 variants (also Step01 IDoc) | already on page |
+| C-033 | generic-inbound.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | shared local process (also Step01 IDoc) | omitted (granularity) |
 | C-034 | generic-inbound.md | fact | fact→message-path.md | default inbound queue PIPX01 | |
 | C-035 | generic-inbound.md | fact | fact→scripts/readInboundQueueFromPD.md | PD override of inbound queue | already on page |
 | C-036 | generic-inbound.md | fact | fact→message-path.md | optional route to PIPQ01 | |
 | C-037 | generic-inbound.md | fact | fact→versions/README.md | iFlow version of the label | |
 | C-038 | generic-inbound.md | fact | fact→versions/README.md | iFlow version of the label | |
-| C-039 | generic-inbound.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | sender adapter and address | |
-| C-040 | generic-inbound.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | sender adapter and address | |
-| C-041 | generic-inbound.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | sync Request Reply path | |
-| C-042 | generic-inbound.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | no sync path | |
-| C-043 | generic-inbound.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | bypass options from PD | |
-| C-044 | generic-inbound.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | no bypass options | |
-| C-045 | generic-inbound.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | no bulk handling | |
-| C-046 | generic-inbound.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | bulk handling | |
-| C-047 | generic-inbound.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | deduplication key | |
-| C-048 | generic-inbound.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | deduplication keys | |
-| C-049 | generic-inbound.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | deduplication switch | |
-| C-050 | generic-inbound.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | application ID | |
-| C-051 | generic-inbound.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | application ID | |
-| C-052 | generic-inbound.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | no test mode | |
-| C-053 | generic-inbound.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | test mode | |
-| C-054 | generic-inbound.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | partner ID script used | |
-| C-055 | generic-inbound.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | partner ID script used | |
-| C-056 | generic-inbound.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | no EOIO (also Step01 IDoc) | |
+| C-039 | generic-inbound.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | sender adapter and address | open question |
+| C-040 | generic-inbound.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | sender adapter and address | open question |
+| C-041 | generic-inbound.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | sync Request Reply path | already on page |
+| C-042 | generic-inbound.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | no sync path | already on page |
+| C-043 | generic-inbound.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | bypass options from PD | already on page |
+| C-044 | generic-inbound.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | no bypass options | already on page |
+| C-045 | generic-inbound.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | no bulk handling | already on page |
+| C-046 | generic-inbound.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | bulk handling | already on page |
+| C-047 | generic-inbound.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | deduplication key | already on page |
+| C-048 | generic-inbound.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | deduplication keys | already on page |
+| C-049 | generic-inbound.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | deduplication switch | already on page |
+| C-050 | generic-inbound.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | application ID | already on page |
+| C-051 | generic-inbound.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | application ID | already on page |
+| C-052 | generic-inbound.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | no test mode | budget |
+| C-053 | generic-inbound.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | test mode | already on page |
+| C-054 | generic-inbound.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | partner ID script used | already on page |
+| C-055 | generic-inbound.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | partner ID script used | already on page |
+| C-056 | generic-inbound.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | no EOIO (also Step01 IDoc) | already on page |
 | C-057 | generic-outbound.md | fact | fact→naming.md | Generic Outbound package content | |
 | C-058 | generic-outbound.md | procedure | dropped (duplicate of C-003) | same team statement on another page | |
 | C-059 | generic-outbound.md | procedure | dropped (duplicate of C-004) | same marker statement on another page | |
@@ -274,15 +274,15 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-072 | generic-pipelines.md | procedure | dropped (duplicate of C-004) | same marker statement on another page | |
 | C-073 | generic-pipelines.md | fact | fact→overview.md | Generic Pipelines role | |
 | C-074 | generic-pipelines.md | fact | fact→overview.md | integrated runtime flows | |
-| C-075 | generic-pipelines.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | merges Step02+04+05 | |
-| C-076 | generic-pipelines.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | single XSLT determination | |
-| C-077 | generic-pipelines.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | input queue PIPX01 | |
-| C-078 | generic-pipelines.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | output queue PIPQ04 | |
-| C-079 | generic-pipelines.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | sync runtime role | |
-| C-080 | generic-pipelines.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | no JMS queues | |
-| C-081 | generic-pipelines.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | one receiver, one interface | |
+| C-075 | generic-pipelines.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | merges Step02+04+05 | already on page |
+| C-076 | generic-pipelines.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | single XSLT determination | already on page |
+| C-077 | generic-pipelines.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | input queue PIPX01 | already on page |
+| C-078 | generic-pipelines.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | output queue PIPQ04 | already on page |
+| C-079 | generic-pipelines.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | sync runtime role | already on page |
+| C-080 | generic-pipelines.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | no JMS queues | already on page |
+| C-081 | generic-pipelines.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | one receiver, one interface | already on page |
 | C-082 | generic-pipelines.md | fact | fact→message-path.md | fully decoupled queues | |
-| C-083 | generic-pipelines.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | Step02 inbound role | |
+| C-083 | generic-pipelines.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | Step02 inbound role | already on page |
 | C-084 | generic-pipelines.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step04.receiver.determination.md | Step04 role | |
 | C-085 | generic-pipelines.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step05.interface.determination.md | Step05 role | |
 | C-086 | generic-pipelines.md | fact | fact→contracts.md | setter of SAP_OutboundProcessingEndpoint | |
@@ -368,32 +368,32 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-166 | when-to-use-cloud-integration-pipeline-decision-matrix.md | rationale | rationale→overview.md | explains the design on pipeline overview | |
 | C-167 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→scripts/addCustomHeaderProperties.md | behaviour of addCustomHeaderProperties | already on page |
 | C-168 | when-to-use-cloud-integration-pipeline-decision-matrix.md | rationale | rationale→overview.md | explains the design on pipeline overview | |
-| C-169 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | sync runtime entry /PIP/XS01 | |
-| C-170 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | receiver call in Step07 | |
-| C-171 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | Request Reply to Step07 | |
-| C-172 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | determination around the Step07 call | |
-| C-173 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | BestEffort, no JMS | |
+| C-169 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | sync runtime entry /PIP/XS01 | already on page |
+| C-170 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | receiver call in Step07 | already on page |
+| C-171 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | Request Reply to Step07 | already on page |
+| C-172 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | determination around the Step07 call | already on page |
+| C-173 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | BestEffort, no JMS | already on page |
 | C-174 | when-to-use-cloud-integration-pipeline-decision-matrix.md | rationale | rationale→overview.md | explains the design on pipeline overview | |
 | C-175 | when-to-use-cloud-integration-pipeline-decision-matrix.md | rationale | rationale→overview.md | explains the design on pipeline overview | |
 | C-176 | when-to-use-cloud-integration-pipeline-decision-matrix.md | procedure | procedure→Task 11 | team procedure or decision | |
 | C-177 | when-to-use-cloud-integration-pipeline-decision-matrix.md | procedure | procedure→Task 11 | team procedure or decision | |
 | C-178 | when-to-use-cloud-integration-pipeline-decision-matrix.md | procedure | procedure→Task 11 | team procedure or decision | |
-| C-179 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | no orchestration | |
+| C-179 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | no orchestration | already on page |
 | C-180 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | dropped (duplicate of C-081) | same statement as the earlier claim | |
-| C-181 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | BestEffort, no split | |
-| C-182 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | router "Any Receiver?" | |
-| C-183 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | stage routing rejects split | |
+| C-181 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | BestEffort, no split | already on page |
+| C-182 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | router "Any Receiver?" | already on page |
+| C-183 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | stage routing rejects split | already on page |
 | C-184 | when-to-use-cloud-integration-pipeline-decision-matrix.md | procedure | procedure→Task 11 | team procedure or decision | |
 | C-185 | when-to-use-cloud-integration-pipeline-decision-matrix.md | procedure | procedure→Task 11 | team procedure or decision | |
 | C-186 | when-to-use-cloud-integration-pipeline-decision-matrix.md | rationale | rationale→overview.md | explains the design on pipeline overview | |
-| C-187 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | combined XSLT determination | |
-| C-188 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | same receiverDetermination XSLT | |
-| C-189 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | p2p bypass in sync | |
+| C-187 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | combined XSLT determination | already on page |
+| C-188 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | same receiverDetermination XSLT | already on page |
+| C-189 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | p2p bypass in sync | already on page |
 | C-190 | when-to-use-cloud-integration-pipeline-decision-matrix.md | rationale | rationale→overview.md | explains the design on pipeline overview | |
 | C-191 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→partner-directory.md | p2p PD string parameters | |
 | C-192 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→scripts/readBypassOptionFromPD.md | skipRcvDet derivation | already on page |
-| C-193 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | skipRcvDet rejected | |
-| C-194 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | p2p still passes stage routing | |
+| C-193 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | skipRcvDet rejected | already on page |
+| C-194 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | p2p still passes stage routing | pitfall |
 | C-195 | when-to-use-cloud-integration-pipeline-decision-matrix.md | procedure | procedure→Task 11 | team procedure or decision | |
 | C-196 | when-to-use-cloud-integration-pipeline-decision-matrix.md | rationale | rationale→overview.md | explains the design on pipeline overview | |
 | C-197 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | tenant→profile | tenant-specific value | |
@@ -567,7 +567,7 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-365 | pipeline-concept.md | fact | fact→message-path.md | Step01 writes to PIPQ01 | |
 | C-366 | pipeline-concept.md | rationale | rationale→message-path.md | why write to the queue early | |
 | C-367 | pipeline-concept.md | fact | dropped (duplicate of C-215) | same statement as the earlier claim | |
-| C-368 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | Step02 inbound role | |
+| C-368 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | Step02 inbound role | already on page |
 | C-369 | pipeline-concept.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step03.inbound.conversion.md | Step03 role | |
 | C-370 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step04.receiver.determination.md | XSLT receiver list | |
 | C-371 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step04.receiver.determination.md | split per receiver | |
@@ -580,15 +580,15 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-378 | pipeline-concept.md | fact | fact→message-path.md | Step01 target queue in integrated async | |
 | C-379 | pipeline-concept.md | fact | dropped (duplicate of C-075) | same statement as the earlier claim | |
 | C-380 | pipeline-concept.md | fact | dropped (duplicate of C-078) | same statement as the earlier claim | |
-| C-381 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | Step03 called from the runtime | |
+| C-381 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | Step03 called from the runtime | already on page |
 | C-382 | pipeline-concept.md | fact | fact→message-path.md | Step06 same in both runtimes | |
 | C-383 | pipeline-concept.md | fact | fact→message-path.md | Step07 same in both runtimes | |
-| C-384 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | sync use case | |
+| C-384 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | sync use case | already on page |
 | C-385 | pipeline-concept.md | fact | dropped (duplicate of C-080) | same statement as the earlier claim | |
 | C-386 | pipeline-concept.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step01.inbound.processing.sync.md | sync sender template role | |
 | C-387 | pipeline-concept.md | fact | dropped (duplicate of C-220) | same statement as the earlier claim | |
 | C-388 | pipeline-concept.md | fact | dropped (duplicate of C-081) | same statement as the earlier claim | |
-| C-389 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | error when not exactly one receiver/interface | |
+| C-389 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | error when not exactly one receiver/interface | already on page |
 | C-390 | pipeline-concept.md | fact | dropped (duplicate of C-171) | same statement as the earlier claim | |
 | C-391 | pipeline-concept.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step07.outbound.processing.sync.md | sync Step07 role | |
 | C-392 | pipeline-concept.md | fact | dropped (duplicate of C-034) | same statement as the earlier claim | |
@@ -601,7 +601,7 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-399 | pipeline-concept.md | fact | dropped (duplicate of C-353) | same statement as the earlier claim | |
 | C-400 | pipeline-concept.md | fact | dropped (duplicate of C-076) | same statement as the earlier claim | |
 | C-401 | pipeline-concept.md | rationale | rationale→message-path.md | logic in one place | |
-| C-402 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | skipRcvDet semantics | |
+| C-402 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | skipRcvDet semantics | already on page |
 | C-403 | pipeline-concept.md | procedure | procedure→Task 11 | team procedure or decision | |
 | C-404 | pipeline-concept.md | fact | fact→partner-directory.md | receiverDetermination binary parameter | |
 | C-405 | pipeline-concept.md | fact | dropped (not pipeline) | example XSLT in the draft, not an artifact | |
@@ -611,9 +611,9 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-409 | pipeline-concept.md | fact | dropped (not pipeline) | example XSLT in the draft, not an artifact | |
 | C-410 | pipeline-concept.md | fact | dropped (not pipeline) | example XSLT in the draft, not an artifact | |
 | C-411 | pipeline-concept.md | fact | fact→message-path.md | combined mapping replaces skipRcvDet + custom IF | |
-| C-412 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | custom RD via CustomXRDEndpoint in async | |
+| C-412 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | custom RD via CustomXRDEndpoint in async | already on page |
 | C-413 | pipeline-concept.md | fact | fact→scripts/readCustomReceiverDeterminationFromPD.md | behaviour of readCustomReceiverDeterminationFromPD | already on page |
-| C-414 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | ProcessDirect call of custom RD | |
+| C-414 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | ProcessDirect call of custom RD | already on page |
 | C-415 | pipeline-concept.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step04.custom.receiver.determination.md | return schema Receivers.xsd | |
 | C-416 | pipeline-concept.md | rationale | rationale→templates/com.sap.integration.cloud.pipeline.v2.template.step04.custom.receiver.determination.md | why a full iFlow for custom RD | |
 | C-417 | pipeline-concept.md | fact | dropped (duplicate of C-250) | same statement as the earlier claim | |
@@ -636,7 +636,7 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-434 | pipeline-concept.md | fact | dropped (duplicate of C-015) | same statement as the earlier claim | |
 | C-435 | pipeline-concept.md | fact | dropped (duplicate of C-010) | same statement as the earlier claim | |
 | C-436 | pipeline-concept.md | fact | dropped (duplicate of C-012) | same statement as the earlier claim | |
-| C-437 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | no ProcessDirect input (also Step01 IDoc) | |
+| C-437 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | no ProcessDirect input (also Step01 IDoc) | already on page |
 | C-438 | pipeline-concept.md | fact | fact→naming.md | Step01 template list | |
 | C-439 | pipeline-concept.md | fact | dropped (duplicate of C-224) | same statement as the earlier claim | |
 | C-440 | pipeline-concept.md | fact | fact→naming.md | Step04/05 template list | |
@@ -675,7 +675,7 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-473 | pipeline-concept.md | procedure | procedure→Task 11 | team procedure or decision | |
 | C-474 | pipeline-concept.md | pitfall | pitfall | KIND pitfall | |
 | C-475 | pipeline-concept.md | fact | fact→contracts.md | SAP_SenderInterface source | |
-| C-476 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | SAP_SenderInterface from the XI adapter | |
+| C-476 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | SAP_SenderInterface from the XI adapter | already on page |
 | C-477 | pipeline-concept.md | fact | fact→scripts/setIDocSenderInterface.md | MESTYP.IDOCTYP[.CIMTYP] | already on page |
 | C-478 | pipeline-concept.md | fact | fact→scripts/determinePartnerID.md | behaviour of determinePartnerID | already on page |
 | C-479 | pipeline-concept.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | behaviour of determinePartnerIDForIDocInbound | already on page |
@@ -713,15 +713,15 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-511 | pipeline-concept.md | fact | fact→partner-directory.md | binary interfaceDetermination for Step05 | |
 | C-512 | pipeline-concept.md | fact | fact→partner-directory.md | not needed in integrated runtime | |
 | C-513 | pipeline-concept.md | fact | fact→partner-directory.md | string interfaceDetermination for p2p | |
-| C-514 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | single XI entry | |
-| C-515 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | headers from the XI adapter | |
-| C-516 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | QoS handled by iFlow | |
-| C-517 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | idempotent call, DuplicateDiscarded | |
+| C-514 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | single XI entry | already on page |
+| C-515 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | headers from the XI adapter | pitfall |
+| C-516 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | QoS handled by iFlow | already on page |
+| C-517 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | idempotent call, DuplicateDiscarded | already on page |
 | C-518 | pipeline-concept.md | fact | fact→scripts/createHeadersFromSapDynamicConfiguration.md | dc_ headers from dynamic configuration | already on page |
-| C-519 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | headers from EDI_DC40 | |
-| C-520 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | bulk IDoc numbers in custom headers | |
-| C-521 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | splitter default and KeepBulk | |
-| C-522 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | dedup key | |
+| C-519 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | headers from EDI_DC40 | pitfall |
+| C-520 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | bulk IDoc numbers in custom headers | added |
+| C-521 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | splitter default and KeepBulk | already on page |
+| C-522 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | dedup key | already on page |
 | C-523 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi.md | single output point (also Step08 IDoc) | |
 | C-524 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi.md | three-layer precedence (also Step08 IDoc) | |
 | C-525 | pipeline-concept.md | procedure | procedure→Task 11 | team procedure or decision | |
@@ -770,9 +770,9 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-568 | pipeline-concept.md | fact | fact→contracts.md | party headers | |
 | C-569 | pipeline-concept.md | fact | fact→scripts/addCustomHeaderProperties.md | party and system in custom headers | added |
 | C-570 | pipeline-concept.md | fact | fact→scripts/readRetryHandlingFromPD.md | maxJMSRetries default and propagation | added |
-| C-571 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | error below limit (every JMS-consuming step) | |
+| C-571 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | error below limit (every JMS-consuming step) | pitfall |
 | C-572 | pipeline-concept.md | fact | fact→scripts/attachAdditionallnformation.md | behaviour of attachAdditionallnformation | added |
-| C-573 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | DLQ end event (every JMS-consuming step) | |
+| C-573 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | DLQ end event (every JMS-consuming step) | already on page |
 | C-574 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step04.receiver.determination.md | limit check before split (also Step05) | |
 | C-575 | pipeline-concept.md | rationale | rationale→iflows/com.sap.integration.cloud.pipeline.v2.generic.step04.receiver.determination.md | why the check precedes the split | |
 | C-576 | pipeline-concept.md | fact | dropped (duplicate of C-608) | same statement, C-608 is the high-confidence copy | |
@@ -789,13 +789,13 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-587 | pipeline-concept.md | fact | fact→glossary.md | custom status values | |
 | C-588 | pipeline-concept.md | fact | dropped (duplicate of C-334) | same statement as the earlier claim | |
 | C-589 | pipeline-concept.md | fact | fact→scripts/addCustomHeaderProperties.md | behaviour of addCustomHeaderProperties | added |
-| C-590 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | custom header properties in sync | |
+| C-590 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | custom header properties in sync | already on page |
 | C-591 | pipeline-concept.md | fact | fact→contracts.md | testMode header | |
 | C-592 | pipeline-concept.md | fact | fact→contracts.md | testMode scope | |
 | C-593 | pipeline-concept.md | rationale | rationale→contracts.md | why test mode | |
 | C-594 | pipeline-concept.md | fact | fact→contracts.md | testMode value and test | |
-| C-595 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | testMode from EDIDC TEST | |
-| C-596 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | no automatic testMode source | |
+| C-595 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | testMode from EDIDC TEST | already on page |
+| C-596 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | no automatic testMode source | budget |
 | C-597 | pipeline-concept.md | procedure | procedure→Task 11 | team procedure or decision | |
 | C-598 | pipeline-concept.md | procedure | procedure→Task 11 | tenant-specific; profile note | |
 | C-599 | pipeline-concept.md | fact | tenant→profile | tenant-specific value | |
@@ -807,10 +807,10 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-605 | pipeline-concept.md | fact | dropped (duplicate of C-608) | same statement as the earlier claim | |
 | C-606 | pipeline-concept.md | fact | fact→contracts.md | routing by testMode | |
 | C-607 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi.md | testMode allowed in Step08 (also Step08 IDoc) | |
-| C-608 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | test mode skips retry (every JMS-consuming step) | |
-| C-609 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | ErrorInTestMode in Step02/05/06/Step01 IDoc | |
+| C-608 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | test mode skips retry (every JMS-consuming step) | already on page |
+| C-609 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | ErrorInTestMode in Step02/05/06/Step01 IDoc | already on page |
 | C-610 | pipeline-concept.md | fact | fact→scripts/attachAdditionallnformation.md | behaviour of attachAdditionallnformation | already on page |
-| C-611 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | CustomXTest_SkipDuplicateCheck | |
+| C-611 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | CustomXTest_SkipDuplicateCheck | added |
 | C-612 | pipeline-concept.md | fact | fact→contracts.md | pipeline propagates testMode only | |
 | C-613 | pipeline-concept.md | fact | dropped (not pipeline) | product mention (Int4, Figaf) | |
 | C-614 | pipeline-concept.md | rationale | rationale→contracts.md | why test mode in all steps | |
@@ -845,11 +845,11 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-643 | pipeline-concept.md | fact | dropped (duplicate of C-250) | same statement as the earlier claim | |
 | C-644 | pipeline-concept.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.custom.exit.md | pre-processing exit purpose | |
 | C-645 | pipeline-concept.md | fact | dropped (duplicate of C-312) | same statement as the earlier claim | |
-| C-646 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | two exit routers (all eight generic callers) | |
-| C-647 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | global exit parameters (all eight generic callers) | |
+| C-646 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | two exit routers (all eight generic callers) | already on page |
+| C-647 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | global exit parameters (all eight generic callers) | already on page |
 | C-648 | pipeline-concept.md | fact | fact→scripts/readCustomXFromPD.md | scenario exit keys | already on page |
-| C-649 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | global then scenario exit | |
-| C-650 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | global exit switch only by parameter | |
+| C-649 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | global then scenario exit | already on page |
+| C-650 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | global exit switch only by parameter | already on page |
 | C-651 | pipeline-concept.md | fact | fact→scripts/readCustomXFromPD.md | CustomXPreEnabled step list | already on page |
 | C-652 | pipeline-concept.md | fact | fact→scripts/readCustomXFromPD.md | behaviour of readCustomXFromPD | already on page |
 | C-653 | pipeline-concept.md | fact | dropped (already on scripts/readCustomXFromPD.md) | grep generic.step: same derivation | n/a |
@@ -864,70 +864,70 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-662 | pipeline-concept.md | pitfall | pitfall | KIND pitfall | |
 | C-663 | generic-step01-inbound-processing-for-xi.md | fact | dropped (duplicate of C-037) | same iFlow version statement | |
 | C-664 | generic-step01-inbound-processing-for-xi.md | fact | dropped (duplicate of C-025) | same statement as the earlier claim | |
-| C-665 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | |
+| C-665 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | already on page |
 | C-666 | generic-step01-inbound-processing-for-xi.md | fact | dropped (duplicate of C-030) | same statement as the earlier claim | |
-| C-667 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | |
-| C-668 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | |
+| C-667 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | already on page |
+| C-668 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | already on page |
 | C-669 | generic-step01-inbound-processing-for-xi.md | fact | dropped (duplicate of C-029) | same statement as the earlier claim | |
 | C-670 | generic-step01-inbound-processing-for-xi.md | fact | dropped (duplicate of C-039) | same statement as the earlier claim | |
-| C-671 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | |
-| C-672 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | |
-| C-673 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | |
-| C-674 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | |
-| C-675 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | |
-| C-676 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | |
-| C-677 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | |
-| C-678 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | step 2 runs the script | |
-| C-679 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | step 3 runs the script | |
-| C-680 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | step 4 runs the script | |
-| C-681 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | |
-| C-682 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | |
-| C-683 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | |
-| C-684 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | EO branch step order | |
-| C-685 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | BE branch step order | |
-| C-686 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | EOIO branch | |
-| C-687 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | default QoS branch | |
-| C-688 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | |
-| C-689 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | router "Which queue?" | |
-| C-690 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | |
-| C-691 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | |
-| C-692 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | |
-| C-693 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | router "Bypass option?" | |
-| C-694 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | |
-| C-695 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | p2p bypass branch | |
-| C-696 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | |
-| C-697 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | |
-| C-698 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | |
-| C-699 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | |
-| C-700 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | "Check scenario-specific exit" step | |
-| C-701 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | |
-| C-702 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | |
-| C-703 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | |
-| C-704 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | |
-| C-705 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | |
-| C-706 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | |
-| C-707 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | |
-| C-708 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | script call order of the main flow | |
+| C-671 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | open question |
+| C-672 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | open question |
+| C-673 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | already on page |
+| C-674 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | already on page |
+| C-675 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | already on page |
+| C-676 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | already on page |
+| C-677 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | added |
+| C-678 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | step 2 runs the script | already on page |
+| C-679 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | step 3 runs the script | already on page |
+| C-680 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | step 4 runs the script | already on page |
+| C-681 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | already on page |
+| C-682 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | already on page |
+| C-683 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | already on page |
+| C-684 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | EO branch step order | already on page |
+| C-685 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | BE branch step order | already on page |
+| C-686 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | EOIO branch | already on page |
+| C-687 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | default QoS branch | already on page |
+| C-688 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | already on page |
+| C-689 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | router "Which queue?" | already on page |
+| C-690 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | open question |
+| C-691 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | already on page |
+| C-692 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | already on page |
+| C-693 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | router "Bypass option?" | already on page |
+| C-694 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | already on page |
+| C-695 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | p2p bypass branch | already on page |
+| C-696 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | already on page |
+| C-697 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | already on page |
+| C-698 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | omitted (granularity) |
+| C-699 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | open question |
+| C-700 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | "Check scenario-specific exit" step | already on page |
+| C-701 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | already on page |
+| C-702 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | already on page |
+| C-703 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | open question |
+| C-704 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | open question |
+| C-705 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | already on page |
+| C-706 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | already on page |
+| C-707 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | pitfall |
+| C-708 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | script call order of the main flow | already on page |
 | C-709 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/createHeadersFromSapDynamicConfiguration.md | behaviour of createHeadersFromSapDynamicConfiguration | already on page |
 | C-710 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/addPartyForXIInbound.md | behaviour of addPartyForXIInbound | already on page |
 | C-711 | generic-step01-inbound-processing-for-xi.md | fact | dropped (duplicate of C-499) | same script, same statement | |
-| C-712 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | two calls of the script | |
+| C-712 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | two calls of the script | already on page |
 | C-713 | generic-step01-inbound-processing-for-xi.md | fact | dropped (duplicate of C-552) | same script, same statement | |
 | C-714 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/mapReceiverAliasToBusinessSystemName.md | behaviour of mapReceiverAliasToBusinessSystemName | already on page |
-| C-715 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | three calls of the script | |
+| C-715 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | three calls of the script | already on page |
 | C-716 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/PipelineLogger.md | behaviour of PipelineLogger | omitted (granularity) |
 | C-717 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/PipelineHelper.md | helper library, importer | already on page |
 | C-718 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/auditLogHandler.md | behaviour of auditLogHandler | already on page |
 | C-719 | generic-step01-inbound-processing-for-xi.md | fact | dropped (duplicate of C-039) | same statement as the earlier claim | |
 | C-720 | generic-step01-inbound-processing-for-xi.md | fact | dropped (duplicate of C-671) | same statement as the earlier claim | |
-| C-721 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | |
-| C-722 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | |
-| C-723 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | |
-| C-724 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | |
-| C-725 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | |
-| C-726 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | |
+| C-721 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | open question |
+| C-722 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | open question |
+| C-723 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | open question |
+| C-724 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | open question |
+| C-725 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | open question |
+| C-726 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | open question |
 | C-727 | generic-step01-inbound-processing-for-xi.md | fact | dropped (duplicate of C-672) | same statement as the earlier claim | |
-| C-728 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | |
+| C-728 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | already on page |
 | C-729 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/createHeadersFromSapDynamicConfiguration.md | behaviour of createHeadersFromSapDynamicConfiguration | already on page |
 | C-730 | generic-step01-inbound-processing-for-xi.md | fact | dropped (already on scripts/createHeadersFromSapDynamicConfiguration.md) | grep dc_SapDynamicConfiguration_: same statement | n/a |
 | C-731 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/createHeadersFromSapDynamicConfiguration.md | behaviour of createHeadersFromSapDynamicConfiguration | already on page |
@@ -1017,7 +1017,7 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-815 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/readCustomXFromPD.md | behaviour of readCustomXFromPD | already on page |
 | C-816 | generic-step01-inbound-processing-for-xi.md | fact | dropped (already on scripts/readInboundQueueFromPD.md) | grep inbQueue: same lookup | n/a |
 | C-817 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/readInboundQueueFromPD.md | behaviour of readInboundQueueFromPD | already on page |
-| C-818 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | |
+| C-818 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | already on page |
 | C-819 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/readInboundQueueFromPD.md | behaviour of readInboundQueueFromPD | already on page |
 | C-820 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/addCustomHeaderProperties.md | behaviour of addCustomHeaderProperties | already on page |
 | C-821 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/addCustomHeaderProperties.md | behaviour of addCustomHeaderProperties | already on page |
@@ -1027,14 +1027,14 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-825 | generic-step01-inbound-processing-for-xi.md | fact | dropped (already on scripts/addCustomHeaderProperties.md) | grep _NdLstElmnt: page states the suffix cut | n/a |
 | C-826 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/addCustomHeaderProperties.md | behaviour of addCustomHeaderProperties | already on page |
 | C-827 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/addCustomHeaderProperties.md | behaviour of addCustomHeaderProperties | already on page |
-| C-828 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | two calls of the script | |
+| C-828 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | two calls of the script | already on page |
 | C-829 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/addCustomHeaderProperties.md | behaviour of addCustomHeaderProperties | already on page |
 | C-830 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/addCustomHeaderProperties.md | behaviour of addCustomHeaderProperties | added |
 | C-831 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/readBypassOptionFromPD.md | behaviour of readBypassOptionFromPD | already on page |
 | C-832 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/readBypassOptionFromPD.md | behaviour of readBypassOptionFromPD | already on page |
 | C-833 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/readBypassOptionFromPD.md | behaviour of readBypassOptionFromPD | already on page |
 | C-834 | generic-step01-inbound-processing-for-xi.md | fact | dropped (duplicate of C-696) | same statement as the earlier claim | |
-| C-835 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | |
+| C-835 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | already on page |
 | C-836 | generic-step01-inbound-processing-for-xi.md | pitfall | pitfall | B1b-flagged: misspelt log key | |
 | C-837 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/mapReceiverAliasToBusinessSystemName.md | behaviour of mapReceiverAliasToBusinessSystemName | already on page |
 | C-838 | generic-step01-inbound-processing-for-xi.md | fact | dropped (duplicate of C-507) | same script, same statement | |
@@ -1047,83 +1047,83 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-845 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/throwException.md | behaviour of throwException | already on page |
 | C-846 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/throwException.md | behaviour of throwException | already on page |
 | C-847 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/throwException.md | behaviour of throwException | already on page |
-| C-848 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | three calls of the script | |
-| C-849 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | |
+| C-848 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | three calls of the script | already on page |
+| C-849 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | added |
 | C-850 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/throwException.md | behaviour of throwException | added |
 | C-851 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/PipelineLogger.md | behaviour of PipelineLogger | already on page |
 | C-852 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/PipelineHelper.md | behaviour of PipelineHelper | already on page |
 | C-853 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/auditLogHandler.md | behaviour of auditLogHandler | omitted (granularity) |
 | C-854 | generic-step01-inbound-processing-for-idoc.md | fact | dropped (duplicate of C-038) | same iFlow version statement | |
 | C-855 | generic-step01-inbound-processing-for-idoc.md | fact | dropped (duplicate of C-025) | same statement as the earlier claim | |
-| C-856 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | |
+| C-856 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | already on page |
 | C-857 | generic-step01-inbound-processing-for-idoc.md | fact | dropped (duplicate of C-031) | same statement as the earlier claim | |
-| C-858 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | |
+| C-858 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | already on page |
 | C-859 | generic-step01-inbound-processing-for-idoc.md | fact | dropped (duplicate of C-042) | same statement as the earlier claim | |
-| C-860 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | |
+| C-860 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | omitted (granularity) |
 | C-861 | generic-step01-inbound-processing-for-idoc.md | fact | dropped (duplicate of C-040) | same statement as the earlier claim | |
-| C-862 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | IDoc sender authentication | |
-| C-863 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | adapter setting InvalidXMLCharHandling | |
-| C-864 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | IDoc sender size limits | |
-| C-865 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | |
+| C-862 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | IDoc sender authentication | open question |
+| C-863 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | adapter setting InvalidXMLCharHandling | open question |
+| C-864 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | IDoc sender size limits | open question |
+| C-865 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | already on page |
 | C-866 | generic-step01-inbound-processing-for-idoc.md | fact | dropped (duplicate of C-595) | same statement as the earlier claim | |
-| C-867 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | |
-| C-868 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | step 2 runs the script | |
-| C-869 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | step 3 runs the script | |
-| C-870 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | step 4 runs the script | |
-| C-871 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | |
-| C-872 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | |
-| C-873 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | |
-| C-874 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | EOIO branch | |
-| C-875 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | |
+| C-867 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | already on page |
+| C-868 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | step 2 runs the script | already on page |
+| C-869 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | step 3 runs the script | already on page |
+| C-870 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | step 4 runs the script | already on page |
+| C-871 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | added |
+| C-872 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | omitted (granularity) |
+| C-873 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | already on page |
+| C-874 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | EOIO branch | already on page |
+| C-875 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | already on page |
 | C-876 | generic-step01-inbound-processing-for-idoc.md | fact | dropped (already on scripts/setIDocSenderInterface.md) | grep SapPlainSoapQoS: same default | n/a |
-| C-877 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | EO step "Read inbound queue" | |
-| C-878 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | |
-| C-879 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | EO step "Set bulk IDs" | |
-| C-880 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | |
-| C-881 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | |
-| C-882 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | |
-| C-883 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | single IDoc step "Remove leading zeros" | |
-| C-884 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | |
-| C-885 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | |
-| C-886 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | |
-| C-887 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | |
-| C-888 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | bulk step "Read keep bulk parameter" | |
-| C-889 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | |
-| C-890 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | |
-| C-891 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | |
-| C-892 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | |
-| C-893 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | JMS write local process | |
-| C-894 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | |
+| C-877 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | EO step "Read inbound queue" | already on page |
+| C-878 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | omitted (granularity) |
+| C-879 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | EO step "Set bulk IDs" | already on page |
+| C-880 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | already on page |
+| C-881 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | already on page |
+| C-882 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | already on page |
+| C-883 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | single IDoc step "Remove leading zeros" | already on page |
+| C-884 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | added |
+| C-885 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | already on page |
+| C-886 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | already on page |
+| C-887 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | already on page |
+| C-888 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | bulk step "Read keep bulk parameter" | already on page |
+| C-889 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | already on page |
+| C-890 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | already on page |
+| C-891 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | already on page |
+| C-892 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | open question |
+| C-893 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | JMS write local process | omitted (granularity) |
+| C-894 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | already on page |
 | C-895 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/readCustomXFromPD.md | behaviour of readCustomXFromPD | pitfall |
-| C-896 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | |
-| C-897 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | |
-| C-898 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | |
-| C-899 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | |
-| C-900 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | |
-| C-901 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | script call order of the main flow | |
+| C-896 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | open question |
+| C-897 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | already on page |
+| C-898 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | pitfall |
+| C-899 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | already on page |
+| C-900 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | already on page |
+| C-901 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | script call order of the main flow | already on page |
 | C-902 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/setIDocSenderInterface.md | behaviour of setIDocSenderInterface | already on page |
 | C-903 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | behaviour of determinePartnerIDForIDocInbound | already on page |
 | C-904 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/displayBulkIDs.md | behaviour of displayBulkIDs | already on page |
 | C-905 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/readKeepBulkSettingFromPD.md | behaviour of readKeepBulkSettingFromPD | already on page |
 | C-906 | generic-step01-inbound-processing-for-idoc.md | fact | dropped (duplicate of C-115) | same statement as the earlier claim | |
-| C-907 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | throwException call in the EOIO branch | |
+| C-907 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | throwException call in the EOIO branch | budget |
 | C-908 | generic-step01-inbound-processing-for-idoc.md | fact | dropped (duplicate of C-040) | same statement as the earlier claim | |
-| C-909 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | same default as on Step01 XI; B3 checks both iFlows | |
+| C-909 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | same default as on Step01 XI; B3 checks both iFlows | open question |
 | C-910 | generic-step01-inbound-processing-for-idoc.md | fact | dropped (duplicate of C-863) | same statement as the earlier claim | |
-| C-911 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | |
-| C-912 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | same default as on Step01 XI; B3 checks both iFlows | |
-| C-913 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | same default as on Step01 XI; B3 checks both iFlows | |
-| C-914 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | |
+| C-911 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | open question |
+| C-912 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | same default as on Step01 XI; B3 checks both iFlows | open question |
+| C-913 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | same default as on Step01 XI; B3 checks both iFlows | open question |
+| C-914 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | added |
 | C-915 | generic-step01-inbound-processing-for-idoc.md | fact | dropped (duplicate of C-611) | same statement as the earlier claim | |
-| C-916 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | |
-| C-917 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | |
+| C-916 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | pitfall |
+| C-917 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | added |
 | C-918 | generic-step01-inbound-processing-for-idoc.md | fact | changelog | parameter since 1.0.6 | |
 | C-919 | generic-step01-inbound-processing-for-idoc.md | fact | changelog | fix in 1.0.7 | |
-| C-920 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | same default as on Step01 XI; B3 checks both iFlows | |
-| C-921 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | same default as on Step01 XI; B3 checks both iFlows | |
-| C-922 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | same default as on Step01 XI; B3 checks both iFlows | |
-| C-923 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | same default as on Step01 XI; B3 checks both iFlows | |
-| C-924 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | same default as on Step01 XI; B3 checks both iFlows | |
+| C-920 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | same default as on Step01 XI; B3 checks both iFlows | open question |
+| C-921 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | same default as on Step01 XI; B3 checks both iFlows | open question |
+| C-922 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | same default as on Step01 XI; B3 checks both iFlows | open question |
+| C-923 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | same default as on Step01 XI; B3 checks both iFlows | open question |
+| C-924 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | same default as on Step01 XI; B3 checks both iFlows | pitfall |
 | C-925 | generic-step01-inbound-processing-for-idoc.md | fact | dropped (duplicate of C-046) | same statement as the earlier claims (C-046, C-048, C-053) | |
 | C-926 | generic-step01-inbound-processing-for-idoc.md | fact | dropped (duplicate of C-477) | same statement as the earlier claim | |
 | C-927 | generic-step01-inbound-processing-for-idoc.md | fact | dropped (already on scripts/setIDocSenderInterface.md) | grep idoc:messages: same namespace | n/a |
@@ -1199,7 +1199,7 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-997 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
 | C-998 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
 | C-999 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
-| C-1000 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | omitted (granularity) |
+| C-1000 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | added |
 | C-1001 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | omitted (granularity) |
 | C-1002 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
 | C-1003 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | pitfall |
@@ -1221,11 +1221,11 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-1019 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/displayBulkIDs.md | behaviour of displayBulkIDs | already on page |
 | C-1020 | generic-step01-inbound-processing-for-idoc.md | fact | dropped (duplicate of C-1016) | same statement as the earlier claim | |
 | C-1021 | generic-step01-inbound-processing-for-idoc.md | fact | dropped (already on scripts/readKeepBulkSettingFromPD.md) | grep keepBulk: same default | n/a |
-| C-1022 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | |
+| C-1022 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | already on page |
 | C-1023 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/readKeepBulkSettingFromPD.md | behaviour of readKeepBulkSettingFromPD | already on page |
 | C-1024 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/readKeepBulkSettingFromPD.md | behaviour of readKeepBulkSettingFromPD | added |
 | C-1025 | generic-step01-inbound-processing-for-idoc.md | fact | dropped (already on scripts/removeLeadingZerosFromApplicationID.md) | grep replaceFirst: same statement | n/a |
-| C-1026 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | step order of "Remove leading zeros" | |
+| C-1026 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | step order of "Remove leading zeros" | already on page |
 | C-1027 | generic-step01-inbound-processing-for-idoc.md | rationale | rationale→scripts/removeLeadingZerosFromApplicationID.md | why zeros are removed | added |
 | C-1028 | generic-step01-inbound-processing-for-idoc.md | fact | dropped (duplicate of C-844) | same script, same statement | |
 | C-1029 | generic-step01-inbound-processing-for-idoc.md | fact | dropped (duplicate of C-907) | same statement as the earlier claim | |
@@ -1235,45 +1235,45 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-1033 | generic-step01-inbound-processing-for-idoc.md | fact | changelog | fix in 1.0.7 | |
 | C-1034 | generic-step01-inbound-processing-for-idoc.md | open-question | pitfall | B1b-flagged: page dates the 1.0.7 fix inconsistently | |
 | C-1035 | generic-step02-inbound-processing.md | fact | fact→versions/README.md | iFlow version of the label | |
-| C-1036 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | about the Step02 inbound page | |
-| C-1037 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | about the Step02 inbound page | |
-| C-1038 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | about the Step02 inbound page | |
-| C-1039 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | about the Step02 inbound page | |
-| C-1040 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | about the Step02 inbound page | |
-| C-1041 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | about the Step02 inbound page | |
-| C-1042 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | about the Step02 inbound page | |
-| C-1043 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | about the Step02 inbound page | |
-| C-1044 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | about the Step02 inbound page | |
-| C-1045 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | about the Step02 inbound page | |
-| C-1046 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | about the Step02 inbound page | |
-| C-1047 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | about the Step02 inbound page | |
-| C-1048 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | about the Step02 inbound page | |
-| C-1049 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | about the Step02 inbound page | |
-| C-1050 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | about the Step02 inbound page | |
-| C-1051 | generic-step02-inbound-processing.md | rationale | rationale→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | explains the design on Step02 inbound | |
-| C-1052 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | about the Step02 inbound page | |
-| C-1053 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | step 3 runs the script | |
+| C-1036 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | about the Step02 inbound page | omitted (granularity) |
+| C-1037 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | about the Step02 inbound page | already on page |
+| C-1038 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | about the Step02 inbound page | already on page |
+| C-1039 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | about the Step02 inbound page | already on page |
+| C-1040 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | about the Step02 inbound page | already on page |
+| C-1041 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | about the Step02 inbound page | already on page |
+| C-1042 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | about the Step02 inbound page | open question |
+| C-1043 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | about the Step02 inbound page | already on page |
+| C-1044 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | about the Step02 inbound page | already on page |
+| C-1045 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | about the Step02 inbound page | already on page |
+| C-1046 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | about the Step02 inbound page | already on page |
+| C-1047 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | about the Step02 inbound page | already on page |
+| C-1048 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | about the Step02 inbound page | already on page |
+| C-1049 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | about the Step02 inbound page | already on page |
+| C-1050 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | about the Step02 inbound page | already on page |
+| C-1051 | generic-step02-inbound-processing.md | rationale | rationale→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | explains the design on Step02 inbound | budget |
+| C-1052 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | about the Step02 inbound page | already on page |
+| C-1053 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | step 3 runs the script | already on page |
 | C-1054 | generic-step02-inbound-processing.md | fact | changelog | stage logic from 1.0.4 | |
 | C-1055 | generic-step02-inbound-processing.md | fact | changelog | alternative partners from 1.0.3 | |
-| C-1056 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | about the Step02 inbound page | |
-| C-1057 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | step 5 "Read retry handling" | |
-| C-1058 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | step 6 "Read inbound conversion" | |
+| C-1056 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | about the Step02 inbound page | already on page |
+| C-1057 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | step 5 "Read retry handling" | already on page |
+| C-1058 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | step 6 "Read inbound conversion" | already on page |
 | C-1059 | generic-step02-inbound-processing.md | fact | changelog | sender-specific endpoint since 1.0.1 | |
-| C-1060 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | about the Step02 inbound page | |
-| C-1061 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | step 7 "Read bypass option" | |
-| C-1062 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | about the Step02 inbound page | |
-| C-1063 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | about the Step02 inbound page | |
-| C-1064 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | p2p branch with receiver-specific queue | |
-| C-1065 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | about the Step02 inbound page | |
-| C-1066 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | "Max # of retries reached?" partner ID condition | |
-| C-1067 | generic-step02-inbound-processing.md | rationale | rationale→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | explains the design on Step02 inbound | |
+| C-1060 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | about the Step02 inbound page | already on page |
+| C-1061 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | step 7 "Read bypass option" | already on page |
+| C-1062 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | about the Step02 inbound page | already on page |
+| C-1063 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | about the Step02 inbound page | already on page |
+| C-1064 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | p2p branch with receiver-specific queue | already on page |
+| C-1065 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | about the Step02 inbound page | pitfall |
+| C-1066 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | "Max # of retries reached?" partner ID condition | already on page |
+| C-1067 | generic-step02-inbound-processing.md | rationale | rationale→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | explains the design on Step02 inbound | added |
 | C-1068 | generic-step02-inbound-processing.md | fact | changelog | direct DLQ fix from 1.0.2 | |
-| C-1069 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | about the Step02 inbound page | |
-| C-1070 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | about the Step02 inbound page | |
+| C-1069 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | about the Step02 inbound page | already on page |
+| C-1070 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | about the Step02 inbound page | already on page |
 | C-1071 | generic-step02-inbound-processing.md | fact | dropped (duplicate of C-570) | same statement as the earlier claim | |
 | C-1072 | generic-step02-inbound-processing.md | fact | fact→scripts/readInboundConversionFromPD.md | behaviour of readInboundConversionFromPD | already on page |
 | C-1073 | generic-step02-inbound-processing.md | fact | fact→scripts/readReceiverSpecificQueueFromPD.md | behaviour of readReceiverSpecificQueueFromPD | already on page |
-| C-1074 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | script copies identical to Step01 XI (md5 on script pages) | |
+| C-1074 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | script copies identical to Step01 XI (md5 on script pages) | omitted (granularity) |
 | C-1075 | generic-step02-inbound-processing.md | fact | dropped (duplicate of C-740) | same script, same statement | |
 | C-1076 | generic-step02-inbound-processing.md | fact | dropped (duplicate of C-741) | same script, same statement | |
 | C-1077 | generic-step02-inbound-processing.md | fact | dropped (duplicate of C-744) | same script, same statement | |
@@ -1319,7 +1319,7 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-1117 | generic-step02-inbound-processing.md | fact | fact→scripts/readBypassOptionFromPD.md | behaviour of readBypassOptionFromPD | already on page |
 | C-1118 | generic-step02-inbound-processing.md | fact | dropped (duplicate of C-831) | same script, same statement | |
 | C-1119 | generic-step02-inbound-processing.md | fact | dropped (duplicate of C-833) | same script, same statement | |
-| C-1120 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | about the Step02 inbound page | |
+| C-1120 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | about the Step02 inbound page | already on page |
 | C-1121 | generic-step02-inbound-processing.md | pitfall | pitfall | B1b-flagged: misspelt log key (repeat of C-836) | |
 | C-1122 | generic-step02-inbound-processing.md | fact | dropped (duplicate of C-837) | same script, same statement | |
 | C-1123 | generic-step02-inbound-processing.md | fact | dropped (duplicate of C-507) | same script, same statement | |
@@ -1333,7 +1333,7 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-1131 | generic-step02-inbound-processing.md | fact | fact→scripts/readReceiverSpecificQueueFromPD.md | behaviour of readReceiverSpecificQueueFromPD | already on page |
 | C-1132 | generic-step02-inbound-processing.md | fact | dropped (already on scripts/checkWellFormedXML.md) | grep XmlSlurper: same statement | n/a |
 | C-1133 | generic-step02-inbound-processing.md | fact | dropped (already on scripts/checkWellFormedXML.md) | page states the audit log write | n/a |
-| C-1134 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | about the Step02 inbound page | |
+| C-1134 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | about the Step02 inbound page | already on page |
 | C-1135 | generic-step02-inbound-processing.md | fact | fact→scripts/storePayloadInXProperty.md | behaviour of storePayloadInXProperty | already on page |
 | C-1136 | generic-step02-inbound-processing.md | rationale | rationale→scripts/storePayloadInXProperty.md | explains the design on storePayloadInXProperty | added |
 | C-1137 | generic-step02-inbound-processing.md | fact | fact→scripts/fetchPayloadFromXProperty.md | behaviour of fetchPayloadFromXProperty | already on page |
@@ -1350,47 +1350,47 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-1148 | generic-step02-inbound-processing.md | fact | dropped (duplicate of C-813) | same script, same statement | |
 | C-1149 | generic-step02-inbound-processing.md | fact | dropped (duplicate of C-851) | same script, same statement | |
 | C-1150 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→versions/README.md | iFlow version of the label | |
-| C-1151 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | about the Step02 sync page | |
-| C-1152 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | about the Step02 sync page | |
+| C-1151 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | about the Step02 sync page | omitted (granularity) |
+| C-1152 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | about the Step02 sync page | already on page |
 | C-1153 | generic-step02-integrated-messaging-runtime-sync.md | procedure | dropped (duplicate of C-003) | same team statement on another page | |
 | C-1154 | generic-step02-integrated-messaging-runtime-sync.md | fact | dropped (duplicate of C-079) | same statement as the earlier claim | |
-| C-1155 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | CBR use of the sync runtime | |
-| C-1156 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | caller Step01 XI via ProcessDirect | |
+| C-1155 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | CBR use of the sync runtime | already on page |
+| C-1156 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | caller Step01 XI via ProcessDirect | already on page |
 | C-1157 | generic-step02-integrated-messaging-runtime-sync.md | fact | dropped (duplicate of C-080) | same statement as the earlier claim | |
 | C-1158 | generic-step02-integrated-messaging-runtime-sync.md | fact | dropped (duplicate of C-081) | same statement as the earlier claim | |
 | C-1159 | generic-step02-integrated-messaging-runtime-sync.md | fact | dropped (duplicate of C-171) | same statement as the earlier claim | |
-| C-1160 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | ProcessDirect sender address | |
-| C-1161 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | outbound Request Reply receiver | |
-| C-1162 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | custom RD ProcessDirect receiver | |
-| C-1163 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | about the Step02 sync page | |
-| C-1164 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | step 1 "Set custom extensions" | |
-| C-1165 | generic-step02-integrated-messaging-runtime-sync.md | rationale | rationale→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | why the payload is copied | |
-| C-1166 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | step order of the main flow | |
-| C-1167 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | step 3 "Read bypass option" | |
-| C-1168 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | default route determination | |
-| C-1169 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | "Too many receivers" branch | |
-| C-1170 | generic-step02-integrated-messaging-runtime-sync.md | rationale | rationale→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | why one receiver only | |
-| C-1171 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | router "Not found type?" | |
-| C-1172 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | no Ignore not-found type | |
-| C-1173 | generic-step02-integrated-messaging-runtime-sync.md | rationale | rationale→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | why no Ignore | |
-| C-1174 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | one receiver continues | |
+| C-1160 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | ProcessDirect sender address | open question |
+| C-1161 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | outbound Request Reply receiver | already on page |
+| C-1162 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | custom RD ProcessDirect receiver | already on page |
+| C-1163 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | about the Step02 sync page | already on page |
+| C-1164 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | step 1 "Set custom extensions" | already on page |
+| C-1165 | generic-step02-integrated-messaging-runtime-sync.md | rationale | rationale→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | why the payload is copied | already on page |
+| C-1166 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | step order of the main flow | already on page |
+| C-1167 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | step 3 "Read bypass option" | already on page |
+| C-1168 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | default route determination | already on page |
+| C-1169 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | "Too many receivers" branch | already on page |
+| C-1170 | generic-step02-integrated-messaging-runtime-sync.md | rationale | rationale→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | why one receiver only | added |
+| C-1171 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | router "Not found type?" | already on page |
+| C-1172 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | no Ignore not-found type | already on page |
+| C-1173 | generic-step02-integrated-messaging-runtime-sync.md | rationale | rationale→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | why no Ignore | added |
+| C-1174 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | one receiver continues | already on page |
 | C-1175 | generic-step02-integrated-messaging-runtime-sync.md | fact | dropped (duplicate of C-189) | same statement as the earlier claim | |
-| C-1176 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | skipRcvDet not supported in sync | |
-| C-1177 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | virtual stage routing steps | |
+| C-1176 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | skipRcvDet not supported in sync | already on page |
+| C-1177 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | virtual stage routing steps | already on page |
 | C-1178 | generic-step02-integrated-messaging-runtime-sync.md | fact | changelog | mapSenderStageToReceiverStage in 1.0.4 | |
-| C-1179 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | 1→1 stage mapping only | |
-| C-1180 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | router "Any Interface?" | |
-| C-1181 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | "Get interface" outputs | |
-| C-1182 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | step 6 order | |
+| C-1179 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | 1→1 stage mapping only | already on page |
+| C-1180 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | router "Any Interface?" | already on page |
+| C-1181 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | "Get interface" outputs | added |
+| C-1182 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | step 6 order | already on page |
 | C-1183 | generic-step02-integrated-messaging-runtime-sync.md | fact | dropped (duplicate of C-171) | same statement as the earlier claim | |
-| C-1184 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | step 7 "Call remove headers" | |
-| C-1185 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | response path back to the sender | |
-| C-1186 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | no retry in sync | |
-| C-1187 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | exception subprocess | |
-| C-1188 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | custom error flow payload | |
+| C-1184 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | step 7 "Call remove headers" | already on page |
+| C-1185 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | response path back to the sender | already on page |
+| C-1186 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | no retry in sync | already on page |
+| C-1187 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | exception subprocess | pitfall |
+| C-1188 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | custom error flow payload | already on page |
 | C-1189 | generic-step02-integrated-messaging-runtime-sync.md | fact | changelog | fix 1.0.2 original payload to custom error flow | |
-| C-1190 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | standard error path SyncCallFailed | |
-| C-1191 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | script list of the sync page | |
+| C-1190 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | standard error path SyncCallFailed | added |
+| C-1191 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | script list of the sync page | omitted (granularity) |
 | C-1192 | generic-step02-integrated-messaging-runtime-sync.md | fact | changelog | determinePartnerID 1.0.4 stages version in Step02 sync | |
 | C-1193 | generic-step02-integrated-messaging-runtime-sync.md | fact | changelog | fix in 1.0.3 script reference | |
 | C-1194 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/determinePartnerID.md | virtual-stage log line | omitted (granularity) |
@@ -1452,7 +1452,7 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-1250 | generic-step02-integrated-messaging-runtime-sync.md | fact | dropped (duplicate of C-831) | same script, same statement | |
 | C-1251 | generic-step02-integrated-messaging-runtime-sync.md | fact | dropped (duplicate of C-832) | same script, same statement | |
 | C-1252 | generic-step02-integrated-messaging-runtime-sync.md | pitfall | dropped (duplicate of C-836) | same script, same statement | |
-| C-1253 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | no receiverDetermination: default route | |
+| C-1253 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | no receiverDetermination: default route | already on page |
 | C-1254 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/readCustomReceiverDeterminationFromPD.md | behaviour of readCustomReceiverDeterminationFromPD | already on page |
 | C-1255 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/readCustomReceiverDeterminationFromPD.md | behaviour of readCustomReceiverDeterminationFromPD | already on page |
 | C-1256 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/readCustomReceiverDeterminationFromPD.md | behaviour of readCustomReceiverDeterminationFromPD | already on page |
@@ -1493,51 +1493,51 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-1291 | generic-step02-integrated-messaging-runtime-sync.md | open-question | pitfall | B1c-flagged: summary exceptionType vs sync variant | |
 | C-1292 | generic-step02-integrated-messaging-runtime-sync.md | fact | dropped (duplicate of C-851) | same script, same statement | |
 | C-1293 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→versions/README.md | iFlow version of the label | |
-| C-1294 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | about the Step02 async page | |
-| C-1295 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | about the Step02 async page | |
+| C-1294 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | about the Step02 async page | omitted (granularity) |
+| C-1295 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | about the Step02 async page | already on page |
 | C-1296 | generic-step02-integrated-messaging-runtime-async.md | procedure | dropped (duplicate of C-003) | same team statement on another page | |
 | C-1297 | generic-step02-integrated-messaging-runtime-async.md | fact | dropped (duplicate of C-075) | same statement as the earlier claim | |
-| C-1298 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | what the async step combines | |
-| C-1299 | generic-step02-integrated-messaging-runtime-async.md | rationale | rationale→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | why fewer JMS queues | |
+| C-1298 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | what the async step combines | already on page |
+| C-1299 | generic-step02-integrated-messaging-runtime-async.md | rationale | rationale→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | why fewer JMS queues | budget |
 | C-1300 | generic-step02-integrated-messaging-runtime-async.md | fact | changelog | stage rules in async from 1.0.4 | |
-| C-1301 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | JMS sender queue | |
+| C-1301 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | JMS sender queue | open question |
 | C-1302 | generic-step02-integrated-messaging-runtime-async.md | fact | dropped (duplicate of C-078) | same statement as the earlier claim | |
-| C-1303 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | receiver-specific JMS receiver | |
-| C-1304 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | dead letter queue | |
-| C-1305 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | inbound conversion ProcessDirect receiver | |
+| C-1303 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | receiver-specific JMS receiver | already on page |
+| C-1304 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | dead letter queue | already on page |
+| C-1305 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | inbound conversion ProcessDirect receiver | already on page |
 | C-1306 | generic-step02-integrated-messaging-runtime-async.md | fact | dropped (duplicate of C-414) | same statement as the earlier claim | |
-| C-1307 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | about the Step02 async page | |
-| C-1308 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | step 1 "Set custom extensions" | |
-| C-1309 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | "Store original payload" step | |
+| C-1307 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | about the Step02 async page | already on page |
+| C-1308 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | step 1 "Set custom extensions" | already on page |
+| C-1309 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | "Store original payload" step | already on page |
 | C-1310 | generic-step02-integrated-messaging-runtime-async.md | fact | changelog | fix 1.0.2 original payload to custom error flow in Step02 async | |
-| C-1311 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | step 2 order | |
-| C-1312 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | router "Max # of retries reached?" | |
-| C-1313 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | step 3 order | |
-| C-1314 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | local process "Call inbound conversion" | |
-| C-1315 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | step 5 "Read bypass option" | |
-| C-1316 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | default route determination | |
-| C-1317 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | router "Not found type?" | |
-| C-1318 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | not-found type Default | |
-| C-1319 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | not-found type Ignore | |
-| C-1320 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | not-found types Completed / Error | |
-| C-1321 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | "Split receivers" | |
-| C-1322 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | bypass option p2p | |
-| C-1323 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | skipRcvDet not supported in async | |
-| C-1324 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | router "Virtual Stage Routing?" | |
-| C-1325 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | "Map to Receiver Stage" | |
-| C-1326 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | router "Multiple Stages?" | |
-| C-1327 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | no virtual stages path | |
-| C-1328 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | step 7 order | |
-| C-1329 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | router "Any Interface?" | |
-| C-1330 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | "Get interface" outputs | |
-| C-1331 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | steps after "Get interface" | |
-| C-1332 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | "Read custom receiver determination" step | |
-| C-1333 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | router "Custom RD?" | |
-| C-1334 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | reuse XRD not supported | |
-| C-1335 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | default XSLT determination from PD | |
-| C-1336 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | non-XML payload over <dummy/> | |
-| C-1337 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | error handling pattern | |
-| C-1338 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | direct DLQ conditions | |
+| C-1311 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | step 2 order | already on page |
+| C-1312 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | router "Max # of retries reached?" | already on page |
+| C-1313 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | step 3 order | already on page |
+| C-1314 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | local process "Call inbound conversion" | already on page |
+| C-1315 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | step 5 "Read bypass option" | already on page |
+| C-1316 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | default route determination | already on page |
+| C-1317 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | router "Not found type?" | already on page |
+| C-1318 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | not-found type Default | already on page |
+| C-1319 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | not-found type Ignore | already on page |
+| C-1320 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | not-found types Completed / Error | already on page |
+| C-1321 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | "Split receivers" | already on page |
+| C-1322 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | bypass option p2p | already on page |
+| C-1323 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | skipRcvDet not supported in async | already on page |
+| C-1324 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | router "Virtual Stage Routing?" | already on page |
+| C-1325 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | "Map to Receiver Stage" | already on page |
+| C-1326 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | router "Multiple Stages?" | pitfall |
+| C-1327 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | no virtual stages path | already on page |
+| C-1328 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | step 7 order | already on page |
+| C-1329 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | router "Any Interface?" | already on page |
+| C-1330 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | "Get interface" outputs | added |
+| C-1331 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | steps after "Get interface" | already on page |
+| C-1332 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | "Read custom receiver determination" step | already on page |
+| C-1333 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | router "Custom RD?" | already on page |
+| C-1334 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | reuse XRD not supported | already on page |
+| C-1335 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | default XSLT determination from PD | already on page |
+| C-1336 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | non-XML payload over <dummy/> | added |
+| C-1337 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | error handling pattern | already on page |
+| C-1338 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | direct DLQ conditions | already on page |
 | C-1339 | generic-step02-integrated-messaging-runtime-async.md | fact | changelog | Error End since 1.0.4 | |
 | C-1340 | generic-step02-integrated-messaging-runtime-async.md | fact | changelog | mapSenderStageToReceiverStage 1.0.4 in Step02 async | |
 | C-1341 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | behaviour of mapSenderStageToReceiverStage | already on page |
@@ -1611,12 +1611,12 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-1409 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→scripts/readInboundConversionFromPD.md | audit log entries of readInboundConversionFromPD | already on page |
 | C-1410 | generic-step02-integrated-messaging-runtime-async.md | fact | dropped (duplicate of C-1132) | same statement as the earlier claim | |
 | C-1411 | generic-step02-integrated-messaging-runtime-async.md | fact | dropped (duplicate of C-1133) | same statement as the earlier claim | |
-| C-1412 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | isWellFormedXml uses in async | |
+| C-1412 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | isWellFormedXml uses in async | added |
 | C-1413 | generic-step02-integrated-messaging-runtime-async.md | fact | dropped (duplicate of C-1117) | same statement as the earlier claim | |
 | C-1414 | generic-step02-integrated-messaging-runtime-async.md | fact | dropped (duplicate of C-831) | same statement as the earlier claim | |
 | C-1415 | generic-step02-integrated-messaging-runtime-async.md | fact | dropped (duplicate of C-832) | same statement as the earlier claim | |
 | C-1416 | generic-step02-integrated-messaging-runtime-async.md | pitfall | dropped (duplicate of C-836) | same statement as the earlier claim | |
-| C-1417 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | no receiverDetermination: default route | |
+| C-1417 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | no receiverDetermination: default route | already on page |
 | C-1418 | generic-step02-integrated-messaging-runtime-async.md | fact | dropped (duplicate of C-1254) | same statement as the earlier claim | |
 | C-1419 | generic-step02-integrated-messaging-runtime-async.md | fact | dropped (duplicate of C-1255) | same statement as the earlier claim | |
 | C-1420 | generic-step02-integrated-messaging-runtime-async.md | fact | dropped (duplicate of C-1256) | same statement as the earlier claim | |

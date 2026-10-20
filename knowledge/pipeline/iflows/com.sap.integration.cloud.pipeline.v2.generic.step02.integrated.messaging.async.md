@@ -72,7 +72,7 @@ Asynchronous integrated runtime, fed by Step01 queue number X01 [com.sap.integra
   48. ExternalCall "Request Reply": [com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async, adapter "ProcessDirect" "ReceiverXRD"]
   49. Enricher "Set custom status": ConfigurationOptionNotSupported
   50. Script "Throw exception": `throwException.groovy`
-  51. ExclusiveGateway "XML?"
+  51. ExclusiveGateway "XML?": isWellFormedXml = 'false' to 52
   52. Enricher "Define dummy xml"
   53. Enricher "Get XSLT mapping from Partner Directory"
   54. Mapping "Run XSLT Mapping"
@@ -89,7 +89,7 @@ Asynchronous integrated runtime, fed by Step01 queue number X01 [com.sap.integra
 65. Script "Get Receiver specific queue from PD": `readReceiverSpecificQueueFromPD.groovy`
 66. ExclusiveGateway "Any Interface?": none to 74
 67. Splitter "Split interfaces"
-68. Enricher "Get interface"
+68. Enricher "Get interface": bypassOption = skipIfDet
 69. Script "Log outbound processing endpoint": `logOutboundProcessingEndpoint.groovy`
 70. Script "Get payload": `fetchPayloadFromXProperty.groovy`
 71. Enricher "Remove header"
@@ -138,7 +138,7 @@ PD scripts set further properties (Partner directory).
 
 ### Read
 
-Headers and properties from outside this flow (sender adapter, earlier or custom flows).
+From outside this flow (adapter, earlier or custom flows).
 
 | Name | Kind | Step | Used for |
 |---|---|---|---|
