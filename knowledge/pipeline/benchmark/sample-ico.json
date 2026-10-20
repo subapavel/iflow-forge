@@ -1,0 +1,226 @@
+{
+  "schemaVersion" : "0.1",
+  "generator" : {
+    "name" : "po-xray",
+    "version" : "0.1.0-SNAPSHOT",
+    "readAt" : "2026-01-01T00:00:00Z"
+  },
+  "source" : {
+    "files" : [ "synthetic-directory-objs.tpz" ]
+  },
+  "query" : {
+    "component" : "SND_SYS",
+    "direction" : "out"
+  },
+  "components" : [ {
+    "name" : "SND_SYS"
+  } ],
+  "icos" : [ {
+    "oid" : "00000000000000000000000000000001",
+    "description" : "Synthetic benchmark ICO, orders from SND_SYS to RCV_SYS as IDoc. Generated for dir://IFLOW/00000000000000000000000000000001 'IF_OrderOut_to_RCV_SYS'",
+    "generatedFrom" : "IF_OrderOut_to_RCV_SYS",
+    "sender" : {
+      "component" : "SND_SYS",
+      "iface" : {
+        "type" : "ifmmessif",
+        "name" : "OrderOut_Async",
+        "namespace" : "urn:example:orders",
+        "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+      },
+      "operations" : [ "OrderOut_Async" ],
+      "channel" : {
+        "component" : "SND_SYS",
+        "name" : "CC_SND_XI"
+      }
+    },
+    "receivers" : [ {
+      "component" : "RCV_SYS",
+      "condition" : {
+        "text" : "/ns0:Order/Type = \"STANDARD\"",
+        "lines" : [ {
+          "group" : 1,
+          "left" : "/ns0:Order/Type",
+          "operator" : "EQ",
+          "right" : "\"STANDARD\""
+        } ]
+      },
+      "qualityOfService" : "EO",
+      "interfaces" : [ {
+        "operation" : "OrderOut_Async",
+        "mapping" : {
+          "type" : "MAPPING",
+          "name" : "OM_OrderOut_to_ORDERS05",
+          "namespace" : "urn:example:orders",
+          "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+        },
+        "targets" : [ {
+          "iface" : {
+            "type" : "ifmmessif",
+            "name" : "ORDERS.ORDERS05",
+            "namespace" : "urn:example:idoc",
+            "swc" : "SC_EXAMPLE_IDOC, 1.0 of example"
+          },
+          "multiplicity" : "1"
+        } ]
+      } ],
+      "channels" : [ {
+        "component" : "RCV_SYS",
+        "name" : "CC_RCV_IDOC"
+      } ]
+    } ],
+    "noReceiverBehaviour" : "error",
+    "modifiedBy" : "USER_SYNTH",
+    "modifiedAt" : "2026-01-01T00:00:00Z"
+  } ],
+  "channels" : [ {
+    "id" : {
+      "component" : "SND_SYS",
+      "name" : "CC_SND_XI"
+    },
+    "direction" : "sender",
+    "adapter" : "SOAP/XI",
+    "transportProtocol" : "SOAP",
+    "messageProtocol" : "XI",
+    "attributes" : {
+      "keepAttachments" : "false",
+      "useEncoded" : "false"
+    },
+    "modules" : [ {
+      "position" : 1,
+      "name" : "AF_Modules/MessageTransformBean",
+      "type" : "L",
+      "namespace" : "transform",
+      "parameters" : {
+        "Transform.Class" : "com.sap.aii.messaging.adapter.Conversion",
+        "Transform.ContentType" : "text/xml",
+        "xml.documentName" : "Order"
+      }
+    }, {
+      "position" : 2,
+      "name" : "CallSapAdapter",
+      "type" : "L",
+      "namespace" : "0",
+      "parameters" : {
+        "ignoreDuplicate" : "true"
+      }
+    } ],
+    "description" : "Synthetic XI sender channel of SND_SYS"
+  }, {
+    "id" : {
+      "component" : "RCV_SYS",
+      "name" : "CC_RCV_IDOC"
+    },
+    "direction" : "receiver",
+    "adapter" : "IDoc/IDoc XML",
+    "transportProtocol" : "IDoc",
+    "messageProtocol" : "IDoc XML",
+    "attributes" : {
+      "rfcDestination" : "RFC_DEST_SYNTH",
+      "interfaceVersion" : "SAP_RELEASE_SYNTH"
+    },
+    "description" : "Synthetic IDoc receiver channel of RCV_SYS"
+  } ],
+  "esr" : {
+    "serviceInterfaces" : [ {
+      "id" : {
+        "type" : "ifmmessif",
+        "name" : "OrderOut_Async",
+        "namespace" : "urn:example:orders",
+        "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+      },
+      "category" : "O",
+      "xmlNamespace" : "urn:example:orders",
+      "operations" : [ {
+        "name" : "OrderOut_Async",
+        "mode" : "async",
+        "request" : {
+          "type" : "ifmmessage",
+          "name" : "Order_MT",
+          "namespace" : "urn:example:orders",
+          "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+        }
+      } ]
+    }, {
+      "id" : {
+        "type" : "ifmmessif",
+        "name" : "ORDERS.ORDERS05",
+        "namespace" : "urn:example:idoc",
+        "swc" : "SC_EXAMPLE_IDOC, 1.0 of example"
+      },
+      "category" : "I",
+      "xmlNamespace" : "urn:example:idoc",
+      "operations" : [ {
+        "name" : "ORDERS.ORDERS05",
+        "mode" : "async",
+        "request" : {
+          "type" : "ifmmessage",
+          "name" : "ORDERS05_MT",
+          "namespace" : "urn:example:idoc",
+          "swc" : "SC_EXAMPLE_IDOC, 1.0 of example"
+        }
+      } ]
+    } ],
+    "operationMappings" : [ {
+      "id" : {
+        "type" : "MAPPING",
+        "name" : "OM_OrderOut_to_ORDERS05",
+        "namespace" : "urn:example:orders",
+        "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+      },
+      "sourceOperation" : {
+        "type" : "ifmoper",
+        "name" : "OrderOut_Async.OrderOut_Async",
+        "namespace" : "urn:example:orders",
+        "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+      },
+      "targetOperation" : {
+        "type" : "ifmoper",
+        "name" : "ORDERS.ORDERS05.ORDERS.ORDERS05",
+        "namespace" : "urn:example:idoc",
+        "swc" : "SC_EXAMPLE_IDOC, 1.0 of example"
+      },
+      "steps" : [ {
+        "kind" : "request",
+        "program" : {
+          "type" : "XI_TRAFO",
+          "name" : "MM_OrderOut_to_ORDERS05",
+          "namespace" : "urn:example:orders",
+          "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+        },
+        "sourceMessage" : {
+          "type" : "ifmmessage",
+          "name" : "Order_MT",
+          "namespace" : "urn:example:orders",
+          "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+        },
+        "targetMessage" : {
+          "type" : "ifmmessage",
+          "name" : "ORDERS05_MT",
+          "namespace" : "urn:example:idoc",
+          "swc" : "SC_EXAMPLE_IDOC, 1.0 of example"
+        }
+      } ]
+    } ],
+    "messageMappings" : [ {
+      "id" : {
+        "type" : "XI_TRAFO",
+        "name" : "MM_OrderOut_to_ORDERS05",
+        "namespace" : "urn:example:orders",
+        "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+      },
+      "source" : {
+        "type" : "ifmmessage",
+        "name" : "Order_MT",
+        "namespace" : "urn:example:orders",
+        "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+      },
+      "target" : {
+        "type" : "ifmmessage",
+        "name" : "ORDERS05_MT",
+        "namespace" : "urn:example:idoc",
+        "swc" : "SC_EXAMPLE_IDOC, 1.0 of example"
+      },
+      "multiplicity" : "1:1"
+    } ]
+  }
+}

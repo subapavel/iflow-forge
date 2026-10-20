@@ -40,12 +40,10 @@ Durable facts only (build quirks, verified APIs, recurring findings). Never task
 ## One-to-many templates (learned on KB-05 B4, 2026-06-trial)
 - o2mo, o2mm, moar keep P2P_ASYNC_0001.iflw, same 3 params and allowedHeaderList as p2p; no Bundle-Description; no mapping file (Mapping step mappinguri empty: cite the iflw resource).
 - o2mm/moar: two branches ("Branch 1"/"Branch 2" sequenceFlow names) share message end event "End", no Join/Gather; receivers are participants Receiver1/Receiver2. moar SequentialMulticast routingSequenceTable gives the order.
-- moar step 6 "Call Exception Handling" has an empty processId (SAP bug): the dump then inlines the exception process under the next call with a processId (step 11).
-- Idempotency key there is property SplitMessageID (`${header.UniqueID}_..`), not header UniqueID.
+- moar step 6 "Call Exception Handling" has an empty processId (SAP bug): the dump then inlines the exception process under the next call with a processId (step 11). Idempotency key there is property SplitMessageID (`${header.UniqueID}_..`), not header UniqueID.
 - Verify step cites in bulk: awk the dump section per id and grep `^ *[n.] Type "name"$` (count must be 1 when no step number).
 ## Custom exit, error handling, collection (learned on KB-05 B5, 2026-06-trial)
-- The dump JSON is a stream of objects: `jq 'select(.id==...)'`, never `.[]`.
-- Exit callers: the 8 generic iFlows except Step08 ("Call custom exit": CustomXScenario `${property.CustomXEndpoint}`, CustomXGlobal; customXPipelineStep from readCustomXFromPD.groovy#L29, byte-identical in all 8) and the 7 Step07 templates ('07', CustomExit). No caller sends '03'.
+- The dump JSON is a stream of objects: `jq 'select(.id==...)'`, never `.[]`. Exit callers: the 8 generic iFlows except Step08 ("Call custom exit": CustomXScenario `${property.CustomXEndpoint}`, CustomXGlobal; customXPipelineStep from readCustomXFromPD.groovy#L29, byte-identical in all 8) and the 7 Step07 templates ('07', CustomExit). No caller sends '03'.
 - Error-flow callers: the same 8, Request Reply "Send to custom error flow" at `{{CustomXError_Endpoint}}`; only Step02 inbound/async, Step04, Step05, Step06 set incomingQueue; caller "End event?" tests only 'Completed'/'Escalated'.
 - Generic .iflw script steps carry an empty scriptBundleId; 8 templates Require-Capability the collection (p2p.to.idoc without a Script step).
 - Fast authoring: write with @XX@ shorthand ids and expand with a scratchpad sed file; verify step/adapter/parameter cites in bulk against TSVs built from the dump JSON.
@@ -54,15 +52,13 @@ Durable facts only (build quirks, verified APIs, recurring findings). Never task
 - Enclosing local process of a script step: awk the .iflw (`<bpmn2:process name=` then `<value>X.groovy</value>`); names are XML-escaped (`&amp;`).
 - PD readers: all but readReceiverSpecificQueueFromPD throw IllegalStateException on missing service/partnerID; most write `?: null` (property set to null though comments say "not created"); readCustomInterfaceDetermination/readReceiverNotDetermined use the legacy logger (getAuditLog + setHeader auditLogHeader), same header as saveToMessage (PipelineLogger#L25/#L69/#L73).
 - All 8 readCustomXFromPD callers set CustomXType = CustomXPre in Enricher "Initialize pre-processing exit" (step 5; 2a 7; 2s 3; 4/5 6).
-- Header overrides customXInboundConversionEndpoint, customXRDEndpoint, CustomXPreEnabled/Endpoint are set nowhere in the label.
-- The collection has no .iflw: cite "not referenced" with `[collection, manifest "SAP-BundleType"]`.
+- Header overrides customXInboundConversionEndpoint, customXRDEndpoint, CustomXPreEnabled/Endpoint are set nowhere in the label. The collection has no .iflw: cite "not referenced" with `[collection, manifest "SAP-BundleType"]`.
 - Write pages with `~L<n>`/`~P<n>` + @id@ shorthand, expand per stem with sed; verify cites in bulk (line non-blank, step TSV, process name in .iflw).
 ## IDoc scripts (learned on KB-06 B2, 2026-06-trial)
 - Canonical copy for stems in neither collection nor Step02 inbound: first id of the alphabetically sorted *Used by* list (step01.idoc < step01.xi < step08).
 - Many IDoc scripts lack a trailing newline: `cat` of several files glues lines; number each file separately (`awk '{print NR": "$0}'`, tab-indented lines break `cut -f`).
 - Step08 IDoc: setEdidcFromParamsForIDoc sets properties Receiver_IDoc* (router "Content Type?" step 29 reads them); validation steps 8/12 force header SAP_Receiver_IDocContentType. Text/XML path 30 -> 42 -> 43, X-SAP.IDOC 45 -> 43 (no node list).
-- determinePartnerIDForIDocInbound: HeaderStateTracker rollback covers only tracker.setHeader; step-4 writes use message.setHeader. 1,065 tokens with precedence as nested ordered list.
-- Adapter cite form for JMS receivers: `[<id>, adapter "JMS" "<participant>"]`.
+- determinePartnerIDForIDocInbound: HeaderStateTracker rollback covers only tracker.setHeader; step-4 writes use message.setHeader. 1,065 tokens with precedence as nested ordered list. Adapter cite form for JMS receivers: `[<id>, adapter "JMS" "<participant>"]`.
 - Review B2 lessons: check that a rollback/restore claim matches what the tracker actually stores (for an IDoc sender, SAP_Sender and SAP_SenderAlias are tracked); cross-reference the page's own list numbers, not the code-comment numbers; a ProcessCallElement name is not the local process name (cite `process "<name>"`); before writing "not in the artifact", follow the flow to the next step (Step08 step 44 addCustomHeaderProperties turns customHeader_* into MPL headers); write Groovy runtime effects (null concatenation, GPath truth, .text() on lists) as what the line does, not as a result.
 ## XI and mapping scripts (learned on KB-06 B3, 2026-06-trial)
 - mapSenderStageToReceiverStage.groovy has CRLF endings and no final newline: `wc -l` says 300, awk 301; strip `\r` before the non-blank check.
@@ -72,8 +68,7 @@ Durable facts only (build quirks, verified APIs, recurring findings). Never task
 - All B3 script steps sit in the main process; Step02 async/sync/Step04 main process names are long ("Integration Process - ..."): copy them from the .iflw.
 - Cite forms that passed earlier: `[<id>, property "allowedHeaderList"]`, `[<id>, parameter "<name>"]`, `[<id>, manifest "Require-Capability"]` for templates using the collection.
 - CHANGELOG cite form (D-019 amended): `[<package-folder>/CHANGELOG.txt#L<n>]` (generic-inbound, generic-outbound, generic-pipelines, templates). Read them before any version claim or "open" question: B3 r1 lost 3 bullets the change log answered.
-- "Who sets X" questions: check the step-1 Content Modifier of the iFlow first (Step02 sync step 1 "Set custom extensions" sets SapQualityOfService = BestEffort), and grep the whole label before writing "no setter" (the mirror script may set it).
-- A negative ("no template names it") needs "grep of every <scope> .iflw" stated or a resource cite.
+- "Who sets X" questions: check the step-1 Content Modifier of the iFlow first (Step02 sync step 1 "Set custom extensions" sets SapQualityOfService = BestEffort), and grep the whole label before writing "no setter" (the mirror script may set it). A negative ("no template names it") needs "grep of every <scope> .iflw" stated or a resource cite.
 ## Helpers, logging, errors (learned on KB-06 B4, 2026-06-trial)
 - md5 every copy, never trust the inventory: throwException has 3 variants (collection L8 default location differs from the six generic 35-line copies; sync 12 lines).
 - Step08 exception handling: Add Custom Headers -> "Audit Log Header?" (no: Recover Audit Log from property auditLogProperty) -> "Add Exception to the Log" (messageText, location, mplAttachmentName ExceptionSubProcess_, mplLoggingConfiguration = {{Exception_LoggingConfiguration}}, no value) -> "Save in Audit Log" (addAuditLog) -> "Log Message per Config".
@@ -117,3 +112,7 @@ Durable facts only (build quirks, verified APIs, recurring findings). Never task
 - Drafts misorder Step01/03/07 template steps: post-processing exit runs BEFORE the idempotent/receiver call; "Set custom header attributes" runs before Define/Map operation. Read the order from SequenceFlows, never from the draft. iFlow-level allowedHeaderList is not in the dump: grep `-A2 '<key>allowedHeaderList</key>'` (value on the next line); Step01 lists lack testMode, Step01 templates are empty, Step08 use {{AllowedHeadersList}}.
 ## Migration procedures (learned on KB-11 C2, 2026-06-trial)
 - Inbound conversion (ReceiverConvert, readInboundConversionFromPD) exists only in Step02 inbound and async; sync has none (Step01 sync template has "Call inbound conversion"). Step01 XI XI sender QualityOfService_inbound = HandledByIflow (routes on header SapQualityOfService). po-xray ICO: qualityOfService is the PO literal passed through, adapter = transportProtocol/messageProtocol. naming.md sits at the 1,480 limit: every used-by append costs 1 token. Procedure triage rows: applied "added (<page>)" names the page.
+- Step02 async XSLT result contract: split /ns0:Receivers/Receiver (83), SAP_ReceiverAlias = /Receiver/Service (84), split //Interfaces/Interface (67), /Interface/Name, /Service -> SAP_OutboundProcessingEndpoint (68); "Not found type?" (60): Type 'Default' 61, 'Ignore' 81, default Error 82 (ReceiverNotFoundError, Error End); iflw namespaceMapping ns0 = http://sap.com/xi/XI/System.
+- Async main order: 1-8, 32, 33 inbound conversion, 41-44, 45 determination; non-XML (isWellFormedXml 'false', 51) maps <dummy></dummy> (52). xpath needs String receiverDetermination, CustomXRDEndpoint, ReuseXRDEndpoint absent (L36, step 44/47).
+- Step01 XI EO path: 4 determinePartnerID, 23 QoS? (header SapQualityOfService 'ExactlyOnce'), 26 readInboundQueueFromPD, 30 Which queue? (31 Default -> DefaultInboundProcessingQueue, 32 PD -> InboundProcessingQueue). PD readers md5-identical across all copies in this label.
+- A proposal page at 1,000 tokens: Scenario+Summary ~330, PD rows with step cites ~250; open questions must be one-liners; procedure findings packed in one row with page:line.

@@ -54,3 +54,7 @@ Durable facts only (build quirks, verified APIs, recurring findings). Never task
 49. (KB-11 C2 closure) For a "routes only X and Y" gateway claim, cite both route targets, not only the gateway (the idoc EO default runs to step 24 "Read inbound queue", found via the json id CallActivity_95).
 50. (KB-11 C3) Placement rules ("sender-side modules → Step03 copy") must cover integrated-sync: Step02 sync has no conversion call; sync inbound conversion is the Step01 sync copy's local process (step 2 "Call inbound conversion").
 51. (KB-11 C3) "X are copies of template T" needs T's adapter "ProcessDirect" "Sender" cite plus one caller cite per exit kind; a cite on T's own gateway proves only the branching.
+52. (KB-12a) Proposal pages: a "keys that must stay absent" row under Partner directory entries is not a contributes row; it fails the selection check even when every cite is right — it belongs in a sentence under the table.
+53. (KB-12a) A "no rule" open question that cites a template line: read that line first (proposal-template:38 gives the copy's iFlow id as `<scenario>`).
+54. (KB-12a) Filling ICO values into partner-ID lookups needs Step01 XI step 1 "Set SAP headers" (SAP_SenderInterface from sapinterfacename), not only the determinePartnerID read lines.
+55. (KB-12a) Step01 XI step 1 "Set SAP headers" (.iflw L1763) is the cite for SAP_Sender, SAP_SenderInterface and SAP_SenderInterfaceNamespace whenever ICO values are put into partner-ID lookups.

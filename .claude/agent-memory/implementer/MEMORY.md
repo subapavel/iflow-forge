@@ -41,3 +41,9 @@ Durable facts only (build quirks, verified APIs, recurring findings). Never task
   quotes). Delete-action rows carry patterns as Name: `$name=SAP_Sender`, `$include=SAP_*`, `$include=dc(.*)`.
 - Mutation checks: `git diff | grep -c '^[-+] '` does not change when the mutated line is already an added line;
   restore from a baseline copy in the scratchpad and compare `sha1sum` instead.
+- Hand-written po-xray JSON: verify the style by round-trip — `mvn -pl po-xray-core dependency:build-classpath
+  -Dmdep.outputFile=<scratch>/cp.txt`, then a jshell script reading the file into the record and `Json.write`, diff.
+  `Json.write` emits `"key" : value`, 2-space indent, arrays `[ {` inline, no trailing newline.
+- Reader literals: condition `operator` is the SAP code (`EQ`, `CP`, `EX`), constants quoted (`"\"X\""`), `text`
+  renders `=`/`like`; ICO target `multiplicity` from real data is `1` (message mapping's is `1:1`); XI sender's
+  standard module is `CallSapAdapter` (type `L`, param `ignoreDuplicate`).
