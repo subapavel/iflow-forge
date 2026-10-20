@@ -61,3 +61,14 @@ input for the designs of parts 3, 4 and 5, not a design. Restated in English; no
    scenario for the same customer already knows that the customer runs the integrated runtime, which naming
    convention its iFlows and Partner Directory entries follow, and that a similar scenario was migrated
    before and can serve as the template.
+
+## Sixth statement, same session
+
+10. When a demanding scenario is brought to Integration Suite, the knowledge gained must not stay tenant-specific:
+    the skill itself grows a catalogue of ways — "this kind of problem can be solved like this, or like that" — so
+    the tool gets stronger with every demanding migration done together, and the owner may later sell it.
+    Consequences the architect notes for the MIG-00 design: a generic pattern catalogue (problem → options →
+    trade-offs → where each was used) written with the same citation discipline, migration evidence cited in an
+    anonymised form (a migration code, never the customer), the strict split between the sellable generic
+    content and the customer's local files kept as it is, and the licence of the SAP package sources inside
+    `knowledge/sources/` as an owner-only question before any sale.
