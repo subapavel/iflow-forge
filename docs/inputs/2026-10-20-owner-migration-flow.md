@@ -46,3 +46,10 @@ input for the designs of parts 3, 4 and 5, not a design. Restated in English; no
    Suite and pipeline knowledge: every question answered one by one, a question may raise a new question,
    the round ends when nothing is unclear between agent and migrator; only then the migration plan, refined
    iteratively; after the final approval the artifacts are created.
+
+## Fourth statement, same session
+
+8. The test data (SCA exports, ICOs) is already local and po-xray has been run on it; the pilot is tested
+   locally. The owner asks for the whole front end to be prepared: a custom skill, ideally usable with every
+   agent (Claude Code, Codex, Gemini CLI); the test itself runs in Claude Code. Recorded as the design row
+   MIG-00 in `agent/BACKLOG.md`.

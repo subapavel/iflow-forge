@@ -1,6 +1,6 @@
 # Handoff
 
-state: KB-00b done 287527b (owner reviewed Q1–Q20); next ready: KB-12b, then KB-11d, KB-11e (version gate from change logs)
+state: KB-12b in-progress (WIP: benchmark run launched 2026-10-20, scratchpad kb-12b/; results page not yet written); KB-00b done 287527b
 last commit: kb: benchmark key corrected after the owner's review (KB-00b); before it 721597b (KB-11c), 6d69048 (KB-00b draft), a51989f
 branch: claude/eager-brown-uw61ft (D-017; owner fast-forwards main); CI green 287527b (39487719616), f609dc7 (39487981477); 3fcc2b8 (39489042472)
 next exact action: KB-12b — fresh session with only the skill answers benchmark/questions.md (plan Task 12 step 3); no read of expected-answers-*.md
