@@ -4,7 +4,7 @@ How PO adapter modules and mapping programs become Integration Suite constructs 
 
 ## Purpose
 
-A recipe says how one PO adapter module, Java mapping or mapping pattern becomes an Integration Suite construct inside a pipeline scenario: which construct, in which template copy. The agent reads it at step 6 of [migration/po-ico-to-pipeline.md](../migration/po-ico-to-pipeline.md) or [migration/is-iflow-to-pipeline.md](../migration/is-iflow-to-pipeline.md), one per Conversions needed row.
+A recipe says how one PO adapter module, Java mapping or mapping pattern becomes an Integration Suite construct: which construct, in which template copy. The agent reads it at step 6 of [migration/po-ico-to-pipeline.md](../migration/po-ico-to-pipeline.md) or [migration/is-iflow-to-pipeline.md](../migration/is-iflow-to-pipeline.md), one per Conversions needed row.
 
 ## Recipe pages
 
@@ -16,7 +16,7 @@ One page per module or pattern: `conversion/<module-or-pattern>.md` (names such 
 - `## Example`: one module or mapping with synthetic names only (no customer token, tenant values as naming.md placeholders).
 - `## Pitfalls`: what went wrong or stayed open on a migration; the lesson also goes to pitfalls.md.
 
-The contract is not yet checked by iflow-forge-knowledge; the kb-reviewer checks it.
+Checked by the kb-reviewer, not yet by iflow-forge-knowledge.
 
 ## Rules
 
@@ -28,7 +28,7 @@ The contract is not yet checked by iflow-forge-knowledge; the kb-reviewer checks
 
 ## Standard adapter modules
 
-These rows are not derived from an artifact: no artifact under `knowledge/sources` is a PO module and no triage row names one, so each row is a proposal until a migration confirms it as a recipe (D-026). Where the construct sits in the scenario: Rules.
+These rows are not derived from an artifact: no artifact under `knowledge/sources` is a PO module and no triage row names one, so each row is a proposal until a migration confirms it as a recipe (D-026). Placement: Rules.
 
 | module (AF_Modules/…) | typical use in PO | Integration Suite construct | status |
 |---|---|---|---|
@@ -40,10 +40,11 @@ These rows are not derived from an artifact: no artifact under `knowledge/source
 | `AF_Modules/TextCodepageConversionBean` | convert the character encoding of a text payload | Groovy script re-encoding the body | proposal — confirm on first migration |
 | `AF_Modules/PayloadSwapBean` | swap the main payload with an attachment | Groovy script moving the attachment into the body | proposal — confirm on first migration |
 | `AF_Modules/MessageSplitterBean` | … | … | unknown |
+| `CallSapAdapter` | the adapter call itself, not a conversion | nothing to convert | proposal — confirm on first migration |
 
 ## Mapping programs
 
-Same status rule as the module table: proposals, not derived from an artifact. Archive programs of kind `class` and `javaSource` are converted together with the Java mapping that uses them.
+Status rule as for modules: proposals, not derived from an artifact. Archive programs of kind `class` and `javaSource` are converted together with the Java mapping that uses them.
 
 | ArchiveProgram.kind / mapping type | Integration Suite construct | status |
 |---|---|---|

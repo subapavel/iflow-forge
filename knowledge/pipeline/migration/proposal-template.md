@@ -18,7 +18,7 @@ The document a human approves before anything is generated (po-ico-to-pipeline.m
 | `custom_exit` | … | … |
 | `inbound_conversion` | … | … |
 
-Value: one of the D-025 values. Source: the ICO field or dump line the value was derived from, or "human decides; default …" with the Open questions number.
+Value: one of the D-025 values. Source: the ICO field or dump line the value was derived from, or "human decides (default …)" with the Open questions number.
 
 Status: proposed | approved
 
@@ -35,7 +35,7 @@ Status: proposed | approved
 |---|---|---|
 | … | … | … |
 
-Fill it from scenario-contribution.md "What a scenario contributes": copy every row whose condition the Scenario values meet ("always" included), one row per copy or entry, a copy written with its iFlow id `<scenario>`, package `<package>` and its own ProcessDirect address, unique per copy.
+Fill it from scenario-contribution.md "What a scenario contributes": copy every row whose condition the Scenario values meet ("always" included), one row per copy or entry, each copy with its own ProcessDirect address, unique per copy. The copy's iFlow id and package follow the tenant profile (part 2); until then the human names them.
 
 ## Partner directory entries
 
@@ -43,8 +43,8 @@ The keys below hang under the scenario's partner ID (partner-directory.md "Key s
 
 | key | value placeholder | set by |
 |---|---|---|
-| partner ID (header partnerID) [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/determinePartnerID.groovy#L342] | per partner-directory.md "Key scheme": … | always |
-| `InboundQueue` [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi, scripts/readInboundQueueFromPD.groovy#L21] | queue name [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi, adapter "JMS" "InboundProcessingQueue"], shape `<prefix>X01` [com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async, adapter "JMS" "InboundProcessingQueueX"] or `<prefix>Q01` [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, adapter "JMS" "InboundProcessingQueue"]: … | `runtime` other than the tenant default; XI, IDOC sender [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc, scripts/readInboundQueueFromPD.groovy#L21] |
+| partner ID (header partnerID) [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/determinePartnerID.groovy#L342] | per partner-directory.md "Key scheme", alias per migration/variants.md: … | always |
+| `InboundQueue` [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi, scripts/readInboundQueueFromPD.groovy#L21] | queue name [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi, adapter "JMS" "InboundProcessingQueue"], shape `<prefix>X01` [com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async, adapter "JMS" "InboundProcessingQueueX"] or `<prefix>Q01` [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, adapter "JMS" "InboundProcessingQueue"]: … | XI, IDOC sender the human assigns its own queue (migration/variants.md) [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc, scripts/readInboundQueueFromPD.groovy#L21] |
 | `InboundConversionEndpoint_<SAP_SenderAlias>` [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/readInboundConversionFromPD.groovy#L26] | `{{tenant.endpoint.inbound.conversion}}` | `inbound_conversion` custom |
 | `InboundConversionEndpoint` [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/readInboundConversionFromPD.groovy#L31] | `{{tenant.endpoint.inbound.conversion}}` | `inbound_conversion` custom, no alias key |
 | `CustomXPreEnabled` [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, step 5 "Initialize pre-processing exit"] [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/readCustomXFromPD.groovy#L41] | step numbers, pipe-separated [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/readCustomXFromPD.groovy#L53] [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/readCustomXFromPD.groovy#L54]: … | `custom_exit` pre, pre+post |
@@ -72,7 +72,7 @@ One row per channel module and mapping program of the Source summary (conversion
 |---|---|---|---|
 | 1 | … | … | … |
 
-Every "human decides" of the procedure is a row here; approval needs each answered.
+Every "human decides" or "human confirms" of the procedure is a row here, the sender alias and partner ID always (migration/variants.md "Partner ID and sender alias", default the sender component name); approval needs each answered.
 
 ## Approval
 

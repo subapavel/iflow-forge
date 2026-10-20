@@ -58,3 +58,11 @@ Durable facts only (build quirks, verified APIs, recurring findings). Never task
 53. (KB-12a) A "no rule" open question that cites a template line: read that line first (proposal-template:38 gives the copy's iFlow id as `<scenario>`).
 54. (KB-12a) Filling ICO values into partner-ID lookups needs Step01 XI step 1 "Set SAP headers" (SAP_SenderInterface from sapinterfacename), not only the determinePartnerID read lines.
 55. (KB-12a) Step01 XI step 1 "Set SAP headers" (.iflw L1763) is the cite for SAP_Sender, SAP_SenderInterface and SAP_SenderInterfaceNamespace whenever ICO values are put into partner-ID lookups.
+56. (KB-11b) Any "Not found type?" table must cover all three gateways (grep ExclusiveGateway_51071187 in the Step02 async, Step02 sync and Step04 .iflw): the sync copy has only "Default" and "Error" routes, no Ignore.
+57. (KB-11b) Step01 alias and partner-ID defaults differ by sender type: XI falls back to SAP_Sender (determinePartnerID#L241), IDoc to the logical system (determinePartnerIDForIDocInbound#L294, #L550, #L585); an XI-only cite under a rule for both sender types fails.
+58. (KB-11b) "(no default)" after "human decides" fails the form rule even when the packet says "no artifact": name a default such as "the proposal stops".
+59. The routes of a gateway with the same id differ per copy: ExclusiveGateway_51071187 has Default, Ignore and Error in Step02 async and Step04 but only Default and Error in Step02 sync. Grep `sourceRef="<gateway id>"` in every copy before accepting "the same".
+60. In a closure round compare every row and cite against the round-1 read; a fix round must not drop anything (48).
+61. A "keys X, Y must be absent" row cited only by gateways fails: it needs the script lines that set the tested properties (readBypassOptionFromPD#L36, readCustomReceiverDeterminationFromPD#L29/#L38).
+62. XSLT content on proposals: the pipeline iFlows bind ns0 = http://sap.com/xi/XI/System (namespaceMapping, Receivers.xsd). An ICO condition prefix reused for the Receivers result is a namespace clash.
+63. When the verifier diff is absent in a closure round, compare the cite lists row by row with the round-1 read of the page.

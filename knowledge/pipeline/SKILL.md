@@ -5,7 +5,7 @@ description: SAP Integration Suite pipeline concept: generic iFlows, contracts, 
 
 # sap-is-pipeline
 
-The knowledge base of the SAP Integration Suite pipeline concept, written from SAP's pipeline packages and read page by page.
+Knowledge of the SAP Integration Suite pipeline, from SAP's packages.
 
 ## When you need …
 
@@ -22,6 +22,7 @@ The knowledge base of the SAP Integration Suite pipeline concept, written from S
 | one Groovy or XSLT resource | `scripts/<name>.md` |
 | to migrate a PO Integrated Configuration | `migration/po-ico-to-pipeline.md` |
 | to migrate a point-to-point iFlow | `migration/is-iflow-to-pipeline.md` |
+| a migration's human decisions and defaults | `migration/variants.md` |
 | the document the human approves before generation | `migration/proposal-template.md` |
 | how PO modules and Java mappings are converted | `conversion/README.md` |
 | which SAP version is current, and what changed between versions | `versions/README.md`, `versions/<label>/changelog[-<group>].md` |
