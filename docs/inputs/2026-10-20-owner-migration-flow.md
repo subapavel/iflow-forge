@@ -98,3 +98,10 @@ input for the designs of parts 3, 4 and 5, not a design. Restated in English; no
     resumes the migration; the tenant profile records the tool and skill version used per migration; urgent
     local fixes follow the same WORKFLOW on a branch the cloud session merges; local commits touch only
     `requests/`, pattern proposals and synthetic fixtures, cloud commits `src/` and the pages.
+
+## Ninth statement, same session — go-ahead
+
+13. The owner agrees with the flow of statements 6–12, asks the architect to proceed, will start the local
+    pilot once the tool is ready as planned, and wants the optional field-request automation switched on as
+    soon as the tool is ready to test. Consequence: MIG-00 (spec) starts right after KB-12b, not after the
+    gate; the gate itself still needs KB-09 (owner, local) and the owner's judgement of the benchmark.
