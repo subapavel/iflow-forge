@@ -167,4 +167,4 @@ PD scripts throw when the header partnerID is missing [scripts/readInboundQueueF
 
 ## Version notes
 
-None yet; Task 10 (KB-10) adds the differences to the later labels.
+- 2026-09-current 1.0.9: see versions/2026-09-current/changelog.md § com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc

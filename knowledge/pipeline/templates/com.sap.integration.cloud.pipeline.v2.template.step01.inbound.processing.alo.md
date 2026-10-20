@@ -77,4 +77,4 @@ Bold: the scenario author must set it; the template references it without a valu
 
 ## Version notes
 
-None yet; Task 10 (KB-10) adds the differences to the later labels.
+2026-09-current 1.0.1: no change in the dump; same Bundle-Version, only the manifest's Origin-ModifiedDate differs [2026-09-current: com.sap.integration.cloud.pipeline.v2.template.step01.inbound.processing.alo, manifest "Bundle-Version"].

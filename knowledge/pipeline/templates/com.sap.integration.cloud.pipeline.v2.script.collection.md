@@ -94,4 +94,4 @@ None: a script collection has no parameters.propdef.
 
 ## Version notes
 
-None yet; Task 10 (KB-10) adds the differences to the later labels.
+- 2026-09-current 1.0.1: logMessage.groovy adds exception logging when CamelExceptionCaught is set and writes an ExceptionInfo attachment [2026-09-current: com.sap.integration.cloud.pipeline.v2.script.collection, scripts/logMessage.groovy#L29] [2026-09-current: com.sap.integration.cloud.pipeline.v2.script.collection, scripts/logMessage.groovy#L136] — see versions/2026-09-current/changelog.md

@@ -34,3 +34,8 @@ Run 39365787352 (push of e145a84, KB-08): job 118442203458 created 03:43:31Z, co
 no steps, label `ubuntu-latest`. Same picture as the two attempts above; not re-run (the one re-run is spent). Every
 commit since ae72101 (02:18Z) fails this way; the condition is persistent, not transient. Local verify for e145a84:
 exit 0 (target/kb-08-verify-final-r2.log). The session continues; later runs are recorded here as they complete.
+
+## Update 2026-10-20 05:25Z — occurrences 4 and 5
+Run 39367224545 (afd0a64, 04:00:06–09Z) and run 39374755769 (c62dba8, 05:24:49–52Z): same picture, failure in 3 s,
+no steps. Every push since ae72101 fails this way; nothing in the repository changed the workflow. Not re-run.
+Local verify for c62dba8: exit 0 (target/kb-10-b1-verify.log).

@@ -188,4 +188,4 @@ Headers and properties from outside this flow (sender adapter, earlier or custom
 
 ## Version notes
 
-None yet; Task 10 (KB-10) adds the differences to the later labels.
+- 2026-09-current 1.0.6: see versions/2026-09-current/changelog-generic-pipelines-step02.md § com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async

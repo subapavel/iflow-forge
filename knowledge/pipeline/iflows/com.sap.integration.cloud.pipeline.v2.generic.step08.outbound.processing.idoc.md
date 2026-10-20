@@ -159,4 +159,4 @@ Headers from the calling flow and the IDoc response.
 
 ## Version notes
 
-None yet; Task 10 (KB-10) adds the differences to the later labels.
+- 2026-09-current 1.0.3: "Set SapMessageId" = UniqueID, the 12 IDoc channels on SapMessageIdDetermination Reuse, partner-directory keys read first from the business-system partner ID [2026-09-current: com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.idoc, step 29 "Set SapMessageId"] [2026-09-current: com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.idoc, adapter "CC_IDOC_Receiver_OnPremBasic" "OnPremise"] [2026-09-current: com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.idoc, scripts/setAllDefaultAndScenarioValuesFromPDForIDoc.groovy#L48] — see versions/2026-09-current/changelog.md

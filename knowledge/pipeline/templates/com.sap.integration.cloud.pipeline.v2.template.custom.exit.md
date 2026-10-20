@@ -100,4 +100,4 @@ Bold: the copy is not reachable without it.
 
 ## Version notes
 
-None yet; Task 10 (KB-10) adds the differences to the later labels.
+2026-09-current 1.0.2: no change in the dump; same Bundle-Version, only the manifest's Origin-ModifiedDate differs [2026-09-current: com.sap.integration.cloud.pipeline.v2.template.custom.exit, manifest "Bundle-Version"].

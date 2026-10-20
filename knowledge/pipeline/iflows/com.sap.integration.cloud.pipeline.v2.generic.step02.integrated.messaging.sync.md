@@ -166,4 +166,5 @@ Headers and properties from outside this flow (Step01 XI, custom flows).
 
 ## Version notes
 
-None yet; Task 10 (KB-10) adds the differences to the later labels.
+- 2026-09-current 1.0.6: step 1 also sets TenantName = ${sysenv.TENANT_NAME} [2026-09-current: com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync, step 1 "Set custom extensions"] — see versions/2026-09-current/changelog-generic-pipelines-step02.md
+- 2026-09-current 1.0.6: determinePartnerID reads the landscape with TenantName [2026-09-current: com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync, scripts/determinePartnerID.groovy#L129] — see versions/2026-09-current/changelog-generic-pipelines-step02.md
