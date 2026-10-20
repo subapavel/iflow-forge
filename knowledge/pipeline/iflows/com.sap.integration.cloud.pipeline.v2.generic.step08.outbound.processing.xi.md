@@ -4,7 +4,7 @@ Artifact: `com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.process
 
 ## Purpose
 
-Generic XI receiver step at `{{ProcessDirect_EndPoint}}` [com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi, adapter "ProcessDirect" "Pipeline"]; the p2p-to-XI template calls `{{GenericXIEndpoint}}` [com.sap.integration.cloud.pipeline.v2.template.step07.outbound.processing.p2p.to.xi, parameter "GenericXIEndpoint"], equal only by configuration (pitfalls). It builds the XI connectivity and the sender, receiver and interface identity from scenario headers, Partner Directory and parameters, removes the pipeline headers (step 10) and ends on one of six XI receiver channels chosen by proxy and authentication type (step 11).
+Generic XI receiver step at `{{ProcessDirect_EndPoint}}` [com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi, adapter "ProcessDirect" "Pipeline"]; the p2p-to-XI template calls `{{GenericXIEndpoint}}` [com.sap.integration.cloud.pipeline.v2.template.step07.outbound.processing.p2p.to.xi, parameter "GenericXIEndpoint"], equal only by configuration (pitfalls). It builds the XI connectivity and the sender, receiver and interface identity from scenario headers, Partner Directory and parameters, removes the pipeline headers (step 10) and ends on one of six XI receiver channels chosen by proxy and authentication type (step 11). The pipeline headers must not reach the receiver [rationale, from analysis 2026]. The template com.sap.integration.cloud.pipeline.v2.template.step07.outbound.processing.p2p.to.xi calls it at `{{GenericXIEndpoint}}` [com.sap.integration.cloud.pipeline.v2.template.step07.outbound.processing.p2p.to.xi, adapter "ProcessDirect" "Receiver"]; Step06 [com.sap.integration.cloud.pipeline.v2.generic.step06.outbound.processing, adapter "ProcessDirect" "Receiver"], fed also by Step02 async [com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async, adapter "JMS_OuboundProcessing" "OuboundProcessingQueue"], calls Step07 at `${header.SAP_OutboundProcessingEndpoint}`.
 
 ## Adapters
 
@@ -38,7 +38,7 @@ All receivers: address `${property.Receiver_XIEndpoint}`; sender, receiver, part
 14. ErrorEventSubProcessTemplate "Exception Subprocess"
   15. ExclusiveGateway "Audit Log Header?": auditLogHeader set to 17, else 16
   16. Enricher "Recover Audit Log": from property auditLogProperty
-  17. Enricher "Add Exception to the Log": `{{Exception_LoggingConfiguration}}`, exception message
+  17. Enricher "Add Exception to the Log": `{{Exception_LoggingConfiguration}}`, exception message, attachment ExceptionSubProcess_
   18. Script "Save in Audit Log": `auditLogHandler.groovy` addAuditLog
   19. Script "Log Message per Config": `logMessage.groovy`, "Error End 1"
 
@@ -48,7 +48,7 @@ All receivers: address `${property.Receiver_XIEndpoint}`; sender, receiver, part
 
 | Name | Kind | Step | Value |
 |---|---|---|---|
-| SapDynamicConfiguration_<key> | property | 1 | from header dc_SapDynamicConfiguration_<key> [scripts/createSapDynamicConfigurationFromHeaders.groovy#L26] |
+| SapDynamicConfiguration_<key> | property | 1 | from header dc_SapDynamicConfiguration_<key> [scripts/createSapDynamicConfigurationFromHeaders.groovy#L26]; the XI receiver adapter adds them as dynamic XI headers [generic-outbound/CHANGELOG.txt#L7] |
 | default_* | property | 2, 5, 6 | parameters [com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi, step "Set Default Properties"], root element [com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi, step "Set XPath Properties"], PD (Partner directory) |
 | isWellFormedXml | property | 3 | [scripts/checkWellFormedXML.groovy#L11] |
 | SAP_Receiver, SAP_Sender | header | 6 | if missing: default_Receiver, default_Sender [scripts/readPDValuesForXI.groovy#L17] [scripts/readPDValuesForXI.groovy#L21] |

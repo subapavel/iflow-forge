@@ -63,7 +63,7 @@ Generic outbound dispatcher: consumes `{{PipelineJMSQueuePrefix}}Q04{{PipelineJM
 
 | Name | Kind | Step | Value |
 |---|---|---|---|
-| isWellFormedXml; payload | header; property | 2; 3 | [scripts/checkWellFormedXML.groovy#L12] [scripts/storePayloadInXProperty.groovy#L15] |
+| isWellFormedXml; payload | header; property | 2; 3 | [scripts/checkWellFormedXML.groovy#L12]; Base64 unless XML [scripts/storePayloadInXProperty.groovy#L15] |
 | CustomXPreGlobal_Enabled, CustomXPreGlobal_Endpoint, PipelineJMSQueuePrefix, DLQ_EndEvent, CustomXError_Enabled | property | 4 | parameter copies [com.sap.integration.cloud.pipeline.v2.generic.step06.outbound.processing, step "Set custom extensions"] |
 | customXPipelineStep | header | 8, removed 33 | two digits after "generic.step" of camelId [scripts/readCustomXFromPD.groovy#L28] |
 | CustomXBoolean, CustomXEndpoint | property | 8 | [scripts/readCustomXFromPD.groovy#L58] |

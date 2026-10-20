@@ -104,8 +104,6 @@ Receiver cells: calling step, IDoc type, authentication. All receivers: `${prope
 
 ### Read
 
-Headers from the calling flow and the IDoc response.
-
 | Name | Kind | Step | Used for |
 |---|---|---|---|
 | SAP_ReceiverAlias, SAP_Receiver, SAP_SenderAlias, SAP_Sender, partnerID | header | 23 | PD keys [scripts/setAllDefaultAndScenarioValuesFromPDForIDoc.groovy#L11] [scripts/setAllDefaultAndScenarioValuesFromPDForIDoc.groovy#L119] |
@@ -144,7 +142,7 @@ Headers from the calling flow and the IDoc response.
 | Default_EDIDC_List_Names, Default_EDIDC_List_Values, pidParameterReadSuffixPattern | — | EDIDC defaults, PD suffix [com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.idoc, step "Set Default Properties"] | no |
 | IDoc_CleanUpRequestHeaders, IDoc_CompressMessage, IDoc_ReturnHTTPResponseCodeAsHeader, IDoc_Timeout, IDoc_AllowChunking, IDoc_KeepAlive | — | HTTP, all receivers [com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.idoc, adapter "CC_IDOC_Receiver_OnPremBasic" "OnPremise"] | no |
 | AllowedHeadersList, HTTPSessionReuse | — | [com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.idoc, property "allowedHeaderList"] [com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.idoc, property "httpSessionHandling"] | no |
-| Exception_LoggingConfiguration, IDocIndividualHeaderInBulk | — | error attachments, bulk numbers [com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.idoc, step "Add Exception to the Log"] [com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.idoc, step "Set IDocs from Bulk Response"] | no |
+| Exception_LoggingConfiguration, IDocIndividualHeaderInBulk | —, true [com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.idoc, resource "parameters.propdef"] | error attachments, bulk numbers [com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.idoc, step "Add Exception to the Log"] [com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.idoc, step "Set IDocs from Bulk Response"] | no |
 
 ## Error handling
 

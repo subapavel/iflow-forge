@@ -56,7 +56,7 @@ Receiver determination of the fully decoupled pipeline [com.sap.integration.clou
 32. ExclusiveGateway "Custom RD?": customXRDBoolean or reuseXRDBoolean to 70, else 33
 33. ProcessCallElement "Call XSLT option"
   34. ExclusiveGateway "XML?": not XML to 35
-  35. Enricher "Define dummy xml"
+  35. Enricher "Define dummy xml": body `<dummy></dummy>`
   36. Enricher "Get XSLT mapping from Partner Directory": `pd:${header.partnerID}:receiverDetermination:Binary`
   37. Mapping "XSLT Mapping"
   38. ErrorEventSubProcessTemplate "Exception Subprocess 2"
@@ -64,7 +64,7 @@ Receiver determination of the fully decoupled pipeline [com.sap.integration.clou
     40. ProcessCallElement "Call custom error handling"
     41. ProcessCallElement "Call standard retry handling"
 42. ExclusiveGateway "Any Receiver?": none to 43, else 68
-43. ExclusiveGateway "Not found type?": Default to 44, Ignore to 66, else 67
+43. ExclusiveGateway "Not found type?": ReceiverNotDetermined/Type Default to 44, Ignore to 66, else 67
 44. Enricher "Get default receiver name"
 45. Enricher "Set custom status": ReceiverNotFoundDefault, then 46
 46. ExclusiveGateway "Virtual Stage Routing?": tenantStageVirtual to 47, else 50
@@ -72,13 +72,13 @@ Receiver determination of the fully decoupled pipeline [com.sap.integration.clou
 48. Script "Map to Receiver Stage": `mapSenderStageToReceiverStage.groovy`
 49. ExclusiveGateway "Multiple Stages?": several to 63, else 50
 50. Script "Map to Business Name": `mapReceiverAliasToBusinessSystemName.groovy`
-51. ExclusiveGateway "Bypass interface determination?": interfaces to 55, else 52
+51. ExclusiveGateway "Bypass interface determination?": count(//Interface) > 0 to 55, else 52
 52. Script "Get payload": `fetchPayloadFromXProperty.groovy`
 53. Enricher "Remove header"
 54. Script "Add Custom Header": `addCustomHeaderProperties.groovy`, then [com.sap.integration.cloud.pipeline.v2.generic.step04.receiver.determination, adapter "JMS_InterfaceDetermination" "InterfaceDeterminationQueue"]
 55. Script "Get Receiver specific queue from Partner Directory": `readReceiverSpecificQueueFromPD.groovy`
 56. Splitter "Iterating splitter": //Interfaces/Interface
-57. Enricher "Get interface"
+57. Enricher "Get interface": bypassOption = skipIfDet
 58. Script "Log outbound processing endpoint": `logOutboundProcessingEndpoint.groovy`
 59. Script "Get payload": `fetchPayloadFromXProperty.groovy`
 60. Enricher "Remove header"
@@ -117,11 +117,9 @@ Receiver determination of the fully decoupled pipeline [com.sap.integration.clou
 | SAP_ReceiverAlias, SAP_ReceiverInterface, SAP_ReceiverInterfaceIndex, SAP_OutboundProcessingEndpoint, tenantStage, SAP_Receiver | header | 44, 69, 57, 48, 64, 50 | [com.sap.integration.cloud.pipeline.v2.generic.step04.receiver.determination, step "Get receiver name"] [com.sap.integration.cloud.pipeline.v2.generic.step04.receiver.determination, step "Get interface"] [scripts/mapSenderStageToReceiverStage.groovy#L251] [scripts/mapReceiverAliasToBusinessSystemName.groovy#L55] |
 | incomingQueue | property, header | 25, 17 | `${property.PipelineJMSQueuePrefix}Q02` [com.sap.integration.cloud.pipeline.v2.generic.step04.receiver.determination, step "Define DLQ"] |
 
-PD scripts set further properties (Partner directory).
+PD scripts: see Partner directory.
 
 ### Read
-
-Set outside this flow (Step02 inbound, custom flows).
 
 | Name | Kind | Step | Used for |
 |---|---|---|---|
