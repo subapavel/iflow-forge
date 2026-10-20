@@ -97,3 +97,10 @@ Durable facts only (build quirks, verified APIs, recurring findings). Never task
 - CHANGELOG cite form (D-019 amended): `[<package-folder>/CHANGELOG.txt#L<n>]` (generic-inbound, generic-outbound, generic-pipelines, templates). Read them before any version claim or "open" question: B3 r1 lost 3 bullets the change log answered.
 - "Who sets X" questions: check the step-1 Content Modifier of the iFlow first (Step02 sync step 1 "Set custom extensions" sets SapQualityOfService = BestEffort), and grep the whole label before writing "no setter" (the mirror script may set it).
 - A negative ("no template names it") needs "grep of every <scope> .iflw" stated or a resource cite.
+
+## Helpers, logging, errors (learned on KB-06 B4, 2026-06-trial)
+- md5 every copy, never trust the inventory: throwException has 3 variants (collection L8 default location differs from the six generic 35-line copies; sync 12 lines).
+- Step08 exception handling: Add Custom Headers -> "Audit Log Header?" (no: Recover Audit Log from property auditLogProperty) -> "Add Exception to the Log" (messageText, location, mplAttachmentName ExceptionSubProcess_, mplLoggingConfiguration = {{Exception_LoggingConfiguration}}, no value) -> "Save in Audit Log" (addAuditLog) -> "Log Message per Config".
+- Only Step08 Content Modifiers set `location`; exceptionType is set nowhere; attachAdditionallnformation runs twice (test mode, DLQ) except Step02 sync (once, no incomingQueue).
+- Shell: .iflw paths contain spaces and " - ": an unquoted `$(find ...)` gives grep a "-" arg and it hangs on stdin; use `find -print0 | xargs -0` or `-exec`. `pkill -f <pattern>` kills the calling shell too.
+- Expander: shorthand inside brackets plus a macro that adds brackets yields `[[...]]`; grep `\[\[` after every expansion. NamesTest rejects a backticked bare `.groovy`: write "every Groovy script".
