@@ -11,18 +11,32 @@ import java.util.Optional;
 import org.junit.jupiter.api.Test;
 
 /**
- * C6 on the real knowledge base: no value of the local forbidden-values file ({@code -Dkb.forbidden=<file>}) occurs
- * anywhere under the pipeline folder; skipped when the property is not set or the file does not exist.
+ * C6 on the real repository: no value of the local forbidden-values file ({@code -Dkb.forbidden=<file>}) occurs
+ * anywhere under the pipeline folder, nor under {@code skills/}, {@code patterns/} and {@code requests/}; skipped
+ * when the property is not set or the file does not exist.
  */
 class ForbiddenValuesTest {
 
     @Test
     void noForbiddenValueInTheKnowledgeBase() throws IOException {
+        Path forbiddenFile = forbiddenFileOrSkip();
+        List<String> messages = Checks.forbidden(KnowledgeBase.pipeline(), forbiddenFile);
+        assertThat(messages).as(String.join("\n", messages)).isEmpty();
+    }
+
+    @Test
+    void noForbiddenValueInSkillsPatternsOrRequests() throws IOException {
+        Path forbiddenFile = forbiddenFileOrSkip();
+        List<String> messages = Checks.forbiddenIn(forbiddenFile, KnowledgeBase.skills(), KnowledgeBase.patterns(),
+                KnowledgeBase.requests());
+        assertThat(messages).as(String.join("\n", messages)).isEmpty();
+    }
+
+    private static Path forbiddenFileOrSkip() {
         KnowledgeBase.skipIfRequested("forbidden");
         Optional<Path> forbiddenFile = KnowledgeBase.forbiddenFile();
         assumeTrue(forbiddenFile.isPresent(), "kb.forbidden not set");
         assumeTrue(Files.isRegularFile(forbiddenFile.get()), "kb.forbidden names no file");
-        List<String> messages = Checks.forbidden(KnowledgeBase.pipeline(), forbiddenFile.get());
-        assertThat(messages).as(String.join("\n", messages)).isEmpty();
+        return forbiddenFile.get();
     }
 }

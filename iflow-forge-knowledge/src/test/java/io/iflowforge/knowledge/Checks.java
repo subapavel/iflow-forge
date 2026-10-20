@@ -21,8 +21,10 @@ import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 /**
- * Consistency checks of the pipeline knowledge base ({@code knowledge/pipeline}). Every check returns its failure
- * messages, empty when it passes; page names in messages are relative to the pipeline folder with {@code /}.
+ * Consistency checks of the pipeline knowledge base ({@code knowledge/pipeline}), of the pages under
+ * {@code skills/}, {@code patterns/}, {@code requests/} and of the skill pointer files. Every check returns its failure
+ * messages, empty when it passes; page names in messages are relative to the pipeline folder with {@code /}, or to the
+ * repository root for the other roots.
  */
 final class Checks {
 
@@ -40,6 +42,15 @@ final class Checks {
     static final String STUB_MARKER = "_Stub,";
     static final String ID_PREFIX = "com.sap.integration.cloud.pipeline.";
 
+    /** The tools whose backticked invocation (a backtick, the name, an opening paren) is agent-specific syntax. */
+    static final List<String> AGENT_TOOLS = List.of("Read", "Edit", "Write", "Bash", "Grep", "Glob", "Agent", "Task",
+            "WebFetch", "WebSearch");
+    private static final String FENCE = "---";
+    /** A whitespace-separated token starting with {@code @} and a path character (an {@code @file} include). */
+    private static final Pattern AT_INCLUDE = Pattern.compile("(?:^|\\s)@[\\w./~-]");
+    /** A line starting with {@code /} and a letter (a slash command). */
+    private static final Pattern SLASH_COMMAND = Pattern.compile("^/[A-Za-z]");
+    private static final Pattern TOOL_INVOCATION = Pattern.compile("`(?:" + String.join("|", AGENT_TOOLS) + ")\\(");
     private static final Pattern PLACEHOLDER = Pattern.compile("\\{\\{tenant\\.[a-z0-9_.]+\\}\\}");
     private static final Pattern BACKTICKED = Pattern.compile("`([^`\\n]+)`");
     private static final Pattern WHITESPACE = Pattern.compile("\\s+");
@@ -231,12 +242,38 @@ final class Checks {
             messages.add("loaded set: " + loaded + " words (limit " + LOADED_LIMIT + ")");
         }
         for (Path page : KnowledgeBase.markdown(kb)) {
-            int n = words(read(page));
-            if (n > PAGE_LIMIT) {
-                messages.add(KnowledgeBase.relative(kb, page) + ": " + n + " words (limit " + PAGE_LIMIT + ")");
+            String over = overBudget(kb, page);
+            if (over != null) {
+                messages.add(over);
             }
         }
         return messages;
+    }
+
+    /**
+     * Every {@code *.md} under each of {@code roots} has at most {@link #PAGE_LIMIT} words (stub pages count 0); no
+     * loaded set applies. A missing root holds no pages. Messages {@code <page>: N words (limit 1500)} with the page
+     * relative to the root's parent ({@code skills/demo/SKILL.md}), by root, then by page.
+     */
+    static List<String> budgetPages(Path... roots) throws IOException {
+        List<String> messages = new ArrayList<>();
+        for (Path root : roots) {
+            Path base = absolute(root);
+            for (Path page : KnowledgeBase.markdown(base)) {
+                String over = overBudget(parent(base), page);
+                if (over != null) {
+                    messages.add(over);
+                }
+            }
+        }
+        return messages;
+    }
+
+    /** {@code <page relative to base>: N words (limit 1500)} when the page is over {@link #PAGE_LIMIT}, else null. */
+    private static String overBudget(Path base, Path page) throws IOException {
+        int n = words(read(page));
+        return n > PAGE_LIMIT ? KnowledgeBase.relative(base, page) + ": " + n + " words (limit " + PAGE_LIMIT + ")"
+                : null;
     }
 
     private static int words(String text) {
@@ -256,6 +293,25 @@ final class Checks {
      * values; the message never contains the value.
      */
     static List<String> forbidden(Path kb, Path forbiddenFile) throws IOException {
+        return forbiddenHits(forbiddenValues(forbiddenFile), kb, kb);
+    }
+
+    /**
+     * {@link #forbidden} over every regular file under each of {@code roots}, with the file named relative to the
+     * root's parent ({@code requests/REQ-1.md:4}); a missing root holds no files.
+     */
+    static List<String> forbiddenIn(Path forbiddenFile, Path... roots) throws IOException {
+        List<String> values = forbiddenValues(forbiddenFile);
+        List<String> messages = new ArrayList<>();
+        for (Path root : roots) {
+            Path base = absolute(root);
+            messages.addAll(forbiddenHits(values, base, parent(base)));
+        }
+        return messages;
+    }
+
+    /** The stripped non-blank lines of {@code forbiddenFile} of at least {@code MIN_FORBIDDEN_LENGTH} characters. */
+    private static List<String> forbiddenValues(Path forbiddenFile) throws IOException {
         List<String> values = new ArrayList<>();
         for (String line : Files.readAllLines(forbiddenFile, StandardCharsets.UTF_8)) {
             String value = line.strip();
@@ -263,15 +319,20 @@ final class Checks {
                 values.add(value);
             }
         }
+        return values;
+    }
+
+    /** The hits of {@code values} in the files under {@code dir}, each file named relative to {@code base}. */
+    private static List<String> forbiddenHits(List<String> values, Path dir, Path base) throws IOException {
         List<String> lowered = values.stream().map(v -> v.toLowerCase(Locale.ROOT)).toList();
         List<String> messages = new ArrayList<>();
-        for (Path file : KnowledgeBase.files(kb)) {
+        for (Path file : KnowledgeBase.files(dir)) {
             List<String> lines = read(file).toLowerCase(Locale.ROOT).lines().toList();
             for (int i = 0; i < lines.size(); i++) {
                 for (int v = 0; v < lowered.size(); v++) {
                     if (lines.get(i).contains(lowered.get(v))) {
                         messages.add("forbidden value #" + (v + 1) + " (" + values.get(v).length() + " chars) in "
-                                + KnowledgeBase.relative(kb, file) + ":" + (i + 1));
+                                + KnowledgeBase.relative(base, file) + ":" + (i + 1));
                     }
                 }
             }
@@ -381,7 +442,121 @@ final class Checks {
                 && !WHITESPACE.matcher(name).find();
     }
 
+    // --- C8 skill mirror ----------------------------------------------------------------------------------------
+
+    /**
+     * Every canonical skill file (key, repo-relative with {@code /}) exists and its body (after the frontmatter, the
+     * lines from the first {@code ---} line to the next) carries no agent-specific syntax: an {@code @file} include,
+     * a line starting with a slash command, a backticked invocation of an {@link #AGENT_TOOLS} tool. Every pointer
+     * file (value) exists, repeats the canonical frontmatter line for line and names the canonical path after it.
+     * Messages {@code <file>:<line> — <reason>} (line 1-based in the whole file; frontmatter: the first differing
+     * line) or {@code <file> — <reason>}; they never contain the offending text.
+     */
+    static List<String> skillMirror(Path repoRoot, Map<String, List<String>> canonicalToPointers) throws IOException {
+        List<String> messages = new ArrayList<>();
+        for (Map.Entry<String, List<String>> skill : canonicalToPointers.entrySet()) {
+            String canonical = skill.getKey();
+            Path canonicalFile = repoRoot.resolve(canonical);
+            List<String> frontmatter = null;
+            if (Files.isRegularFile(canonicalFile)) {
+                List<String> lines = read(canonicalFile).lines().toList();
+                int fence = frontmatterEnd(lines);
+                if (fence < 0) {
+                    messages.add(canonical + ":1 — no frontmatter block");
+                } else {
+                    frontmatter = lines.subList(0, fence + 1);
+                }
+                for (int i = fence + 1; i < lines.size(); i++) {
+                    String kind = agentSyntax(lines.get(i));
+                    if (kind != null) {
+                        messages.add(canonical + ":" + (i + 1) + " — agent-specific syntax (" + kind + ")");
+                    }
+                }
+            } else {
+                messages.add(canonical + " — canonical skill file missing");
+            }
+            for (String pointer : skill.getValue()) {
+                messages.addAll(pointerMessages(repoRoot, canonical, frontmatter, pointer));
+            }
+        }
+        return messages;
+    }
+
+    /** The checks of one pointer; {@code frontmatter} is null when the canonical has none (reported there). */
+    private static List<String> pointerMessages(Path repoRoot, String canonical, List<String> frontmatter,
+            String pointer) throws IOException {
+        Path file = repoRoot.resolve(pointer);
+        if (!Files.isRegularFile(file)) {
+            Path folder = file.getParent();
+            return List.of(pointer + " — " + (folder != null && Files.isDirectory(folder)
+                    ? "pointer folder has no " + file.getFileName()
+                    : "pointer file missing"));
+        }
+        List<String> messages = new ArrayList<>();
+        List<String> lines = read(file).lines().toList();
+        int fence = frontmatterEnd(lines);
+        if (fence < 0) {
+            messages.add(pointer + ":1 — no frontmatter block");
+        } else if (frontmatter != null) {
+            int differs = firstDifference(frontmatter, lines.subList(0, fence + 1));
+            if (differs >= 0) {
+                messages.add(pointer + ":" + (differs + 1) + " — frontmatter differs from " + canonical);
+            }
+        }
+        if (!String.join("\n", lines.subList(fence + 1, lines.size())).contains(canonical)) {
+            messages.add(pointer + " — body does not name " + canonical);
+        }
+        return messages;
+    }
+
+    /** The index of the line closing the frontmatter (the second {@code ---} line, the first being line 1), or -1. */
+    private static int frontmatterEnd(List<String> lines) {
+        if (lines.isEmpty() || !lines.getFirst().equals(FENCE)) {
+            return -1;
+        }
+        for (int i = 1; i < lines.size(); i++) {
+            if (lines.get(i).equals(FENCE)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /** The first index where the two lists differ (a missing line counts), or -1 when they are equal. */
+    private static int firstDifference(List<String> expected, List<String> actual) {
+        for (int i = 0; i < Math.max(expected.size(), actual.size()); i++) {
+            if (i >= expected.size() || i >= actual.size() || !expected.get(i).equals(actual.get(i))) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /** The kind of agent-specific syntax on {@code line}, or null. */
+    private static String agentSyntax(String line) {
+        if (AT_INCLUDE.matcher(line).find()) {
+            return "@-file include";
+        }
+        if (SLASH_COMMAND.matcher(line).find()) {
+            return "slash command";
+        }
+        if (TOOL_INVOCATION.matcher(line).find()) {
+            return "backticked tool invocation";
+        }
+        return null;
+    }
+
     // --- shared -------------------------------------------------------------------------------------------------
+
+    /** {@code path} absolute and normalized. */
+    private static Path absolute(Path path) {
+        return path.toAbsolutePath().normalize();
+    }
+
+    /** The parent of an absolute {@code path}; the path itself for a file-system root. */
+    private static Path parent(Path path) {
+        return path.getParent() == null ? path : path.getParent();
+    }
 
     /** The package folders of a label folder (directories only), sorted; none when it is not a folder. */
     private static List<Path> packages(Path sources) throws IOException {

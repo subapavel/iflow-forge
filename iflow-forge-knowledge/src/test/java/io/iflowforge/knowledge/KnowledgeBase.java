@@ -33,6 +33,21 @@ final class KnowledgeBase {
         return root().resolve("sources").resolve(property("kb.sources").orElse(DEFAULT_SOURCES));
     }
 
+    /** {@code <repo>/skills}: the canonical agent-neutral skills; a missing folder holds no files. */
+    static Path skills() {
+        return repoRoot().resolve("skills");
+    }
+
+    /** {@code <repo>/patterns}: the scenario-pattern pages; a missing folder holds no files. */
+    static Path patterns() {
+        return repoRoot().resolve("patterns");
+    }
+
+    /** {@code <repo>/requests}: the filed requests; a missing folder holds no files. */
+    static Path requests() {
+        return repoRoot().resolve("requests");
+    }
+
     /** Aborts the calling test (JUnit assumption) when {@code kb.skip} names {@code check}. */
     static void skipIfRequested(String check) {
         List<String> skipped = property("kb.skip")
@@ -47,10 +62,11 @@ final class KnowledgeBase {
      * folder); an absolute value is used as given.
      */
     static Optional<Path> forbiddenFile() {
-        return property("kb.forbidden").map(Path::of).map(p -> p.isAbsolute() ? p : repositoryRoot().resolve(p));
+        return property("kb.forbidden").map(Path::of).map(p -> p.isAbsolute() ? p : repoRoot().resolve(p));
     }
 
-    private static Path repositoryRoot() {
+    /** The repository root: the parent of {@code kb.root}, absolute and normalized. */
+    static Path repoRoot() {
         Path parent = root().toAbsolutePath().normalize().getParent();
         return parent == null ? root().toAbsolutePath() : parent;
     }

@@ -84,6 +84,10 @@ Facts only; the next exact action and the state live in `agent/HANDOFF.md`.
   repository root. The owner's file stays under `testdata/` (gitignored). Messages never contain the value.
 - Synthetic sources for checks tests: `io.poxray.cpi.SyntheticArtifact` (public bridge to the package-private
   `IFlowFixture` of the po-xray-core test-jar), one Script step plus the given resources.
+- MIG-01 roots: `KnowledgeBase.repoRoot()` (parent of `kb.root`), `skills()`, `patterns()`, `requests()`; a missing folder is empty.
+  `BudgetTest` runs `Checks.budgetPages` (every `*.md`, PAGE_LIMIT only, `_Stub,` counts 0), `ForbiddenValuesTest` `Checks.forbiddenIn`.
+- `SkillMirrorTest` (`Checks.skillMirror`, skip `mirror`): pointer frontmatter = canonical line for line, body names the canonical
+  path; canonical body free of `@file`, `/cmd` line starts, backticked tool calls. Pointer list: `repositorySkillsMirror`.
 - Reader follow-up (KB-04 B2): `IFlow` does not expose the iFlow-level `ifl:property` entries of the collaboration/process (e.g. `allowedHeaderList`); pages cite them by grep of the .iflw (D-019). Expose them in a later reader task.
 - Follow-ups: coverage treats a `generic-*` package by folder prefix and `templates` by exact name; a new package kind
   needs a rule. Headings also reports `unexpected "X" at position N` for extra H2s (beyond the spec, kept).
@@ -99,3 +103,9 @@ Facts only; the next exact action and the state live in `agent/HANDOFF.md`.
   `message.properties.y`) and router conditions (`${header.X}`) are not extracted; `\bheaders.get` misses `msgheaders.get`.
   Test 6 (`contractNamesCoversEveryCallFormAndFirstArtifact`) was written after the code; the mutation logs
   `target/kb-07-mut1..4.log` stand in for its red run.
+
+## Skill portability (MIG-00/MIG-01, 2026-10-20)
+
+- Codex discovers repository skills under `.agents/skills/` (constants `AGENTS_DIR_NAME = ".agents"`, `SKILLS_DIR_NAME = "skills"`, repo-scoped roots between project root and cwd) [external: github.com/openai/codex codex-rs/ext/skills/src/host_roots.rs]; user scope `~/.agents/skills/`; it reads only `name` and `description` until the skill triggers.
+- Gemini CLI reads workspace skills from `.gemini/skills/` or the `.agents/skills/` alias; agent skills are enabled by default (`skills.enabled` default true) [external: github.com/google-gemini/gemini-cli docs/cli/using-agent-skills.md "Discovery tiers"; packages/cli/src/config/settingsSchema.ts]. One `.agents/skills/` pointer therefore serves Codex and Gemini; spec §6.1 changelog 2026-10-20.
+- The cloud environment's network policy blocks developers.openai.com (curl 403 via the proxy, WebFetch ENOTFOUND); Context7 (`/openai/codex`, `/google-gemini/gemini-cli`) is the reachable source for these facts.

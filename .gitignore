@@ -1,6 +1,9 @@
 # Confidential client test data - never commit
 testdata/
 
+# Customer memory of the migration skill (tenant profiles, scenario library, migration code map) — never commit
+local/
+
 # Maven
 target/
 pom.xml.tag

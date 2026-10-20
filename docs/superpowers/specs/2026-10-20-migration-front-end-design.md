@@ -4,7 +4,7 @@ Design, 2026-10-20. Status: **draft — review at hand-over** (MIG-00; owner go-
 `docs/inputs/2026-10-20-owner-migration-flow.md` statement 13). Every decision in §12 is marked for
 the owner's review; nothing here is built yet.
 
-**Changelog:** (none)
+**Changelog:** 2026-10-20 · MIG-01 preparation · §6.1, §13: Gemini CLI reads `.agents/skills/` as an alias of `.gemini/skills/` and agent skills are enabled by default, so one `.agents/skills/` pointer serves Codex and Gemini; the `.gemini/skills/` pointer and the experimental-flag question are dropped [external: github.com/openai/codex codex-rs/ext/skills/src/host_roots.rs] [external: github.com/google-gemini/gemini-cli docs/cli/using-agent-skills.md].
 
 ## 1. Where this sits
 
@@ -115,18 +115,19 @@ skills/sap-po-migration/
     question.md                 one question record
     request.md                  one REQ-<n> record
 .claude/skills/sap-po-migration/SKILL.md     pointer (frontmatter + "read skills/sap-po-migration/SKILL.md")
-.agents/skills/sap-po-migration/SKILL.md     same pointer, for Codex
-.gemini/skills/sap-po-migration/SKILL.md     same pointer, for Gemini CLI (experimental skills flag)
+.agents/skills/sap-po-migration/SKILL.md     same pointer, for Codex and Gemini CLI
 ```
 
-The two non-Claude pointer locations are tooling facts from the owner's and the architect's reading of
-the vendors' documentation on 2026-10-20; MIG-01 confirms them through Context7 or the vendors' pages
-before creating the files.
+Codex discovers repository skills under `.agents/skills/` [external: github.com/openai/codex
+codex-rs/ext/skills/src/host_roots.rs, constants AGENTS_DIR_NAME and SKILLS_DIR_NAME]; Gemini CLI reads
+the same directory as an alias of `.gemini/skills/`, with agent skills enabled by default [external:
+github.com/google-gemini/gemini-cli docs/cli/using-agent-skills.md, "Discovery tiers"]. Both read only
+the frontmatter `name` and `description` until the skill triggers, as Claude Code does.
 
 The canonical skill lives at the repository root under `skills/` because it is a product, not
 knowledge about the pipeline; `knowledge/pipeline/` stays the fact base of `sap-is-pipeline`. The
-three pointer files follow the existing `.claude/skills/sap-is-pipeline/SKILL.md` (a frontmatter and
-one sentence). A Java test (`SkillMirrorTest`, in `iflow-forge-knowledge`) asserts that the three
+two pointer files follow the existing `.claude/skills/sap-is-pipeline/SKILL.md` (a frontmatter and
+one sentence). A Java test (`SkillMirrorTest`, in `iflow-forge-knowledge`) asserts that the two
 pointers carry the canonical frontmatter verbatim and that the skill body uses no agent-specific
 syntax (no `@file` includes, no tool names, no slash commands); the same module's budget and
 forbidden-values checks run over `skills/`, `patterns/` and `requests/`.
@@ -355,8 +356,8 @@ it brings. The skill never assumes the newest version; it asks.
 
 1. Customer memory location: is a gitignored `local/<code>/` beside `testdata/` acceptable, or should
    the profile and scenario library live under `testdata/` too (one gitignored tree)?
-2. Gemini CLI loads skills behind an experimental flag; is it enough that the pointer file exists, with
-   Claude Code the tested path (statement 8)?
+2. Codex and Gemini CLI are served by the one `.agents/skills/` pointer; is Claude Code alone the tested
+   path (statement 8), or should the owner try one of the other two once on the pilot?
 3. The order of the four BPM pilots, and whether the first one has human tasks (P-5 would stop it).
 4. The SAP-sources licence (SRC-00) before any sale — unchanged, owner-only.
 5. Whether `patterns/` pages may name SAP product features by their documented names (external cites

@@ -1,9 +1,9 @@
 # Handoff
 
-state: MIG-00 done (spec draft — review at hand-over; owner questions §13); KB-12b done 06b08eb (owner judgement pending, GATE check 5); next MIG-01
-last commit: docs: design spec for the migration front end, skill sap-po-migration (MIG-00); before it 06b08eb (KB-12b), c7b1e79, 287527b
-branch: claude/eager-brown-uw61ft (D-017; owner fast-forwards main); CI green 06b08eb (39501020052), 287527b (39487719616), f609dc7 (39487981477)
-next exact action: MIG-01 — acceptance spec for SkillMirrorTest + skill skeleton per spec §6.1/§11 (test-author red first); KB-11e, KB-11d stay ready
+state: MIG-01 done (skill skeleton, pointers, checks); MIG-00 done 8401615; KB-12b done 06b08eb (owner judgement pending, GATE check 5); next MIG-02
+last commit: feat: skill skeleton sap-po-migration, pointer files and checks over skills/, patterns/, requests/ (MIG-01); before it 8401615, 06b08eb
+branch: claude/eager-brown-uw61ft (D-017; owner fast-forwards main); CI green 8401615 (39503180896), 06b08eb (39501020052), 287527b (39487719616)
+next exact action: MIG-02 — acceptance spec for `po-xray attributes` and `po-xray bpm-inventory` (spec §6.3, P-7; fixtures: skills/…/fixtures/)
 MIG-00 spec: docs/superpowers/specs/2026-10-20-migration-front-end-design.md — §6 layout, §7 phases, §8 learning, §9 field loop, §12 P-1…P-12, §13
 benchmark: 20 q first run 10/9/1, reruns 4/2/1 then Q10 correct; open-questions/kb-12b.md (missing Binary receiverDetermination); the owner judges the page
 reader: io.poxray.cpi per plan Task 2 + F-1; order D-016; ScriptCollection 0 steps; propdef no defaults (D-015); ifl:property not exposed (NOTES)
@@ -17,4 +17,4 @@ customer data: spec/plan/backlog/PROGRESS neutralised 2026-10-20 (`<tenant>` pla
 build: `mvn -B -ntp -q verify > target/<task>-verify.log 2>&1`; JDK 25, Maven 3.9; counts in <module>/target/surefire-reports; CI .github/workflows/verify.yml
 notes: agent/NOTES.md (sources, iFlow format, inputs, build and reader follow-ups, knowledge module); PROGRESS headings take the hash from the next entry
 turn economy: WORKFLOW §10 (D-024) — foreground waits; target/.batch-in-review during review; gated hook via SessionStart (a6bfbef); self-check dc3644e
-reviewer memory: .claude/agent-memory/kb-reviewer/MEMORY.md items 1–87 (architect appends; the reviewer is read-only); dumps reusable in target/kb-11b/
+reviewer memory: .claude/agent-memory/kb-reviewer/MEMORY.md items 1–88 (architect appends; the reviewer is read-only); dumps reusable in target/kb-11b/

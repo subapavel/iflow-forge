@@ -13,6 +13,7 @@ import java.nio.file.Path;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -414,6 +415,91 @@ class ChecksTest {
         assertThat(Checks.forbidden(kb(dir.resolve("clean")), forbidden)).isEmpty();
     }
 
+    // --- C5 / C6 over the new roots skills/, patterns/, requests/ (MIG-01) -------------------------------------
+
+    @Test
+    void budgetPagesReportsAnOverlongPageUnderSkillsRelativeToTheRepositoryRoot() throws IOException {
+        Path repo = dir.resolve("repo");
+        write(repo.resolve("skills/demo/SKILL.md"), words(1501));
+        write(repo.resolve("skills/demo/references/intake.md"), words(1500));
+        write(repo.resolve("patterns/README.md"), words(10));
+        write(repo.resolve("requests/README.md"), words(10));
+
+        assertThat(Checks.budgetPages(repo.resolve("skills"), repo.resolve("patterns"), repo.resolve("requests")))
+                .containsExactly("skills/demo/SKILL.md: 1501 words (limit 1500)");
+    }
+
+    @Test
+    void budgetPagesCountsStubsAsZeroAndChecksOnlyMarkdown() throws IOException {
+        Path repo = dir.resolve("repo");
+        write(repo.resolve("skills/demo/references/plan.md"), "_Stub, written by MIG-05 (spec §7)._\n" + words(1600));
+        write(repo.resolve("patterns/data.txt"), words(1600));
+        write(repo.resolve("requests/REQ-1.md"), words(1600));
+
+        assertThat(Checks.budgetPages(repo.resolve("skills"), repo.resolve("patterns"), repo.resolve("requests")))
+                .containsExactly("requests/REQ-1.md: 1600 words (limit 1500)");
+    }
+
+    @Test
+    void budgetPagesAppliesNoLoadedSetToTheNewRoots() throws IOException {
+        Path skills = dir.resolve("repo/skills");
+        for (String name : List.of("SKILL.md", "overview.md", "contracts.md", "scenario-contribution.md")) {
+            write(skills.resolve(name), words(1400));
+        }
+
+        assertThat(Checks.budgetPages(skills)).isEmpty();
+    }
+
+    @Test
+    void budgetPagesTreatsAMissingRootAsEmpty() throws IOException {
+        Path repo = dir.resolve("repo");
+        write(repo.resolve("skills/demo/SKILL.md"), words(1501));
+
+        assertThat(Checks.budgetPages(repo.resolve("patterns"), repo.resolve("requests"))).isEmpty();
+        assertThat(Checks.budgetPages(repo.resolve("patterns"), repo.resolve("skills")))
+                .containsExactly("skills/demo/SKILL.md: 1501 words (limit 1500)");
+    }
+
+    @Test
+    void forbiddenInReportsAValueInARequestAsFileAndLineWithoutTheValue() throws IOException {
+        Path forbidden = write(dir.resolve("forbidden-values.txt"), "SECRETVALUE\nabc\n");
+        Path repo = dir.resolve("repo");
+        write(repo.resolve("requests/REQ-1.md"), "# REQ-1\n\nkind: kb\nThe queue is secretvalue today.\n");
+        write(repo.resolve("skills/demo/SKILL.md"), "# Demo\n\nabc abc\n");
+        write(repo.resolve("patterns/README.md"), "# Patterns\n");
+
+        assertThat(Checks.forbiddenIn(forbidden, repo.resolve("skills"), repo.resolve("patterns"),
+                repo.resolve("requests")))
+                .singleElement(STRING)
+                .contains("requests/REQ-1.md:4")
+                .contains("(11 chars)")
+                .doesNotContainIgnoringCase("secretvalue");
+    }
+
+    @Test
+    void forbiddenInScansEveryRegularFileUnderEveryRoot() throws IOException {
+        Path forbidden = write(dir.resolve("forbidden-values.txt"), "SECRETVALUE\n");
+        Path repo = dir.resolve("repo");
+        write(repo.resolve("skills/demo/templates/profile.md"), "a\nb\nxxSecretValuexx\n");
+        write(repo.resolve("patterns/raw/sample.xml"), "<a>\n<b>SECRETVALUE</b>\n</a>\n");
+
+        assertThat(Checks.forbiddenIn(forbidden, repo.resolve("skills"), repo.resolve("patterns"),
+                repo.resolve("requests")))
+                .hasSize(2)
+                .anyMatch(m -> m.contains("skills/demo/templates/profile.md:3"))
+                .anyMatch(m -> m.contains("patterns/raw/sample.xml:2"))
+                .noneMatch(m -> m.toLowerCase(Locale.ROOT).contains("secretvalue"));
+    }
+
+    @Test
+    void forbiddenInTreatsMissingRootsAsEmpty() throws IOException {
+        Path forbidden = write(dir.resolve("forbidden-values.txt"), "SECRETVALUE\n");
+        Path repo = dir.resolve("repo");
+
+        assertThat(Checks.forbiddenIn(forbidden, repo.resolve("skills"), repo.resolve("patterns"),
+                repo.resolve("requests"))).isEmpty();
+    }
+
     // --- KnowledgeBase --------------------------------------------------------------------------------------------
 
     @Test
@@ -472,6 +558,21 @@ class ChecksTest {
         } finally {
             restore("kb.root", previousRoot);
             restore("kb.forbidden", previousForbidden);
+        }
+    }
+
+    @Test
+    void newRootsAreSiblingsOfTheKnowledgeRootUnderTheRepositoryRoot() {
+        String previousRoot = System.getProperty("kb.root");
+        try {
+            System.setProperty("kb.root", dir.resolve("knowledge").toString());
+            Path repo = dir.toAbsolutePath().normalize();
+            assertThat(KnowledgeBase.repoRoot().toAbsolutePath().normalize()).isEqualTo(repo);
+            assertThat(KnowledgeBase.skills().toAbsolutePath().normalize()).isEqualTo(repo.resolve("skills"));
+            assertThat(KnowledgeBase.patterns().toAbsolutePath().normalize()).isEqualTo(repo.resolve("patterns"));
+            assertThat(KnowledgeBase.requests().toAbsolutePath().normalize()).isEqualTo(repo.resolve("requests"));
+        } finally {
+            restore("kb.root", previousRoot);
         }
     }
 
