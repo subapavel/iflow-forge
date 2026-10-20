@@ -39,3 +39,7 @@ exit 0 (target/kb-08-verify-final-r2.log). The session continues; later runs are
 Run 39367224545 (afd0a64, 04:00:06–09Z) and run 39374755769 (c62dba8, 05:24:49–52Z): same picture, failure in 3 s,
 no steps. Every push since ae72101 fails this way; nothing in the repository changed the workflow. Not re-run.
 Local verify for c62dba8: exit 0 (target/kb-10-b1-verify.log).
+Run 39383547567 (9aae29f, 06:58:31–34Z): same picture, failure in 3 s with no steps; the sixth occurrence since ae72101.
+Not re-run (the one allowed re-run is spent); local verify for 9aae29f: exit 0 (target/kb-10-b2-verify.log).
+Re-run requested by the owner (attempt 2 of run 39383547567, 07:14:33–07:15:22Z): a runner picked it up and the run SUCCEEDED. The runner
+problem appears resolved on the owner's side; the next push decides whether ISSUE-2 can be closed.

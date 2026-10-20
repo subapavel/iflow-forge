@@ -19,6 +19,7 @@ Script step "Remove leading zeros" in the main process of Step01 IDoc, reached f
 - Header absent: nothing is set [com.sap.integration.cloud.pipeline.v2.script.collection, scripts/removeLeadingZerosFromApplicationID.groovy#L7].
 - `^0+` matches every leading zero, so a value of zeros only becomes "" [com.sap.integration.cloud.pipeline.v2.script.collection, scripts/removeLeadingZerosFromApplicationID.groovy#L8].
 - The collection copy is referenced by no template (grep of every template `.iflw`); Step01 IDoc runs its own copy (Used by).
+- Leading zeros are removed so that monitoring can be searched by the IDoc number without zeros [rationale, from analysis 2026].
 
 ## Used by
 

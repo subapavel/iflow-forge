@@ -23,6 +23,7 @@ Script step "Store payload" right after "Check well formed XML" at the start of 
 - The matching reader `fetchPayloadFromXProperty.groovy` decodes by the header it finds at its own run [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/fetchPayloadFromXProperty.groovy#L12] [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/fetchPayloadFromXProperty.groovy#L15]; in the shipping iFlows the only later "Check well formed XML" is Step02 async step 41, which runs before that iFlow's store step 42 [com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async, step 41 "Check well formed XML"] [com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async, step 42 "Store converted payload"].
 - Step02 sync does not ship the script; its first Content Modifier sets property payload from `${body}` [com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync, step 1 "Set custom extensions"].
 - SAP's change logs record the Base64 encoding of non-XML payloads in an exchange property [generic-pipelines/CHANGELOG.txt#L24] [generic-pipelines/CHANGELOG.txt#L19] [generic-outbound/CHANGELOG.txt#L14].
+- Non-XML bodies are Base64-encoded to protect non-XML data in the property [rationale, from analysis 2026].
 
 ## Used by
 

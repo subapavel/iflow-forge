@@ -46,26 +46,26 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | R-040 | tenant-export-review-2026-09.md | fact | fact→naming.md | SAP default queue prefix from propdef | |
 | R-041 | tenant-export-review-2026-09.md | fact | fact→message-path.md | bypass and receiver-specific queues | |
 | R-042 | tenant-export-review-2026-09.md | fact | fact→overview.md | scenario flows are templates | |
-| R-043 | tenant-export-review-2026-09.md | fact | fact→scripts/determinePartnerID.md | partner ID lookup order | |
-| R-044 | tenant-export-review-2026-09.md | fact | fact→scripts/determinePartnerID.md | tilde fallback switch | |
+| R-043 | tenant-export-review-2026-09.md | fact | fact→scripts/determinePartnerID.md | partner ID lookup order | already on page |
+| R-044 | tenant-export-review-2026-09.md | fact | fact→scripts/determinePartnerID.md | tilde fallback switch | already on page |
 | R-045 | tenant-export-review-2026-09.md | fact | tenant→profile | tenant-specific value | |
-| R-046 | tenant-export-review-2026-09.md | fact | fact→scripts/determinePartnerID.md | error when no PD configuration found | |
+| R-046 | tenant-export-review-2026-09.md | fact | fact→scripts/determinePartnerID.md | error when no PD configuration found | already on page |
 | R-047 | tenant-export-review-2026-09.md | fact | fact→partner-directory.md | bypass PD keys | |
-| R-048 | tenant-export-review-2026-09.md | fact | fact→scripts/readBypassOptionFromPD.md | skipRcvDet derivation | |
+| R-048 | tenant-export-review-2026-09.md | fact | fact→scripts/readBypassOptionFromPD.md | skipRcvDet derivation | already on page |
 | R-049 | tenant-export-review-2026-09.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | integrated variant rejects skipRcvDet | |
 | R-050 | tenant-export-review-2026-09.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | CustomXRDEndpoint support | |
 | R-051 | tenant-export-review-2026-09.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | ReuseXRDEndpoint rejected | |
 | R-052 | tenant-export-review-2026-09.md | pitfall | pitfall | KIND pitfall | |
 | R-053 | tenant-export-review-2026-09.md | fact | fact→partner-directory.md | receiverDetermination Binary key | |
 | R-054 | tenant-export-review-2026-09.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | routing XSLT not in the package | |
-| R-055 | tenant-export-review-2026-09.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | stage mapping | |
+| R-055 | tenant-export-review-2026-09.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | stage mapping | already on page |
 | R-056 | tenant-export-review-2026-09.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step04.receiver.determination.md | Multiple Stages branch in async variants | |
 | R-057 | tenant-export-review-2026-09.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | sync rejects multiple receivers/interfaces/stages | |
 | R-058 | tenant-export-review-2026-09.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step06.outbound.processing.md | Step06 role | |
 | R-059 | tenant-export-review-2026-09.md | fact | fact→overview.md | Step07 role | |
 | R-060 | tenant-export-review-2026-09.md | fact | fact→overview.md | Step08 role | |
 | R-061 | tenant-export-review-2026-09.md | pitfall | pitfall | KIND pitfall | |
-| R-062 | tenant-export-review-2026-09.md | fact | fact→scripts/PipelineLogger.md | behaviour of PipelineLogger | |
+| R-062 | tenant-export-review-2026-09.md | fact | fact→scripts/PipelineLogger.md | behaviour of PipelineLogger | already on page |
 | R-063 | tenant-export-review-2026-09.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.script.collection.md | scriptBundleId dependency | |
 | R-064 | tenant-export-review-2026-09.md | fact | changelog | version difference 1.0.5→1.0.6 | |
 | R-065 | tenant-export-review-2026-09.md | fact | changelog | version difference 1.0.8→1.0.9 | |
@@ -142,12 +142,12 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | R-136 | tenant-export-review-2026-09.md | fact | tenant→profile | tenant-specific value | |
 | R-137 | tenant-export-review-2026-09.md | fact | changelog | PayloadSizeMeasurement mapping in export | |
 | R-138 | tenant-export-review-2026-09.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi.md | business-system PID branch (also Step08 IDoc) | |
-| R-139 | tenant-export-review-2026-09.md | fact | fact→scripts/readPDValuesForXI.md | precedence of business system, alias, defaults | |
-| R-140 | tenant-export-review-2026-09.md | fact | fact→scripts/readPDValuesForXI.md | business-system branch condition (also IDoc script) | |
+| R-139 | tenant-export-review-2026-09.md | fact | fact→scripts/readPDValuesForXI.md | precedence of business system, alias, defaults | added |
+| R-140 | tenant-export-review-2026-09.md | fact | fact→scripts/readPDValuesForXI.md | business-system branch condition (also IDoc script) | added |
 | R-141 | tenant-export-review-2026-09.md | fact | changelog | scenario parameter keys only in 2026-09-current scripts | |
 | R-142 | tenant-export-review-2026-09.md | fact | changelog | scenarioKeys only in 2026-09-current readPDValuesForXI | |
 | R-143 | tenant-export-review-2026-09.md | fact | changelog | scenario keys only in 2026-09-current IDoc script | |
-| R-144 | tenant-export-review-2026-09.md | fact | fact→scripts/setAllDefaultAndScenarioValuesFromPDForIDoc.md | pidParameterReadSuffixPattern | |
+| R-144 | tenant-export-review-2026-09.md | fact | fact→scripts/setAllDefaultAndScenarioValuesFromPDForIDoc.md | pidParameterReadSuffixPattern | already on page |
 | R-145 | tenant-export-review-2026-09.md | pitfall | pitfall | KIND pitfall | |
 | R-146 | tenant-export-review-2026-09.md | fact | changelog | scenarioKeys list only in 2026-09-current | |
 | R-147 | tenant-export-review-2026-09.md | fact | changelog | ID Mapper only in 2026-09-current | |
@@ -175,8 +175,8 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | R-169 | tenant-export-review-2026-09.md | fact | changelog | PD Upload Helper only in 2026-09-current | |
 | R-170 | tenant-export-review-2026-09.md | fact | tenant→profile | tenant-specific value | |
 | R-171 | tenant-export-review-2026-09.md | procedure | procedure→Task 11 | team procedure or decision | |
-| R-172 | tenant-export-review-2026-09.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | System.getenv TENANT_NAME | |
-| R-173 | tenant-export-review-2026-09.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | referenced copies | |
+| R-172 | tenant-export-review-2026-09.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | System.getenv TENANT_NAME | added |
+| R-173 | tenant-export-review-2026-09.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | referenced copies | already on page |
 | R-174 | tenant-export-review-2026-09.md | fact | changelog | TenantName read only in 2026-09-current | |
 | R-175 | tenant-export-review-2026-09.md | pitfall | pitfall | KIND pitfall | |
 | R-176 | tenant-export-review-2026-09.md | fact | changelog | checkExceptionType only in 2026-09-current | |
@@ -234,7 +234,7 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-032 | generic-inbound.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | flow outline of both Step01 variants (also Step01 IDoc) | |
 | C-033 | generic-inbound.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | shared local process (also Step01 IDoc) | |
 | C-034 | generic-inbound.md | fact | fact→message-path.md | default inbound queue PIPX01 | |
-| C-035 | generic-inbound.md | fact | fact→scripts/readInboundQueueFromPD.md | PD override of inbound queue | |
+| C-035 | generic-inbound.md | fact | fact→scripts/readInboundQueueFromPD.md | PD override of inbound queue | already on page |
 | C-036 | generic-inbound.md | fact | fact→message-path.md | optional route to PIPQ01 | |
 | C-037 | generic-inbound.md | fact | fact→versions/README.md | iFlow version of the label | |
 | C-038 | generic-inbound.md | fact | fact→versions/README.md | iFlow version of the label | |
@@ -296,34 +296,34 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-094 | pipeline-v2-script-collection-overview.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.script.collection.md | generic flows bundle scripts locally | |
 | C-095 | pipeline-v2-script-collection-overview.md | fact | dropped (duplicate of C-018) | same statement as the earlier claim | |
 | C-096 | pipeline-v2-script-collection-overview.md | rationale | rationale→templates/com.sap.integration.cloud.pipeline.v2.script.collection.md | why one shared collection | |
-| C-097 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/mapMessageTypeToOperation.md | behaviour of mapMessageTypeToOperation | |
-| C-098 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/mapMessageTypeToOperation.md | behaviour of mapMessageTypeToOperation | |
-| C-099 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/customReceiverDeterminationViaXProperties.md | behaviour of customReceiverDeterminationViaXProperties | |
-| C-100 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/customReceiverDeterminationViaXProperties.md | behaviour of customReceiverDeterminationViaXProperties | |
-| C-101 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/customReceiverDeterminationViaXProperties.md | behaviour of customReceiverDeterminationViaXProperties | |
-| C-102 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/customInterfaceDeterminationViaXProperties.md | behaviour of customInterfaceDeterminationViaXProperties | |
-| C-103 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/customInterfaceDeterminationViaXProperties.md | behaviour of customInterfaceDeterminationViaXProperties | |
-| C-104 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/customInterfaceDeterminationViaXProperties.md | behaviour of customInterfaceDeterminationViaXProperties | |
-| C-105 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/addCalledByPipelineStep.md | behaviour of addCalledByPipelineStep | |
-| C-106 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/addCalledByPipelineStep.md | behaviour of addCalledByPipelineStep | |
-| C-107 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/setPropertyFromPdStringParameter.md | behaviour of setPropertyFromPdStringParameter | |
-| C-108 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/setPropertyFromPdStringParameter.md | behaviour of setPropertyFromPdStringParameter | |
-| C-109 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/createPropertyFromCustomHeaderProperties.md | behaviour of createPropertyFromCustomHeaderProperties | |
-| C-110 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/createPropertyFromCustomHeaderProperties.md | behaviour of createPropertyFromCustomHeaderProperties | |
-| C-111 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/addCustomHeaderProperties.md | behaviour of addCustomHeaderProperties | |
-| C-112 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/addCustomHeaderProperties.md | behaviour of addCustomHeaderProperties | |
-| C-113 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/addCustomHeaderProperties.md | behaviour of addCustomHeaderProperties | |
-| C-114 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/removeLeadingZerosFromApplicationID.md | behaviour of removeLeadingZerosFromApplicationID | |
-| C-115 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/removeLeadingZerosFromApplicationID.md | behaviour of removeLeadingZerosFromApplicationID | |
-| C-116 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/throwException.md | behaviour of throwException | |
-| C-117 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/throwException.md | behaviour of throwException | |
-| C-118 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/auditLogHandler.md | behaviour of auditLogHandler | |
-| C-119 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/auditLogHandler.md | behaviour of auditLogHandler | |
-| C-120 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/logMessage.md | behaviour of logMessage | |
-| C-121 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/logMessage.md | behaviour of logMessage | |
-| C-122 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/PipelineHelper.md | behaviour of PipelineHelper | |
-| C-123 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/PipelineLogger.md | behaviour of PipelineLogger | |
-| C-124 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/PipelineLogger.md | behaviour of PipelineLogger | |
+| C-097 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/mapMessageTypeToOperation.md | behaviour of mapMessageTypeToOperation | already on page |
+| C-098 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/mapMessageTypeToOperation.md | behaviour of mapMessageTypeToOperation | already on page |
+| C-099 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/customReceiverDeterminationViaXProperties.md | behaviour of customReceiverDeterminationViaXProperties | already on page |
+| C-100 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/customReceiverDeterminationViaXProperties.md | behaviour of customReceiverDeterminationViaXProperties | already on page |
+| C-101 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/customReceiverDeterminationViaXProperties.md | behaviour of customReceiverDeterminationViaXProperties | already on page |
+| C-102 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/customInterfaceDeterminationViaXProperties.md | behaviour of customInterfaceDeterminationViaXProperties | already on page |
+| C-103 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/customInterfaceDeterminationViaXProperties.md | behaviour of customInterfaceDeterminationViaXProperties | already on page |
+| C-104 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/customInterfaceDeterminationViaXProperties.md | behaviour of customInterfaceDeterminationViaXProperties | already on page |
+| C-105 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/addCalledByPipelineStep.md | behaviour of addCalledByPipelineStep | already on page |
+| C-106 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/addCalledByPipelineStep.md | behaviour of addCalledByPipelineStep | already on page |
+| C-107 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/setPropertyFromPdStringParameter.md | behaviour of setPropertyFromPdStringParameter | already on page |
+| C-108 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/setPropertyFromPdStringParameter.md | behaviour of setPropertyFromPdStringParameter | already on page |
+| C-109 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/createPropertyFromCustomHeaderProperties.md | behaviour of createPropertyFromCustomHeaderProperties | already on page |
+| C-110 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/createPropertyFromCustomHeaderProperties.md | behaviour of createPropertyFromCustomHeaderProperties | already on page |
+| C-111 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/addCustomHeaderProperties.md | behaviour of addCustomHeaderProperties | already on page |
+| C-112 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/addCustomHeaderProperties.md | behaviour of addCustomHeaderProperties | already on page |
+| C-113 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/addCustomHeaderProperties.md | behaviour of addCustomHeaderProperties | already on page |
+| C-114 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/removeLeadingZerosFromApplicationID.md | behaviour of removeLeadingZerosFromApplicationID | already on page |
+| C-115 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/removeLeadingZerosFromApplicationID.md | behaviour of removeLeadingZerosFromApplicationID | already on page |
+| C-116 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/throwException.md | behaviour of throwException | already on page |
+| C-117 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/throwException.md | behaviour of throwException | already on page |
+| C-118 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/auditLogHandler.md | behaviour of auditLogHandler | already on page |
+| C-119 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/auditLogHandler.md | behaviour of auditLogHandler | already on page |
+| C-120 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/logMessage.md | behaviour of logMessage | already on page |
+| C-121 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/logMessage.md | behaviour of logMessage | pitfall |
+| C-122 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/PipelineHelper.md | behaviour of PipelineHelper | already on page |
+| C-123 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/PipelineLogger.md | behaviour of PipelineLogger | already on page |
+| C-124 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/PipelineLogger.md | behaviour of PipelineLogger | already on page |
 | C-125 | pipeline-v2-script-collection-overview.md | procedure | procedure→Task 11 | team procedure or decision | |
 | C-126 | pipeline-v2-script-collection-overview.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.script.collection.md | deployment order failure | |
 | C-127 | pipeline-v2-script-collection-overview.md | procedure | procedure→Task 11 | team procedure or decision | |
@@ -356,17 +356,17 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-154 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→overview.md | about the pipeline overview page | |
 | C-155 | when-to-use-cloud-integration-pipeline-decision-matrix.md | rationale | rationale→overview.md | explains the design on pipeline overview | |
 | C-156 | when-to-use-cloud-integration-pipeline-decision-matrix.md | rationale | rationale→overview.md | explains the design on pipeline overview | |
-| C-157 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | behaviour of mapSenderStageToReceiverStage | |
+| C-157 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | behaviour of mapSenderStageToReceiverStage | already on page |
 | C-158 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→partner-directory.md | landscape PD entry | |
-| C-159 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | alternative-partner stage lookup | |
-| C-160 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | stageRule_* priorities | |
+| C-159 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | alternative-partner stage lookup | already on page |
+| C-160 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | stageRule_* priorities | already on page |
 | C-161 | when-to-use-cloud-integration-pipeline-decision-matrix.md | rationale | rationale→overview.md | explains the design on pipeline overview | |
 | C-162 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | tenant→profile | tenant-specific value | |
 | C-163 | when-to-use-cloud-integration-pipeline-decision-matrix.md | rationale | rationale→overview.md | explains the design on pipeline overview | |
 | C-164 | when-to-use-cloud-integration-pipeline-decision-matrix.md | rationale | rationale→overview.md | explains the design on pipeline overview | |
 | C-165 | when-to-use-cloud-integration-pipeline-decision-matrix.md | rationale | rationale→overview.md | explains the design on pipeline overview | |
 | C-166 | when-to-use-cloud-integration-pipeline-decision-matrix.md | rationale | rationale→overview.md | explains the design on pipeline overview | |
-| C-167 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→scripts/addCustomHeaderProperties.md | behaviour of addCustomHeaderProperties | |
+| C-167 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→scripts/addCustomHeaderProperties.md | behaviour of addCustomHeaderProperties | already on page |
 | C-168 | when-to-use-cloud-integration-pipeline-decision-matrix.md | rationale | rationale→overview.md | explains the design on pipeline overview | |
 | C-169 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | sync runtime entry /PIP/XS01 | |
 | C-170 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | receiver call in Step07 | |
@@ -391,7 +391,7 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-189 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | p2p bypass in sync | |
 | C-190 | when-to-use-cloud-integration-pipeline-decision-matrix.md | rationale | rationale→overview.md | explains the design on pipeline overview | |
 | C-191 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→partner-directory.md | p2p PD string parameters | |
-| C-192 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→scripts/readBypassOptionFromPD.md | skipRcvDet derivation | |
+| C-192 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→scripts/readBypassOptionFromPD.md | skipRcvDet derivation | already on page |
 | C-193 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | skipRcvDet rejected | |
 | C-194 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | p2p still passes stage routing | |
 | C-195 | when-to-use-cloud-integration-pipeline-decision-matrix.md | procedure | procedure→Task 11 | team procedure or decision | |
@@ -406,7 +406,7 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-204 | step01-exactly-once.md | procedure | procedure→Task 11 | team procedure or decision | |
 | C-205 | step01-exactly-once.md | procedure | procedure→Task 11 | team procedure or decision | |
 | C-206 | step01-exactly-once.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step01.inbound.processing.eo.md | about the Step01 EO template page | |
-| C-207 | step01-exactly-once.md | fact | fact→scripts/mapMessageTypeToOperation.md | behaviour of mapMessageTypeToOperation | |
+| C-207 | step01-exactly-once.md | fact | fact→scripts/mapMessageTypeToOperation.md | behaviour of mapMessageTypeToOperation | already on page |
 | C-208 | step01-exactly-once.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step01.inbound.processing.eo.md | about the Step01 EO template page | |
 | C-209 | step01-exactly-once.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step01.inbound.processing.eo.md | about the Step01 EO template page | |
 | C-210 | step01-exactly-once.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step01.inbound.processing.eo.md | about the Step01 EO template page | |
@@ -424,7 +424,7 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-222 | step01-synchronous.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step01.inbound.processing.sync.md | about the Step01 sync template page | |
 | C-223 | step01-synchronous.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step01.inbound.processing.sync.md | about the Step01 sync template page | |
 | C-224 | step03-inbound-conversion.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step03.inbound.conversion.md | about the Step03 template page | |
-| C-225 | step03-inbound-conversion.md | fact | fact→scripts/readInboundConversionFromPD.md | PD key InboundConversionEndpoint | |
+| C-225 | step03-inbound-conversion.md | fact | fact→scripts/readInboundConversionFromPD.md | PD key InboundConversionEndpoint | already on page |
 | C-226 | step03-inbound-conversion.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step03.inbound.conversion.md | about the Step03 template page | |
 | C-227 | step03-inbound-conversion.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step03.inbound.conversion.md | about the Step03 template page | |
 | C-228 | step03-inbound-conversion.md | procedure | procedure→Task 11 | team procedure or decision | |
@@ -441,14 +441,14 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-239 | step04-custom-receiver-and-interface-determination-via-exchange-properties.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step04.custom.receiver.determination.scripts.md | about the Step04 scripts template page | |
 | C-240 | step04-custom-receiver-and-interface-determination-via-exchange-properties.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step04.custom.receiver.determination.scripts.md | about the Step04 scripts template page | |
 | C-241 | step04-custom-receiver-and-interface-determination-via-exchange-properties.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step04.custom.receiver.determination.scripts.md | about the Step04 scripts template page | |
-| C-242 | step04-custom-receiver-and-interface-determination-via-exchange-properties.md | fact | fact→scripts/customReceiverDeterminationViaXProperties.md | behaviour of customReceiverDeterminationViaXProperties | |
-| C-243 | step04-custom-receiver-and-interface-determination-via-exchange-properties.md | fact | fact→scripts/customInterfaceDeterminationViaXProperties.md | behaviour of customInterfaceDeterminationViaXProperties | |
+| C-242 | step04-custom-receiver-and-interface-determination-via-exchange-properties.md | fact | fact→scripts/customReceiverDeterminationViaXProperties.md | behaviour of customReceiverDeterminationViaXProperties | already on page |
+| C-243 | step04-custom-receiver-and-interface-determination-via-exchange-properties.md | fact | fact→scripts/customInterfaceDeterminationViaXProperties.md | behaviour of customInterfaceDeterminationViaXProperties | already on page |
 | C-244 | step04-custom-receiver-and-interface-determination-via-exchange-properties.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step04.receiver.determination.md | router "Bypass interface determination?" | |
 | C-245 | step04-custom-receiver-and-interface-determination-via-exchange-properties.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step04.custom.receiver.determination.scripts.md | about the Step04 scripts template page | |
 | C-246 | step04-custom-receiver-and-interface-determination-via-extended-receiver-determination.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step04.custom.receiver.determination.xrd.md | about the Step04 XRD template page | |
 | C-247 | step04-custom-receiver-and-interface-determination-via-extended-receiver-determination.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step04.custom.receiver.determination.xrd.md | about the Step04 XRD template page | |
 | C-248 | step04-custom-receiver-and-interface-determination-via-extended-receiver-determination.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step04.custom.receiver.determination.xrd.md | about the Step04 XRD template page | |
-| C-249 | step04-custom-receiver-and-interface-determination-via-extended-receiver-determination.md | fact | fact→scripts/customInterfaceDeterminationViaXProperties.md | behaviour of customInterfaceDeterminationViaXProperties | |
+| C-249 | step04-custom-receiver-and-interface-determination-via-extended-receiver-determination.md | fact | fact→scripts/customInterfaceDeterminationViaXProperties.md | behaviour of customInterfaceDeterminationViaXProperties | already on page |
 | C-250 | step04-custom-receiver-and-interface-determination-via-extended-receiver-determination.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step04.custom.receiver.determination.xrd.md | about the Step04 XRD template page | |
 | C-251 | step04-custom-receiver-determination.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step04.custom.receiver.determination.md | about the Step04 custom template page | |
 | C-252 | step04-custom-receiver-determination.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step04.custom.receiver.determination.md | about the Step04 custom template page | |
@@ -533,7 +533,7 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-331 | pipeline-concept.md | fact | fact→message-path.md | queue count integrated | |
 | C-332 | pipeline-concept.md | rationale | rationale→overview.md | operating model | |
 | C-333 | pipeline-concept.md | fact | fact→glossary.md | custom status | |
-| C-334 | pipeline-concept.md | fact | fact→scripts/addCustomHeaderProperties.md | customHeader_ prefix monitoring | |
+| C-334 | pipeline-concept.md | fact | fact→scripts/addCustomHeaderProperties.md | customHeader_ prefix monitoring | already on page |
 | C-335 | pipeline-concept.md | fact | dropped (duplicate of C-145) | same statement as the earlier claim | |
 | C-336 | pipeline-concept.md | fact | fact→overview.md | new message type needs a template copy | |
 | C-337 | pipeline-concept.md | rationale | rationale→overview.md | small deployment unit | |
@@ -612,7 +612,7 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-410 | pipeline-concept.md | fact | dropped (not pipeline) | example XSLT in the draft, not an artifact | |
 | C-411 | pipeline-concept.md | fact | fact→message-path.md | combined mapping replaces skipRcvDet + custom IF | |
 | C-412 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | custom RD via CustomXRDEndpoint in async | |
-| C-413 | pipeline-concept.md | fact | fact→scripts/readCustomReceiverDeterminationFromPD.md | behaviour of readCustomReceiverDeterminationFromPD | |
+| C-413 | pipeline-concept.md | fact | fact→scripts/readCustomReceiverDeterminationFromPD.md | behaviour of readCustomReceiverDeterminationFromPD | already on page |
 | C-414 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | ProcessDirect call of custom RD | |
 | C-415 | pipeline-concept.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step04.custom.receiver.determination.md | return schema Receivers.xsd | |
 | C-416 | pipeline-concept.md | rationale | rationale→templates/com.sap.integration.cloud.pipeline.v2.template.step04.custom.receiver.determination.md | why a full iFlow for custom RD | |
@@ -653,42 +653,42 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-451 | pipeline-concept.md | procedure | procedure→Task 11 | team procedure or decision | |
 | C-452 | pipeline-concept.md | fact | fact→partner-directory.md | alternative partner SenderInterface scheme | |
 | C-453 | pipeline-concept.md | fact | fact→partner-directory.md | alternative partner namespace scheme | |
-| C-454 | pipeline-concept.md | fact | fact→scripts/determinePartnerID.md | namespace variant first | |
-| C-455 | pipeline-concept.md | fact | fact→scripts/determinePartnerID.md | behaviour of determinePartnerID | |
+| C-454 | pipeline-concept.md | fact | fact→scripts/determinePartnerID.md | namespace variant first | already on page |
+| C-455 | pipeline-concept.md | fact | fact→scripts/determinePartnerID.md | behaviour of determinePartnerID | already on page |
 | C-456 | pipeline-concept.md | rationale | rationale→partner-directory.md | alternative-partner field limits | |
 | C-457 | pipeline-concept.md | rationale | rationale→partner-directory.md | wildcard and grouping | |
 | C-458 | pipeline-concept.md | fact | fact→partner-directory.md | stages need alternative partners | |
-| C-459 | pipeline-concept.md | fact | fact→scripts/determinePartnerID.md | tilde partnerID format | |
-| C-460 | pipeline-concept.md | fact | fact→scripts/determinePartnerID.md | tilde sender part | |
-| C-461 | pipeline-concept.md | fact | fact→scripts/determinePartnerID.md | tilde interface part, character replacement | |
-| C-462 | pipeline-concept.md | fact | fact→scripts/determinePartnerID.md | tilde built only as fallback | |
-| C-463 | pipeline-concept.md | fact | fact→scripts/determinePartnerID.md | tilde condition | |
+| C-459 | pipeline-concept.md | fact | fact→scripts/determinePartnerID.md | tilde partnerID format | already on page |
+| C-460 | pipeline-concept.md | fact | fact→scripts/determinePartnerID.md | tilde sender part | already on page |
+| C-461 | pipeline-concept.md | fact | fact→scripts/determinePartnerID.md | tilde interface part, character replacement | already on page |
+| C-462 | pipeline-concept.md | fact | fact→scripts/determinePartnerID.md | tilde built only as fallback | already on page |
+| C-463 | pipeline-concept.md | fact | fact→scripts/determinePartnerID.md | tilde condition | pitfall |
 | C-464 | pipeline-concept.md | open-question | pitfall | B1b-flagged: draft contradicts itself on the tilde switch | |
-| C-465 | pipeline-concept.md | fact | fact→scripts/determinePartnerID.md | tilde in XI and IDoc (also IDoc script) | |
-| C-466 | pipeline-concept.md | fact | fact→scripts/determinePartnerID.md | behaviour of determinePartnerID | |
-| C-467 | pipeline-concept.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | behaviour of determinePartnerIDForIDocInbound | |
+| C-465 | pipeline-concept.md | fact | fact→scripts/determinePartnerID.md | tilde in XI and IDoc (also IDoc script) | added |
+| C-466 | pipeline-concept.md | fact | fact→scripts/determinePartnerID.md | behaviour of determinePartnerID | already on page |
+| C-467 | pipeline-concept.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | behaviour of determinePartnerIDForIDocInbound | already on page |
 | C-468 | pipeline-concept.md | procedure | procedure→Task 11 | team procedure or decision | |
-| C-469 | pipeline-concept.md | fact | fact→scripts/determinePartnerID.md | externalized switch and its default (check propdef) | |
-| C-470 | pipeline-concept.md | fact | fact→scripts/determinePartnerID.md | five caller iFlows of the switch | |
-| C-471 | pipeline-concept.md | fact | fact→scripts/determinePartnerID.md | switch is flow-level | |
-| C-472 | pipeline-concept.md | rationale | rationale→scripts/determinePartnerID.md | why the switch defaults to off | |
+| C-469 | pipeline-concept.md | fact | fact→scripts/determinePartnerID.md | externalized switch and its default (check propdef) | added |
+| C-470 | pipeline-concept.md | fact | fact→scripts/determinePartnerID.md | five caller iFlows of the switch | already on page |
+| C-471 | pipeline-concept.md | fact | fact→scripts/determinePartnerID.md | switch is flow-level | already on page |
+| C-472 | pipeline-concept.md | rationale | rationale→scripts/determinePartnerID.md | why the switch defaults to off | added |
 | C-473 | pipeline-concept.md | procedure | procedure→Task 11 | team procedure or decision | |
 | C-474 | pipeline-concept.md | pitfall | pitfall | KIND pitfall | |
 | C-475 | pipeline-concept.md | fact | fact→contracts.md | SAP_SenderInterface source | |
 | C-476 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | SAP_SenderInterface from the XI adapter | |
-| C-477 | pipeline-concept.md | fact | fact→scripts/setIDocSenderInterface.md | MESTYP.IDOCTYP[.CIMTYP] | |
-| C-478 | pipeline-concept.md | fact | fact→scripts/determinePartnerID.md | behaviour of determinePartnerID | |
-| C-479 | pipeline-concept.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | behaviour of determinePartnerIDForIDocInbound | |
-| C-480 | pipeline-concept.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partnerID check order | |
-| C-481 | pipeline-concept.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | agency from EDIDC | |
-| C-482 | pipeline-concept.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | LS logical system | |
-| C-483 | pipeline-concept.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | LS with stages | |
-| C-484 | pipeline-concept.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | non-LS logical system from port | |
-| C-485 | pipeline-concept.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | non-LS agency format | |
-| C-486 | pipeline-concept.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | virtual receiver switch | |
-| C-487 | pipeline-concept.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | virtual receiver fields | |
-| C-488 | pipeline-concept.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | virtual receiver agency | |
-| C-489 | pipeline-concept.md | rationale | rationale→scripts/determinePartnerIDForIDocInbound.md | why a virtual receiver | |
+| C-477 | pipeline-concept.md | fact | fact→scripts/setIDocSenderInterface.md | MESTYP.IDOCTYP[.CIMTYP] | already on page |
+| C-478 | pipeline-concept.md | fact | fact→scripts/determinePartnerID.md | behaviour of determinePartnerID | already on page |
+| C-479 | pipeline-concept.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | behaviour of determinePartnerIDForIDocInbound | already on page |
+| C-480 | pipeline-concept.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partnerID check order | already on page |
+| C-481 | pipeline-concept.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | agency from EDIDC | already on page |
+| C-482 | pipeline-concept.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | LS logical system | already on page |
+| C-483 | pipeline-concept.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | LS with stages | already on page |
+| C-484 | pipeline-concept.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | non-LS logical system from port | already on page |
+| C-485 | pipeline-concept.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | non-LS agency format | already on page |
+| C-486 | pipeline-concept.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | virtual receiver switch | added |
+| C-487 | pipeline-concept.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | virtual receiver fields | already on page |
+| C-488 | pipeline-concept.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | virtual receiver agency | already on page |
+| C-489 | pipeline-concept.md | rationale | rationale→scripts/determinePartnerIDForIDocInbound.md | why a virtual receiver | added |
 | C-490 | pipeline-concept.md | fact | fact→partner-directory.md | InboundConversionEndpoint key | |
 | C-491 | pipeline-concept.md | fact | fact→partner-directory.md | MaxJMSRetries key and default | |
 | C-492 | pipeline-concept.md | fact | fact→partner-directory.md | ReuseXRDEndpoint, ReceiverNotDeterminedType keys | |
@@ -698,16 +698,16 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-496 | pipeline-concept.md | fact | fact→partner-directory.md | KeepBulk key and default | |
 | C-497 | pipeline-concept.md | fact | fact→partner-directory.md | CustomXPre keys | |
 | C-498 | pipeline-concept.md | fact | fact→partner-directory.md | ReceiverSpecificQueue keys | |
-| C-499 | pipeline-concept.md | fact | fact→scripts/readInboundQueueFromPD.md | behaviour of readInboundQueueFromPD | |
-| C-500 | pipeline-concept.md | fact | fact→scripts/readInboundQueueFromPD.md | effect of InboundQueue | |
+| C-499 | pipeline-concept.md | fact | fact→scripts/readInboundQueueFromPD.md | behaviour of readInboundQueueFromPD | already on page |
+| C-500 | pipeline-concept.md | fact | fact→scripts/readInboundQueueFromPD.md | effect of InboundQueue | added |
 | C-501 | pipeline-concept.md | rationale | rationale→partner-directory.md | priority pipelines via InboundQueue | |
 | C-502 | pipeline-concept.md | rationale | rationale→partner-directory.md | route to fully decoupled via InboundQueue | |
 | C-503 | pipeline-concept.md | fact | fact→partner-directory.md | receiverDetermination binary at the partner | |
 | C-504 | pipeline-concept.md | fact | fact→partner-directory.md | interfaceDetermination_<receiver> suffix | |
 | C-505 | pipeline-concept.md | rationale | rationale→partner-directory.md | why the suffix is an alias | |
-| C-506 | pipeline-concept.md | fact | fact→scripts/mapReceiverAliasToBusinessSystemName.md | fallback without stages | |
-| C-507 | pipeline-concept.md | fact | fact→scripts/mapReceiverAliasToBusinessSystemName.md | behaviour of mapReceiverAliasToBusinessSystemName | |
-| C-508 | pipeline-concept.md | fact | fact→scripts/mapReceiverAliasToBusinessSystemName.md | suffix without stages | |
+| C-506 | pipeline-concept.md | fact | fact→scripts/mapReceiverAliasToBusinessSystemName.md | fallback without stages | already on page |
+| C-507 | pipeline-concept.md | fact | fact→scripts/mapReceiverAliasToBusinessSystemName.md | behaviour of mapReceiverAliasToBusinessSystemName | already on page |
+| C-508 | pipeline-concept.md | fact | fact→scripts/mapReceiverAliasToBusinessSystemName.md | suffix without stages | added |
 | C-509 | pipeline-concept.md | procedure | procedure→Task 11 | team procedure or decision | |
 | C-510 | pipeline-concept.md | fact | dropped (not pipeline) | Integration Suite generality: PD API and UI | |
 | C-511 | pipeline-concept.md | fact | fact→partner-directory.md | binary interfaceDetermination for Step05 | |
@@ -717,7 +717,7 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-515 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | headers from the XI adapter | |
 | C-516 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | QoS handled by iFlow | |
 | C-517 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | idempotent call, DuplicateDiscarded | |
-| C-518 | pipeline-concept.md | fact | fact→scripts/createHeadersFromSapDynamicConfiguration.md | dc_ headers from dynamic configuration | |
+| C-518 | pipeline-concept.md | fact | fact→scripts/createHeadersFromSapDynamicConfiguration.md | dc_ headers from dynamic configuration | already on page |
 | C-519 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | headers from EDI_DC40 | |
 | C-520 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | bulk IDoc numbers in custom headers | |
 | C-521 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | splitter default and KeepBulk | |
@@ -749,29 +749,29 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-547 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step04.receiver.determination.md | combined determination skips Step05 | |
 | C-548 | pipeline-concept.md | fact | dropped (duplicate of C-350) | same statement as the earlier claim | |
 | C-549 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step04.receiver.determination.md | bypass interface determination | |
-| C-550 | pipeline-concept.md | fact | fact→scripts/readBypassOptionFromPD.md | skipRcvDet keys | |
+| C-550 | pipeline-concept.md | fact | fact→scripts/readBypassOptionFromPD.md | skipRcvDet keys | added |
 | C-551 | pipeline-concept.md | fact | dropped (duplicate of C-353) | same statement as the earlier claim | |
-| C-552 | pipeline-concept.md | fact | fact→scripts/readBypassOptionFromPD.md | behaviour of readBypassOptionFromPD | |
+| C-552 | pipeline-concept.md | fact | fact→scripts/readBypassOptionFromPD.md | behaviour of readBypassOptionFromPD | already on page |
 | C-553 | pipeline-concept.md | fact | fact→partner-directory.md | receiverDetermination binary in the standard case | |
 | C-554 | pipeline-concept.md | fact | fact→partner-directory.md | string receiverDetermination means p2p | |
 | C-555 | pipeline-concept.md | rationale | rationale→partner-directory.md | why a sender wildcard | |
 | C-556 | pipeline-concept.md | procedure | procedure→Task 11 | team procedure or decision | |
 | C-557 | pipeline-concept.md | pitfall | pitfall | KIND pitfall | |
 | C-558 | pipeline-concept.md | procedure | procedure→Task 11 | team procedure or decision | |
-| C-559 | pipeline-concept.md | fact | fact→scripts/determinePartnerID.md | existing partnerID header skips the lookup | |
+| C-559 | pipeline-concept.md | fact | fact→scripts/determinePartnerID.md | existing partnerID header skips the lookup | already on page |
 | C-560 | pipeline-concept.md | fact | fact→partner-directory.md | interface-name scheme avoids key clashes | |
-| C-561 | pipeline-concept.md | fact | fact→scripts/mapMessageTypeToOperation.md | operation needs 1:1 message type | |
+| C-561 | pipeline-concept.md | fact | fact→scripts/mapMessageTypeToOperation.md | operation needs 1:1 message type | already on page |
 | C-562 | pipeline-concept.md | procedure | procedure→Task 11 | team procedure or decision | |
-| C-563 | pipeline-concept.md | fact | fact→scripts/mapMessageTypeToOperation.md | behaviour of mapMessageTypeToOperation | |
+| C-563 | pipeline-concept.md | fact | fact→scripts/mapMessageTypeToOperation.md | behaviour of mapMessageTypeToOperation | already on page |
 | C-564 | pipeline-concept.md | fact | fact→contracts.md | SAP_SenderOperation use | |
 | C-565 | pipeline-concept.md | fact | fact→glossary.md | party | |
 | C-566 | pipeline-concept.md | fact | fact→contracts.md | Party.System format | |
-| C-567 | pipeline-concept.md | fact | fact→scripts/addPartyForXIInbound.md | Party.System from XI headers | |
+| C-567 | pipeline-concept.md | fact | fact→scripts/addPartyForXIInbound.md | Party.System from XI headers | already on page |
 | C-568 | pipeline-concept.md | fact | fact→contracts.md | party headers | |
-| C-569 | pipeline-concept.md | fact | fact→scripts/addCustomHeaderProperties.md | party and system in custom headers | |
-| C-570 | pipeline-concept.md | fact | fact→scripts/readRetryHandlingFromPD.md | maxJMSRetries default and propagation | |
+| C-569 | pipeline-concept.md | fact | fact→scripts/addCustomHeaderProperties.md | party and system in custom headers | added |
+| C-570 | pipeline-concept.md | fact | fact→scripts/readRetryHandlingFromPD.md | maxJMSRetries default and propagation | added |
 | C-571 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | error below limit (every JMS-consuming step) | |
-| C-572 | pipeline-concept.md | fact | fact→scripts/attachAdditionallnformation.md | behaviour of attachAdditionallnformation | |
+| C-572 | pipeline-concept.md | fact | fact→scripts/attachAdditionallnformation.md | behaviour of attachAdditionallnformation | added |
 | C-573 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | DLQ end event (every JMS-consuming step) | |
 | C-574 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step04.receiver.determination.md | limit check before split (also Step05) | |
 | C-575 | pipeline-concept.md | rationale | rationale→iflows/com.sap.integration.cloud.pipeline.v2.generic.step04.receiver.determination.md | why the check precedes the split | |
@@ -788,7 +788,7 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-586 | pipeline-concept.md | fact | dropped (not pipeline) | Integration Suite generality: correlation ID | |
 | C-587 | pipeline-concept.md | fact | fact→glossary.md | custom status values | |
 | C-588 | pipeline-concept.md | fact | dropped (duplicate of C-334) | same statement as the earlier claim | |
-| C-589 | pipeline-concept.md | fact | fact→scripts/addCustomHeaderProperties.md | behaviour of addCustomHeaderProperties | |
+| C-589 | pipeline-concept.md | fact | fact→scripts/addCustomHeaderProperties.md | behaviour of addCustomHeaderProperties | added |
 | C-590 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | custom header properties in sync | |
 | C-591 | pipeline-concept.md | fact | fact→contracts.md | testMode header | |
 | C-592 | pipeline-concept.md | fact | fact→contracts.md | testMode scope | |
@@ -809,29 +809,29 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-607 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi.md | testMode allowed in Step08 (also Step08 IDoc) | |
 | C-608 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | test mode skips retry (every JMS-consuming step) | |
 | C-609 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | ErrorInTestMode in Step02/05/06/Step01 IDoc | |
-| C-610 | pipeline-concept.md | fact | fact→scripts/attachAdditionallnformation.md | behaviour of attachAdditionallnformation | |
+| C-610 | pipeline-concept.md | fact | fact→scripts/attachAdditionallnformation.md | behaviour of attachAdditionallnformation | already on page |
 | C-611 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | CustomXTest_SkipDuplicateCheck | |
 | C-612 | pipeline-concept.md | fact | fact→contracts.md | pipeline propagates testMode only | |
 | C-613 | pipeline-concept.md | fact | dropped (not pipeline) | product mention (Int4, Figaf) | |
 | C-614 | pipeline-concept.md | rationale | rationale→contracts.md | why test mode in all steps | |
-| C-615 | pipeline-concept.md | rationale | rationale→scripts/mapSenderStageToReceiverStage.md | aim of landscape stages | |
-| C-616 | pipeline-concept.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | alias mapping in and out | |
+| C-615 | pipeline-concept.md | rationale | rationale→scripts/mapSenderStageToReceiverStage.md | aim of landscape stages | added |
+| C-616 | pipeline-concept.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | alias mapping in and out | added |
 | C-617 | pipeline-concept.md | fact | fact→contracts.md | monitor shows real names | |
 | C-618 | pipeline-concept.md | fact | fact→partner-directory.md | SAP_Integration_Suite_Landscape tenant-to-stage key | |
-| C-619 | pipeline-concept.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | one stage per tenant | |
-| C-620 | pipeline-concept.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | default stage PRD | |
-| C-621 | pipeline-concept.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | virtual stage order | |
+| C-619 | pipeline-concept.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | one stage per tenant | already on page |
+| C-620 | pipeline-concept.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | default stage PRD | already on page |
+| C-621 | pipeline-concept.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | virtual stage order | pitfall |
 | C-622 | pipeline-concept.md | fact | fact→partner-directory.md | system-alias alternative partners | |
 | C-623 | pipeline-concept.md | fact | changelog | stage rules since 1.0.4 | |
-| C-624 | pipeline-concept.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | stage rule effect | |
-| C-625 | pipeline-concept.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | stageRule_ key format | |
-| C-626 | pipeline-concept.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | receiver-limited rule | |
-| C-627 | pipeline-concept.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | rule scope | |
-| C-628 | pipeline-concept.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | rule example | |
-| C-629 | pipeline-concept.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | duplication rule | |
+| C-624 | pipeline-concept.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | stage rule effect | already on page |
+| C-625 | pipeline-concept.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | stageRule_ key format | already on page |
+| C-626 | pipeline-concept.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | receiver-limited rule | already on page |
+| C-627 | pipeline-concept.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | rule scope | already on page |
+| C-628 | pipeline-concept.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | rule example | omitted (granularity) |
+| C-629 | pipeline-concept.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | duplication rule | already on page |
 | C-630 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step04.receiver.determination.md | stage duplication async only | |
 | C-631 | pipeline-concept.md | fact | tenant→profile | tenant-specific value | |
-| C-632 | pipeline-concept.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | behaviour of mapSenderStageToReceiverStage | |
+| C-632 | pipeline-concept.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | behaviour of mapSenderStageToReceiverStage | already on page |
 | C-633 | pipeline-concept.md | fact | tenant→profile | tenant-specific value | |
 | C-634 | pipeline-concept.md | fact | tenant→profile | tenant-specific value | |
 | C-635 | pipeline-concept.md | procedure | procedure→Task 11 | tenant-specific; profile note | |
@@ -847,15 +847,15 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-645 | pipeline-concept.md | fact | dropped (duplicate of C-312) | same statement as the earlier claim | |
 | C-646 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | two exit routers (all eight generic callers) | |
 | C-647 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | global exit parameters (all eight generic callers) | |
-| C-648 | pipeline-concept.md | fact | fact→scripts/readCustomXFromPD.md | scenario exit keys | |
+| C-648 | pipeline-concept.md | fact | fact→scripts/readCustomXFromPD.md | scenario exit keys | already on page |
 | C-649 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | global then scenario exit | |
 | C-650 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | global exit switch only by parameter | |
-| C-651 | pipeline-concept.md | fact | fact→scripts/readCustomXFromPD.md | CustomXPreEnabled step list | |
-| C-652 | pipeline-concept.md | fact | fact→scripts/readCustomXFromPD.md | behaviour of readCustomXFromPD | |
-| C-653 | pipeline-concept.md | fact | dropped (already on scripts/readCustomXFromPD.md) | grep generic.step: same derivation | |
-| C-654 | pipeline-concept.md | fact | fact→scripts/readCustomXFromPD.md | relevant step numbers in integrated runtime | |
-| C-655 | pipeline-concept.md | fact | fact→scripts/readCustomXFromPD.md | behaviour of readCustomXFromPD | |
-| C-656 | pipeline-concept.md | fact | fact→scripts/readCustomXFromPD.md | global exit outside header>PD priority | |
+| C-651 | pipeline-concept.md | fact | fact→scripts/readCustomXFromPD.md | CustomXPreEnabled step list | already on page |
+| C-652 | pipeline-concept.md | fact | fact→scripts/readCustomXFromPD.md | behaviour of readCustomXFromPD | already on page |
+| C-653 | pipeline-concept.md | fact | dropped (already on scripts/readCustomXFromPD.md) | grep generic.step: same derivation | n/a |
+| C-654 | pipeline-concept.md | fact | fact→scripts/readCustomXFromPD.md | relevant step numbers in integrated runtime | added |
+| C-655 | pipeline-concept.md | fact | fact→scripts/readCustomXFromPD.md | behaviour of readCustomXFromPD | already on page |
+| C-656 | pipeline-concept.md | fact | fact→scripts/readCustomXFromPD.md | global exit outside header>PD priority | added |
 | C-657 | pipeline-concept.md | fact | fact→contracts.md | configuration by headers | |
 | C-658 | pipeline-concept.md | fact | dropped (duplicate of C-559) | same statement as the earlier claim | |
 | C-659 | pipeline-concept.md | fact | fact→contracts.md | customXRDEndpoint, SAP_OutboundProcessingEndpoint headers | |
@@ -908,16 +908,16 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-706 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | |
 | C-707 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | |
 | C-708 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | script call order of the main flow | |
-| C-709 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/createHeadersFromSapDynamicConfiguration.md | behaviour of createHeadersFromSapDynamicConfiguration | |
-| C-710 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/addPartyForXIInbound.md | behaviour of addPartyForXIInbound | |
+| C-709 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/createHeadersFromSapDynamicConfiguration.md | behaviour of createHeadersFromSapDynamicConfiguration | already on page |
+| C-710 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/addPartyForXIInbound.md | behaviour of addPartyForXIInbound | already on page |
 | C-711 | generic-step01-inbound-processing-for-xi.md | fact | dropped (duplicate of C-499) | same script, same statement | |
 | C-712 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | two calls of the script | |
 | C-713 | generic-step01-inbound-processing-for-xi.md | fact | dropped (duplicate of C-552) | same script, same statement | |
-| C-714 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/mapReceiverAliasToBusinessSystemName.md | behaviour of mapReceiverAliasToBusinessSystemName | |
+| C-714 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/mapReceiverAliasToBusinessSystemName.md | behaviour of mapReceiverAliasToBusinessSystemName | already on page |
 | C-715 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | three calls of the script | |
-| C-716 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/PipelineLogger.md | behaviour of PipelineLogger | |
-| C-717 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/PipelineHelper.md | helper library, importer | |
-| C-718 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/auditLogHandler.md | behaviour of auditLogHandler | |
+| C-716 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/PipelineLogger.md | behaviour of PipelineLogger | omitted (granularity) |
+| C-717 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/PipelineHelper.md | helper library, importer | already on page |
+| C-718 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/auditLogHandler.md | behaviour of auditLogHandler | already on page |
 | C-719 | generic-step01-inbound-processing-for-xi.md | fact | dropped (duplicate of C-039) | same statement as the earlier claim | |
 | C-720 | generic-step01-inbound-processing-for-xi.md | fact | dropped (duplicate of C-671) | same statement as the earlier claim | |
 | C-721 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | |
@@ -928,131 +928,131 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-726 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | |
 | C-727 | generic-step01-inbound-processing-for-xi.md | fact | dropped (duplicate of C-672) | same statement as the earlier claim | |
 | C-728 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | |
-| C-729 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/createHeadersFromSapDynamicConfiguration.md | behaviour of createHeadersFromSapDynamicConfiguration | |
-| C-730 | generic-step01-inbound-processing-for-xi.md | fact | dropped (already on scripts/createHeadersFromSapDynamicConfiguration.md) | grep dc_SapDynamicConfiguration_: same statement | |
-| C-731 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/createHeadersFromSapDynamicConfiguration.md | behaviour of createHeadersFromSapDynamicConfiguration | |
-| C-732 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/addPartyForXIInbound.md | behaviour of addPartyForXIInbound | |
-| C-733 | generic-step01-inbound-processing-for-xi.md | fact | dropped (already on scripts/addPartyForXIInbound.md) | grep SapSenderParty: same statement | |
-| C-734 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/addPartyForXIInbound.md | behaviour of addPartyForXIInbound | |
-| C-735 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/addPartyForXIInbound.md | behaviour of addPartyForXIInbound | |
-| C-736 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-737 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-738 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-739 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-740 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-741 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-742 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-743 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-744 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-745 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-746 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-747 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-748 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-749 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-750 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-751 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-752 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-753 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-754 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-755 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-756 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-757 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-758 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-759 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-760 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-761 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-762 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-763 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-764 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-765 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-766 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-767 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-768 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-769 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-770 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-771 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-772 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-773 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-774 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-775 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-776 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-777 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-778 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-779 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-780 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-781 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-782 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
+| C-729 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/createHeadersFromSapDynamicConfiguration.md | behaviour of createHeadersFromSapDynamicConfiguration | already on page |
+| C-730 | generic-step01-inbound-processing-for-xi.md | fact | dropped (already on scripts/createHeadersFromSapDynamicConfiguration.md) | grep dc_SapDynamicConfiguration_: same statement | n/a |
+| C-731 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/createHeadersFromSapDynamicConfiguration.md | behaviour of createHeadersFromSapDynamicConfiguration | already on page |
+| C-732 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/addPartyForXIInbound.md | behaviour of addPartyForXIInbound | already on page |
+| C-733 | generic-step01-inbound-processing-for-xi.md | fact | dropped (already on scripts/addPartyForXIInbound.md) | grep SapSenderParty: same statement | n/a |
+| C-734 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/addPartyForXIInbound.md | behaviour of addPartyForXIInbound | already on page |
+| C-735 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/addPartyForXIInbound.md | behaviour of addPartyForXIInbound | already on page |
+| C-736 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | already on page |
+| C-737 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | already on page |
+| C-738 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | already on page |
+| C-739 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | already on page |
+| C-740 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | already on page |
+| C-741 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | already on page |
+| C-742 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | already on page |
+| C-743 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | already on page |
+| C-744 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | already on page |
+| C-745 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | already on page |
+| C-746 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | already on page |
+| C-747 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | already on page |
+| C-748 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | already on page |
+| C-749 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | already on page |
+| C-750 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | already on page |
+| C-751 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | already on page |
+| C-752 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | already on page |
+| C-753 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | already on page |
+| C-754 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | already on page |
+| C-755 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | omitted (granularity) |
+| C-756 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | already on page |
+| C-757 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | already on page |
+| C-758 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | already on page |
+| C-759 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | already on page |
+| C-760 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | already on page |
+| C-761 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | already on page |
+| C-762 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | already on page |
+| C-763 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | added |
+| C-764 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | already on page |
+| C-765 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | already on page |
+| C-766 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | added |
+| C-767 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | already on page |
+| C-768 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | already on page |
+| C-769 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | already on page |
+| C-770 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | already on page |
+| C-771 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | already on page |
+| C-772 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | already on page |
+| C-773 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | already on page |
+| C-774 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | added |
+| C-775 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | added |
+| C-776 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | already on page |
+| C-777 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | already on page |
+| C-778 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | added |
+| C-779 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | already on page |
+| C-780 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | already on page |
+| C-781 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | already on page |
+| C-782 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | already on page |
 | C-783 | generic-step01-inbound-processing-for-xi.md | fact | dropped (duplicate of C-455) | same script, same statement | |
 | C-784 | generic-step01-inbound-processing-for-xi.md | fact | dropped (duplicate of C-455) | same script, same statement | |
-| C-785 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
+| C-785 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | already on page |
 | C-786 | generic-step01-inbound-processing-for-xi.md | fact | dropped (duplicate of C-466) | same script, same statement | |
-| C-787 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-788 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-789 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-790 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-791 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-792 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-793 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-794 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-795 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-796 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-797 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-798 | generic-step01-inbound-processing-for-xi.md | rationale | rationale→scripts/determinePartnerID.md | why the header rollback | |
-| C-799 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-800 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-801 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-802 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-803 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-804 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
-| C-805 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | |
+| C-787 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | already on page |
+| C-788 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | omitted (granularity) |
+| C-789 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | omitted (granularity) |
+| C-790 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | already on page |
+| C-791 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | already on page |
+| C-792 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | already on page |
+| C-793 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | already on page |
+| C-794 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | already on page |
+| C-795 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | omitted (granularity) |
+| C-796 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | already on page |
+| C-797 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | already on page |
+| C-798 | generic-step01-inbound-processing-for-xi.md | rationale | rationale→scripts/determinePartnerID.md | why the header rollback | added |
+| C-799 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | already on page |
+| C-800 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | already on page |
+| C-801 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | already on page |
+| C-802 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | already on page |
+| C-803 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | already on page |
+| C-804 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | already on page |
+| C-805 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/determinePartnerID.md | determinePartnerID internals (quoted code) | already on page |
 | C-806 | generic-step01-inbound-processing-for-xi.md | fact | changelog | landscape-stage logic from 1.0.6 | |
 | C-807 | generic-step01-inbound-processing-for-xi.md | open-question | pitfall | B1b-flagged: page version vs script version unclear | |
-| C-808 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/readCustomXFromPD.md | behaviour of readCustomXFromPD | |
-| C-809 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/readCustomXFromPD.md | behaviour of readCustomXFromPD | |
+| C-808 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/readCustomXFromPD.md | behaviour of readCustomXFromPD | already on page |
+| C-809 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/readCustomXFromPD.md | behaviour of readCustomXFromPD | already on page |
 | C-810 | generic-step01-inbound-processing-for-xi.md | fact | dropped (duplicate of C-653) | same script, same statement | |
 | C-811 | generic-step01-inbound-processing-for-xi.md | fact | dropped (duplicate of C-655) | same script, same statement | |
 | C-812 | generic-step01-inbound-processing-for-xi.md | fact | dropped (duplicate of C-652) | same script, same statement | |
-| C-813 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/readCustomXFromPD.md | behaviour of readCustomXFromPD | |
-| C-814 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/readCustomXFromPD.md | behaviour of readCustomXFromPD | |
-| C-815 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/readCustomXFromPD.md | behaviour of readCustomXFromPD | |
-| C-816 | generic-step01-inbound-processing-for-xi.md | fact | dropped (already on scripts/readInboundQueueFromPD.md) | grep inbQueue: same lookup | |
-| C-817 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/readInboundQueueFromPD.md | behaviour of readInboundQueueFromPD | |
+| C-813 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/readCustomXFromPD.md | behaviour of readCustomXFromPD | already on page |
+| C-814 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/readCustomXFromPD.md | behaviour of readCustomXFromPD | already on page |
+| C-815 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/readCustomXFromPD.md | behaviour of readCustomXFromPD | already on page |
+| C-816 | generic-step01-inbound-processing-for-xi.md | fact | dropped (already on scripts/readInboundQueueFromPD.md) | grep inbQueue: same lookup | n/a |
+| C-817 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/readInboundQueueFromPD.md | behaviour of readInboundQueueFromPD | already on page |
 | C-818 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | |
-| C-819 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/readInboundQueueFromPD.md | behaviour of readInboundQueueFromPD | |
-| C-820 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/addCustomHeaderProperties.md | behaviour of addCustomHeaderProperties | |
-| C-821 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/addCustomHeaderProperties.md | behaviour of addCustomHeaderProperties | |
-| C-822 | generic-step01-inbound-processing-for-xi.md | rationale | rationale→scripts/addCustomHeaderProperties.md | why the '\|' split | |
-| C-823 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/addCustomHeaderProperties.md | behaviour of addCustomHeaderProperties | |
-| C-824 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/addCustomHeaderProperties.md | behaviour of addCustomHeaderProperties | |
-| C-825 | generic-step01-inbound-processing-for-xi.md | fact | dropped (already on scripts/addCustomHeaderProperties.md) | grep _NdLstElmnt: page states the suffix cut | |
-| C-826 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/addCustomHeaderProperties.md | behaviour of addCustomHeaderProperties | |
-| C-827 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/addCustomHeaderProperties.md | behaviour of addCustomHeaderProperties | |
+| C-819 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/readInboundQueueFromPD.md | behaviour of readInboundQueueFromPD | already on page |
+| C-820 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/addCustomHeaderProperties.md | behaviour of addCustomHeaderProperties | already on page |
+| C-821 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/addCustomHeaderProperties.md | behaviour of addCustomHeaderProperties | already on page |
+| C-822 | generic-step01-inbound-processing-for-xi.md | rationale | rationale→scripts/addCustomHeaderProperties.md | why the '\|' split | added |
+| C-823 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/addCustomHeaderProperties.md | behaviour of addCustomHeaderProperties | already on page |
+| C-824 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/addCustomHeaderProperties.md | behaviour of addCustomHeaderProperties | already on page |
+| C-825 | generic-step01-inbound-processing-for-xi.md | fact | dropped (already on scripts/addCustomHeaderProperties.md) | grep _NdLstElmnt: page states the suffix cut | n/a |
+| C-826 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/addCustomHeaderProperties.md | behaviour of addCustomHeaderProperties | already on page |
+| C-827 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/addCustomHeaderProperties.md | behaviour of addCustomHeaderProperties | already on page |
 | C-828 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | two calls of the script | |
-| C-829 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/addCustomHeaderProperties.md | behaviour of addCustomHeaderProperties | |
-| C-830 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/addCustomHeaderProperties.md | behaviour of addCustomHeaderProperties | |
-| C-831 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/readBypassOptionFromPD.md | behaviour of readBypassOptionFromPD | |
-| C-832 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/readBypassOptionFromPD.md | behaviour of readBypassOptionFromPD | |
-| C-833 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/readBypassOptionFromPD.md | behaviour of readBypassOptionFromPD | |
+| C-829 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/addCustomHeaderProperties.md | behaviour of addCustomHeaderProperties | already on page |
+| C-830 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/addCustomHeaderProperties.md | behaviour of addCustomHeaderProperties | added |
+| C-831 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/readBypassOptionFromPD.md | behaviour of readBypassOptionFromPD | already on page |
+| C-832 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/readBypassOptionFromPD.md | behaviour of readBypassOptionFromPD | already on page |
+| C-833 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/readBypassOptionFromPD.md | behaviour of readBypassOptionFromPD | already on page |
 | C-834 | generic-step01-inbound-processing-for-xi.md | fact | dropped (duplicate of C-696) | same statement as the earlier claim | |
 | C-835 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | |
 | C-836 | generic-step01-inbound-processing-for-xi.md | pitfall | pitfall | B1b-flagged: misspelt log key | |
-| C-837 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/mapReceiverAliasToBusinessSystemName.md | behaviour of mapReceiverAliasToBusinessSystemName | |
+| C-837 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/mapReceiverAliasToBusinessSystemName.md | behaviour of mapReceiverAliasToBusinessSystemName | already on page |
 | C-838 | generic-step01-inbound-processing-for-xi.md | fact | dropped (duplicate of C-507) | same script, same statement | |
-| C-839 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/mapReceiverAliasToBusinessSystemName.md | behaviour of mapReceiverAliasToBusinessSystemName | |
-| C-840 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/mapReceiverAliasToBusinessSystemName.md | behaviour of mapReceiverAliasToBusinessSystemName | |
-| C-841 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/mapReceiverAliasToBusinessSystemName.md | behaviour of mapReceiverAliasToBusinessSystemName | |
-| C-842 | generic-step01-inbound-processing-for-xi.md | fact | dropped (already on scripts/mapReceiverAliasToBusinessSystemName.md) | grep mapReceiverToBusinessName: same log location | |
-| C-843 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/mapReceiverAliasToBusinessSystemName.md | behaviour of mapReceiverAliasToBusinessSystemName | |
-| C-844 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/throwException.md | behaviour of throwException | |
-| C-845 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/throwException.md | behaviour of throwException | |
-| C-846 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/throwException.md | behaviour of throwException | |
-| C-847 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/throwException.md | behaviour of throwException | |
+| C-839 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/mapReceiverAliasToBusinessSystemName.md | behaviour of mapReceiverAliasToBusinessSystemName | already on page |
+| C-840 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/mapReceiverAliasToBusinessSystemName.md | behaviour of mapReceiverAliasToBusinessSystemName | already on page |
+| C-841 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/mapReceiverAliasToBusinessSystemName.md | behaviour of mapReceiverAliasToBusinessSystemName | already on page |
+| C-842 | generic-step01-inbound-processing-for-xi.md | fact | dropped (already on scripts/mapReceiverAliasToBusinessSystemName.md) | grep mapReceiverToBusinessName: same log location | n/a |
+| C-843 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/mapReceiverAliasToBusinessSystemName.md | behaviour of mapReceiverAliasToBusinessSystemName | already on page |
+| C-844 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/throwException.md | behaviour of throwException | already on page |
+| C-845 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/throwException.md | behaviour of throwException | already on page |
+| C-846 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/throwException.md | behaviour of throwException | already on page |
+| C-847 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/throwException.md | behaviour of throwException | already on page |
 | C-848 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | three calls of the script | |
 | C-849 | generic-step01-inbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | about the Step01 XI page | |
-| C-850 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/throwException.md | behaviour of throwException | |
-| C-851 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/PipelineLogger.md | behaviour of PipelineLogger | |
-| C-852 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/PipelineHelper.md | behaviour of PipelineHelper | |
-| C-853 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/auditLogHandler.md | behaviour of auditLogHandler | |
+| C-850 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/throwException.md | behaviour of throwException | added |
+| C-851 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/PipelineLogger.md | behaviour of PipelineLogger | already on page |
+| C-852 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/PipelineHelper.md | behaviour of PipelineHelper | already on page |
+| C-853 | generic-step01-inbound-processing-for-xi.md | fact | fact→scripts/auditLogHandler.md | behaviour of auditLogHandler | omitted (granularity) |
 | C-854 | generic-step01-inbound-processing-for-idoc.md | fact | dropped (duplicate of C-038) | same iFlow version statement | |
 | C-855 | generic-step01-inbound-processing-for-idoc.md | fact | dropped (duplicate of C-025) | same statement as the earlier claim | |
 | C-856 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | |
@@ -1075,7 +1075,7 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-873 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | |
 | C-874 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | EOIO branch | |
 | C-875 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | |
-| C-876 | generic-step01-inbound-processing-for-idoc.md | fact | dropped (already on scripts/setIDocSenderInterface.md) | grep SapPlainSoapQoS: same default | |
+| C-876 | generic-step01-inbound-processing-for-idoc.md | fact | dropped (already on scripts/setIDocSenderInterface.md) | grep SapPlainSoapQoS: same default | n/a |
 | C-877 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | EO step "Read inbound queue" | |
 | C-878 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | |
 | C-879 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | EO step "Set bulk IDs" | |
@@ -1094,17 +1094,17 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-892 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | |
 | C-893 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | JMS write local process | |
 | C-894 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | |
-| C-895 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/readCustomXFromPD.md | behaviour of readCustomXFromPD | |
+| C-895 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/readCustomXFromPD.md | behaviour of readCustomXFromPD | pitfall |
 | C-896 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | |
 | C-897 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | |
 | C-898 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | |
 | C-899 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | |
 | C-900 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | |
 | C-901 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | script call order of the main flow | |
-| C-902 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/setIDocSenderInterface.md | behaviour of setIDocSenderInterface | |
-| C-903 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | behaviour of determinePartnerIDForIDocInbound | |
-| C-904 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/displayBulkIDs.md | behaviour of displayBulkIDs | |
-| C-905 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/readKeepBulkSettingFromPD.md | behaviour of readKeepBulkSettingFromPD | |
+| C-902 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/setIDocSenderInterface.md | behaviour of setIDocSenderInterface | already on page |
+| C-903 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | behaviour of determinePartnerIDForIDocInbound | already on page |
+| C-904 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/displayBulkIDs.md | behaviour of displayBulkIDs | already on page |
+| C-905 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/readKeepBulkSettingFromPD.md | behaviour of readKeepBulkSettingFromPD | already on page |
 | C-906 | generic-step01-inbound-processing-for-idoc.md | fact | dropped (duplicate of C-115) | same statement as the earlier claim | |
 | C-907 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | throwException call in the EOIO branch | |
 | C-908 | generic-step01-inbound-processing-for-idoc.md | fact | dropped (duplicate of C-040) | same statement as the earlier claim | |
@@ -1126,107 +1126,107 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-924 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | same default as on Step01 XI; B3 checks both iFlows | |
 | C-925 | generic-step01-inbound-processing-for-idoc.md | fact | dropped (duplicate of C-046) | same statement as the earlier claims (C-046, C-048, C-053) | |
 | C-926 | generic-step01-inbound-processing-for-idoc.md | fact | dropped (duplicate of C-477) | same statement as the earlier claim | |
-| C-927 | generic-step01-inbound-processing-for-idoc.md | fact | dropped (already on scripts/setIDocSenderInterface.md) | grep idoc:messages: same namespace | |
+| C-927 | generic-step01-inbound-processing-for-idoc.md | fact | dropped (already on scripts/setIDocSenderInterface.md) | grep idoc:messages: same namespace | n/a |
 | C-928 | generic-step01-inbound-processing-for-idoc.md | fact | dropped (duplicate of C-876) | same statement as the earlier claim | |
-| C-929 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/setIDocSenderInterface.md | behaviour of setIDocSenderInterface | |
-| C-930 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/setIDocSenderInterface.md | behaviour of setIDocSenderInterface | |
-| C-931 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-932 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-933 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-934 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-935 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-936 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-937 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-938 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-939 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-940 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-941 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-942 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-943 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-944 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-945 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-946 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-947 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-948 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-949 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-950 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-951 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-952 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-953 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-954 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-955 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-956 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-957 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-958 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-959 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-960 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-961 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-962 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-963 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-964 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-965 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-966 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-967 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-968 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-969 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-970 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-971 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-972 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-973 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-974 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-975 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-976 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-977 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-978 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-979 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-980 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-981 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-982 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-983 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-984 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-985 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-986 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-987 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-988 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
+| C-929 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/setIDocSenderInterface.md | behaviour of setIDocSenderInterface | already on page |
+| C-930 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/setIDocSenderInterface.md | behaviour of setIDocSenderInterface | already on page |
+| C-931 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
+| C-932 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
+| C-933 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
+| C-934 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
+| C-935 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
+| C-936 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
+| C-937 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
+| C-938 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
+| C-939 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
+| C-940 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
+| C-941 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
+| C-942 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
+| C-943 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
+| C-944 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
+| C-945 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
+| C-946 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
+| C-947 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
+| C-948 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
+| C-949 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | added |
+| C-950 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | added |
+| C-951 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
+| C-952 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
+| C-953 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
+| C-954 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | added |
+| C-955 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | added |
+| C-956 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
+| C-957 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | added |
+| C-958 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | added |
+| C-959 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | omitted (granularity) |
+| C-960 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | added |
+| C-961 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
+| C-962 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
+| C-963 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
+| C-964 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
+| C-965 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
+| C-966 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
+| C-967 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
+| C-968 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
+| C-969 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
+| C-970 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
+| C-971 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
+| C-972 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
+| C-973 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
+| C-974 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
+| C-975 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
+| C-976 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
+| C-977 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
+| C-978 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
+| C-979 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
+| C-980 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
+| C-981 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
+| C-982 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
+| C-983 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
+| C-984 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
+| C-985 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
+| C-986 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
+| C-987 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
+| C-988 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
 | C-989 | generic-step01-inbound-processing-for-idoc.md | pitfall | pitfall | B1b-flagged: customHeader_PartnerID vs customHeader_partnerID | |
-| C-990 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-991 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-992 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-993 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-994 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-995 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-996 | generic-step01-inbound-processing-for-idoc.md | rationale | rationale→scripts/determinePartnerIDForIDocInbound.md | why the header rollback | |
-| C-997 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-998 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-999 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-1000 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-1001 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-1002 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-1003 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
+| C-990 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | omitted (granularity) |
+| C-991 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | omitted (granularity) |
+| C-992 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
+| C-993 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
+| C-994 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
+| C-995 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | added |
+| C-996 | generic-step01-inbound-processing-for-idoc.md | rationale | rationale→scripts/determinePartnerIDForIDocInbound.md | why the header rollback | added |
+| C-997 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
+| C-998 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
+| C-999 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
+| C-1000 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | omitted (granularity) |
+| C-1001 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | omitted (granularity) |
+| C-1002 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
+| C-1003 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | pitfall |
 | C-1004 | generic-step01-inbound-processing-for-idoc.md | open-question | pitfall | B1b-flagged: summary fallback vs quoted code | |
-| C-1005 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
+| C-1005 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | already on page |
 | C-1006 | generic-step01-inbound-processing-for-idoc.md | fact | changelog | extension from 1.0.6 | |
 | C-1007 | generic-step01-inbound-processing-for-idoc.md | fact | changelog | fix in 1.0.7 | |
-| C-1008 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
-| C-1009 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | |
+| C-1008 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | pitfall |
+| C-1009 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | IDoc partner ID script internals (quoted code) | pitfall |
 | C-1010 | generic-step01-inbound-processing-for-idoc.md | open-question | pitfall | B1b-flagged: summary output SAP_Receiver vs quoted code | |
 | C-1011 | generic-step01-inbound-processing-for-idoc.md | fact | dropped (duplicate of C-829) | same script, same statement | |
 | C-1012 | generic-step01-inbound-processing-for-idoc.md | fact | dropped (duplicate of C-655) | same script, same statement | |
 | C-1013 | generic-step01-inbound-processing-for-idoc.md | fact | dropped (duplicate of C-816) | same script, same statement | |
-| C-1014 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/displayBulkIDs.md | behaviour of displayBulkIDs | |
-| C-1015 | generic-step01-inbound-processing-for-idoc.md | fact | dropped (already on scripts/displayBulkIDs.md) | grep SapIDocDbId: same custom headers | |
-| C-1016 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/displayBulkIDs.md | behaviour of displayBulkIDs | |
-| C-1017 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/displayBulkIDs.md | behaviour of displayBulkIDs | |
-| C-1018 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/displayBulkIDs.md | behaviour of displayBulkIDs | |
-| C-1019 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/displayBulkIDs.md | behaviour of displayBulkIDs | |
+| C-1014 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/displayBulkIDs.md | behaviour of displayBulkIDs | already on page |
+| C-1015 | generic-step01-inbound-processing-for-idoc.md | fact | dropped (already on scripts/displayBulkIDs.md) | grep SapIDocDbId: same custom headers | n/a |
+| C-1016 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/displayBulkIDs.md | behaviour of displayBulkIDs | already on page |
+| C-1017 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/displayBulkIDs.md | behaviour of displayBulkIDs | already on page |
+| C-1018 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/displayBulkIDs.md | behaviour of displayBulkIDs | already on page |
+| C-1019 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/displayBulkIDs.md | behaviour of displayBulkIDs | already on page |
 | C-1020 | generic-step01-inbound-processing-for-idoc.md | fact | dropped (duplicate of C-1016) | same statement as the earlier claim | |
-| C-1021 | generic-step01-inbound-processing-for-idoc.md | fact | dropped (already on scripts/readKeepBulkSettingFromPD.md) | grep keepBulk: same default | |
+| C-1021 | generic-step01-inbound-processing-for-idoc.md | fact | dropped (already on scripts/readKeepBulkSettingFromPD.md) | grep keepBulk: same default | n/a |
 | C-1022 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | about the Step01 IDoc page | |
-| C-1023 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/readKeepBulkSettingFromPD.md | behaviour of readKeepBulkSettingFromPD | |
-| C-1024 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/readKeepBulkSettingFromPD.md | behaviour of readKeepBulkSettingFromPD | |
-| C-1025 | generic-step01-inbound-processing-for-idoc.md | fact | dropped (already on scripts/removeLeadingZerosFromApplicationID.md) | grep replaceFirst: same statement | |
+| C-1023 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/readKeepBulkSettingFromPD.md | behaviour of readKeepBulkSettingFromPD | already on page |
+| C-1024 | generic-step01-inbound-processing-for-idoc.md | fact | fact→scripts/readKeepBulkSettingFromPD.md | behaviour of readKeepBulkSettingFromPD | added |
+| C-1025 | generic-step01-inbound-processing-for-idoc.md | fact | dropped (already on scripts/removeLeadingZerosFromApplicationID.md) | grep replaceFirst: same statement | n/a |
 | C-1026 | generic-step01-inbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | step order of "Remove leading zeros" | |
-| C-1027 | generic-step01-inbound-processing-for-idoc.md | rationale | rationale→scripts/removeLeadingZerosFromApplicationID.md | why zeros are removed | |
+| C-1027 | generic-step01-inbound-processing-for-idoc.md | rationale | rationale→scripts/removeLeadingZerosFromApplicationID.md | why zeros are removed | added |
 | C-1028 | generic-step01-inbound-processing-for-idoc.md | fact | dropped (duplicate of C-844) | same script, same statement | |
 | C-1029 | generic-step01-inbound-processing-for-idoc.md | fact | dropped (duplicate of C-907) | same statement as the earlier claim | |
 | C-1030 | generic-step01-inbound-processing-for-idoc.md | fact | dropped (duplicate of C-851) | same script, same statement | |
@@ -1271,8 +1271,8 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-1069 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | about the Step02 inbound page | |
 | C-1070 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | about the Step02 inbound page | |
 | C-1071 | generic-step02-inbound-processing.md | fact | dropped (duplicate of C-570) | same statement as the earlier claim | |
-| C-1072 | generic-step02-inbound-processing.md | fact | fact→scripts/readInboundConversionFromPD.md | behaviour of readInboundConversionFromPD | |
-| C-1073 | generic-step02-inbound-processing.md | fact | fact→scripts/readReceiverSpecificQueueFromPD.md | behaviour of readReceiverSpecificQueueFromPD | |
+| C-1072 | generic-step02-inbound-processing.md | fact | fact→scripts/readInboundConversionFromPD.md | behaviour of readInboundConversionFromPD | already on page |
+| C-1073 | generic-step02-inbound-processing.md | fact | fact→scripts/readReceiverSpecificQueueFromPD.md | behaviour of readReceiverSpecificQueueFromPD | already on page |
 | C-1074 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | script copies identical to Step01 XI (md5 on script pages) | |
 | C-1075 | generic-step02-inbound-processing.md | fact | dropped (duplicate of C-740) | same script, same statement | |
 | C-1076 | generic-step02-inbound-processing.md | fact | dropped (duplicate of C-741) | same script, same statement | |
@@ -1308,15 +1308,15 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-1106 | generic-step02-inbound-processing.md | fact | dropped (duplicate of C-741) | same script, same statement | |
 | C-1107 | generic-step02-inbound-processing.md | fact | dropped (duplicate of C-742) | same script, same statement (DLQ part: C-1066) | |
 | C-1108 | generic-step02-inbound-processing.md | fact | dropped (duplicate of C-804) | same script, same statement | |
-| C-1109 | generic-step02-inbound-processing.md | fact | fact→scripts/readRetryHandlingFromPD.md | behaviour of readRetryHandlingFromPD | |
-| C-1110 | generic-step02-inbound-processing.md | fact | dropped (already on scripts/readRetryHandlingFromPD.md) | grep maxJMSRetries: header kept when present | |
-| C-1111 | generic-step02-inbound-processing.md | fact | dropped (already on scripts/readRetryHandlingFromPD.md) | grep maxJMSRetries: Integer or 5 | |
-| C-1112 | generic-step02-inbound-processing.md | fact | fact→scripts/readRetryHandlingFromPD.md | behaviour of readRetryHandlingFromPD | |
-| C-1113 | generic-step02-inbound-processing.md | fact | fact→scripts/readInboundConversionFromPD.md | behaviour of readInboundConversionFromPD | |
-| C-1114 | generic-step02-inbound-processing.md | fact | fact→scripts/readInboundConversionFromPD.md | behaviour of readInboundConversionFromPD | |
-| C-1115 | generic-step02-inbound-processing.md | fact | dropped (already on scripts/readInboundConversionFromPD.md) | grep inbConvBoolean: same properties | |
-| C-1116 | generic-step02-inbound-processing.md | fact | fact→scripts/readInboundConversionFromPD.md | behaviour of readInboundConversionFromPD | |
-| C-1117 | generic-step02-inbound-processing.md | fact | fact→scripts/readBypassOptionFromPD.md | behaviour of readBypassOptionFromPD | |
+| C-1109 | generic-step02-inbound-processing.md | fact | fact→scripts/readRetryHandlingFromPD.md | behaviour of readRetryHandlingFromPD | already on page |
+| C-1110 | generic-step02-inbound-processing.md | fact | dropped (already on scripts/readRetryHandlingFromPD.md) | grep maxJMSRetries: header kept when present | n/a |
+| C-1111 | generic-step02-inbound-processing.md | fact | dropped (already on scripts/readRetryHandlingFromPD.md) | grep maxJMSRetries: Integer or 5 | n/a |
+| C-1112 | generic-step02-inbound-processing.md | fact | fact→scripts/readRetryHandlingFromPD.md | behaviour of readRetryHandlingFromPD | added |
+| C-1113 | generic-step02-inbound-processing.md | fact | fact→scripts/readInboundConversionFromPD.md | behaviour of readInboundConversionFromPD | already on page |
+| C-1114 | generic-step02-inbound-processing.md | fact | fact→scripts/readInboundConversionFromPD.md | behaviour of readInboundConversionFromPD | already on page |
+| C-1115 | generic-step02-inbound-processing.md | fact | dropped (already on scripts/readInboundConversionFromPD.md) | grep inbConvBoolean: same properties | n/a |
+| C-1116 | generic-step02-inbound-processing.md | fact | fact→scripts/readInboundConversionFromPD.md | behaviour of readInboundConversionFromPD | already on page |
+| C-1117 | generic-step02-inbound-processing.md | fact | fact→scripts/readBypassOptionFromPD.md | behaviour of readBypassOptionFromPD | already on page |
 | C-1118 | generic-step02-inbound-processing.md | fact | dropped (duplicate of C-831) | same script, same statement | |
 | C-1119 | generic-step02-inbound-processing.md | fact | dropped (duplicate of C-833) | same script, same statement | |
 | C-1120 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | about the Step02 inbound page | |
@@ -1324,26 +1324,26 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-1122 | generic-step02-inbound-processing.md | fact | dropped (duplicate of C-837) | same script, same statement | |
 | C-1123 | generic-step02-inbound-processing.md | fact | dropped (duplicate of C-507) | same script, same statement | |
 | C-1124 | generic-step02-inbound-processing.md | fact | dropped (duplicate of C-839) | same script, same statement | |
-| C-1125 | generic-step02-inbound-processing.md | fact | fact→scripts/mapReceiverAliasToBusinessSystemName.md | behaviour of mapReceiverAliasToBusinessSystemName | |
+| C-1125 | generic-step02-inbound-processing.md | fact | fact→scripts/mapReceiverAliasToBusinessSystemName.md | behaviour of mapReceiverAliasToBusinessSystemName | already on page |
 | C-1126 | generic-step02-inbound-processing.md | fact | dropped (duplicate of C-842) | same script, same statement | |
-| C-1127 | generic-step02-inbound-processing.md | fact | fact→scripts/readReceiverSpecificQueueFromPD.md | behaviour of readReceiverSpecificQueueFromPD | |
-| C-1128 | generic-step02-inbound-processing.md | fact | fact→scripts/readReceiverSpecificQueueFromPD.md | behaviour of readReceiverSpecificQueueFromPD | |
-| C-1129 | generic-step02-inbound-processing.md | fact | dropped (already on scripts/readReceiverSpecificQueueFromPD.md) | grep ReceiverSpecificQueue_: same lookup order | |
-| C-1130 | generic-step02-inbound-processing.md | fact | dropped (already on scripts/readReceiverSpecificQueueFromPD.md) | grep receiverSpecificQueueBoolean: same properties | |
-| C-1131 | generic-step02-inbound-processing.md | fact | fact→scripts/readReceiverSpecificQueueFromPD.md | behaviour of readReceiverSpecificQueueFromPD | |
-| C-1132 | generic-step02-inbound-processing.md | fact | dropped (already on scripts/checkWellFormedXML.md) | grep XmlSlurper: same statement | |
-| C-1133 | generic-step02-inbound-processing.md | fact | dropped (already on scripts/checkWellFormedXML.md) | page states the audit log write | |
+| C-1127 | generic-step02-inbound-processing.md | fact | fact→scripts/readReceiverSpecificQueueFromPD.md | behaviour of readReceiverSpecificQueueFromPD | already on page |
+| C-1128 | generic-step02-inbound-processing.md | fact | fact→scripts/readReceiverSpecificQueueFromPD.md | behaviour of readReceiverSpecificQueueFromPD | already on page |
+| C-1129 | generic-step02-inbound-processing.md | fact | dropped (already on scripts/readReceiverSpecificQueueFromPD.md) | grep ReceiverSpecificQueue_: same lookup order | n/a |
+| C-1130 | generic-step02-inbound-processing.md | fact | dropped (already on scripts/readReceiverSpecificQueueFromPD.md) | grep receiverSpecificQueueBoolean: same properties | n/a |
+| C-1131 | generic-step02-inbound-processing.md | fact | fact→scripts/readReceiverSpecificQueueFromPD.md | behaviour of readReceiverSpecificQueueFromPD | already on page |
+| C-1132 | generic-step02-inbound-processing.md | fact | dropped (already on scripts/checkWellFormedXML.md) | grep XmlSlurper: same statement | n/a |
+| C-1133 | generic-step02-inbound-processing.md | fact | dropped (already on scripts/checkWellFormedXML.md) | page states the audit log write | n/a |
 | C-1134 | generic-step02-inbound-processing.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | about the Step02 inbound page | |
-| C-1135 | generic-step02-inbound-processing.md | fact | fact→scripts/storePayloadInXProperty.md | behaviour of storePayloadInXProperty | |
-| C-1136 | generic-step02-inbound-processing.md | rationale | rationale→scripts/storePayloadInXProperty.md | explains the design on storePayloadInXProperty | |
-| C-1137 | generic-step02-inbound-processing.md | fact | fact→scripts/fetchPayloadFromXProperty.md | behaviour of fetchPayloadFromXProperty | |
+| C-1135 | generic-step02-inbound-processing.md | fact | fact→scripts/storePayloadInXProperty.md | behaviour of storePayloadInXProperty | already on page |
+| C-1136 | generic-step02-inbound-processing.md | rationale | rationale→scripts/storePayloadInXProperty.md | explains the design on storePayloadInXProperty | added |
+| C-1137 | generic-step02-inbound-processing.md | fact | fact→scripts/fetchPayloadFromXProperty.md | behaviour of fetchPayloadFromXProperty | already on page |
 | C-1138 | generic-step02-inbound-processing.md | fact | dropped (duplicate of C-829) | same script, same statement | |
 | C-1139 | generic-step02-inbound-processing.md | fact | dropped (duplicate of C-823) | same script, same statement | |
-| C-1140 | generic-step02-inbound-processing.md | fact | dropped (already on scripts/attachAdditionallnformation.md) | grep _DLQ: same queue name | |
-| C-1141 | generic-step02-inbound-processing.md | fact | dropped (already on scripts/attachAdditionallnformation.md) | grep NONE, testMode: same inputs | |
-| C-1142 | generic-step02-inbound-processing.md | fact | fact→scripts/attachAdditionallnformation.md | behaviour of attachAdditionallnformation | |
-| C-1143 | generic-step02-inbound-processing.md | fact | dropped (already on scripts/attachAdditionallnformation.md) | grep Additional Information: same attachment | |
-| C-1144 | generic-step02-inbound-processing.md | fact | fact→scripts/attachAdditionallnformation.md | behaviour of attachAdditionallnformation | |
+| C-1140 | generic-step02-inbound-processing.md | fact | dropped (already on scripts/attachAdditionallnformation.md) | grep _DLQ: same queue name | n/a |
+| C-1141 | generic-step02-inbound-processing.md | fact | dropped (already on scripts/attachAdditionallnformation.md) | grep NONE, testMode: same inputs | n/a |
+| C-1142 | generic-step02-inbound-processing.md | fact | fact→scripts/attachAdditionallnformation.md | behaviour of attachAdditionallnformation | already on page |
+| C-1143 | generic-step02-inbound-processing.md | fact | dropped (already on scripts/attachAdditionallnformation.md) | grep Additional Information: same attachment | n/a |
+| C-1144 | generic-step02-inbound-processing.md | fact | fact→scripts/attachAdditionallnformation.md | behaviour of attachAdditionallnformation | already on page |
 | C-1145 | generic-step02-inbound-processing.md | fact | dropped (duplicate of C-808) | same script, same statement | |
 | C-1146 | generic-step02-inbound-processing.md | fact | dropped (duplicate of C-653) | same script, same statement | |
 | C-1147 | generic-step02-inbound-processing.md | fact | dropped (duplicate of C-655) | same script, same statement | |
@@ -1393,7 +1393,7 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-1191 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | script list of the sync page | |
 | C-1192 | generic-step02-integrated-messaging-runtime-sync.md | fact | changelog | determinePartnerID 1.0.4 stages version in Step02 sync | |
 | C-1193 | generic-step02-integrated-messaging-runtime-sync.md | fact | changelog | fix in 1.0.3 script reference | |
-| C-1194 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/determinePartnerID.md | virtual-stage log line | |
+| C-1194 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/determinePartnerID.md | virtual-stage log line | omitted (granularity) |
 | C-1195 | generic-step02-integrated-messaging-runtime-sync.md | fact | dropped (duplicate of C-740) | same script, same statement | |
 | C-1196 | generic-step02-integrated-messaging-runtime-sync.md | fact | dropped (duplicate of C-741) | same script, same statement | |
 | C-1197 | generic-step02-integrated-messaging-runtime-sync.md | fact | dropped (duplicate of C-742) | same script, same statement | |
@@ -1435,7 +1435,7 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-1233 | generic-step02-integrated-messaging-runtime-sync.md | fact | dropped (duplicate of C-799) | same script, same statement | |
 | C-1234 | generic-step02-integrated-messaging-runtime-sync.md | rationale | dropped (duplicate of C-798) | same script, same statement | |
 | C-1235 | generic-step02-integrated-messaging-runtime-sync.md | fact | dropped (duplicate of C-799) | same script, same statement | |
-| C-1236 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/determinePartnerID.md | purpose of the partner ID | |
+| C-1236 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/determinePartnerID.md | purpose of the partner ID | already on page |
 | C-1237 | generic-step02-integrated-messaging-runtime-sync.md | fact | dropped (duplicate of C-804) | same script, same statement | |
 | C-1238 | generic-step02-integrated-messaging-runtime-sync.md | open-question | pitfall | B1c-flagged: summary outputs vs quoted code | |
 | C-1239 | generic-step02-integrated-messaging-runtime-sync.md | fact | dropped (duplicate of C-808) | same script, same statement | |
@@ -1453,43 +1453,43 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-1251 | generic-step02-integrated-messaging-runtime-sync.md | fact | dropped (duplicate of C-832) | same script, same statement | |
 | C-1252 | generic-step02-integrated-messaging-runtime-sync.md | pitfall | dropped (duplicate of C-836) | same script, same statement | |
 | C-1253 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | no receiverDetermination: default route | |
-| C-1254 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/readCustomReceiverDeterminationFromPD.md | behaviour of readCustomReceiverDeterminationFromPD | |
-| C-1255 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/readCustomReceiverDeterminationFromPD.md | behaviour of readCustomReceiverDeterminationFromPD | |
-| C-1256 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/readCustomReceiverDeterminationFromPD.md | behaviour of readCustomReceiverDeterminationFromPD | |
+| C-1254 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/readCustomReceiverDeterminationFromPD.md | behaviour of readCustomReceiverDeterminationFromPD | already on page |
+| C-1255 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/readCustomReceiverDeterminationFromPD.md | behaviour of readCustomReceiverDeterminationFromPD | already on page |
+| C-1256 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/readCustomReceiverDeterminationFromPD.md | behaviour of readCustomReceiverDeterminationFromPD | already on page |
 | C-1257 | generic-step02-integrated-messaging-runtime-sync.md | open-question | pitfall | B1c-flagged: comment vs ?: null | |
-| C-1258 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/readCustomReceiverDeterminationFromPD.md | behaviour of readCustomReceiverDeterminationFromPD | |
-| C-1259 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/readCustomReceiverDeterminationFromPD.md | behaviour of readCustomReceiverDeterminationFromPD | |
-| C-1260 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | behaviour of mapSenderStageToReceiverStage | |
-| C-1261 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | behaviour of mapSenderStageToReceiverStage | |
+| C-1258 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/readCustomReceiverDeterminationFromPD.md | behaviour of readCustomReceiverDeterminationFromPD | already on page |
+| C-1259 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/readCustomReceiverDeterminationFromPD.md | behaviour of readCustomReceiverDeterminationFromPD | already on page |
+| C-1260 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | behaviour of mapSenderStageToReceiverStage | already on page |
+| C-1261 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | behaviour of mapSenderStageToReceiverStage | already on page |
 | C-1262 | generic-step02-integrated-messaging-runtime-sync.md | open-question | pitfall | B1c-flagged: split before null test | |
-| C-1263 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | behaviour of mapSenderStageToReceiverStage | |
-| C-1264 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | behaviour of mapSenderStageToReceiverStage | |
-| C-1265 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | behaviour of mapSenderStageToReceiverStage | |
-| C-1266 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | behaviour of mapSenderStageToReceiverStage | |
-| C-1267 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | behaviour of mapSenderStageToReceiverStage | |
-| C-1268 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | behaviour of mapSenderStageToReceiverStage | |
-| C-1269 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | rule order, unknown stage | |
-| C-1270 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | behaviour of mapSenderStageToReceiverStage | |
-| C-1271 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | rule order, known stage | |
-| C-1272 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | behaviour of mapSenderStageToReceiverStage | |
-| C-1273 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | stage rule value format | |
-| C-1274 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | behaviour of mapSenderStageToReceiverStage | |
-| C-1275 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | behaviour of mapSenderStageToReceiverStage | |
-| C-1276 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | behaviour of mapSenderStageToReceiverStage | |
-| C-1277 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | behaviour of mapSenderStageToReceiverStage | |
-| C-1278 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | behaviour of mapSenderStageToReceiverStage | |
-| C-1279 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | behaviour of mapSenderStageToReceiverStage | |
+| C-1263 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | behaviour of mapSenderStageToReceiverStage | already on page |
+| C-1264 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | behaviour of mapSenderStageToReceiverStage | already on page |
+| C-1265 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | behaviour of mapSenderStageToReceiverStage | already on page |
+| C-1266 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | behaviour of mapSenderStageToReceiverStage | already on page |
+| C-1267 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | behaviour of mapSenderStageToReceiverStage | already on page |
+| C-1268 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | behaviour of mapSenderStageToReceiverStage | already on page |
+| C-1269 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | rule order, unknown stage | already on page |
+| C-1270 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | behaviour of mapSenderStageToReceiverStage | already on page |
+| C-1271 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | rule order, known stage | already on page |
+| C-1272 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | behaviour of mapSenderStageToReceiverStage | already on page |
+| C-1273 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | stage rule value format | already on page |
+| C-1274 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | behaviour of mapSenderStageToReceiverStage | already on page |
+| C-1275 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | behaviour of mapSenderStageToReceiverStage | already on page |
+| C-1276 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | behaviour of mapSenderStageToReceiverStage | already on page |
+| C-1277 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | behaviour of mapSenderStageToReceiverStage | already on page |
+| C-1278 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | behaviour of mapSenderStageToReceiverStage | already on page |
+| C-1279 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | behaviour of mapSenderStageToReceiverStage | already on page |
 | C-1280 | generic-step02-integrated-messaging-runtime-sync.md | fact | dropped (duplicate of C-160) | same script, same statement | |
-| C-1281 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | sync 1→1 restriction in the script | |
-| C-1282 | generic-step02-integrated-messaging-runtime-sync.md | rationale | rationale→scripts/mapSenderStageToReceiverStage.md | why no split in sync | |
+| C-1281 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | sync 1→1 restriction in the script | already on page |
+| C-1282 | generic-step02-integrated-messaging-runtime-sync.md | rationale | rationale→scripts/mapSenderStageToReceiverStage.md | why no split in sync | added |
 | C-1283 | generic-step02-integrated-messaging-runtime-sync.md | open-question | pitfall | B1c-flagged: summary outputs vs quoted code | |
 | C-1284 | generic-step02-integrated-messaging-runtime-sync.md | fact | dropped (duplicate of C-837) | same script, same statement | |
 | C-1285 | generic-step02-integrated-messaging-runtime-sync.md | fact | dropped (duplicate of C-1125) | same script, same statement | |
 | C-1286 | generic-step02-integrated-messaging-runtime-sync.md | fact | dropped (duplicate of C-507) | same script, same statement | |
 | C-1287 | generic-step02-integrated-messaging-runtime-sync.md | fact | dropped (duplicate of C-839) | same script, same statement | |
 | C-1288 | generic-step02-integrated-messaging-runtime-sync.md | fact | dropped (duplicate of C-842) | same script, same statement | |
-| C-1289 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/logOutboundProcessingEndpoint.md | behaviour of logOutboundProcessingEndpoint | |
-| C-1290 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/throwException.md | sync short variant of throwException | |
+| C-1289 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/logOutboundProcessingEndpoint.md | behaviour of logOutboundProcessingEndpoint | already on page |
+| C-1290 | generic-step02-integrated-messaging-runtime-sync.md | fact | fact→scripts/throwException.md | sync short variant of throwException | already on page |
 | C-1291 | generic-step02-integrated-messaging-runtime-sync.md | open-question | pitfall | B1c-flagged: summary exceptionType vs sync variant | |
 | C-1292 | generic-step02-integrated-messaging-runtime-sync.md | fact | dropped (duplicate of C-851) | same script, same statement | |
 | C-1293 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→versions/README.md | iFlow version of the label | |
@@ -1540,11 +1540,11 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-1338 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | direct DLQ conditions | |
 | C-1339 | generic-step02-integrated-messaging-runtime-async.md | fact | changelog | Error End since 1.0.4 | |
 | C-1340 | generic-step02-integrated-messaging-runtime-async.md | fact | changelog | mapSenderStageToReceiverStage 1.0.4 in Step02 async | |
-| C-1341 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | behaviour of mapSenderStageToReceiverStage | |
-| C-1342 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→scripts/storeOriginalPayloadInXProperty.md | behaviour of storeOriginalPayloadInXProperty | |
-| C-1343 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→scripts/storeOriginalPayloadInXProperty.md | quoted code of storeOriginalPayloadInXProperty | |
-| C-1344 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→scripts/storeOriginalPayloadInXProperty.md | summary of storeOriginalPayloadInXProperty | |
-| C-1345 | generic-step02-integrated-messaging-runtime-async.md | rationale | rationale→scripts/storeOriginalPayloadInXProperty.md | why the original payload is kept | |
+| C-1341 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | behaviour of mapSenderStageToReceiverStage | already on page |
+| C-1342 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→scripts/storeOriginalPayloadInXProperty.md | behaviour of storeOriginalPayloadInXProperty | already on page |
+| C-1343 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→scripts/storeOriginalPayloadInXProperty.md | quoted code of storeOriginalPayloadInXProperty | pitfall |
+| C-1344 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→scripts/storeOriginalPayloadInXProperty.md | summary of storeOriginalPayloadInXProperty | already on page |
+| C-1345 | generic-step02-integrated-messaging-runtime-async.md | rationale | rationale→scripts/storeOriginalPayloadInXProperty.md | why the original payload is kept | added |
 | C-1346 | generic-step02-integrated-messaging-runtime-async.md | open-question | pitfall | B1c-flagged: originalPayload vs payload | |
 | C-1347 | generic-step02-integrated-messaging-runtime-async.md | fact | dropped (duplicate of C-1194) | same statement as the earlier claim | |
 | C-1348 | generic-step02-integrated-messaging-runtime-async.md | fact | dropped (duplicate of C-740) | same statement as the earlier claim | |
@@ -1608,7 +1608,7 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-1406 | generic-step02-integrated-messaging-runtime-async.md | fact | dropped (duplicate of C-1114) | same script, same statement | |
 | C-1407 | generic-step02-integrated-messaging-runtime-async.md | open-question | pitfall | B1c-flagged: comment vs ?: null | |
 | C-1408 | generic-step02-integrated-messaging-runtime-async.md | fact | dropped (duplicate of C-1115) | same script, same statement | |
-| C-1409 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→scripts/readInboundConversionFromPD.md | audit log entries of readInboundConversionFromPD | |
+| C-1409 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→scripts/readInboundConversionFromPD.md | audit log entries of readInboundConversionFromPD | already on page |
 | C-1410 | generic-step02-integrated-messaging-runtime-async.md | fact | dropped (duplicate of C-1132) | same statement as the earlier claim | |
 | C-1411 | generic-step02-integrated-messaging-runtime-async.md | fact | dropped (duplicate of C-1133) | same statement as the earlier claim | |
 | C-1412 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | isWellFormedXml uses in async | |
@@ -1643,11 +1643,11 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-1441 | generic-step02-integrated-messaging-runtime-async.md | fact | dropped (duplicate of C-1277) | same statement as the earlier claim | |
 | C-1442 | generic-step02-integrated-messaging-runtime-async.md | fact | dropped (duplicate of C-1278) | same statement as the earlier claim | |
 | C-1443 | generic-step02-integrated-messaging-runtime-async.md | fact | dropped (duplicate of C-1279) | same statement as the earlier claim | |
-| C-1444 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | summary of mapSenderStageToReceiverStage | |
-| C-1445 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | summary rule priority | |
-| C-1446 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | multi-stage rule value | |
-| C-1447 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | multi-Receiver XML, async only | |
-| C-1448 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | summary outputs | |
+| C-1444 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | summary of mapSenderStageToReceiverStage | already on page |
+| C-1445 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | summary rule priority | already on page |
+| C-1446 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | multi-stage rule value | already on page |
+| C-1447 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | multi-Receiver XML, async only | already on page |
+| C-1448 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | summary outputs | already on page |
 | C-1449 | generic-step02-integrated-messaging-runtime-async.md | open-question | pitfall | B1c-flagged: summary omits singleReceiverStageBoolean | |
 | C-1450 | generic-step02-integrated-messaging-runtime-async.md | fact | dropped (duplicate of C-837) | same statement as the earlier claim | |
 | C-1451 | generic-step02-integrated-messaging-runtime-async.md | fact | dropped (duplicate of C-1125) | same statement as the earlier claim | |
@@ -1660,8 +1660,8 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-1458 | generic-step02-integrated-messaging-runtime-async.md | fact | dropped (duplicate of C-1130) | same statement as the earlier claim | |
 | C-1459 | generic-step02-integrated-messaging-runtime-async.md | fact | dropped (duplicate of C-1131) | same statement as the earlier claim | |
 | C-1460 | generic-step02-integrated-messaging-runtime-async.md | fact | dropped (duplicate of C-1289) | same statement as the earlier claim | |
-| C-1461 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→scripts/fetchOriginalPayloadFromXProperty.md | behaviour of fetchOriginalPayloadFromXProperty | |
-| C-1462 | generic-step02-integrated-messaging-runtime-async.md | rationale | rationale→scripts/fetchOriginalPayloadFromXProperty.md | why the original payload is restored | |
+| C-1461 | generic-step02-integrated-messaging-runtime-async.md | fact | fact→scripts/fetchOriginalPayloadFromXProperty.md | behaviour of fetchOriginalPayloadFromXProperty | already on page |
+| C-1462 | generic-step02-integrated-messaging-runtime-async.md | rationale | rationale→scripts/fetchOriginalPayloadFromXProperty.md | why the original payload is restored | already on page |
 | C-1463 | generic-step02-integrated-messaging-runtime-async.md | fact | dropped (duplicate of C-844) | same script, same statement | |
 | C-1464 | generic-step02-integrated-messaging-runtime-async.md | fact | dropped (duplicate of C-847) | same script, same statement | |
 | C-1465 | generic-step02-integrated-messaging-runtime-async.md | fact | dropped (duplicate of C-851) | same script, same statement | |
@@ -1698,7 +1698,7 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-1496 | generic-step04-receiver-determination.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step04.receiver.determination.md | branch without interfaces | |
 | C-1497 | generic-step04-receiver-determination.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step04.receiver.determination.md | error handling pattern | |
 | C-1498 | generic-step04-receiver-determination.md | fact | changelog | fix 1.0.2 original payload to custom error flow in Step04 | |
-| C-1499 | generic-step04-receiver-determination.md | fact | fact→scripts/readReceiverNotDeterminedFromPD.md | behaviour of readReceiverNotDeterminedFromPD | |
+| C-1499 | generic-step04-receiver-determination.md | fact | fact→scripts/readReceiverNotDeterminedFromPD.md | behaviour of readReceiverNotDeterminedFromPD | added |
 | C-1500 | generic-step04-receiver-determination.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step04.receiver.determination.md | not-determined info in the XSLT output | |
 | C-1501 | generic-step04-receiver-determination.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step04.receiver.determination.md | script identity statement | |
 | C-1502 | generic-step04-receiver-determination.md | fact | dropped (duplicate of C-1254) | same statement as the earlier claim | |
@@ -1707,10 +1707,10 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-1505 | generic-step04-receiver-determination.md | open-question | pitfall | B1c-flagged: comment vs ?: null | |
 | C-1506 | generic-step04-receiver-determination.md | fact | dropped (duplicate of C-1258) | same statement as the earlier claim | |
 | C-1507 | generic-step04-receiver-determination.md | fact | dropped (duplicate of C-1259) | same statement as the earlier claim | |
-| C-1508 | generic-step04-receiver-determination.md | fact | fact→scripts/readReceiverNotDeterminedFromPD.md | behaviour of readReceiverNotDeterminedFromPD | |
-| C-1509 | generic-step04-receiver-determination.md | fact | fact→scripts/readReceiverNotDeterminedFromPD.md | behaviour of readReceiverNotDeterminedFromPD | |
-| C-1510 | generic-step04-receiver-determination.md | fact | fact→scripts/readReceiverNotDeterminedFromPD.md | behaviour of readReceiverNotDeterminedFromPD | |
-| C-1511 | generic-step04-receiver-determination.md | fact | fact→scripts/readReceiverNotDeterminedFromPD.md | legacy logger of readReceiverNotDeterminedFromPD | |
+| C-1508 | generic-step04-receiver-determination.md | fact | fact→scripts/readReceiverNotDeterminedFromPD.md | behaviour of readReceiverNotDeterminedFromPD | already on page |
+| C-1509 | generic-step04-receiver-determination.md | fact | fact→scripts/readReceiverNotDeterminedFromPD.md | behaviour of readReceiverNotDeterminedFromPD | already on page |
+| C-1510 | generic-step04-receiver-determination.md | fact | fact→scripts/readReceiverNotDeterminedFromPD.md | behaviour of readReceiverNotDeterminedFromPD | already on page |
+| C-1511 | generic-step04-receiver-determination.md | fact | fact→scripts/readReceiverNotDeterminedFromPD.md | legacy logger of readReceiverNotDeterminedFromPD | already on page |
 | C-1512 | generic-step04-receiver-determination.md | fact | dropped (duplicate of C-1260) | same statement as the earlier claim | |
 | C-1513 | generic-step04-receiver-determination.md | fact | dropped (duplicate of C-1261) | same statement as the earlier claim | |
 | C-1514 | generic-step04-receiver-determination.md | open-question | pitfall | B1c-flagged: split before null test | |
@@ -1750,7 +1750,7 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-1548 | generic-step04-receiver-determination.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step04.receiver.determination.md | isWellFormedXml use in Step04 | |
 | C-1549 | generic-step04-receiver-determination.md | fact | dropped (duplicate of C-1135) | same statement as the earlier claim | |
 | C-1550 | generic-step04-receiver-determination.md | fact | dropped (duplicate of C-1137) | same script, same statement | |
-| C-1551 | generic-step04-receiver-determination.md | fact | fact→scripts/fetchPayloadFromXProperty.md | use in custom error handling | |
+| C-1551 | generic-step04-receiver-determination.md | fact | fact→scripts/fetchPayloadFromXProperty.md | use in custom error handling | already on page |
 | C-1552 | generic-step04-receiver-determination.md | fact | dropped (duplicate of C-821) | same statement as the earlier claim | |
 | C-1553 | generic-step04-receiver-determination.md | rationale | dropped (duplicate of C-822) | same statement as the earlier claim | |
 | C-1554 | generic-step04-receiver-determination.md | fact | dropped (duplicate of C-823) | same statement as the earlier claim | |
@@ -1796,11 +1796,11 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-1594 | generic-step05-interface-determination.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step05.interface.determination.md | error handling pattern | |
 | C-1595 | generic-step05-interface-determination.md | fact | changelog | fix 1.0.2 original payload to custom error flow in Step05 | |
 | C-1596 | generic-step05-interface-determination.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step05.interface.determination.md | script identity statement | |
-| C-1597 | generic-step05-interface-determination.md | fact | fact→scripts/readCustomInterfaceDeterminationFromPD.md | behaviour of readCustomInterfaceDeterminationFromPD | |
-| C-1598 | generic-step05-interface-determination.md | fact | fact→scripts/readCustomInterfaceDeterminationFromPD.md | behaviour of readCustomInterfaceDeterminationFromPD | |
+| C-1597 | generic-step05-interface-determination.md | fact | fact→scripts/readCustomInterfaceDeterminationFromPD.md | behaviour of readCustomInterfaceDeterminationFromPD | already on page |
+| C-1598 | generic-step05-interface-determination.md | fact | fact→scripts/readCustomInterfaceDeterminationFromPD.md | behaviour of readCustomInterfaceDeterminationFromPD | already on page |
 | C-1599 | generic-step05-interface-determination.md | open-question | pitfall | B1c-flagged: comment vs ?: null | |
-| C-1600 | generic-step05-interface-determination.md | fact | fact→scripts/readCustomInterfaceDeterminationFromPD.md | legacy logger of readCustomInterfaceDeterminationFromPD | |
-| C-1601 | generic-step05-interface-determination.md | fact | fact→scripts/readCustomInterfaceDeterminationFromPD.md | custom flow replaces the XSLT | |
+| C-1600 | generic-step05-interface-determination.md | fact | fact→scripts/readCustomInterfaceDeterminationFromPD.md | legacy logger of readCustomInterfaceDeterminationFromPD | already on page |
+| C-1601 | generic-step05-interface-determination.md | fact | fact→scripts/readCustomInterfaceDeterminationFromPD.md | custom flow replaces the XSLT | added |
 | C-1602 | generic-step05-interface-determination.md | fact | dropped (duplicate of C-1127) | same statement as the earlier claim | |
 | C-1603 | generic-step05-interface-determination.md | fact | dropped (duplicate of C-1128) | same statement as the earlier claim | |
 | C-1604 | generic-step05-interface-determination.md | fact | dropped (duplicate of C-1129) | same statement as the earlier claim | |
@@ -1812,7 +1812,7 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-1610 | generic-step05-interface-determination.md | fact | dropped (duplicate of C-1135) | same statement as the earlier claim | |
 | C-1611 | generic-step05-interface-determination.md | fact | dropped (duplicate of C-1137) | same statement as the earlier claim | |
 | C-1612 | generic-step05-interface-determination.md | fact | dropped (duplicate of C-1551) | same statement as the earlier claim | |
-| C-1613 | generic-step05-interface-determination.md | fact | fact→scripts/logOutboundProcessingEndpoint.md | endpoint origin in the log | |
+| C-1613 | generic-step05-interface-determination.md | fact | fact→scripts/logOutboundProcessingEndpoint.md | endpoint origin in the log | already on page |
 | C-1614 | generic-step05-interface-determination.md | fact | dropped (duplicate of C-821) | same statement as the earlier claim | |
 | C-1615 | generic-step05-interface-determination.md | rationale | dropped (duplicate of C-822) | same statement as the earlier claim | |
 | C-1616 | generic-step05-interface-determination.md | fact | dropped (duplicate of C-823) | same statement as the earlier claim | |
@@ -1917,7 +1917,7 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-1715 | generic-step08-outbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi.md | step 1 "Create dynamic configurations" | |
 | C-1716 | generic-step08-outbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi.md | dynamic XI headers in the adapter | |
 | C-1717 | generic-step08-outbound-processing-for-xi.md | fact | changelog | dynamic configuration since 1.0.3 | |
-| C-1718 | generic-step08-outbound-processing-for-xi.md | fact | fact→scripts/createSapDynamicConfigurationFromHeaders.md | mirror of the inbound script | |
+| C-1718 | generic-step08-outbound-processing-for-xi.md | fact | fact→scripts/createSapDynamicConfigurationFromHeaders.md | mirror of the inbound script | already on page |
 | C-1719 | generic-step08-outbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi.md | step 2 "Set Default Properties" | |
 | C-1720 | generic-step08-outbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi.md | MPL entries of "Set Default Properties" | |
 | C-1721 | generic-step08-outbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi.md | step 3 "Check if XML body" | |
@@ -1942,13 +1942,13 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-1740 | generic-step08-outbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi.md | script call site | |
 | C-1741 | generic-step08-outbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi.md | script table: header isWellFormedXML | |
 | C-1742 | generic-step08-outbound-processing-for-xi.md | open-question | pitfall | B1c-flagged: header vs property isWellFormedXml | |
-| C-1743 | generic-step08-outbound-processing-for-xi.md | fact | fact→scripts/readPDValuesForXI.md | behaviour of readPDValuesForXI | |
-| C-1744 | generic-step08-outbound-processing-for-xi.md | fact | fact→scripts/readPDValuesForXI.md | behaviour of readPDValuesForXI | |
+| C-1743 | generic-step08-outbound-processing-for-xi.md | fact | fact→scripts/readPDValuesForXI.md | behaviour of readPDValuesForXI | already on page |
+| C-1744 | generic-step08-outbound-processing-for-xi.md | fact | fact→scripts/readPDValuesForXI.md | behaviour of readPDValuesForXI | already on page |
 | C-1745 | generic-step08-outbound-processing-for-xi.md | fact | changelog | readPDValuesForXI fallback from 1.0.3 | |
-| C-1746 | generic-step08-outbound-processing-for-xi.md | fact | fact→scripts/readPDValuesForXI.md | behaviour of readPDValuesForXI | |
-| C-1747 | generic-step08-outbound-processing-for-xi.md | fact | fact→scripts/readPDValuesForXI.md | behaviour of readPDValuesForXI | |
+| C-1746 | generic-step08-outbound-processing-for-xi.md | fact | fact→scripts/readPDValuesForXI.md | behaviour of readPDValuesForXI | already on page |
+| C-1747 | generic-step08-outbound-processing-for-xi.md | fact | fact→scripts/readPDValuesForXI.md | behaviour of readPDValuesForXI | already on page |
 | C-1748 | generic-step08-outbound-processing-for-xi.md | open-question | pitfall | B1c-flagged: fallback order unclear | |
-| C-1749 | generic-step08-outbound-processing-for-xi.md | fact | fact→scripts/setValuesForXI.md | behaviour of setValuesForXI | |
+| C-1749 | generic-step08-outbound-processing-for-xi.md | fact | fact→scripts/setValuesForXI.md | behaviour of setValuesForXI | already on page |
 | C-1750 | generic-step08-outbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi.md | step "Throw Exception" | |
 | C-1751 | generic-step08-outbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi.md | logging scripts in the Exception Subprocess | |
 | C-1752 | generic-step08-outbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi.md | ProcessDirect_EndPoint default | |
@@ -1962,20 +1962,20 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-1760 | generic-step08-outbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi.md | Exception_LoggingConfiguration default | |
 | C-1761 | generic-step08-outbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi.md | AllowedHeadersList parameter | |
 | C-1762 | generic-step08-outbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi.md | parameters without default | |
-| C-1763 | generic-step08-outbound-processing-for-xi.md | fact | fact→scripts/createSapDynamicConfigurationFromHeaders.md | behaviour of createSapDynamicConfigurationFromHeaders | |
-| C-1764 | generic-step08-outbound-processing-for-xi.md | fact | fact→scripts/createSapDynamicConfigurationFromHeaders.md | behaviour of createSapDynamicConfigurationFromHeaders | |
-| C-1765 | generic-step08-outbound-processing-for-xi.md | fact | fact→scripts/checkWellFormedXML.md | Step08 XI variant sets a property | |
+| C-1763 | generic-step08-outbound-processing-for-xi.md | fact | fact→scripts/createSapDynamicConfigurationFromHeaders.md | behaviour of createSapDynamicConfigurationFromHeaders | already on page |
+| C-1764 | generic-step08-outbound-processing-for-xi.md | fact | fact→scripts/createSapDynamicConfigurationFromHeaders.md | behaviour of createSapDynamicConfigurationFromHeaders | already on page |
+| C-1765 | generic-step08-outbound-processing-for-xi.md | fact | fact→scripts/checkWellFormedXML.md | Step08 XI variant sets a property | already on page |
 | C-1766 | generic-step08-outbound-processing-for-xi.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi.md | XPath fallback controlled by isWellFormedXml | |
 | C-1767 | generic-step08-outbound-processing-for-xi.md | fact | dropped (not pipeline) | document meta: code not quoted on the page | |
-| C-1768 | generic-step08-outbound-processing-for-xi.md | fact | fact→scripts/readPDValuesForXI.md | behaviour of readPDValuesForXI | |
-| C-1769 | generic-step08-outbound-processing-for-xi.md | fact | fact→scripts/readPDValuesForXI.md | behaviour of readPDValuesForXI | |
-| C-1770 | generic-step08-outbound-processing-for-xi.md | fact | fact→scripts/readPDValuesForXI.md | behaviour of readPDValuesForXI | |
-| C-1771 | generic-step08-outbound-processing-for-xi.md | fact | fact→scripts/readPDValuesForXI.md | outputs of readPDValuesForXI | |
-| C-1772 | generic-step08-outbound-processing-for-xi.md | fact | fact→scripts/setValuesForXI.md | behaviour of setValuesForXI | |
-| C-1773 | generic-step08-outbound-processing-for-xi.md | fact | fact→scripts/setValuesForXI.md | behaviour of setValuesForXI | |
-| C-1774 | generic-step08-outbound-processing-for-xi.md | fact | fact→scripts/setValuesForXI.md | behaviour of setValuesForXI | |
-| C-1775 | generic-step08-outbound-processing-for-xi.md | fact | fact→scripts/setValuesForXI.md | behaviour of setValuesForXI | |
-| C-1776 | generic-step08-outbound-processing-for-xi.md | fact | fact→scripts/setValuesForXI.md | behaviour of setValuesForXI | |
+| C-1768 | generic-step08-outbound-processing-for-xi.md | fact | fact→scripts/readPDValuesForXI.md | behaviour of readPDValuesForXI | already on page |
+| C-1769 | generic-step08-outbound-processing-for-xi.md | fact | fact→scripts/readPDValuesForXI.md | behaviour of readPDValuesForXI | already on page |
+| C-1770 | generic-step08-outbound-processing-for-xi.md | fact | fact→scripts/readPDValuesForXI.md | behaviour of readPDValuesForXI | already on page |
+| C-1771 | generic-step08-outbound-processing-for-xi.md | fact | fact→scripts/readPDValuesForXI.md | outputs of readPDValuesForXI | already on page |
+| C-1772 | generic-step08-outbound-processing-for-xi.md | fact | fact→scripts/setValuesForXI.md | behaviour of setValuesForXI | already on page |
+| C-1773 | generic-step08-outbound-processing-for-xi.md | fact | fact→scripts/setValuesForXI.md | behaviour of setValuesForXI | already on page |
+| C-1774 | generic-step08-outbound-processing-for-xi.md | fact | fact→scripts/setValuesForXI.md | behaviour of setValuesForXI | already on page |
+| C-1775 | generic-step08-outbound-processing-for-xi.md | fact | fact→scripts/setValuesForXI.md | behaviour of setValuesForXI | already on page |
+| C-1776 | generic-step08-outbound-processing-for-xi.md | fact | fact→scripts/setValuesForXI.md | behaviour of setValuesForXI | already on page |
 | C-1777 | generic-step08-outbound-processing-for-xi.md | fact | dropped (duplicate of C-821) | same statement as the earlier claim | |
 | C-1778 | generic-step08-outbound-processing-for-xi.md | rationale | dropped (duplicate of C-822) | same statement as the earlier claim | |
 | C-1779 | generic-step08-outbound-processing-for-xi.md | fact | dropped (duplicate of C-823) | same statement as the earlier claim | |
@@ -1983,11 +1983,11 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-1781 | generic-step08-outbound-processing-for-xi.md | fact | dropped (duplicate of C-826) | same statement as the earlier claim | |
 | C-1782 | generic-step08-outbound-processing-for-xi.md | fact | dropped (duplicate of C-844) | same statement as the earlier claim | |
 | C-1783 | generic-step08-outbound-processing-for-xi.md | fact | dropped (duplicate of C-847) | same statement as the earlier claim | |
-| C-1784 | generic-step08-outbound-processing-for-xi.md | fact | fact→scripts/auditLogHandler.md | behaviour of auditLogHandler | |
-| C-1785 | generic-step08-outbound-processing-for-xi.md | fact | fact→scripts/auditLogHandler.md | behaviour of auditLogHandler | |
-| C-1786 | generic-step08-outbound-processing-for-xi.md | fact | fact→scripts/logMessage.md | behaviour of logMessage | |
-| C-1787 | generic-step08-outbound-processing-for-xi.md | fact | fact→scripts/logMessage.md | behaviour of logMessage | |
-| C-1788 | generic-step08-outbound-processing-for-xi.md | fact | fact→scripts/logMessage.md | behaviour of logMessage | |
+| C-1784 | generic-step08-outbound-processing-for-xi.md | fact | fact→scripts/auditLogHandler.md | behaviour of auditLogHandler | already on page |
+| C-1785 | generic-step08-outbound-processing-for-xi.md | fact | fact→scripts/auditLogHandler.md | behaviour of auditLogHandler | already on page |
+| C-1786 | generic-step08-outbound-processing-for-xi.md | fact | fact→scripts/logMessage.md | behaviour of logMessage | already on page |
+| C-1787 | generic-step08-outbound-processing-for-xi.md | fact | fact→scripts/logMessage.md | behaviour of logMessage | already on page |
+| C-1788 | generic-step08-outbound-processing-for-xi.md | fact | fact→scripts/logMessage.md | behaviour of logMessage | already on page |
 | C-1789 | generic-step08-outbound-processing-for-xi.md | fact | dropped (duplicate of C-851) | same statement as the earlier claim | |
 | C-1790 | generic-step08-outbound-processing-for-idoc.md | fact | fact→versions/README.md | iFlow version of the label | |
 | C-1791 | generic-step08-outbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.idoc.md | about the Step08 IDoc page | |
@@ -2032,17 +2032,17 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-1830 | generic-step08-outbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.idoc.md | error return to the caller | |
 | C-1831 | generic-step08-outbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.idoc.md | script table: header isWellFormedXml | |
 | C-1832 | generic-step08-outbound-processing-for-idoc.md | open-question | pitfall | B1c-flagged: header vs property isWellFormedXml | |
-| C-1833 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/addEdidcNodeIfMissing.md | behaviour of addEdidcNodeIfMissing | |
-| C-1834 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/setAllDefaultAndScenarioValuesFromPDForIDoc.md | script table statement | |
-| C-1835 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/setAllDefaultAndScenarioValuesFromPDForIDoc.md | script table statement | |
+| C-1833 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/addEdidcNodeIfMissing.md | behaviour of addEdidcNodeIfMissing | already on page |
+| C-1834 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/setAllDefaultAndScenarioValuesFromPDForIDoc.md | script table statement | already on page |
+| C-1835 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/setAllDefaultAndScenarioValuesFromPDForIDoc.md | script table statement | pitfall |
 | C-1836 | generic-step08-outbound-processing-for-idoc.md | open-question | pitfall | B1c-flagged: LS_ vs IDocLogicalSystem_ parameter names | |
-| C-1837 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/setAllDefaultAndScenarioValuesFromPDForIDoc.md | script table statement | |
+| C-1837 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/setAllDefaultAndScenarioValuesFromPDForIDoc.md | script table statement | already on page |
 | C-1838 | generic-step08-outbound-processing-for-idoc.md | open-question | pitfall | B1c-flagged: suffix pattern table vs code | |
-| C-1839 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/setEdidcFromParamsForIDoc.md | behaviour of setEdidcFromParamsForIDoc | |
-| C-1840 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/setIDocMonitoringProperties.md | behaviour of setIDocMonitoringProperties | |
-| C-1841 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/setIDocMonitoringProperties.md | behaviour of setIDocMonitoringProperties | |
+| C-1839 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/setEdidcFromParamsForIDoc.md | behaviour of setEdidcFromParamsForIDoc | already on page |
+| C-1840 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/setIDocMonitoringProperties.md | behaviour of setIDocMonitoringProperties | already on page |
+| C-1841 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/setIDocMonitoringProperties.md | behaviour of setIDocMonitoringProperties | already on page |
 | C-1842 | generic-step08-outbound-processing-for-idoc.md | fact | changelog | partner function in IDocSenderPartner from 1.0.3 | |
-| C-1843 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/displayBulkIDs.md | use in Step08 IDoc | |
+| C-1843 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/displayBulkIDs.md | use in Step08 IDoc | already on page |
 | C-1844 | generic-step08-outbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.idoc.md | step "Throw Exception" | |
 | C-1845 | generic-step08-outbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.idoc.md | logging scripts in Exception handling | |
 | C-1846 | generic-step08-outbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.idoc.md | ProcessDirect_Address default | |
@@ -2056,39 +2056,39 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-1854 | generic-step08-outbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.idoc.md | same default as on Step01 IDoc; B3 checks both iFlows | |
 | C-1855 | generic-step08-outbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.idoc.md | HTTP tuning defaults | |
 | C-1856 | generic-step08-outbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.idoc.md | Exception_LoggingConfiguration default | |
-| C-1857 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/checkWellFormedXML.md | Step08 IDoc variant sets a property | |
+| C-1857 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/checkWellFormedXML.md | Step08 IDoc variant sets a property | already on page |
 | C-1858 | generic-step08-outbound-processing-for-idoc.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.idoc.md | non-XML body ends validation | |
-| C-1859 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/addEdidcNodeIfMissing.md | behaviour of addEdidcNodeIfMissing | |
-| C-1860 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/addEdidcNodeIfMissing.md | behaviour of addEdidcNodeIfMissing | |
-| C-1861 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/addEdidcNodeIfMissing.md | behaviour of addEdidcNodeIfMissing | |
-| C-1862 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/addEdidcNodeIfMissing.md | behaviour of addEdidcNodeIfMissing | |
-| C-1863 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/setAllDefaultAndScenarioValuesFromPDForIDoc.md | behaviour of setAllDefaultAndScenarioValuesFromPDForIDoc | |
-| C-1864 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/setAllDefaultAndScenarioValuesFromPDForIDoc.md | behaviour of setAllDefaultAndScenarioValuesFromPDForIDoc | |
-| C-1865 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/setAllDefaultAndScenarioValuesFromPDForIDoc.md | behaviour of setAllDefaultAndScenarioValuesFromPDForIDoc | |
-| C-1866 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/setAllDefaultAndScenarioValuesFromPDForIDoc.md | behaviour of setAllDefaultAndScenarioValuesFromPDForIDoc | |
-| C-1867 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/setAllDefaultAndScenarioValuesFromPDForIDoc.md | behaviour of setAllDefaultAndScenarioValuesFromPDForIDoc | |
-| C-1868 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/setAllDefaultAndScenarioValuesFromPDForIDoc.md | behaviour of setAllDefaultAndScenarioValuesFromPDForIDoc | |
-| C-1869 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/setAllDefaultAndScenarioValuesFromPDForIDoc.md | behaviour of setAllDefaultAndScenarioValuesFromPDForIDoc | |
-| C-1870 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/setAllDefaultAndScenarioValuesFromPDForIDoc.md | behaviour of setAllDefaultAndScenarioValuesFromPDForIDoc | |
-| C-1871 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/setAllDefaultAndScenarioValuesFromPDForIDoc.md | behaviour of setAllDefaultAndScenarioValuesFromPDForIDoc | |
-| C-1872 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/setAllDefaultAndScenarioValuesFromPDForIDoc.md | behaviour of setAllDefaultAndScenarioValuesFromPDForIDoc | |
-| C-1873 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/setAllDefaultAndScenarioValuesFromPDForIDoc.md | outputs of setAllDefaultAndScenarioValuesFromPDForIDoc | |
-| C-1874 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/setEdidcFromParamsForIDoc.md | behaviour of setEdidcFromParamsForIDoc | |
-| C-1875 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/setEdidcFromParamsForIDoc.md | behaviour of setEdidcFromParamsForIDoc | |
-| C-1876 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/setEdidcFromParamsForIDoc.md | behaviour of setEdidcFromParamsForIDoc | |
-| C-1877 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/setEdidcFromParamsForIDoc.md | behaviour of setEdidcFromParamsForIDoc | |
-| C-1878 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/setEdidcFromParamsForIDoc.md | behaviour of setEdidcFromParamsForIDoc | |
-| C-1879 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/setEdidcFromParamsForIDoc.md | behaviour of setEdidcFromParamsForIDoc | |
+| C-1859 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/addEdidcNodeIfMissing.md | behaviour of addEdidcNodeIfMissing | already on page |
+| C-1860 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/addEdidcNodeIfMissing.md | behaviour of addEdidcNodeIfMissing | already on page |
+| C-1861 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/addEdidcNodeIfMissing.md | behaviour of addEdidcNodeIfMissing | already on page |
+| C-1862 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/addEdidcNodeIfMissing.md | behaviour of addEdidcNodeIfMissing | already on page |
+| C-1863 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/setAllDefaultAndScenarioValuesFromPDForIDoc.md | behaviour of setAllDefaultAndScenarioValuesFromPDForIDoc | already on page |
+| C-1864 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/setAllDefaultAndScenarioValuesFromPDForIDoc.md | behaviour of setAllDefaultAndScenarioValuesFromPDForIDoc | already on page |
+| C-1865 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/setAllDefaultAndScenarioValuesFromPDForIDoc.md | behaviour of setAllDefaultAndScenarioValuesFromPDForIDoc | already on page |
+| C-1866 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/setAllDefaultAndScenarioValuesFromPDForIDoc.md | behaviour of setAllDefaultAndScenarioValuesFromPDForIDoc | already on page |
+| C-1867 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/setAllDefaultAndScenarioValuesFromPDForIDoc.md | behaviour of setAllDefaultAndScenarioValuesFromPDForIDoc | already on page |
+| C-1868 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/setAllDefaultAndScenarioValuesFromPDForIDoc.md | behaviour of setAllDefaultAndScenarioValuesFromPDForIDoc | already on page |
+| C-1869 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/setAllDefaultAndScenarioValuesFromPDForIDoc.md | behaviour of setAllDefaultAndScenarioValuesFromPDForIDoc | already on page |
+| C-1870 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/setAllDefaultAndScenarioValuesFromPDForIDoc.md | behaviour of setAllDefaultAndScenarioValuesFromPDForIDoc | already on page |
+| C-1871 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/setAllDefaultAndScenarioValuesFromPDForIDoc.md | behaviour of setAllDefaultAndScenarioValuesFromPDForIDoc | already on page |
+| C-1872 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/setAllDefaultAndScenarioValuesFromPDForIDoc.md | behaviour of setAllDefaultAndScenarioValuesFromPDForIDoc | already on page |
+| C-1873 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/setAllDefaultAndScenarioValuesFromPDForIDoc.md | outputs of setAllDefaultAndScenarioValuesFromPDForIDoc | already on page |
+| C-1874 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/setEdidcFromParamsForIDoc.md | behaviour of setEdidcFromParamsForIDoc | already on page |
+| C-1875 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/setEdidcFromParamsForIDoc.md | behaviour of setEdidcFromParamsForIDoc | already on page |
+| C-1876 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/setEdidcFromParamsForIDoc.md | behaviour of setEdidcFromParamsForIDoc | already on page |
+| C-1877 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/setEdidcFromParamsForIDoc.md | behaviour of setEdidcFromParamsForIDoc | already on page |
+| C-1878 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/setEdidcFromParamsForIDoc.md | behaviour of setEdidcFromParamsForIDoc | already on page |
+| C-1879 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/setEdidcFromParamsForIDoc.md | behaviour of setEdidcFromParamsForIDoc | already on page |
 | C-1880 | generic-step08-outbound-processing-for-idoc.md | open-question | pitfall | B1c-flagged: values vs field names | |
-| C-1881 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/setIDocMonitoringProperties.md | behaviour of setIDocMonitoringProperties | |
-| C-1882 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/setIDocMonitoringProperties.md | behaviour of setIDocMonitoringProperties | |
-| C-1883 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/setIDocMonitoringProperties.md | behaviour of setIDocMonitoringProperties | |
+| C-1881 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/setIDocMonitoringProperties.md | behaviour of setIDocMonitoringProperties | already on page |
+| C-1882 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/setIDocMonitoringProperties.md | behaviour of setIDocMonitoringProperties | already on page |
+| C-1883 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/setIDocMonitoringProperties.md | behaviour of setIDocMonitoringProperties | already on page |
 | C-1884 | generic-step08-outbound-processing-for-idoc.md | fact | dropped (duplicate of C-1014) | same script, same statement | |
 | C-1885 | generic-step08-outbound-processing-for-idoc.md | fact | dropped (duplicate of C-1015) | same script, same statement | |
 | C-1886 | generic-step08-outbound-processing-for-idoc.md | fact | dropped (duplicate of C-1016) | same script, same statement | |
 | C-1887 | generic-step08-outbound-processing-for-idoc.md | fact | dropped (duplicate of C-1017) | same script, same statement | |
 | C-1888 | generic-step08-outbound-processing-for-idoc.md | fact | dropped (duplicate of C-1018) | same script, same statement | |
-| C-1889 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/displayBulkIDs.md | summary of displayBulkIDs | |
+| C-1889 | generic-step08-outbound-processing-for-idoc.md | fact | fact→scripts/displayBulkIDs.md | summary of displayBulkIDs | already on page |
 | C-1890 | generic-step08-outbound-processing-for-idoc.md | fact | dropped (duplicate of C-821) | same statement as the earlier claim | |
 | C-1891 | generic-step08-outbound-processing-for-idoc.md | rationale | dropped (duplicate of C-822) | same statement as the earlier claim | |
 | C-1892 | generic-step08-outbound-processing-for-idoc.md | fact | dropped (duplicate of C-823) | same statement as the earlier claim | |

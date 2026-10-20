@@ -23,6 +23,7 @@ Script step "Throw exception" or "Throw Exception" right after a "Set custom sta
 - An exceptionType outside the four names, a misspelling included, falls silently to Exception [com.sap.integration.cloud.pipeline.v2.script.collection, scripts/throwException.groovy#L30] [com.sap.integration.cloud.pipeline.v2.script.collection, scripts/throwException.groovy#L31]; since no caller sets exceptionType, every call in the label throws java.lang.Exception [com.sap.integration.cloud.pipeline.v2.script.collection, scripts/throwException.groovy#L7].
 - With an empty exceptionMessage the whole body becomes part of the exception text [com.sap.integration.cloud.pipeline.v2.script.collection, scripts/throwException.groovy#L12].
 - The text always ends with " at <location>.", so it carries the default location when the caller sets none [com.sap.integration.cloud.pipeline.v2.script.collection, scripts/throwException.groovy#L8] [com.sap.integration.cloud.pipeline.v2.script.collection, scripts/throwException.groovy#L14].
+- In Step01 XI the three "Throw exception" steps sit in [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi, process "Integration Process"], whose [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi, step 52 "Exception Subprocess 1"] holds [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi, step 54 "Call custom error handling"] and [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi, step 55 "Call standard error handling"].
 
 ## Used by
 

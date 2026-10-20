@@ -1,9 +1,9 @@
 # Handoff
 
-state: RUNNING — KB-10 B2 done (hash: next commit); B3a next; B1 c62dba8; KB-08 e145a84; KB-13 4d7ee0f (ISSUE-2 CI; ISSUE-1 Phase B owner)
-last commit: KB-10 B2 kb: changelog 2026-09-current (3 files) + version notes on 29 pages; before it c62dba8 (B1), afd0a64 (ledger), e145a84 (KB-08)
-branch: claude/eager-brown-uw61ft (D-017; owner fast-forwards main) — all pushed; CI green through ae72101; every later run fails with no runner (ISSUE-2)
-next exact action: KB-10 B3a — kb-author on scratchpad kb-10/page-packet-b3.md §B3a (scripts pages, ≈450 triage rows); kb-review; verifier; commit; B3b–d
+state: RUNNING — KB-10 B3a done (hash: next commit); B3b next; B2 9aae29f; B1 c62dba8; KB-08 e145a84; KB-13 4d7ee0f (ISSUE-1 Phase B owner)
+last commit: KB-10 B3a kb: scripts pages enriched from the triaged claims; applied column filled; before it 9aae29f (B2), c62dba8 (B1), e145a84 (KB-08)
+branch: claude/eager-brown-uw61ft (D-017; owner fast-forwards main) — all pushed; CI green again at 9aae29f (attempt 2) after six no-runner failures (ISSUE-2)
+next exact action: KB-10 B3b — kb-author on scratchpad kb-10/page-packet-b3.md §B3b (Step01/Step02 iflows pages, ≈330 rows) + carry-overs; review; commit
 then: kb-author (batches by input group) → kb-reviewer per batch → verifier → commit per batch; KB-09 stays owner/local; KB-11 after KB-10
 pages: iflows/templates ten headings; scripts/ five; registry pages cite full ids; D-019 forms (process, CHANGELOG.txt#L); ≤ 1,500 words; all checks on verify
 reader: io.poxray.cpi per plan Task 2 + F-1; order D-016; ScriptCollection: 0 steps; propdef: no defaults (D-015); iFlow-level ifl:property not exposed (NOTES)

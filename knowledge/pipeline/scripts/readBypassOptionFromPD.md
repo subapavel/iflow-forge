@@ -28,6 +28,7 @@ Script step "Read bypass option" in the main process of Step02 inbound, both Ste
 - Log entries 3 and 4 use the key "readBypassOptionFromPDe" (typo in the artifact) [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/readBypassOptionFromPD.groovy#L44] [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/readBypassOptionFromPD.groovy#L45].
 - The `?: "n/a"` fallback is applied after `.toString()`, so a missing bypassOption is logged as "null", not "n/a" [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/readBypassOptionFromPD.groovy#L43].
 - Lines 50 to 61 are a commented-out older logger [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/readBypassOptionFromPD.groovy#L50].
+- 'skipRcvDet' is routed only in Step02 inbound, to "Map to Business Name" [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, step 38 "Bypass option?"]; Step01 XI and both integrated runtimes send it to their "Not supported route" [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi, step 41 "Bypass option?"] [com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async, step 44 "Bypass option?"] [com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync, step 30 "Bypass option?"].
 
 ## Used by
 

@@ -22,6 +22,7 @@ Script step "Store original payload" at the start of the Step02 asynchronous run
 - The test is string equality with "true" [com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async, scripts/storeOriginalPayloadInXProperty.groovy#L12]: a missing header takes the Base64 branch [com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async, scripts/storeOriginalPayloadInXProperty.groovy#L15].
 - The header that chose the encoding here is written again after the inbound conversion [com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async, step 41 "Check well formed XML"]; the reader decodes by the header it finds at its own run [com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async, scripts/fetchOriginalPayloadFromXProperty.groovy#L12] (Gotchas of `fetchOriginalPayloadFromXProperty.groovy`).
 - SAP's change log: since 1.0.2 the original payload at the generic flow's inbound is forwarded to the custom error flow [generic-pipelines/CHANGELOG.txt#L18].
+- The original payload is kept so that the custom error flow has the input message before conversion [rationale, from analysis 2026].
 
 ## Used by
 
