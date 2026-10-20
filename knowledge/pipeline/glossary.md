@@ -1,3 +1,46 @@
 # Glossary
 
-_Stub, filled in Task 8._
+Terms as this knowledge base uses them. Pipeline terms cite the `2026-06-trial` artifacts or point to the page that does; SAP PO and Integration Suite terms are general definitions.
+
+## Pipeline terms
+
+- **Pipeline step id**: the two-digit step number in an iFlow id (step01 to step08); when header customXPipelineStep is absent [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/readCustomXFromPD.groovy#L25], readCustomXFromPD takes it from the Camel id [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/readCustomXFromPD.groovy#L27] [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/readCustomXFromPD.groovy#L29] and sets that header [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/readCustomXFromPD.groovy#L30]; naming.md.
+- **Generic iFlow vs template**: a generic iFlow serves every scenario of a pipeline from Partner Directory entries (partner-directory.md); a template is a skeleton for one scenario. The Step03 to Step07, exit and error templates listen on a ProcessDirect address set by a parameter [com.sap.integration.cloud.pipeline.v2.template.step07.outbound.processing.p2p, parameter "ProcessDirect_Endpoint"] [com.sap.integration.cloud.pipeline.v2.template.custom.exit, parameter "ProcessDirect_EndPoint"]; the Step01 templates are sender-side and parameterise their target instead, the JMS queue of eo and alo [com.sap.integration.cloud.pipeline.v2.template.step01.inbound.processing.eo, parameter "JMS_Outgoing"] [com.sap.integration.cloud.pipeline.v2.template.step01.inbound.processing.alo, parameter "JMS_Outgoing"] and the ProcessDirect address of sync [com.sap.integration.cloud.pipeline.v2.template.step01.inbound.processing.sync, parameter "Sync_Pipeline_Endpoint"]. The id and display name say which (naming.md).
+- **Stage**: the landscape stage of the tenant, read from Partner Directory PID SAP_Integration_Suite_Landscape under the tenant name `{{tenant.name}}`, default PRD [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/determinePartnerID.groovy#L22]; stage rules map sender to receiver stages (partner-directory.md).
+- **Partner ID**: the Partner Directory PID of a configuration scenario, set as header partnerID [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/determinePartnerID.groovy#L342]; how it is built: partner-directory.md "Key scheme".
+- **Virtual receiver**: with property CustomXPid_ResolveVirtualReceiver 'true' [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc, scripts/determinePartnerIDForIDocInbound.groovy#L393] [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc, scripts/determinePartnerIDForIDocInbound.groovy#L509], Step01 IDoc builds the key `<agency>:<receiver>` [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc, scripts/determinePartnerIDForIDocInbound.groovy#L528] and looks up a partner ID for it [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc, scripts/determinePartnerIDForIDocInbound.groovy#L529]; partner-directory.md.
+- **Inbound conversion**: a scenario flow (Step03 template) called before receiver determination at Partner Directory InboundConversionEndpoint_<SAP_SenderAlias> [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/readInboundConversionFromPD.groovy#L26]; message-path.md hop 4.
+- **Bypass option**: property bypassOption; once Partner Directory receiverDetermination [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/readBypassOptionFromPD.groovy#L22] names the receiver [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/readBypassOptionFromPD.groovy#L28], 'p2p' when it also holds interfaceDetermination_<receiver alias>, else 'skipRcvDet' [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/readBypassOptionFromPD.groovy#L36]; scripts/readBypassOptionFromPD.md.
+- **Receiver-specific queue**: a JMS queue per receiver, Partner Directory ReceiverSpecificQueue_<SAP_ReceiverAlias> [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/readReceiverSpecificQueueFromPD.groovy#L19], written by the receiver-specific outbound adapter [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, adapter "JMS" "ReceiverSpecificOutboundQueue"]; message-path.md.
+- **Custom X / exits**: customer extension points called over ProcessDirect: pre-processing (global [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, parameter "CustomXPreGlobal_Endpoint"] or per scenario, CustomXPreEnabled/CustomXPreEndpoint), XRD (custom receiver determination, CustomXRDEndpoint), XID (custom interface determination, CustomXIDEndpoint), post-processing [com.sap.integration.cloud.pipeline.v2.template.step07.outbound.processing.p2p, parameter "CustomXPost_Endpoint"] and error [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, parameter "CustomXError_Endpoint"]; keys in partner-directory.md, hops 7, 11, 12 in message-path.md.
+- **Keep bulk**: Partner Directory KeepBulk; property keepBulk, default 'false' [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc, scripts/readKeepBulkSettingFromPD.groovy#L25]; 'true' keeps an IDoc bulk unsplit (scripts/readKeepBulkSettingFromPD.md).
+- **Test mode**: header testMode; with 'true' attachAdditionallnformation logs no retries-exceeded and dead-letter entries [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/attachAdditionallnformation.groovy#L23]; contracts.md.
+- **DLQ / dead-letter queue**: each pipeline queue has a `<queue>_DLQ` [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, adapter "JMS" "DeadLetterQueue"]; the custom error template writes to property deadLetterQueue [com.sap.integration.cloud.pipeline.v2.template.custom.error.handling, adapter "JMS" "DLQ"]; message-path.md.
+- **Script collection**: `com.sap.integration.cloud.pipeline.v2.script.collection`, bundle type ScriptCollection [com.sap.integration.cloud.pipeline.v2.script.collection, manifest "SAP-BundleType"], referenced by templates such as com.sap.integration.cloud.pipeline.v2.template.step07.outbound.processing.p2p.to.xi [com.sap.integration.cloud.pipeline.v2.template.step07.outbound.processing.p2p.to.xi, manifest "Require-Capability"]; templates/com.sap.integration.cloud.pipeline.v2.script.collection.md.
+- **Value mapping**: an Integration Suite value mapping artifact; none in `2026-06-trial` [knowledge/sources/README.md#L9], one in `2026-09-current` [knowledge/sources/README.md#L10].
+
+## SAP PO terms
+
+- **SAP PO**: SAP Process Orchestration, the on-premise middleware (formerly PI/XI) whose configurations the pipeline replaces.
+- **ICO**: Integrated Configuration, one PO object holding sender, receiver determination, interface determination, mappings and receiver agreements of one sender interface.
+- **Sender / receiver agreement**: PO objects binding a sender or receiver communication component and interface to a communication channel and its security settings.
+- **Receiver determination**: PO step choosing the receivers of a message, statically or by condition.
+- **Interface determination**: PO step choosing, per receiver, the inbound interfaces and the operation mapping to apply.
+- **Operation mapping**: PO object pairing a sender and a receiver service interface operation with the message mappings between them.
+- **Communication channel**: PO adapter configuration (type, address, security) of a sender or receiver.
+- **Party / communication component (service)**: party is a business partner; a communication component is a business system or service of a party that sends or receives.
+- **QoS EO / EOIO / BE**: quality of service: Exactly Once, Exactly Once In Order, Best Effort (synchronous).
+
+## Integration Suite terms
+
+- **Integration Suite / Cloud Integration**: SAP's cloud integration platform; Cloud Integration is its capability that runs iFlows.
+- **iFlow**: integration flow, a BPMN process deployed as one artifact.
+- **Package**: integration package, the unit that groups and ships artifacts.
+- **ProcessDirect**: adapter for synchronous in-tenant calls between iFlows by address.
+- **JMS adapter**: adapter for the tenant's persistent queues, giving asynchronous decoupling and retry.
+- **Partner Directory**: tenant store of parameters (strings, binaries) per partner ID, read by scripts at runtime.
+- **Externalized parameter**: a `{{name}}` value of an iFlow set at configuration time, declared in `parameters.propdef`.
+- **Script collection**: artifact holding Groovy scripts shared by several iFlows.
+- **Value mapping**: artifact mapping values between agency/scheme pairs.
+- **Cloud Connector**: SAP's on-premise agent tunnelling calls to backend systems, addressed by location ID.
+- **MPL**: message processing log, the per-message monitoring record with custom status and attachments.

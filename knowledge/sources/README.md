@@ -25,7 +25,7 @@ Windows checkouts need `git config core.longpaths true` (paths exceed 260 charac
 as exported (`.gitattributes`: `-text`).
 
 Versions per artifact are in `INDEX.md`; package change-log versions (e.g. Generic Pipelines 1.0.4 → 1.0.5,
-Templates 1.1.1 → 1.2.0) are the first line of each `CHANGELOG.txt`.
+Templates 1.1.1 → 1.2.0) are the version of the first dated entry of each `CHANGELOG.txt` (line 5; line 1 is the title).
 
-The staging script (`stage.py`) is local and not part of the repository; `tools/unpack_package.py` (plan Task 2)
-reproduces this layout from a package zip.
+The staging script (`stage.py`) is local and not part of the repository; `po-xray unpack <package.zip> <out-dir> [--strip a,b]`
+(po-xray-cli, KB-02) reproduces this layout from a package zip.

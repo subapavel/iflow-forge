@@ -18,7 +18,6 @@ Durable facts only (build quirks, verified APIs, recurring findings). Never task
 - The JSON dump's step `id` is the BPMN element id: grep the `.iflw` `sequenceFlow` lines (sourceRef/targetRef/name + conditionExpression) and map ids to dump step numbers; messageFlow sourceRef=ServiceTask_/EndEvent_ gives the adapter per step.
 - Dump order is not flow order: in Step02 sync the two "Request Reply" exit calls are #9 = CustomXScenario, #10 = CustomXGlobal (reverse of async). Always map ServiceTask id -> messageFlow -> participant.
 - Backoff parameter spelling: JMS_ExpotentialBackoff (Step02 async, Step04) vs JMS_ExponentialBackoff (Step02 inbound). Message-flow names: JMS_OuboundProcessing, JMS_InterfaceDetermination (typo "Oubound" is SAP's).
-- Step04 has no retry-read script; its retry gateway uses maxJMSRetries from upstream (open question in pitfalls).
 
 ## Budget (cont.)
 - Bare step lines cost ~5 tokens each (99 steps = 495); a table row costs 5 pipe tokens plus cells. 1,350 is out of reach above ~90 steps; group script rows and point to "Partner directory" instead of repeating cites.
@@ -35,15 +34,12 @@ Durable facts only (build quirks, verified APIs, recurring findings). Never task
 - Templates have no script folder; script steps carry scriptBundleId = the script collection; cite `[<collection id>, scripts/<file>#L<n>]`. MANIFEST Require-Capability (resolution optional) names the collection; Step01 sync has none. No Bundle-Description in B1 manifests (join continuation lines before grepping).
 - Step01 templates have an unconnected participant "Sender" (no message flow): cite `[<id>, resource "<iflw path>"]`.
 - Dump quirk: an IdempotentProcessCall's local process is not inlined (Step01 eo: Send listed as step 1, depth 0); a local process called three times is inlined only under the first call (Step01 sync).
-- The template id folders are `...step01.inbound.processing.<qos>`, not `...step01.<qos>`; take ids from `ls templates/`.
-- Coverage log repeats each `missing page:` line ~4 times; count distinct with `sort -u`.
 
 ## Determination templates (learned on KB-05 B2, 2026-06-trial)
 - All step04/step05 templates keep the Step03 file name PIP_03_InboundConversion4Scenario1.iflw; one ProcessDirect sender `{{ProcessDirect_EndPoint}}`, allowedHeaderList set (step05 adds SAP_Receiver(.*)).
 - Callers: Step04 step 71 / async step 48 / sync step 34 Request Reply "ReceiverXRD" (`${property.customXRDEndpoint}`); Step05 step 53 "ReceiverXID". Integrated runtimes reject reuseXRD (async 49, sync 35: ConfigurationOptionNotSupported).
 - Template Content Modifiers carry SAP's angle-bracket placeholder text as values; Mapping steps have empty mappinguri. Empty skeletons have Start->End only: cite the iflw resource.
 - SAP-Operation / SAP-OperationSpecific are read by the collection's custom*ViaXProperties scripts but set nowhere in the label.
-- open-questions/kb-05.md reached ~1,020 tokens after B2: later batches must write short bullets.
 - Review B2 lessons: a claim about "the Step04 templates" needs one cite per template; check BPMN process names (`[<id>, process "<name>"]`, D-019) before writing "not found in the artifact"; mapMessageTypeToOperation.groovy sets SAP_SenderOperation at L24 (L18 is the comparison); a Read-table row covering several names needs the step per name.
 
 ## Step07 templates (learned on KB-05 B3, 2026-06-trial)
@@ -53,7 +49,6 @@ Durable facts only (build quirks, verified APIs, recurring findings). Never task
 - p2p and sync leave participant "Receiver" unconnected; p2p.to.idoc/xi call {{GenericIDocEndpoint}}/{{GenericXIEndpoint}} (placeholders tenant.endpoint.idoc/xi.outbound).
 - Callers: Step06 end event "End" -> `${header.SAP_OutboundProcessingEndpoint}`; Step02 sync step 59 "ScenarioSpecificOutbound"; Step01 XI step 49 "ActualReceiver" on bypass p2p (gateway 41).
 - Step08 takes a present SAP_<key> header by containsKey (setEdidcFromParamsForIDoc.groovy#L32, setValuesForXI.groovy#L42); EDIDC field headers only when listed in SAP_IDoc_EDIDC_overrideControlRecordParameters (#L50, #L54, #L61).
-- Open questions of B3-B5 go to open-questions/kb-05-outbound.md (kb-05.md is full, ~1,150 tokens).
 
 ## One-to-many templates (learned on KB-05 B4, 2026-06-trial)
 - o2mo, o2mm, moar keep P2P_ASYNC_0001.iflw, same 3 params and allowedHeaderList as p2p; no Bundle-Description; no mapping file (Mapping step mappinguri empty: cite the iflw resource).
@@ -93,7 +88,6 @@ Durable facts only (build quirks, verified APIs, recurring findings). Never task
 - Virtual-stage path: router "Virtual Stage Routing?" (`tenantStageVirtual = 'true'`) -> "Map to Receiver Stage" -> "Multiple Stages?" (async, Step04 only; sync goes straight to "Map to Business Name").
 - All B3 script steps sit in the main process; Step02 async/sync/Step04 main process names are long ("Integration Process - ..."): copy them from the .iflw.
 - Cite forms that passed earlier: `[<id>, property "allowedHeaderList"]`, `[<id>, parameter "<name>"]`, `[<id>, manifest "Require-Capability"]` for templates using the collection.
-- Write "throws no exception of its own" rather than "no exception leaves the script".
 - CHANGELOG cite form (D-019 amended): `[<package-folder>/CHANGELOG.txt#L<n>]` (generic-inbound, generic-outbound, generic-pipelines, templates). Read them before any version claim or "open" question: B3 r1 lost 3 bullets the change log answered.
 - "Who sets X" questions: check the step-1 Content Modifier of the iFlow first (Step02 sync step 1 "Set custom extensions" sets SapQualityOfService = BestEffort), and grep the whole label before writing "no setter" (the mirror script may set it).
 - A negative ("no template names it") needs "grep of every <scope> .iflw" stated or a resource cite.
@@ -117,3 +111,9 @@ Durable facts only (build quirks, verified APIs, recurring findings). Never task
 - contracts.md floor: 222 names (~310 tokens) + table pipes (~290) + ~150 full-id cites (~600); every script cite on a page without its own artifact needs the full id (canonical copy: collection, else step02 inbound, else first id); count before writing.
 - Variant script copies (checkWellFormedXML, logMessage, throwException) take the id form `[<id>, scripts/<file>#L<n>]`, never the short form.
 - Mechanical cite verification (step name at dump number, script line contains the claimed token) before handback; BudgetTest counts whitespace tokens, slightly above wc -w.
+## Naming, versions, glossary (learned on KB-08, 2026-06-trial)
+- PlaceholdersTest: declared = backticked `{{tenant.<[a-z0-9_.]+>}}` tokens of naming.md; used = same regex on every other *.md (open-questions too). `{{tenant.*}}` is safe (no match); reserved names go unbracketed.
+- NamesTest checks every backticked token starting with the id prefix: write id schemes (`...v2.<generic|template>.step<NN>...`) unbackticked. MANIFEST lines wrap at 72 chars: join continuation lines before grepping Bundle-Name.
+- Runtime reads the step number from the Camel id: readCustomXFromPD#L28-L30 (indexOf "generic.step" + 12); Step07 templates set customXPipelineStep '07' as a constant in "Initialize".
+- `po-xray unpack <package> <out-dir> [--strip a,b]` (UnpackCommand); out-dir = the package folder. CHANGELOG version = first dated entry (L5), not line 1.
+- Review KB-08 lessons: sources/README.md L19 says only suffixes were stripped (prefix claim failed); a behaviour clause on a placeholder bullet needs the reading script line, not only the template parameter; Step01 templates are sender-side (JMS_Outgoing / Sync_Pipeline_Endpoint), no ProcessDirect sender.
