@@ -12,6 +12,7 @@ Procedure from one existing point-to-point Integration Suite iFlow to an approve
 - Records: `IFlow` (`id`, `name`, `version`, `participants`, `steps`, `parameters`, `resources`), `Participant` (`name`, `componentType`, `direction`, `endpoint`, `properties`), `Step` (`id`, `name`, `activityType`, `depth`, `properties`, `reached`), `Param` (`name`, `defaultValue`, `configured`; a configured value itself is never read).
 - The Markdown omits participant and step properties; `--json` shows them. Neither shows sequence flows: gateway conditions and which step feeds which participant are grepped from the `.iflw` (`sequenceFlow`, `conditionExpression`, `messageFlow` `sourceRef`), never loaded whole.
 - This knowledge base and the tenant profile as in po-ico-to-pipeline.md (the profile is not yet available).
+- The tenant's package versions: versions/features.md, section "The tenant's installed version".
 
 ## Steps
 

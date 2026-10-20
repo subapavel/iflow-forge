@@ -14,6 +14,8 @@ Which SAP pipeline version the knowledge base describes, what a label folder und
 | `2026-09-current` | package export from a customer tenant, September 2026, scrubbed [knowledge/sources/README.md#L10] | 32, Templates 1.2.0 [knowledge/sources/README.md#L10] | staged; to be replaced by a clean catalogue download [knowledge/sources/README.md#L21]; pages after KB-00a |
 | `2026-10-catalog` | clean catalogue download of the four packages | — | planned (agent/BACKLOG.md KB-00a) |
 
+Which package version brought which feature or fix, from the change logs of both labels: versions/features.md.
+
 ## What a label folder holds
 
 - `INDEX.md`: one row per package entry with package, type, name, symbolic name, version [2026-06-trial/INDEX.md#L1].

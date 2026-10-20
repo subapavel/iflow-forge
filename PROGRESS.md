@@ -274,3 +274,12 @@ Review: reviewer r1 PASS, r2 PASS on the delta (r1 PASS with observations → ma
 Findings: the §6.3 rules were under-specified for Java-PO XI channels (`SOAP/XI`) and for MessageTransformBean; decided in the acceptance spec §8, documented in OUTPUT-MODEL — no spec text contradicted, no deviation.
 Ledger: MIG-01 hash 144bcc5, CI 39508095025 green.
 Next: MIG-03 needs KB-11e (versions/features.md) → KB-11e next, then MIG-03.
+
+## KB-11e · 2026-10-20 · (hash in the next entry)
+Content task (no red test): acceptance = kb-reviewer PASS + green knowledge module.
+Changed: knowledge/pipeline/versions/features.md (new: features by package from the four CHANGELOG.txt, every dated entry of both labels, cites [2026-09-current/<pkg>/CHANGELOG.txt#L<n>], one 2026-06-trial-only line; "The tenant's installed version"); SKILL.md routing row; versions/README.md pointer; naming.md placeholder {{tenant.pipeline.version.<package-folder>}}; po-ico-to-pipeline.md and is-iflow-to-pipeline.md Inputs bullet; BACKLOG, HANDOFF.
+Checks: knowledge module exit 0 (target/kb-11e-kb-r1.log, -r2.log; PlaceholdersTest 1/0/0/0, BudgetTest 2/0/0/0, SkillMirrorTest 12/0/0/0); mvn verify exit 0 (verifier target/kb-11e-verify-r2.log after r3; core 178/0/0/22, cli 22/0/0/1, native 2/0/0/0, knowledge 54/0/0/2); tokens features 1,476, naming 1,478, po-ico 1,478, is-iflow 1,042, SKILL 458, loaded set 4,674/5,000; 109 distinct CHANGELOG cites; forbidden-pattern grep 0 (ForbiddenValuesTest NOT_RUN, kb.forbidden unset).
+Review: kb-reviewer r1 FAIL 3 (features.md:53 "fixes:" over a non-fix clause; :49 and :26 a flow prefix carried into unscoped clauses) → fixed, sweep fixed :38, :52, :65 too; r2 PASS (budget confirmed by the verifier: 1,476). Reviewer memory 89–93.
+Findings: one row per bullet did not fit (1,994 tokens) → one row per change-log entry, every bullet cited (39 rows); a page split rejected. The `<package-folder>` placeholder was invisible to PlaceholdersTest → four concrete underscore names. Spec/plan text unchanged; not a deviation (the row said "one row per feature or behaviour change" — amended to "per entry" on the BACKLOG row). Bullets needing interpretation left as SAP wrote them ("reworked"; DLQ-instead-of-endless-retry stays a fix).
+Ledger: MIG-02 hash 65fc51b, CI 39513402531 green.
+Next: MIG-03 (references intake.md, attributes.md, bpm.md) now ready; KB-11d ready.

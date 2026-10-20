@@ -26,6 +26,7 @@ Knowledge of the SAP Integration Suite pipeline, from SAP's packages.
 | the document the human approves before generation | `migration/proposal-template.md` |
 | how PO modules and Java mappings are converted | `conversion/README.md` |
 | which SAP version is current, and what changed between versions | `versions/README.md`, `versions/<label>/changelog[-<group>].md` |
+| whether the customer's installed pipeline version has a feature or fix | `versions/features.md` |
 | lessons learned, contradictions, open questions | `pitfalls.md` |
 | draft claims the artifacts contradict | `pitfalls-drafts.md` |
 | open questions per content task (uncited draft claims) | `open-questions/<task>[-<group>].md` |
