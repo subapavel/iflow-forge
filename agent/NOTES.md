@@ -77,8 +77,8 @@ Facts only; the next exact action and the state live in `agent/HANDOFF.md`.
 
 - `iflow-forge-knowledge` has no `src/main`; `Checks` and `KnowledgeBase` live in `src/test/java/io/iflowforge/knowledge/`.
   Run: `mvn -B -ntp -q -pl iflow-forge-knowledge -am test [-Dkb.skip=a,b] [-Dkb.forbidden=<file>]`.
-- `kb.skip` defaults to `coverage` in the module pom (F-2) until KB-06 clears it; `-Dkb.skip=` (empty) runs every check,
-  so the 74 missing pages can be listed any time. `kb.root` = `<repo>/knowledge`, `kb.sources` = `2026-06-trial`.
+- `kb.skip` defaults to empty in the module pom since KB-06 (F-2 closed): every check runs; `-Dkb.skip=a,b` skips named
+  checks. `kb.root` = `<repo>/knowledge`, `kb.sources` = `2026-06-trial`.
 - `ForbiddenValuesTest` skips unless `-Dkb.forbidden` names an existing file; a relative value resolves against the
   repository root. The owner's file stays under `testdata/` (gitignored). Messages never contain the value.
 - Synthetic sources for checks tests: `io.poxray.cpi.SyntheticArtifact` (public bridge to the package-private

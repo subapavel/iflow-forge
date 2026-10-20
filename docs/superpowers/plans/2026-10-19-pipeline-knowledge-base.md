@@ -10,7 +10,7 @@
 
 **Spec:** `docs/superpowers/specs/2026-10-19-pipeline-knowledge-base-design.md`
 
-**Changelog:** 2026-10-19 · F-1 · Task 2 `Participant` widened with `endpoint` and `properties` (the message-flow name alone does not identify the adapter; the dump is the reading surface for the pages). 2026-10-19 · D-016 · Task 2 step order covers local processes (inlined under the step whose `processId` names them) and event subprocesses (no incoming flow, `reached = true`). 2026-10-19 · D-015 · `parameters.propdef` carries no defaults; `Param.defaultValue` is the `<value>` child when present, else empty. 2026-10-19 · F-2 · Task 3 module pom defaults `kb.skip` to `coverage` until Task 6 clears it (the real-KB coverage check is red until the pages exist; `mvn verify` and CI must stay green); a relative `kb.forbidden` resolves against the repository root; Task 4 step 4 and Task 5 step 4 run coverage with `-Dkb.skip=`.
+**Changelog:** 2026-10-19 · F-1 · Task 2 `Participant` widened with `endpoint` and `properties` (the message-flow name alone does not identify the adapter; the dump is the reading surface for the pages). 2026-10-19 · D-016 · Task 2 step order covers local processes (inlined under the step whose `processId` names them) and event subprocesses (no incoming flow, `reached = true`). 2026-10-19 · D-015 · `parameters.propdef` carries no defaults; `Param.defaultValue` is the `<value>` child when present, else empty. 2026-10-19 · F-2 · Task 3 module pom defaults `kb.skip` to `coverage` until Task 6 clears it (the real-KB coverage check is red until the pages exist; `mvn verify` and CI must stay green); a relative `kb.forbidden` resolves against the repository root; Task 4 step 4 and Task 5 step 4 run coverage with `-Dkb.skip=`. 2026-10-20 · F-2 closed · Task 6 cleared the `kb.skip` default; `mvn verify` runs every knowledge check.
 
 ## Global Constraints
 
@@ -129,7 +129,7 @@
 ### Task 3: `iflow-forge-knowledge`: knowledge base checks as a Maven test module
 
 **Files:**
-- Create: `iflow-forge-knowledge/pom.xml` (packaging `jar`, no main sources, test dependencies `po-xray-core`, JUnit 5, AssertJ; surefire system properties `kb.root` = `${maven.multiModuleProjectDirectory}/knowledge`, `kb.sources` = `2026-06-trial`; `kb.skip` and `kb.forbidden` passed through from the command line; `kb.skip` defaults to `coverage` until Task 6 clears it, F-2)
+- Create: `iflow-forge-knowledge/pom.xml` (packaging `jar`, no main sources, test dependencies `po-xray-core`, JUnit 5, AssertJ; surefire system properties `kb.root` = `${maven.multiModuleProjectDirectory}/knowledge`, `kb.sources` = `2026-06-trial`; `kb.skip` and `kb.forbidden` passed through from the command line; `kb.skip` defaults to `coverage` until Task 6 clears it, F-2) (cleared by Task 6)
 - Create: `iflow-forge-knowledge/src/test/java/io/iflowforge/knowledge/KnowledgeBase.java` (paths, page loading, skip handling), `Checks.java` (the check functions), `ChecksTest.java` (unit tests on a synthetic knowledge base in a `@TempDir`), and one JUnit class per check run against the real `knowledge/`: `CoverageTest`, `HeadingsTest`, `PlaceholdersTest`, `NamesTest`, `BudgetTest`, `ForbiddenValuesTest`
 - Modify: `pom.xml` (root: add `<module>iflow-forge-knowledge</module>`)
 

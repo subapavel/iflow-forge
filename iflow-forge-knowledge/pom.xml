@@ -17,9 +17,9 @@
 
     <properties>
         <!-- Passed through from the command line; empty = unset (KnowledgeBase treats a blank value as unset). -->
-        <!-- F-2: the real-KB coverage check is red until the pages of KB-04..KB-06 exist; KB-06 clears this default.
-             `-Dkb.skip=` (empty) runs every check. -->
-        <kb.skip>coverage</kb.skip>
+        <!-- Every check runs by default; `-Dkb.skip=a,b` skips the named checks. F-2 is closed by KB-06 (the default
+             `coverage` is cleared now that every page exists). -->
+        <kb.skip></kb.skip>
         <kb.forbidden></kb.forbidden>
     </properties>
 

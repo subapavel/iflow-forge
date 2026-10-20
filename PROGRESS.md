@@ -73,3 +73,16 @@ Deviation: F-3 extended (B3): a task's open questions may split per batch group 
 Issues: ISSUE-1 (four tracked .py files from 2026-10-09 pre-date the Java-only rule; owner decision, nothing blocked).
 Reader follow-ups (agent/NOTES.md): IdempotentProcessCall local process not inlined by the dump; a repeated local process inlined under its first call only; the known `[Fatal Error] :1:9` stderr line.
 Next: KB-06 (45 script pages in five batches; the implementer clears the pom default kb.skip=coverage, F-2, after the last batch).
+
+## KB-06 · 2026-10-20 · (hash: the closing commit `kb: script pages payload, validation and custom determination; F-2 closed (KB-06 B5)`; recorded in the next entry)
+Task: Pass A script pages — 45 `scripts/<stem>.md` (five-H2 contract), one per distinct Groovy stem of 2026-06-trial (152 copies, no XSLT; 3 stems with variants); `open-questions/kb-06.md` (30 bullets, 1,282 words); pom default `kb.skip=coverage` removed (F-2 closed), plain `mvn verify` runs every check.
+Context compacted once after B1's verification (before its commit); re-verified with git status / git log -3.
+Batches: B1 9b9a38f (PD readers; FAIL r1 5 findings → PASS r2), B2 5f12052 (IDoc; FAIL r1 4 → PASS r2), B3 711b5f0 (XI/mapping; FAIL r1 7 → PASS r2), B4 ba478a4 (helpers/logging; r1 turn limit without content defect, follow-up FAIL 1 cite → PASS; throwException has 3 variants), B5 (this commit; payload/validation/custom; FAIL r1 4 → PASS r2; pom edit by the implementer).
+Checks: `mvn verify` VERIFIED_PASS per batch (target/kb-06-b<n>-verify.log) · acceptance `mvn -B -ntp -q verify` with no -D flag VERIFIED_PASS, CoverageTest run with Skipped 0 (target/kb-06-verify.log) · `-Dkb.skip=coverage` still skips it (target/kb-06-skip.log) · pages 217–1,225 words · customer-data and shortened-cite greps empty per batch · byte identity of every multi-copy stem observed by md5.
+CI (GitHub Actions verify.yml): B1 39335349107, B2 39338722570, B3 39342034966, B4 39347779378 success; B5 run recorded in the next entry.
+Review: kb-reviewer PASS per batch (rounds in the commit bodies); reviewer memory items 14–16 written by the architect.
+Decisions: D-019 amended — `[<package-folder>/CHANGELOG.txt#L<n>]` for SAP's change-log lines (B3). Canonical copy rule for a script page: collection → generic step02.inbound.processing → first full id alphabetically (packet addendum, not a decision row).
+Deviation: none (F-2 closed as the finding foresaw).
+For Task 7 (contracts.md): header/property names spelt as the code does, incl. `customHeader_partnerID` (determinePartnerID) vs `customHeader_PartnerID` (determinePartnerIDForIDocInbound).
+Issues: none open; ISSUE-1 → KB-13 (owner's local Phase A: Python output byte-identical to the committed catalog; Phase B after the port).
+Next: KB-07 (`contracts.md`, `partner-directory.md`, `Checks.contractNames` + `ContractNamesTest`; code+content, red test first) — ready; KB-13 ready as well.

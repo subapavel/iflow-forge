@@ -14,7 +14,7 @@ _Stub, filled in Task 8._
 - `{{tenant.security.cert.issuerdn}}`: issuer DN of the sender client certificate (parameter IssuerDN)
 - `{{tenant.xi.communication.party}}`: XI receiver communication party of the Step01 XI sender adapter (parameter CommunicationParty)
 - `{{tenant.idoc.logicalsystem.default}}`: value of parameter Default_LogicalSystemName (Step01 IDoc)
-- `{{tenant.name}}`: the tenant name the runtime reads from the environment variable TENANT_NAME; Partner Directory parameter id of the landscape stages (PID SAP_Integration_Suite_Landscape) and part of the stageRule_<tenant name> keys (Step02 async and sync, Step04)
+- `{{tenant.name}}`: the tenant name the runtime reads from the environment variable TENANT_NAME; Partner Directory parameter id of the landscape stages (PID SAP_Integration_Suite_Landscape), read by `determinePartnerID.groovy` (Step01 XI, Step02 inbound, async and sync) and `determinePartnerIDForIDocInbound.groovy` (Step01 IDoc), and part of the stageRule_<tenant name> keys (Step02 async and sync, Step04)
 - `{{tenant.pipeline.outbound.suffix}}`: suffix of the Step06 queue `<prefix>Q04<suffix>` and its DLQ (parameter PipelineJMSQueueSuffix; empty unless a receiver-specific outbound processing flow is set up)
 - `{{tenant.endpoint.idoc.outbound}}`: ProcessDirect address of the Step08 IDoc flow (parameter ProcessDirect_Address)
 - `{{tenant.endpoint.xi.outbound}}`: ProcessDirect address of the Step08 XI flow (parameter ProcessDirect_EndPoint)

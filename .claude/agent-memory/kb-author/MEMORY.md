@@ -104,3 +104,11 @@ Durable facts only (build quirks, verified APIs, recurring findings). Never task
 - Only Step08 Content Modifiers set `location`; exceptionType is set nowhere; attachAdditionallnformation runs twice (test mode, DLQ) except Step02 sync (once, no incomingQueue).
 - Shell: .iflw paths contain spaces and " - ": an unquoted `$(find ...)` gives grep a "-" arg and it hangs on stdin; use `find -print0 | xargs -0` or `-exec`. `pkill -f <pattern>` kills the calling shell too.
 - Expander: shorthand inside brackets plus a macro that adds brackets yields `[[...]]`; grep `\[\[` after every expansion. NamesTest rejects a backticked bare `.groovy`: write "every Groovy script".
+
+## Payload and custom determination scripts (learned on KB-06 B5, 2026-06-trial)
+- store/fetch payload scripts branch on header isWellFormedXml at their own run; Step02 async rewrites it at step 41, so step 28 fetchOriginal can decode by the converted body's value. Step02 sync ships neither: step 1 sets property payload = ${body}, step 58 Enricher "Get payload".
+- Routers "XML?" (async 51, sync 38, Step04 34, Step05 35) test `${header.isWellFormedXml} = 'false'`; Step08 (step 4) tests the property; Step04 step 51 "Bypass interface determination?" tests `count(//Interface) > 0`.
+- bypassOption: readBypassOptionFromPD#L36 (Step01 XI, Step02 x3); constant skipIfDet in "Get interface" (async 68, sync 56, Step04 57); set nowhere in Step05. Check every Content Modifier before a reader, not only scripts.
+- The custom*ViaXProperties scripts read exchange properties only (no Partner Directory) and are used only by the Step04 templates .scripts/.xrd; the Step05 custom template names no Groovy script.
+- determinePartnerID writes customHeader_partnerID, the IDoc script customHeader_PartnerID (L604). CustomXPid_SwitchOffTilde has no propdef default.
+- Review B5 lessons: auditLogHeader claims cite PipelineLogger#L25 (name = logTypeName + "Header") plus the caller's "auditLog" line, not only L69; an "every write goes through X" claim must name its exceptions; negatives in open questions state the grep scope, never a read line as support.
