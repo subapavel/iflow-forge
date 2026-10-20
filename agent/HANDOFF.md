@@ -1,9 +1,9 @@
 # Handoff
 
-state: RUNNING — KB-08 done (e145a84; D-022; kb-reviewer PASS r2); KB-13 4d7ee0f (ISSUE-2 CI; ISSUE-1 Phase B owner); KB-07 ae72101; next KB-10 (Pass B)
-last commit: e145a84 kb: naming.md, versions/README.md, glossary.md (KB-08); before it 4d7ee0f (KB-13), ae72101 (KB-07)
+state: RUNNING — KB-10 B1 done (claims + triage, this commit); B2 changelog next; KB-08 e145a84; KB-13 4d7ee0f (ISSUE-2 CI; ISSUE-1 Phase B owner)
+last commit: HEAD kb: claims from prior documentation and triage table (KB-10 B1); before it afd0a64 (ledger), e145a84 (KB-08), 4d7ee0f (KB-13)
 branch: claude/eager-brown-uw61ft (D-017; owner fast-forwards main) — all pushed; CI green through ae72101 (run 39358167204); 4d7ee0f, e145a84: ISSUE-2
-next exact action: KB-10 — scout plan Task 10 + spec Appendix A by section; write the page packet (claims triage, pitfalls.md, versions/<label>/changelog.md)
+next exact action: KB-10 B2 — kb-author on scratchpad kb-10/page-packet-b2.md (changelog 2026-09-current from target/kb-10 diffs; Version notes); then B3
 then: kb-author (batches by input group) → kb-reviewer per batch → verifier → commit per batch; KB-09 stays owner/local; KB-11 after KB-10
 pages: iflows/templates ten headings; scripts/ five; registry pages cite full ids; D-019 forms (process, CHANGELOG.txt#L); ≤ 1,500 words; all checks on verify
 reader: io.poxray.cpi per plan Task 2 + F-1; order D-016; ScriptCollection: 0 steps; propdef: no defaults (D-015); iFlow-level ifl:property not exposed (NOTES)

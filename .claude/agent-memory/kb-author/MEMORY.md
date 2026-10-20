@@ -1,7 +1,6 @@
 # kb-author memory
 
 Durable facts only (build quirks, verified APIs, recurring findings). Never task state. Under 120 lines.
-
 ## Artifacts (generic pipeline iFlows, 2026-06-trial)
 - Message-flow names are only the adapter type ("JMS", "ProcessDirect", "XI", "IDOC"); the participant name (dump `-> <endpoint>`) is what tells flows apart.
 - JMS queue receivers in Step02+ are fed by message end events, not Send steps; find them via `<bpmn2:messageFlow sourceRef="EndEvent_...">`.
@@ -9,18 +8,14 @@ Durable facts only (build quirks, verified APIs, recurring findings). Never task
 - Scripts with the same file name in different generic iFlows were byte-identical (md5) in this label; line numbers carry over, check again per label.
 - Queue prefix parameter has three names: PipelinePrefix (Step01 XI, Step02 sync address), DefaultJMSQueuePrefix (Step01 IDoc), PipelineJMSQueuePrefix (Step02+).
 - The JSON dump's Content Modifier tables are `<row><cell id='Name'>...` strings; flatten with jq gsub into `ROW[...]` to read them.
-
 ## Budget
 - BudgetTest counts whitespace tokens: table pipes and the `—` default cells count; `wc -w` undercounts by ~8. Measure with `tr -s ' \t\n\r\f\v' '\n' < page | grep -c .`.
 - A step line with the full `[<id>, step "<name>"]` cite costs ~11 tokens; a 55-step iFlow leaves ~850 for the other nine sections. Write terse from the start; script-step cites (`[scripts/...#Ln]`) are 1 token.
-
 ## Reading the routing (learned on Step02 async/sync, Step04)
 - The JSON dump's step `id` is the BPMN element id: grep the `.iflw` `sequenceFlow` lines (sourceRef/targetRef/name + conditionExpression) and map ids to dump step numbers; messageFlow sourceRef=ServiceTask_/EndEvent_ gives the adapter per step.
 - Dump order is not flow order: in Step02 sync the two "Request Reply" exit calls are #9 = CustomXScenario, #10 = CustomXGlobal (reverse of async). Always map ServiceTask id -> messageFlow -> participant.
 - Backoff parameter spelling: JMS_ExpotentialBackoff (Step02 async, Step04) vs JMS_ExponentialBackoff (Step02 inbound). Message-flow names: JMS_OuboundProcessing, JMS_InterfaceDetermination (typo "Oubound" is SAP's).
-
-## Budget (cont.)
-- Bare step lines cost ~5 tokens each (99 steps = 495); a table row costs 5 pipe tokens plus cells. 1,350 is out of reach above ~90 steps; group script rows and point to "Partner directory" instead of repeating cites.
+- (Budget) Bare step lines cost ~5 tokens each (99 steps = 495); a table row costs 5 pipe tokens plus cells. 1,350 is out of reach above ~90 steps; group script rows and point to "Partner directory" instead of repeating cites.
 
 ## Generic outbound (learned on Step05, Step06, Step08 IDoc/XI, 2026-06-trial)
 - Step08 message-flow names are the channel names (CC_IDOC_Receiver_OnPremBasic, CC_XI_Receiver_InternetNone, CC_ProcessDirect_Sender); endpoints repeat (OnPremise, Internet), so cite by flow name. Step08 XI and Step05/06 receivers hang on end events, Step08 IDoc on ExternalCall steps.
@@ -117,3 +112,9 @@ Durable facts only (build quirks, verified APIs, recurring findings). Never task
 - Runtime reads the step number from the Camel id: readCustomXFromPD#L28-L30 (indexOf "generic.step" + 12); Step07 templates set customXPipelineStep '07' as a constant in "Initialize".
 - `po-xray unpack <package> <out-dir> [--strip a,b]` (UnpackCommand); out-dir = the package folder. CHANGELOG version = first dated entry (L5), not line 1.
 - Review KB-08 lessons: sources/README.md L19 says only suffixes were stripped (prefix claim failed); a behaviour clause on a placeholder bullet needs the reading script line, not only the template parameter; Step01 templates are sender-side (JMS_Outgoing / Sync_Pipeline_Endpoint), no ProcessDirect sender.
+## Claim extraction (learned on KB-10 B1b)
+- Write claims as `K|C|V|L|text` lines in the scratchpad and expand with an awk generator (rejoin fields 5..NF with "|": claims contain `01|02|06`); ids past 999 print as C-1000, so check with `\bC-[0-9]{3,4}\b` (a `{3}` regex stops at 999).
+- Confluence pages quoting Groovy repeat the same determinePartnerID code in XI, IDoc and Step02 pages: summarise code once per page; summaries sometimes contradict the quoted code (Default_LogicalSystemName fallback, SAP_Receiver output) -> open-question.
+- B1c: the Confluence drafts quote the same script on many pages with different PDF line wrapping; compare copies with newlines and spaces removed, then map claim lines page-to-page by a 25-char prefix anchor (diff-based maps fail on rewrapped lines). Summary-vs-code gaps recur: "property not created" comments vs `?: null`, header vs property isWellFormedXml (Step08), storeOriginalPayload quoting the storePayload code.
+- Triage (B1d-1): 2026-09-current has features absent from the 2026-06-trial fact base (TenantName, skipRetry, backupMessage, checkExceptionType, getOriginalExceptionFromMplApi, scenarioKeys); `grep -rlF <token>` per label decides `changelog` vs `fact`.
+- B1d-2: shell awk is mawk (no `{n,m}` intervals, they never match: write `[A-Z][A-Z]+`); claim dedup by exact normalized text to the earliest earlier claim, root via its dup target; claims files have no backticks, so a Name index needs a token regex plus stoplist.

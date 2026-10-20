@@ -107,7 +107,7 @@ Source: Step02 Async `.iflw`, Step06 `.iflw`, `parameters.prop`, `checkException
 
 The new helper loads the Value Mapping ZIP via the API, extracts `value_mapping.xml`, compares the content with the PD StringParameters and creates missing values or updates differing ones. Surplus PD keys are ignored in the comparison: it is a completion/update, not an exact synchronization including deletion.
 
-The default target PID is `SAP_Integration_Suite_SkipRetryGlobalProfile`, VM version 1.0.1. The API hostname is a placeholder and the credential alias is `OWN_API_ACCESS`. The helper was not run and nothing was written to PD.
+The default target PID is `SAP_Integration_Suite_SkipRetryGlobalProfile`, VM version 1.0.1. The API hostname is a placeholder and the credential alias is `<credential-alias>`. The helper was not run and nothing was written to PD.
 
 Source: helper `.iflw`, `ExtractValueMapping.groovy`, `CompareValueMapping.groovy`, `BuildUpdatePayload.groovy`, `parameters.prop`.
 
