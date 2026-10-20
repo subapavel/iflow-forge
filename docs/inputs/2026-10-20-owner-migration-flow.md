@@ -84,3 +84,17 @@ input for the designs of parts 3, 4 and 5, not a design. Restated in English; no
     source layer needs a script-summary form (what a script reads and writes, by line reference the customer
     verifies on their own download) and a change to the cite forms of D-019/D-020 — an expensive-to-reverse
     decision, to be designed and marked draft, and still an owner-only licence call.
+
+## Eighth statement, same session
+
+12. Development runs in the cloud environment; the owner migrates locally and "improves" the tool there. The
+    owner asks how a tool update found necessary during a local migration reaches the tool developed
+    elsewhere. Architect's proposal (to be written into the MIG-00 spec and WORKFLOW): the local skill's
+    retrospective writes a generic, anonymised request file (`requests/REQ-<n>.md`: what the tool could not do,
+    the evidence as a synthetic fixture, the expected behaviour) checked by the local forbidden-values guard
+    (`-Dkb.forbidden`, `ForbiddenValuesTest`) before it is pushed on a `field/<date>` branch; the cloud
+    architect reads `requests/` at session start and turns each into a BACKLOG row (red test, implementer,
+    review, commit); the owner fast-forwards `main` (D-017), pulls locally, rebuilds the runner jar and
+    resumes the migration; the tenant profile records the tool and skill version used per migration; urgent
+    local fixes follow the same WORKFLOW on a branch the cloud session merges; local commits touch only
+    `requests/`, pattern proposals and synthetic fixtures, cloud commits `src/` and the pages.
