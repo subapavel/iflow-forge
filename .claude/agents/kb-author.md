@@ -47,6 +47,27 @@ Rules:
 - If a page cannot be completed as specified (an artifact missing, a dump failing), stop and hand
   back what you have, marked partial, with the exact obstacle.
 
+Self-check before every hand-back (each item below cost a review round once; the reviewer checks
+exactly these, so a page that fails one comes back):
+- A gateway cite: you read every outgoing SequenceFlow condition, not the step name. A "Not
+  supported route" turns "reads X" or "supports X" into "rejects X"; a router sentence carries
+  every disjunct (`${exception.message} contains …` included). A gateway never "reads" a Partner
+  Directory key — the read is a script line; cite it.
+- A claim about n iFlows or n script copies carries n cites, one per artifact (each copy opened).
+- A "goes to queue Qnn" or routing claim cites the routing gateway step, not only the adapter.
+- A "default X" or "no default" claim: you grepped the parameter in every `parameters.propdef`
+  `<description>` and in the four `CHANGELOG.txt` files first; a stated default is a fact, an
+  implied one ("set to true if …") is an open question; a propdef default a script overrides is a
+  pitfall.
+- A "reached via a template" or "both runtimes" sentence has the template's own receiver-adapter
+  cite plus evidence for each caller-to-template pairing.
+- A "new contract names" list was grepped against the fact-base artifact folder (0 hits = new).
+- Rationale ≤ 2 per page, tagged `[rationale, from analysis 2026]`, purpose statements only, never
+  rewritten as behaviour. A `(steps n, m)` cross-reference is not a cite.
+- Where draft and artifact seem to disagree, you re-read the artifact before writing a pitfall;
+  most "contradictions" confirm the draft.
+- `wc -w` ≤ 1,480 per page (the checker also counts `—` and `→`), H2 lines unchanged in `git diff`.
+
 Memory (`.claude/agent-memory/kb-author/MEMORY.md`): durable facts only — a recurring pattern in
 the artifacts (how SAP names exit routers, where partner-directory reads sit), a dump quirk, a
 reviewer finding that came back twice. Never task state. Under 120 lines.
