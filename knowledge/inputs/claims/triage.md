@@ -5,14 +5,14 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | id | source | kind | disposition | target / reason | applied (B3) |
 |---|---|---|---|---|---|
 | R-001 | tenant-export-review-2026-09.md | fact | tenant→profile | tenant-specific value | profile |
-| R-002 | tenant-export-review-2026-09.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
+| R-002 | tenant-export-review-2026-09.md | procedure | procedure→Task 11 | team procedure or decision | n/a |
 | R-003 | tenant-export-review-2026-09.md | fact | dropped (not pipeline) | document meta: method of the analysis | n/a |
 | R-004 | tenant-export-review-2026-09.md | fact | dropped (not pipeline) | document meta: what the analysis is not | n/a |
 | R-005 | tenant-export-review-2026-09.md | fact | dropped (not pipeline) | document meta: readability of the export | n/a |
 | R-006 | tenant-export-review-2026-09.md | fact | dropped (not pipeline) | tenant export file format, Integration Suite generality | n/a |
 | R-007 | tenant-export-review-2026-09.md | fact | dropped (not pipeline) | tenant export file format, Integration Suite generality | n/a |
 | R-008 | tenant-export-review-2026-09.md | fact | dropped (not pipeline) | tenant export file format, Integration Suite generality | n/a |
-| R-009 | tenant-export-review-2026-09.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
+| R-009 | tenant-export-review-2026-09.md | procedure | procedure→Task 11 | team procedure or decision | n/a |
 | R-010 | tenant-export-review-2026-09.md | fact | fact→naming.md | package composition, Generic Inbound | added |
 | R-011 | tenant-export-review-2026-09.md | fact | fact→naming.md | package composition, Generic Pipelines | added |
 | R-012 | tenant-export-review-2026-09.md | fact | fact→naming.md | package composition, Generic Outbound | added |
@@ -37,15 +37,15 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | R-031 | tenant-export-review-2026-09.md | fact | dropped (not pipeline) | document meta: analysis output files | n/a |
 | R-032 | tenant-export-review-2026-09.md | pitfall | pitfall | KIND pitfall | pitfall |
 | R-033 | tenant-export-review-2026-09.md | fact | dropped (not pipeline) | Integration Suite generality: sequenceFlow order | n/a |
-| R-034 | tenant-export-review-2026-09.md | fact | fact→overview.md | pipeline structure | deferred (KB-11) |
-| R-035 | tenant-export-review-2026-09.md | fact | fact→overview.md | what determines a scenario | deferred (KB-11) |
+| R-034 | tenant-export-review-2026-09.md | fact | fact→overview.md | pipeline structure | added |
+| R-035 | tenant-export-review-2026-09.md | fact | fact→overview.md | what determines a scenario | added |
 | R-036 | tenant-export-review-2026-09.md | fact | fact→message-path.md | JMS decoupling of phases | already on page |
 | R-037 | tenant-export-review-2026-09.md | fact | fact→message-path.md | fully decoupled async path | already on page |
 | R-038 | tenant-export-review-2026-09.md | fact | fact→message-path.md | integrated async path | already on page |
 | R-039 | tenant-export-review-2026-09.md | fact | fact→message-path.md | integrated sync path | already on page |
 | R-040 | tenant-export-review-2026-09.md | fact | fact→naming.md | SAP default queue prefix from propdef | open question |
 | R-041 | tenant-export-review-2026-09.md | fact | fact→message-path.md | bypass and receiver-specific queues | already on page |
-| R-042 | tenant-export-review-2026-09.md | fact | fact→overview.md | scenario flows are templates | deferred (KB-11) |
+| R-042 | tenant-export-review-2026-09.md | fact | fact→overview.md | scenario flows are templates | omitted (granularity) |
 | R-043 | tenant-export-review-2026-09.md | fact | fact→scripts/determinePartnerID.md | partner ID lookup order | already on page |
 | R-044 | tenant-export-review-2026-09.md | fact | fact→scripts/determinePartnerID.md | tilde fallback switch | already on page |
 | R-045 | tenant-export-review-2026-09.md | fact | tenant→profile | tenant-specific value | profile |
@@ -62,8 +62,8 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | R-056 | tenant-export-review-2026-09.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step04.receiver.determination.md | Multiple Stages branch in async variants | already on page |
 | R-057 | tenant-export-review-2026-09.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | sync rejects multiple receivers/interfaces/stages | already on page |
 | R-058 | tenant-export-review-2026-09.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step06.outbound.processing.md | Step06 role | already on page |
-| R-059 | tenant-export-review-2026-09.md | fact | fact→overview.md | Step07 role | deferred (KB-11) |
-| R-060 | tenant-export-review-2026-09.md | fact | fact→overview.md | Step08 role | deferred (KB-11) |
+| R-059 | tenant-export-review-2026-09.md | fact | fact→overview.md | Step07 role | already on page |
+| R-060 | tenant-export-review-2026-09.md | fact | fact→overview.md | Step08 role | already on page |
 | R-061 | tenant-export-review-2026-09.md | pitfall | pitfall | KIND pitfall | already on page |
 | R-062 | tenant-export-review-2026-09.md | fact | fact→scripts/PipelineLogger.md | behaviour of PipelineLogger | already on page |
 | R-063 | tenant-export-review-2026-09.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.script.collection.md | scriptBundleId dependency | already on page |
@@ -174,18 +174,18 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | R-168 | tenant-export-review-2026-09.md | open-question | tenant→profile | whether the collection is deployed is tenant state | profile |
 | R-169 | tenant-export-review-2026-09.md | fact | changelog | PD Upload Helper only in 2026-09-current | changelog (not observable (B2)) |
 | R-170 | tenant-export-review-2026-09.md | fact | tenant→profile | tenant-specific value | profile |
-| R-171 | tenant-export-review-2026-09.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
+| R-171 | tenant-export-review-2026-09.md | procedure | procedure→Task 11 | team procedure or decision | n/a |
 | R-172 | tenant-export-review-2026-09.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | System.getenv TENANT_NAME | added |
 | R-173 | tenant-export-review-2026-09.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | referenced copies | already on page |
 | R-174 | tenant-export-review-2026-09.md | fact | changelog | TenantName read only in 2026-09-current | changelog (done (B2)) |
 | R-175 | tenant-export-review-2026-09.md | pitfall | pitfall | KIND pitfall | pitfall |
 | R-176 | tenant-export-review-2026-09.md | fact | changelog | checkExceptionType only in 2026-09-current | changelog (done (B2)) |
 | R-177 | tenant-export-review-2026-09.md | fact | changelog | readRetryHandlingFromPDOutbound only in 2026-09-current | changelog (done (B2)) |
-| R-178 | tenant-export-review-2026-09.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
+| R-178 | tenant-export-review-2026-09.md | procedure | procedure→Task 11 | team procedure or decision | n/a |
 | R-179 | tenant-export-review-2026-09.md | pitfall | pitfall | KIND pitfall | pitfall |
 | R-180 | tenant-export-review-2026-09.md | fact | changelog | CustomXSkipRetriesProfile only in 2026-09-current | changelog (done (B2)) |
 | R-181 | tenant-export-review-2026-09.md | open-question | pitfall | open question no artifact settles | open question |
-| R-182 | tenant-export-review-2026-09.md | procedure | procedure→Task 11 | tenant-specific; profile note | deferred (KB-11) |
+| R-182 | tenant-export-review-2026-09.md | procedure | procedure→Task 11 | tenant-specific; profile note | profile |
 | R-183 | tenant-export-review-2026-09.md | fact | dropped (not pipeline) | document meta: material available to the analysis | n/a |
 | R-184 | tenant-export-review-2026-09.md | open-question | dropped (not pipeline) | document meta: what the analysis lacks | n/a |
 | R-185 | tenant-export-review-2026-09.md | open-question | tenant→profile | PD content, security material, deployment state live on the tenant | profile |
@@ -194,41 +194,41 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | R-188 | tenant-export-review-2026-09.md | fact | dropped (not pipeline) | document meta: nothing deployed | n/a |
 | R-189 | tenant-export-review-2026-09.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.script.collection.md | no v2 script API import | omitted (granularity) |
 | R-190 | tenant-export-review-2026-09.md | pitfall | pitfall | KIND pitfall | n/a |
-| R-191 | tenant-export-review-2026-09.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
+| R-191 | tenant-export-review-2026-09.md | procedure | procedure→Task 11 | team procedure or decision | n/a |
 | R-192 | tenant-export-review-2026-09.md | fact | dropped (not pipeline) | document meta: traceability summary | n/a |
-| R-193 | tenant-export-review-2026-09.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
-| R-194 | tenant-export-review-2026-09.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
-| R-195 | tenant-export-review-2026-09.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
+| R-193 | tenant-export-review-2026-09.md | procedure | procedure→Task 11 | team procedure or decision | profile |
+| R-194 | tenant-export-review-2026-09.md | procedure | procedure→Task 11 | team procedure or decision | profile |
+| R-195 | tenant-export-review-2026-09.md | procedure | procedure→Task 11 | team procedure or decision | profile |
 | R-196 | tenant-export-review-2026-09.md | rationale | rationale→versions/README.md | why old exports help separate upgrades from changes | budget |
 | C-001 | templates.md | fact | fact→versions/README.md | package version of the label | budget |
 | C-002 | templates.md | fact | fact→naming.md | Templates package content | added |
-| C-003 | templates.md | procedure | procedure→Task 11 | tenant-specific; profile note | deferred (KB-11) |
-| C-004 | templates.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
-| C-005 | templates.md | fact | fact→overview.md | deployment model of generic flows | deferred (KB-11) |
-| C-006 | templates.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
-| C-007 | templates.md | fact | fact→overview.md | where templates plug into the pipeline | deferred (KB-11) |
+| C-003 | templates.md | procedure | procedure→Task 11 | tenant-specific; profile note | profile |
+| C-004 | templates.md | procedure | procedure→Task 11 | team procedure or decision | added (migration/po-ico-to-pipeline.md) |
+| C-005 | templates.md | fact | fact→overview.md | deployment model of generic flows | open question |
+| C-006 | templates.md | procedure | procedure→Task 11 | team procedure or decision | added (migration/po-ico-to-pipeline.md) |
+| C-007 | templates.md | fact | fact→overview.md | where templates plug into the pipeline | added |
 | C-008 | templates.md | fact | fact→naming.md | template parameter name (spelling per template) | pitfall |
-| C-009 | templates.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
-| C-010 | templates.md | fact | fact→overview.md | common exception process of all templates | deferred (KB-11) |
-| C-011 | templates.md | fact | fact→overview.md | retry owned by the calling generic step | deferred (KB-11) |
+| C-009 | templates.md | procedure | procedure→Task 11 | team procedure or decision | added (migration/proposal-template.md) |
+| C-010 | templates.md | fact | fact→overview.md | common exception process of all templates | open question |
+| C-011 | templates.md | fact | fact→overview.md | retry owned by the calling generic step | open question |
 | C-012 | templates.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step07.outbound.processing.p2p.md | shared post-processing exit of all Step07 templates | already on page |
 | C-013 | templates.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step07.outbound.processing.p2p.md | shared post-processing exit of all Step07 templates | already on page |
 | C-014 | templates.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step07.outbound.processing.p2p.md | shared post-processing exit of all Step07 templates | already on page |
-| C-015 | templates.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
+| C-015 | templates.md | procedure | procedure→Task 11 | team procedure or decision | added (migration/proposal-template.md) |
 | C-016 | templates.md | pitfall | pitfall | KIND pitfall | open question |
-| C-017 | templates.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
+| C-017 | templates.md | procedure | procedure→Task 11 | team procedure or decision | already on page |
 | C-018 | templates.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.script.collection.md | templates reference the collection | already on page |
 | C-019 | templates.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.script.collection.md | scriptBundleId of templates | already on page |
 | C-020 | templates.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.script.collection.md | deployment of the collection | open question |
-| C-021 | templates.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
+| C-021 | templates.md | procedure | procedure→Task 11 | team procedure or decision | omitted (granularity) |
 | C-022 | templates.md | fact | fact→glossary.md | MPL status RetryViaParentFlow | open question |
-| C-023 | templates.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
+| C-023 | templates.md | procedure | procedure→Task 11 | team procedure or decision | open question |
 | C-024 | generic-inbound.md | fact | fact→naming.md | Generic Inbound package content | budget |
 | C-025 | generic-inbound.md | fact | fact→naming.md | shared .iflw file name | added |
 | C-026 | generic-inbound.md | procedure | dropped (duplicate of C-003) | same team statement on another page | n/a |
 | C-027 | generic-inbound.md | procedure | dropped (duplicate of C-004) | same marker statement on another page | n/a |
-| C-028 | generic-inbound.md | fact | fact→overview.md | Step01 role | deferred (KB-11) |
-| C-029 | generic-inbound.md | fact | fact→overview.md | Step01 deployment model | deferred (KB-11) |
+| C-028 | generic-inbound.md | fact | fact→overview.md | Step01 role | added |
+| C-029 | generic-inbound.md | fact | fact→overview.md | Step01 deployment model | open question |
 | C-030 | generic-inbound.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | sender type | already on page |
 | C-031 | generic-inbound.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | sender type | omitted (granularity) |
 | C-032 | generic-inbound.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | flow outline of both Step01 variants (also Step01 IDoc) | already on page |
@@ -259,21 +259,21 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-057 | generic-outbound.md | fact | fact→naming.md | Generic Outbound package content | budget |
 | C-058 | generic-outbound.md | procedure | dropped (duplicate of C-003) | same team statement on another page | n/a |
 | C-059 | generic-outbound.md | procedure | dropped (duplicate of C-004) | same marker statement on another page | n/a |
-| C-060 | generic-outbound.md | fact | fact→overview.md | outbound side role | deferred (KB-11) |
+| C-060 | generic-outbound.md | fact | fact→overview.md | outbound side role | added |
 | C-061 | generic-outbound.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step06.outbound.processing.md | dispatcher on PIPQ04 | already on page |
 | C-062 | generic-outbound.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step06.outbound.processing.md | retry and dead letter | already on page |
 | C-063 | generic-outbound.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step06.outbound.processing.md | hand-over to Step07 | already on page |
 | C-064 | generic-outbound.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi.md | physical XI sending | already on page |
 | C-065 | generic-outbound.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.idoc.md | physical IDoc sending | already on page |
 | C-066 | generic-outbound.md | fact | fact→message-path.md | outbound path | already on page |
-| C-067 | generic-outbound.md | fact | fact→overview.md | outbound flows shared by both runtimes | deferred (KB-11) |
+| C-067 | generic-outbound.md | fact | fact→overview.md | outbound flows shared by both runtimes | omitted (granularity) |
 | C-068 | generic-outbound.md | fact | fact→message-path.md | who fills PIPQ04 | already on page |
 | C-069 | generic-outbound.md | fact | dropped (not pipeline) | document meta: page carries no runtime markers | n/a |
 | C-070 | generic-pipelines.md | fact | fact→naming.md | Generic Pipelines package content | added |
 | C-071 | generic-pipelines.md | procedure | dropped (duplicate of C-003) | same team statement on another page | n/a |
 | C-072 | generic-pipelines.md | procedure | dropped (duplicate of C-004) | same marker statement on another page | n/a |
-| C-073 | generic-pipelines.md | fact | fact→overview.md | Generic Pipelines role | deferred (KB-11) |
-| C-074 | generic-pipelines.md | fact | fact→overview.md | integrated runtime flows | deferred (KB-11) |
+| C-073 | generic-pipelines.md | fact | fact→overview.md | Generic Pipelines role | added |
+| C-074 | generic-pipelines.md | fact | fact→overview.md | integrated runtime flows | added |
 | C-075 | generic-pipelines.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | merges Step02+04+05 | already on page |
 | C-076 | generic-pipelines.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | single XSLT determination | already on page |
 | C-077 | generic-pipelines.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async.md | input queue PIPX01 | already on page |
@@ -287,12 +287,12 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-085 | generic-pipelines.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step05.interface.determination.md | Step05 role | already on page |
 | C-086 | generic-pipelines.md | fact | fact→contracts.md | setter of SAP_OutboundProcessingEndpoint | pitfall |
 | C-087 | generic-pipelines.md | fact | dropped (duplicate of C-075) | same statement as the earlier claim | n/a |
-| C-088 | generic-pipelines.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
+| C-088 | generic-pipelines.md | procedure | procedure→Task 11 | team procedure or decision | profile |
 | C-089 | generic-pipelines.md | fact | dropped (duplicate of C-076) | same statement as the earlier claim | n/a |
 | C-090 | pipeline-v2-script-collection-overview.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.script.collection.md | type and version | already on page |
 | C-091 | pipeline-v2-script-collection-overview.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.script.collection.md | symbolic name | already on page |
-| C-092 | pipeline-v2-script-collection-overview.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
-| C-093 | pipeline-v2-script-collection-overview.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
+| C-092 | pipeline-v2-script-collection-overview.md | procedure | procedure→Task 11 | team procedure or decision | already on page |
+| C-093 | pipeline-v2-script-collection-overview.md | procedure | procedure→Task 11 | team procedure or decision | omitted (granularity) |
 | C-094 | pipeline-v2-script-collection-overview.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.script.collection.md | generic flows bundle scripts locally | already on page |
 | C-095 | pipeline-v2-script-collection-overview.md | fact | dropped (duplicate of C-018) | same statement as the earlier claim | n/a |
 | C-096 | pipeline-v2-script-collection-overview.md | rationale | rationale→templates/com.sap.integration.cloud.pipeline.v2.script.collection.md | why one shared collection | added |
@@ -324,87 +324,87 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-122 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/PipelineHelper.md | behaviour of PipelineHelper | already on page |
 | C-123 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/PipelineLogger.md | behaviour of PipelineLogger | already on page |
 | C-124 | pipeline-v2-script-collection-overview.md | fact | fact→scripts/PipelineLogger.md | behaviour of PipelineLogger | already on page |
-| C-125 | pipeline-v2-script-collection-overview.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
+| C-125 | pipeline-v2-script-collection-overview.md | procedure | procedure→Task 11 | team procedure or decision | already on page |
 | C-126 | pipeline-v2-script-collection-overview.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.script.collection.md | deployment order failure | open question |
-| C-127 | pipeline-v2-script-collection-overview.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
-| C-128 | when-to-use-cloud-integration-pipeline-decision-matrix.md | procedure | procedure→Task 11 | tenant-specific; profile note | deferred (KB-11) |
-| C-129 | when-to-use-cloud-integration-pipeline-decision-matrix.md | rationale | rationale→overview.md | what the pipeline is for | deferred (KB-11) |
-| C-130 | when-to-use-cloud-integration-pipeline-decision-matrix.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
-| C-131 | when-to-use-cloud-integration-pipeline-decision-matrix.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
-| C-132 | when-to-use-cloud-integration-pipeline-decision-matrix.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
-| C-133 | when-to-use-cloud-integration-pipeline-decision-matrix.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
-| C-134 | when-to-use-cloud-integration-pipeline-decision-matrix.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
-| C-135 | when-to-use-cloud-integration-pipeline-decision-matrix.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
-| C-136 | when-to-use-cloud-integration-pipeline-decision-matrix.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
-| C-137 | when-to-use-cloud-integration-pipeline-decision-matrix.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
-| C-138 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→overview.md | about the pipeline overview page | deferred (KB-11) |
+| C-127 | pipeline-v2-script-collection-overview.md | procedure | procedure→Task 11 | team procedure or decision | n/a |
+| C-128 | when-to-use-cloud-integration-pipeline-decision-matrix.md | procedure | procedure→Task 11 | tenant-specific; profile note | profile |
+| C-129 | when-to-use-cloud-integration-pipeline-decision-matrix.md | rationale | rationale→overview.md | what the pipeline is for | added |
+| C-130 | when-to-use-cloud-integration-pipeline-decision-matrix.md | procedure | procedure→Task 11 | team procedure or decision | profile |
+| C-131 | when-to-use-cloud-integration-pipeline-decision-matrix.md | procedure | procedure→Task 11 | team procedure or decision | profile |
+| C-132 | when-to-use-cloud-integration-pipeline-decision-matrix.md | procedure | procedure→Task 11 | team procedure or decision | profile |
+| C-133 | when-to-use-cloud-integration-pipeline-decision-matrix.md | procedure | procedure→Task 11 | team procedure or decision | profile |
+| C-134 | when-to-use-cloud-integration-pipeline-decision-matrix.md | procedure | procedure→Task 11 | team procedure or decision | profile |
+| C-135 | when-to-use-cloud-integration-pipeline-decision-matrix.md | procedure | procedure→Task 11 | team procedure or decision | profile |
+| C-136 | when-to-use-cloud-integration-pipeline-decision-matrix.md | procedure | procedure→Task 11 | team procedure or decision | profile |
+| C-137 | when-to-use-cloud-integration-pipeline-decision-matrix.md | procedure | procedure→Task 11 | team procedure or decision | profile |
+| C-138 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→overview.md | about the pipeline overview page | added |
 | C-139 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | dropped (not pipeline) | plain-iFlow generality | n/a |
-| C-140 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→overview.md | about the pipeline overview page | deferred (KB-11) |
-| C-141 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→overview.md | about the pipeline overview page | deferred (KB-11) |
+| C-140 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→overview.md | about the pipeline overview page | already on page |
+| C-141 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→overview.md | about the pipeline overview page | added |
 | C-142 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | dropped (not pipeline) | plain-iFlow generality | n/a |
-| C-143 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→overview.md | about the pipeline overview page | deferred (KB-11) |
+| C-143 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→overview.md | about the pipeline overview page | already on page |
 | C-144 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | dropped (not pipeline) | plain-iFlow generality | n/a |
-| C-145 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→overview.md | about the pipeline overview page | deferred (KB-11) |
+| C-145 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→overview.md | about the pipeline overview page | open question |
 | C-146 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | dropped (not pipeline) | plain-iFlow generality | n/a |
-| C-147 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→overview.md | about the pipeline overview page | deferred (KB-11) |
+| C-147 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→overview.md | about the pipeline overview page | added |
 | C-148 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | dropped (not pipeline) | plain-iFlow generality | n/a |
-| C-149 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→overview.md | about the pipeline overview page | deferred (KB-11) |
+| C-149 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→overview.md | about the pipeline overview page | already on page |
 | C-150 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | dropped (not pipeline) | plain-iFlow generality | n/a |
-| C-151 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→overview.md | about the pipeline overview page | deferred (KB-11) |
+| C-151 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→overview.md | about the pipeline overview page | already on page |
 | C-152 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | dropped (not pipeline) | plain-iFlow generality | n/a |
-| C-153 | when-to-use-cloud-integration-pipeline-decision-matrix.md | rationale | rationale→overview.md | explains the design on pipeline overview | deferred (KB-11) |
-| C-154 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→overview.md | about the pipeline overview page | deferred (KB-11) |
-| C-155 | when-to-use-cloud-integration-pipeline-decision-matrix.md | rationale | rationale→overview.md | explains the design on pipeline overview | deferred (KB-11) |
-| C-156 | when-to-use-cloud-integration-pipeline-decision-matrix.md | rationale | rationale→overview.md | explains the design on pipeline overview | deferred (KB-11) |
+| C-153 | when-to-use-cloud-integration-pipeline-decision-matrix.md | rationale | rationale→overview.md | explains the design on pipeline overview | omitted (granularity) |
+| C-154 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→overview.md | about the pipeline overview page | already on page |
+| C-155 | when-to-use-cloud-integration-pipeline-decision-matrix.md | rationale | rationale→overview.md | explains the design on pipeline overview | omitted (granularity) |
+| C-156 | when-to-use-cloud-integration-pipeline-decision-matrix.md | rationale | rationale→overview.md | explains the design on pipeline overview | omitted (granularity) |
 | C-157 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | behaviour of mapSenderStageToReceiverStage | already on page |
 | C-158 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→partner-directory.md | landscape PD entry | already on page |
 | C-159 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | alternative-partner stage lookup | already on page |
 | C-160 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | stageRule_* priorities | already on page |
-| C-161 | when-to-use-cloud-integration-pipeline-decision-matrix.md | rationale | rationale→overview.md | explains the design on pipeline overview | deferred (KB-11) |
+| C-161 | when-to-use-cloud-integration-pipeline-decision-matrix.md | rationale | rationale→overview.md | explains the design on pipeline overview | already on page |
 | C-162 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | tenant→profile | tenant-specific value | profile |
-| C-163 | when-to-use-cloud-integration-pipeline-decision-matrix.md | rationale | rationale→overview.md | explains the design on pipeline overview | deferred (KB-11) |
-| C-164 | when-to-use-cloud-integration-pipeline-decision-matrix.md | rationale | rationale→overview.md | explains the design on pipeline overview | deferred (KB-11) |
-| C-165 | when-to-use-cloud-integration-pipeline-decision-matrix.md | rationale | rationale→overview.md | explains the design on pipeline overview | deferred (KB-11) |
-| C-166 | when-to-use-cloud-integration-pipeline-decision-matrix.md | rationale | rationale→overview.md | explains the design on pipeline overview | deferred (KB-11) |
+| C-163 | when-to-use-cloud-integration-pipeline-decision-matrix.md | rationale | rationale→overview.md | explains the design on pipeline overview | open question |
+| C-164 | when-to-use-cloud-integration-pipeline-decision-matrix.md | rationale | rationale→overview.md | explains the design on pipeline overview | omitted (granularity) |
+| C-165 | when-to-use-cloud-integration-pipeline-decision-matrix.md | rationale | rationale→overview.md | explains the design on pipeline overview | already on page |
+| C-166 | when-to-use-cloud-integration-pipeline-decision-matrix.md | rationale | rationale→overview.md | explains the design on pipeline overview | added |
 | C-167 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→scripts/addCustomHeaderProperties.md | behaviour of addCustomHeaderProperties | already on page |
-| C-168 | when-to-use-cloud-integration-pipeline-decision-matrix.md | rationale | rationale→overview.md | explains the design on pipeline overview | deferred (KB-11) |
+| C-168 | when-to-use-cloud-integration-pipeline-decision-matrix.md | rationale | rationale→overview.md | explains the design on pipeline overview | omitted (granularity) |
 | C-169 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | sync runtime entry /PIP/XS01 | already on page |
 | C-170 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | receiver call in Step07 | already on page |
 | C-171 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | Request Reply to Step07 | already on page |
 | C-172 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | determination around the Step07 call | already on page |
 | C-173 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | BestEffort, no JMS | already on page |
-| C-174 | when-to-use-cloud-integration-pipeline-decision-matrix.md | rationale | rationale→overview.md | explains the design on pipeline overview | deferred (KB-11) |
-| C-175 | when-to-use-cloud-integration-pipeline-decision-matrix.md | rationale | rationale→overview.md | explains the design on pipeline overview | deferred (KB-11) |
-| C-176 | when-to-use-cloud-integration-pipeline-decision-matrix.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
-| C-177 | when-to-use-cloud-integration-pipeline-decision-matrix.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
-| C-178 | when-to-use-cloud-integration-pipeline-decision-matrix.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
+| C-174 | when-to-use-cloud-integration-pipeline-decision-matrix.md | rationale | rationale→overview.md | explains the design on pipeline overview | omitted (granularity) |
+| C-175 | when-to-use-cloud-integration-pipeline-decision-matrix.md | rationale | rationale→overview.md | explains the design on pipeline overview | omitted (granularity) |
+| C-176 | when-to-use-cloud-integration-pipeline-decision-matrix.md | procedure | procedure→Task 11 | team procedure or decision | profile |
+| C-177 | when-to-use-cloud-integration-pipeline-decision-matrix.md | procedure | procedure→Task 11 | team procedure or decision | profile |
+| C-178 | when-to-use-cloud-integration-pipeline-decision-matrix.md | procedure | procedure→Task 11 | team procedure or decision | profile |
 | C-179 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | no orchestration | already on page |
 | C-180 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | dropped (duplicate of C-081) | same statement as the earlier claim | n/a |
 | C-181 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | BestEffort, no split | already on page |
 | C-182 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | router "Any Receiver?" | already on page |
 | C-183 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | stage routing rejects split | already on page |
-| C-184 | when-to-use-cloud-integration-pipeline-decision-matrix.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
-| C-185 | when-to-use-cloud-integration-pipeline-decision-matrix.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
-| C-186 | when-to-use-cloud-integration-pipeline-decision-matrix.md | rationale | rationale→overview.md | explains the design on pipeline overview | deferred (KB-11) |
+| C-184 | when-to-use-cloud-integration-pipeline-decision-matrix.md | procedure | procedure→Task 11 | team procedure or decision | profile |
+| C-185 | when-to-use-cloud-integration-pipeline-decision-matrix.md | procedure | procedure→Task 11 | team procedure or decision | profile |
+| C-186 | when-to-use-cloud-integration-pipeline-decision-matrix.md | rationale | rationale→overview.md | explains the design on pipeline overview | added |
 | C-187 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | combined XSLT determination | already on page |
 | C-188 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | same receiverDetermination XSLT | already on page |
 | C-189 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | p2p bypass in sync | already on page |
-| C-190 | when-to-use-cloud-integration-pipeline-decision-matrix.md | rationale | rationale→overview.md | explains the design on pipeline overview | deferred (KB-11) |
+| C-190 | when-to-use-cloud-integration-pipeline-decision-matrix.md | rationale | rationale→overview.md | explains the design on pipeline overview | omitted (granularity) |
 | C-191 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→partner-directory.md | p2p PD string parameters | already on page |
 | C-192 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→scripts/readBypassOptionFromPD.md | skipRcvDet derivation | already on page |
 | C-193 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | skipRcvDet rejected | already on page |
 | C-194 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync.md | p2p still passes stage routing | pitfall |
-| C-195 | when-to-use-cloud-integration-pipeline-decision-matrix.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
-| C-196 | when-to-use-cloud-integration-pipeline-decision-matrix.md | rationale | rationale→overview.md | explains the design on pipeline overview | deferred (KB-11) |
+| C-195 | when-to-use-cloud-integration-pipeline-decision-matrix.md | procedure | procedure→Task 11 | team procedure or decision | profile |
+| C-196 | when-to-use-cloud-integration-pipeline-decision-matrix.md | rationale | rationale→overview.md | explains the design on pipeline overview | omitted (granularity) |
 | C-197 | when-to-use-cloud-integration-pipeline-decision-matrix.md | fact | tenant→profile | tenant-specific value | profile |
-| C-198 | when-to-use-cloud-integration-pipeline-decision-matrix.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
+| C-198 | when-to-use-cloud-integration-pipeline-decision-matrix.md | procedure | procedure→Task 11 | team procedure or decision | profile |
 | C-199 | step01-at-least-once.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step01.inbound.processing.alo.md | about the Step01 ALO template page | already on page |
 | C-200 | step01-at-least-once.md | rationale | rationale→templates/com.sap.integration.cloud.pipeline.v2.template.step01.inbound.processing.alo.md | explains the design on Step01 ALO template | added |
 | C-201 | step01-at-least-once.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step01.inbound.processing.alo.md | about the Step01 ALO template page | pitfall |
 | C-202 | step01-exactly-once.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step01.inbound.processing.eo.md | about the Step01 EO template page | already on page |
 | C-203 | step01-exactly-once.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step01.inbound.processing.eo.md | about the Step01 EO template page | pitfall |
-| C-204 | step01-exactly-once.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
-| C-205 | step01-exactly-once.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
+| C-204 | step01-exactly-once.md | procedure | procedure→Task 11 | team procedure or decision | added (migration/po-ico-to-pipeline.md) |
+| C-205 | step01-exactly-once.md | procedure | procedure→Task 11 | team procedure or decision | already on page |
 | C-206 | step01-exactly-once.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step01.inbound.processing.eo.md | about the Step01 EO template page | already on page |
 | C-207 | step01-exactly-once.md | fact | fact→scripts/mapMessageTypeToOperation.md | behaviour of mapMessageTypeToOperation | already on page |
 | C-208 | step01-exactly-once.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step01.inbound.processing.eo.md | about the Step01 EO template page | already on page |
@@ -412,9 +412,9 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-210 | step01-exactly-once.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step01.inbound.processing.eo.md | about the Step01 EO template page | already on page |
 | C-211 | step01-exactly-once.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step01.inbound.processing.eo.md | about the Step01 EO template page | already on page |
 | C-212 | step01-exactly-once.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step01.inbound.processing.eo.md | about the Step01 EO template page | already on page |
-| C-213 | step01-exactly-once.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
-| C-214 | step01-inbound-processing.md | fact | fact→overview.md | about the pipeline overview page | deferred (KB-11) |
-| C-215 | step01-inbound-processing.md | fact | fact→overview.md | XI/IDoc senders use generic Step01 | deferred (KB-11) |
+| C-213 | step01-exactly-once.md | procedure | procedure→Task 11 | team procedure or decision | already on page |
+| C-214 | step01-inbound-processing.md | fact | fact→overview.md | about the pipeline overview page | added |
+| C-215 | step01-inbound-processing.md | fact | fact→overview.md | XI/IDoc senders use generic Step01 | added |
 | C-216 | step01-inbound-processing.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step01.inbound.processing.alo.md | Step01 templates target queue (eo: C-211) | already on page |
 | C-217 | step01-synchronous.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step01.inbound.processing.sync.md | about the Step01 sync template page | already on page |
 | C-218 | step01-synchronous.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step01.inbound.processing.sync.md | about the Step01 sync template page | already on page |
@@ -427,14 +427,14 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-225 | step03-inbound-conversion.md | fact | fact→scripts/readInboundConversionFromPD.md | PD key InboundConversionEndpoint | already on page |
 | C-226 | step03-inbound-conversion.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step03.inbound.conversion.md | about the Step03 template page | already on page |
 | C-227 | step03-inbound-conversion.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step03.inbound.conversion.md | about the Step03 template page | pitfall |
-| C-228 | step03-inbound-conversion.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
+| C-228 | step03-inbound-conversion.md | procedure | procedure→Task 11 | team procedure or decision | already on page |
 | C-229 | step03-inbound-conversion.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step03.inbound.conversion.md | about the Step03 template page | already on page |
 | C-230 | step04-05-custom-determination.md | fact | fact→partner-directory.md | PD keys of the custom determination endpoints | already on page |
 | C-231 | step04-05-custom-determination.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step04.custom.receiver.determination.md | output format, all Step04/05 templates | already on page |
-| C-232 | step04-05-custom-determination.md | fact | fact→overview.md | about the pipeline overview page | deferred (KB-11) |
-| C-233 | step04-05-custom-determination.md | fact | fact→overview.md | about the pipeline overview page | deferred (KB-11) |
-| C-234 | step04-05-custom-determination.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
-| C-235 | step04-05-custom-determination.md | fact | fact→overview.md | about the pipeline overview page | deferred (KB-11) |
+| C-232 | step04-05-custom-determination.md | fact | fact→overview.md | about the pipeline overview page | added |
+| C-233 | step04-05-custom-determination.md | fact | fact→overview.md | about the pipeline overview page | added |
+| C-234 | step04-05-custom-determination.md | procedure | procedure→Task 11 | team procedure or decision | already on page |
+| C-235 | step04-05-custom-determination.md | fact | fact→overview.md | about the pipeline overview page | added |
 | C-236 | step04-custom-receiver-and-interface-determination-via-exchange-properties.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step04.custom.receiver.determination.scripts.md | about the Step04 scripts template page | already on page |
 | C-237 | step04-custom-receiver-and-interface-determination-via-exchange-properties.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step04.custom.receiver.determination.scripts.md | about the Step04 scripts template page | already on page |
 | C-238 | step04-custom-receiver-and-interface-determination-via-exchange-properties.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step04.custom.receiver.determination.scripts.md | about the Step04 scripts template page | already on page |
@@ -455,7 +455,7 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-253 | step04-custom-receiver-determination.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step04.custom.receiver.determination.md | about the Step04 custom template page | already on page |
 | C-254 | step04-custom-receiver-determination.md | fact | dropped (duplicate of C-233) | same statement as the earlier claim | n/a |
 | C-255 | step04-reuse-extended-receiver-determination.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step04.reuse.extended.receiver.determination.md | about the Step04 reuse XRD template page | already on page |
-| C-256 | step04-reuse-extended-receiver-determination.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
+| C-256 | step04-reuse-extended-receiver-determination.md | procedure | procedure→Task 11 | team procedure or decision | added (migration/po-ico-to-pipeline.md) |
 | C-257 | step04-reuse-extended-receiver-determination.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step04.reuse.extended.receiver.determination.md | about the Step04 reuse XRD template page | already on page |
 | C-258 | step04-reuse-extended-receiver-determination.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step04.receiver.determination.md | reuse XRD branch of generic Step04 | already on page |
 | C-259 | step05-custom-interface-determination.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step05.custom.interface.determination.md | about the Step05 custom template page | already on page |
@@ -468,7 +468,7 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-266 | step07-one-to-many-multiple-message-types.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step07.outbound.processing.o2mm.md | about the Step07 o2mm template page | already on page |
 | C-267 | step07-one-to-many-multiple-message-types.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step07.outbound.processing.o2mm.md | about the Step07 o2mm template page | already on page |
 | C-268 | step07-one-to-many-multiple-message-types.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step07.outbound.processing.o2mm.md | about the Step07 o2mm template page | already on page |
-| C-269 | step07-one-to-many-multiple-message-types.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
+| C-269 | step07-one-to-many-multiple-message-types.md | procedure | procedure→Task 11 | team procedure or decision | omitted (granularity) |
 | C-270 | step07-one-to-many-one-message-type.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step07.outbound.processing.o2mo.md | about the Step07 o2mo template page | already on page |
 | C-271 | step07-one-to-many-one-message-type.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step07.outbound.processing.o2mo.md | about the Step07 o2mo template page | pitfall |
 | C-272 | step07-one-to-many-one-message-type.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step07.outbound.processing.o2mo.md | about the Step07 o2mo template page | already on page |
@@ -507,44 +507,44 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-305 | custom-error-handling.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.custom.error.handling.md | about the custom error template page | already on page |
 | C-306 | custom-error-handling.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.custom.error.handling.md | about the custom error template page | open question |
 | C-307 | custom-error-handling.md | fact | fact→contracts.md | customXError_* header contract | already on page |
-| C-308 | custom-error-handling.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
+| C-308 | custom-error-handling.md | procedure | procedure→Task 11 | team procedure or decision | already on page |
 | C-309 | custom-exit-and-custom-error-handling.md | rationale | rationale→templates/com.sap.integration.cloud.pipeline.v2.template.custom.exit.md | explains the design on custom exit template | budget |
 | C-310 | custom-exit.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.custom.exit.md | about the custom exit template page | already on page |
 | C-311 | custom-exit.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.custom.exit.md | about the custom exit template page | already on page |
 | C-312 | custom-exit.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.custom.exit.md | about the custom exit template page | already on page |
 | C-313 | custom-exit.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.custom.exit.md | about the custom exit template page | already on page |
-| C-314 | custom-exit.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
+| C-314 | custom-exit.md | procedure | procedure→Task 11 | team procedure or decision | already on page |
 | C-315 | custom-exit.md | rationale | rationale→templates/com.sap.integration.cloud.pipeline.v2.template.custom.exit.md | explains the design on custom exit template | already on page |
-| C-316 | pipeline-concept.md | fact | fact→overview.md | SAP recommendation; needs a citable source | deferred (KB-11) |
+| C-316 | pipeline-concept.md | fact | fact→overview.md | SAP recommendation; needs a citable source | added |
 | C-317 | pipeline-concept.md | procedure | dropped (duplicate of C-004) | same marker statement on another page | n/a |
-| C-318 | pipeline-concept.md | fact | fact→overview.md | pipeline concept | deferred (KB-11) |
-| C-319 | pipeline-concept.md | fact | fact→overview.md | pipeline concept | deferred (KB-11) |
+| C-318 | pipeline-concept.md | fact | fact→overview.md | pipeline concept | added |
+| C-319 | pipeline-concept.md | fact | fact→overview.md | pipeline concept | added |
 | C-320 | pipeline-concept.md | fact | fact→message-path.md | fixed step sequence | already on page |
 | C-321 | pipeline-concept.md | rationale | rationale→glossary.md | origin of the term pipeline | budget |
-| C-322 | pipeline-concept.md | fact | fact→overview.md | configuration instead of hard-wiring | deferred (KB-11) |
-| C-323 | pipeline-concept.md | rationale | rationale→overview.md | origin and use of the concept | deferred (KB-11) |
-| C-324 | pipeline-concept.md | fact | fact→overview.md | generic flows | deferred (KB-11) |
-| C-325 | pipeline-concept.md | fact | fact→overview.md | scenario-specific flows | deferred (KB-11) |
+| C-322 | pipeline-concept.md | fact | fact→overview.md | configuration instead of hard-wiring | added |
+| C-323 | pipeline-concept.md | rationale | rationale→overview.md | origin and use of the concept | omitted (granularity) |
+| C-324 | pipeline-concept.md | fact | fact→overview.md | generic flows | added |
+| C-325 | pipeline-concept.md | fact | fact→overview.md | scenario-specific flows | added |
 | C-326 | pipeline-concept.md | rationale | rationale→message-path.md | why JMS between steps | added |
 | C-327 | pipeline-concept.md | fact | fact→message-path.md | ProcessDirect between flows | already on page |
 | C-328 | pipeline-concept.md | fact | fact→partner-directory.md | PD holds scenario configuration | already on page |
 | C-329 | pipeline-concept.md | rationale | rationale→message-path.md | queue economy | added |
 | C-330 | pipeline-concept.md | fact | fact→message-path.md | queue count fully decoupled | already on page |
 | C-331 | pipeline-concept.md | fact | fact→message-path.md | queue count integrated | already on page |
-| C-332 | pipeline-concept.md | rationale | rationale→overview.md | operating model | deferred (KB-11) |
+| C-332 | pipeline-concept.md | rationale | rationale→overview.md | operating model | omitted (granularity) |
 | C-333 | pipeline-concept.md | fact | fact→glossary.md | custom status | open question |
 | C-334 | pipeline-concept.md | fact | fact→scripts/addCustomHeaderProperties.md | customHeader_ prefix monitoring | already on page |
 | C-335 | pipeline-concept.md | fact | dropped (duplicate of C-145) | same statement as the earlier claim | n/a |
-| C-336 | pipeline-concept.md | fact | fact→overview.md | new message type needs a template copy | deferred (KB-11) |
-| C-337 | pipeline-concept.md | rationale | rationale→overview.md | small deployment unit | deferred (KB-11) |
+| C-336 | pipeline-concept.md | fact | fact→overview.md | new message type needs a template copy | already on page |
+| C-337 | pipeline-concept.md | rationale | rationale→overview.md | small deployment unit | added |
 | C-338 | pipeline-concept.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step07.outbound.processing.p2p.md | built-in standards of all Step07 templates | pitfall |
 | C-339 | pipeline-concept.md | rationale | rationale→templates/com.sap.integration.cloud.pipeline.v2.template.step07.outbound.processing.p2p.md | why standards are built into the templates | added |
 | C-340 | pipeline-concept.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step07.outbound.processing.p2p.md | common frame of all Step07 templates | pitfall |
 | C-341 | pipeline-concept.md | rationale | dropped (duplicate of C-164) | same statement as the earlier claim | n/a |
 | C-342 | pipeline-concept.md | fact | dropped (duplicate of C-166) | same statement as the earlier claim | n/a |
-| C-343 | pipeline-concept.md | fact | fact→overview.md | fully decoupled origin | deferred (KB-11) |
-| C-344 | pipeline-concept.md | rationale | rationale→overview.md | why the fully decoupled variant explains best | deferred (KB-11) |
-| C-345 | pipeline-concept.md | rationale | rationale→overview.md | why the integrated runtime exists | deferred (KB-11) |
+| C-343 | pipeline-concept.md | fact | fact→overview.md | fully decoupled origin | omitted (granularity) |
+| C-344 | pipeline-concept.md | rationale | rationale→overview.md | why the fully decoupled variant explains best | omitted (granularity) |
+| C-345 | pipeline-concept.md | rationale | rationale→overview.md | why the integrated runtime exists | added |
 | C-346 | pipeline-concept.md | fact | dropped (duplicate of C-080) | same statement as the earlier claim | n/a |
 | C-347 | pipeline-concept.md | fact | fact→message-path.md | step count per variant | omitted (granularity) |
 | C-348 | pipeline-concept.md | fact | fact→message-path.md | queues per variant | already on page |
@@ -559,7 +559,7 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-357 | pipeline-concept.md | open-question | pitfall | B1b-flagged: draft table leaves sync support open | already on page |
 | C-358 | pipeline-concept.md | rationale | rationale→message-path.md | no loss of functionality | budget |
 | C-359 | pipeline-concept.md | fact | fact→message-path.md | functions not used in the integrated runtime | added |
-| C-360 | pipeline-concept.md | procedure | procedure→Task 11 | tenant-specific; profile note | deferred (KB-11) |
+| C-360 | pipeline-concept.md | procedure | procedure→Task 11 | tenant-specific; profile note | profile |
 | C-361 | pipeline-concept.md | fact | fact→message-path.md | merged steps and queues | already on page |
 | C-362 | pipeline-concept.md | fact | fact→message-path.md | Step01 holds the sender adapter | already on page |
 | C-363 | pipeline-concept.md | fact | fact→contracts.md | SAP_Sender, SAP_SenderInterface set in Step01 | already on page |
@@ -602,7 +602,7 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-400 | pipeline-concept.md | fact | dropped (duplicate of C-076) | same statement as the earlier claim | n/a |
 | C-401 | pipeline-concept.md | rationale | rationale→message-path.md | logic in one place | budget |
 | C-402 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing.md | skipRcvDet semantics | already on page |
-| C-403 | pipeline-concept.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
+| C-403 | pipeline-concept.md | procedure | procedure→Task 11 | team procedure or decision | omitted (granularity) |
 | C-404 | pipeline-concept.md | fact | fact→partner-directory.md | receiverDetermination binary parameter | already on page |
 | C-405 | pipeline-concept.md | fact | dropped (not pipeline) | example XSLT in the draft, not an artifact | n/a |
 | C-406 | pipeline-concept.md | fact | dropped (not pipeline) | example XSLT in the draft, not an artifact | n/a |
@@ -619,8 +619,8 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-417 | pipeline-concept.md | fact | dropped (duplicate of C-250) | same statement as the earlier claim | n/a |
 | C-418 | pipeline-concept.md | rationale | rationale→message-path.md | why async is the default | budget |
 | C-419 | pipeline-concept.md | fact | dropped (duplicate of C-005) | same statement as the earlier claim | n/a |
-| C-420 | pipeline-concept.md | fact | fact→overview.md | how scenario flows are created | deferred (KB-11) |
-| C-421 | pipeline-concept.md | rationale | rationale→overview.md | generic vs scenario-specific boundary | deferred (KB-11) |
+| C-420 | pipeline-concept.md | fact | fact→overview.md | how scenario flows are created | omitted (granularity) |
+| C-421 | pipeline-concept.md | rationale | rationale→overview.md | generic vs scenario-specific boundary | added |
 | C-422 | pipeline-concept.md | rationale | rationale→message-path.md | queue count trade-off | budget |
 | C-423 | pipeline-concept.md | fact | dropped (not pipeline) | Integration Suite generality: ProcessDirect status | n/a |
 | C-424 | pipeline-concept.md | rationale | rationale→glossary.md | why RetryViaParentFlow exists | added |
@@ -640,17 +640,17 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-438 | pipeline-concept.md | fact | fact→naming.md | Step01 template list | omitted (granularity) |
 | C-439 | pipeline-concept.md | fact | dropped (duplicate of C-224) | same statement as the earlier claim | n/a |
 | C-440 | pipeline-concept.md | fact | fact→naming.md | Step04/05 template list | omitted (granularity) |
-| C-441 | pipeline-concept.md | fact | fact→overview.md | when to use Step04/05 templates | deferred (KB-11) |
+| C-441 | pipeline-concept.md | fact | fact→overview.md | when to use Step04/05 templates | already on page |
 | C-442 | pipeline-concept.md | fact | fact→naming.md | Step07 template list | omitted (granularity) |
-| C-443 | pipeline-concept.md | fact | fact→overview.md | Step07 template role | deferred (KB-11) |
+| C-443 | pipeline-concept.md | fact | fact→overview.md | Step07 template role | added |
 | C-444 | pipeline-concept.md | fact | fact→naming.md | custom-exit template list | omitted (granularity) |
 | C-445 | pipeline-concept.md | fact | dropped (duplicate of C-235) | same statement as the earlier claim | n/a |
-| C-446 | pipeline-concept.md | fact | fact→overview.md | integrated-capable Step04 templates | deferred (KB-11) |
+| C-446 | pipeline-concept.md | fact | fact→overview.md | integrated-capable Step04 templates | already on page |
 | C-447 | pipeline-concept.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.script.collection.md | 13 scripts, shared artifact | already on page |
 | C-448 | pipeline-concept.md | fact | dropped (duplicate of C-019) | same statement as the earlier claim | n/a |
 | C-449 | pipeline-concept.md | fact | dropped (duplicate of C-020) | same statement as the earlier claim | n/a |
 | C-450 | pipeline-concept.md | procedure | dropped (duplicate of C-021) | same statement as the earlier claim | n/a |
-| C-451 | pipeline-concept.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
+| C-451 | pipeline-concept.md | procedure | procedure→Task 11 | team procedure or decision | already on page |
 | C-452 | pipeline-concept.md | fact | fact→partner-directory.md | alternative partner SenderInterface scheme | already on page |
 | C-453 | pipeline-concept.md | fact | fact→partner-directory.md | alternative partner namespace scheme | already on page |
 | C-454 | pipeline-concept.md | fact | fact→scripts/determinePartnerID.md | namespace variant first | already on page |
@@ -667,12 +667,12 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-465 | pipeline-concept.md | fact | fact→scripts/determinePartnerID.md | tilde in XI and IDoc (also IDoc script) | added |
 | C-466 | pipeline-concept.md | fact | fact→scripts/determinePartnerID.md | behaviour of determinePartnerID | already on page |
 | C-467 | pipeline-concept.md | fact | fact→scripts/determinePartnerIDForIDocInbound.md | behaviour of determinePartnerIDForIDocInbound | already on page |
-| C-468 | pipeline-concept.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
+| C-468 | pipeline-concept.md | procedure | procedure→Task 11 | team procedure or decision | already on page |
 | C-469 | pipeline-concept.md | fact | fact→scripts/determinePartnerID.md | externalized switch and its default (check propdef) | added |
 | C-470 | pipeline-concept.md | fact | fact→scripts/determinePartnerID.md | five caller iFlows of the switch | already on page |
 | C-471 | pipeline-concept.md | fact | fact→scripts/determinePartnerID.md | switch is flow-level | already on page |
 | C-472 | pipeline-concept.md | rationale | rationale→scripts/determinePartnerID.md | why the switch defaults to off | added |
-| C-473 | pipeline-concept.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
+| C-473 | pipeline-concept.md | procedure | procedure→Task 11 | team procedure or decision | already on page |
 | C-474 | pipeline-concept.md | pitfall | pitfall | KIND pitfall | already on page |
 | C-475 | pipeline-concept.md | fact | fact→contracts.md | SAP_SenderInterface source | already on page |
 | C-476 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | SAP_SenderInterface from the XI adapter | already on page |
@@ -708,7 +708,7 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-506 | pipeline-concept.md | fact | fact→scripts/mapReceiverAliasToBusinessSystemName.md | fallback without stages | already on page |
 | C-507 | pipeline-concept.md | fact | fact→scripts/mapReceiverAliasToBusinessSystemName.md | behaviour of mapReceiverAliasToBusinessSystemName | already on page |
 | C-508 | pipeline-concept.md | fact | fact→scripts/mapReceiverAliasToBusinessSystemName.md | suffix without stages | added |
-| C-509 | pipeline-concept.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
+| C-509 | pipeline-concept.md | procedure | procedure→Task 11 | team procedure or decision | omitted (granularity) |
 | C-510 | pipeline-concept.md | fact | dropped (not pipeline) | Integration Suite generality: PD API and UI | n/a |
 | C-511 | pipeline-concept.md | fact | fact→partner-directory.md | binary interfaceDetermination for Step05 | already on page |
 | C-512 | pipeline-concept.md | fact | fact→partner-directory.md | not needed in integrated runtime | added |
@@ -724,7 +724,7 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-522 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | dedup key | already on page |
 | C-523 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi.md | single output point (also Step08 IDoc) | open question |
 | C-524 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi.md | three-layer precedence (also Step08 IDoc) | already on page |
-| C-525 | pipeline-concept.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
+| C-525 | pipeline-concept.md | procedure | procedure→Task 11 | team procedure or decision | omitted (granularity) |
 | C-526 | pipeline-concept.md | rationale | rationale→contracts.md | why UniqueID | added |
 | C-527 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step06.outbound.processing.md | "Set unique identifier" default | already on page |
 | C-528 | pipeline-concept.md | fact | dropped (not pipeline) | Integration Suite generality: MPL ID across retries | n/a |
@@ -732,7 +732,7 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-530 | pipeline-concept.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step07.outbound.processing.p2p.md | idempotent duplicate discard | already on page |
 | C-531 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi.md | no idempotent call (also Step08 IDoc) | already on page |
 | C-532 | pipeline-concept.md | fact | fact→contracts.md | UniqueID override | open question |
-| C-533 | pipeline-concept.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
+| C-533 | pipeline-concept.md | procedure | procedure→Task 11 | team procedure or decision | omitted (granularity) |
 | C-534 | pipeline-concept.md | fact | fact→contracts.md | no parameter for the override | open question |
 | C-535 | pipeline-concept.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step07.outbound.processing.o2mo.md | partial-message dedup IDs (also o2mm) | already on page |
 | C-536 | pipeline-concept.md | rationale | rationale→templates/com.sap.integration.cloud.pipeline.v2.template.step07.outbound.processing.o2mo.md | why partial IDs differ | added |
@@ -741,7 +741,7 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-539 | pipeline-concept.md | fact | dropped (not pipeline) | Camel generality: CamelSplitIndex | n/a |
 | C-540 | pipeline-concept.md | rationale | rationale→templates/com.sap.integration.cloud.pipeline.v2.template.step07.outbound.processing.o2mo.md | functional base keeps partial dedup | added |
 | C-541 | pipeline-concept.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.step07.outbound.processing.o2mo.md | re-send produces same partial IDs | added |
-| C-542 | pipeline-concept.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
+| C-542 | pipeline-concept.md | procedure | procedure→Task 11 | team procedure or decision | omitted (granularity) |
 | C-543 | pipeline-concept.md | pitfall | pitfall | KIND pitfall | open question |
 | C-544 | pipeline-concept.md | fact | dropped (duplicate of C-191) | same statement as the earlier claim | n/a |
 | C-545 | pipeline-concept.md | fact | fact→message-path.md | p2p skips Step04/05 | added |
@@ -755,13 +755,13 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-553 | pipeline-concept.md | fact | fact→partner-directory.md | receiverDetermination binary in the standard case | already on page |
 | C-554 | pipeline-concept.md | fact | fact→partner-directory.md | string receiverDetermination means p2p | added |
 | C-555 | pipeline-concept.md | rationale | rationale→partner-directory.md | why a sender wildcard | budget |
-| C-556 | pipeline-concept.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
+| C-556 | pipeline-concept.md | procedure | procedure→Task 11 | team procedure or decision | omitted (granularity) |
 | C-557 | pipeline-concept.md | pitfall | pitfall | KIND pitfall | open question |
-| C-558 | pipeline-concept.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
+| C-558 | pipeline-concept.md | procedure | procedure→Task 11 | team procedure or decision | already on page |
 | C-559 | pipeline-concept.md | fact | fact→scripts/determinePartnerID.md | existing partnerID header skips the lookup | already on page |
 | C-560 | pipeline-concept.md | fact | fact→partner-directory.md | interface-name scheme avoids key clashes | already on page |
 | C-561 | pipeline-concept.md | fact | fact→scripts/mapMessageTypeToOperation.md | operation needs 1:1 message type | already on page |
-| C-562 | pipeline-concept.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
+| C-562 | pipeline-concept.md | procedure | procedure→Task 11 | team procedure or decision | already on page |
 | C-563 | pipeline-concept.md | fact | fact→scripts/mapMessageTypeToOperation.md | behaviour of mapMessageTypeToOperation | already on page |
 | C-564 | pipeline-concept.md | fact | fact→contracts.md | SAP_SenderOperation use | open question |
 | C-565 | pipeline-concept.md | fact | fact→glossary.md | party | already on page |
@@ -796,14 +796,14 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-594 | pipeline-concept.md | fact | fact→contracts.md | testMode value and test | added |
 | C-595 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc.md | testMode from EDIDC TEST | already on page |
 | C-596 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | no automatic testMode source | budget |
-| C-597 | pipeline-concept.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
-| C-598 | pipeline-concept.md | procedure | procedure→Task 11 | tenant-specific; profile note | deferred (KB-11) |
+| C-597 | pipeline-concept.md | procedure | procedure→Task 11 | team procedure or decision | already on page |
+| C-598 | pipeline-concept.md | procedure | procedure→Task 11 | tenant-specific; profile note | profile |
 | C-599 | pipeline-concept.md | fact | tenant→profile | tenant-specific value | profile |
 | C-600 | pipeline-concept.md | fact | fact→contracts.md | testMode in allowed header lists | pitfall |
-| C-601 | pipeline-concept.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
-| C-602 | pipeline-concept.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
+| C-601 | pipeline-concept.md | procedure | procedure→Task 11 | team procedure or decision | omitted (granularity) |
+| C-602 | pipeline-concept.md | procedure | procedure→Task 11 | team procedure or decision | omitted (granularity) |
 | C-603 | pipeline-concept.md | pitfall | pitfall | KIND pitfall | pitfall |
-| C-604 | pipeline-concept.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
+| C-604 | pipeline-concept.md | procedure | procedure→Task 11 | team procedure or decision | omitted (granularity) |
 | C-605 | pipeline-concept.md | fact | dropped (duplicate of C-608) | same statement as the earlier claim | n/a |
 | C-606 | pipeline-concept.md | fact | fact→contracts.md | routing by testMode | open question |
 | C-607 | pipeline-concept.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi.md | testMode allowed in Step08 (also Step08 IDoc) | open question |
@@ -834,14 +834,14 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | C-632 | pipeline-concept.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | behaviour of mapSenderStageToReceiverStage | already on page |
 | C-633 | pipeline-concept.md | fact | tenant→profile | tenant-specific value | profile |
 | C-634 | pipeline-concept.md | fact | tenant→profile | tenant-specific value | profile |
-| C-635 | pipeline-concept.md | procedure | procedure→Task 11 | tenant-specific; profile note | deferred (KB-11) |
+| C-635 | pipeline-concept.md | procedure | procedure→Task 11 | tenant-specific; profile note | profile |
 | C-636 | pipeline-concept.md | fact | tenant→profile | tenant-specific value | profile |
-| C-637 | pipeline-concept.md | procedure | procedure→Task 11 | tenant-specific; profile note | deferred (KB-11) |
-| C-638 | pipeline-concept.md | rationale | rationale→overview.md | why extensions avoid generic flows | deferred (KB-11) |
-| C-639 | pipeline-concept.md | fact | fact→overview.md | extension points | deferred (KB-11) |
+| C-637 | pipeline-concept.md | procedure | procedure→Task 11 | tenant-specific; profile note | profile |
+| C-638 | pipeline-concept.md | rationale | rationale→overview.md | why extensions avoid generic flows | already on page |
+| C-639 | pipeline-concept.md | fact | fact→overview.md | extension points | already on page |
 | C-640 | pipeline-concept.md | fact | dropped (duplicate of C-253) | same statement as the earlier claim | n/a |
 | C-641 | pipeline-concept.md | fact | dropped (duplicate of C-354) | same statement as the earlier claim | n/a |
-| C-642 | pipeline-concept.md | procedure | procedure→Task 11 | team procedure or decision | deferred (KB-11) |
+| C-642 | pipeline-concept.md | procedure | procedure→Task 11 | team procedure or decision | already on page |
 | C-643 | pipeline-concept.md | fact | dropped (duplicate of C-250) | same statement as the earlier claim | n/a |
 | C-644 | pipeline-concept.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.template.custom.exit.md | pre-processing exit purpose | already on page |
 | C-645 | pipeline-concept.md | fact | dropped (duplicate of C-312) | same statement as the earlier claim | n/a |
@@ -2149,15 +2149,14 @@ Rows per `applied (B3)` value over all 2,098 claims.
 
 | value | rows |
 |---|---|
-| already on page | 924 |
-| n/a | 537 |
-| deferred (KB-11) | 131 |
-| added | 118 |
-| open question | 110 |
+| already on page | 954 |
+| n/a | 543 |
+| added (6 of them name their migration/ page) | 153 |
+| open question | 117 |
 | changelog (done (B2)) | 82 |
 | pitfall | 62 |
+| omitted (granularity) | 61 |
+| profile | 46 |
 | budget | 42 |
 | changelog (not observable (B2)) | 38 |
-| omitted (granularity) | 34 |
-| profile | 20 |
 | total | 2098 |
