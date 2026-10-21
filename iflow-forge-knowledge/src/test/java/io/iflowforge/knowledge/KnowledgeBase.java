@@ -12,13 +12,13 @@ import java.util.stream.Stream;
 
 /**
  * The real knowledge base as the test run sees it, from system properties (set by surefire, see the module pom):
- * {@code kb.root} (default {@code ../knowledge}), {@code kb.sources} (default {@code 2026-06-trial}), {@code kb.skip}
+ * {@code kb.root} (default {@code ../knowledge}), {@code kb.sources} (default {@code 2026-06}), {@code kb.skip}
  * (comma-separated check names) and {@code kb.forbidden} (a local file). A blank property counts as unset.
  */
 final class KnowledgeBase {
 
     static final String DEFAULT_ROOT = "../knowledge";
-    static final String DEFAULT_SOURCES = "2026-06-trial";
+    static final String DEFAULT_SOURCES = "2026-06";
 
     private KnowledgeBase() {
     }

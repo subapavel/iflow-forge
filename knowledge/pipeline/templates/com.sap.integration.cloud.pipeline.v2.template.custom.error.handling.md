@@ -1,6 +1,6 @@
 # Pipeline v2 Template - Custom Error Handling (com.sap.integration.cloud.pipeline.v2.template.custom.error.handling)
 
-Artifact: `com.sap.integration.cloud.pipeline.v2.template.custom.error.handling` 1.0.0, package templates, label 2026-06-trial.
+Artifact: `com.sap.integration.cloud.pipeline.v2.template.custom.error.handling` 1.0.0, package templates, label 2026-06.
 
 ## Purpose
 
@@ -91,4 +91,4 @@ Bold: the copy is not reachable without it.
 
 ## Version notes
 
-2026-09-current 1.0.0: no change in the dump; same Bundle-Version, only the manifest's Origin-ModifiedDate differs [2026-09-current: com.sap.integration.cloud.pipeline.v2.template.custom.error.handling, manifest "Bundle-Version"].
+2026-09 1.0.0: no change in the dump; same Bundle-Version, only the manifest's Origin-ModifiedDate differs [2026-09: com.sap.integration.cloud.pipeline.v2.template.custom.error.handling, manifest "Bundle-Version"].

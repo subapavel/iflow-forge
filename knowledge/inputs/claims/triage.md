@@ -79,8 +79,8 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | R-073 | tenant-export-review-2026-09.md | fact | changelog | version difference 1.0.2→1.0.3 | changelog (done (B2)) |
 | R-074 | tenant-export-review-2026-09.md | fact | changelog | version difference 1.1.1→1.2.0 | changelog (done (B2)) |
 | R-075 | tenant-export-review-2026-09.md | fact | changelog | collection version in export | changelog (done (B2)) |
-| R-076 | tenant-export-review-2026-09.md | fact | changelog | Skip Retry Value Mapping only in 2026-09-current | changelog (done (B2)) |
-| R-077 | tenant-export-review-2026-09.md | fact | changelog | PD Upload Helper only in 2026-09-current | changelog (done (B2)) |
+| R-076 | tenant-export-review-2026-09.md | fact | changelog | Skip Retry Value Mapping only in 2026-09 | changelog (done (B2)) |
+| R-077 | tenant-export-review-2026-09.md | fact | changelog | PD Upload Helper only in 2026-09 | changelog (done (B2)) |
 | R-078 | tenant-export-review-2026-09.md | pitfall | pitfall | KIND pitfall | pitfall |
 | R-079 | tenant-export-review-2026-09.md | fact | changelog | Generic Inbound changelog header in export | changelog (done (B2)) |
 | R-080 | tenant-export-review-2026-09.md | fact | changelog | Generic Pipelines changelog header in export | changelog (done (B2)) |
@@ -90,74 +90,74 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | R-084 | tenant-export-review-2026-09.md | fact | changelog | Step01 XI 1.0.6 stage mapping in bypass | changelog (done (B2)) |
 | R-085 | tenant-export-review-2026-09.md | fact | changelog | Step01 XI 1.0.6 step, absent from the label | changelog (done (B2)) |
 | R-086 | tenant-export-review-2026-09.md | rationale | changelog | reason given by changelog for 1.0.6 step | changelog (done (B2)) |
-| R-087 | tenant-export-review-2026-09.md | fact | changelog | TenantName only in 2026-09-current | changelog (done (B2)) |
-| R-088 | tenant-export-review-2026-09.md | fact | changelog | TenantName read only in 2026-09-current scripts | changelog (done (B2)) |
+| R-087 | tenant-export-review-2026-09.md | fact | changelog | TenantName only in 2026-09 | changelog (done (B2)) |
+| R-088 | tenant-export-review-2026-09.md | fact | changelog | TenantName read only in 2026-09 scripts | changelog (done (B2)) |
 | R-089 | tenant-export-review-2026-09.md | pitfall | pitfall | KIND pitfall | pitfall |
-| R-090 | tenant-export-review-2026-09.md | fact | changelog | dc_(.) pattern only in 2026-09-current | changelog (done (B2)) |
+| R-090 | tenant-export-review-2026-09.md | fact | changelog | dc_(.) pattern only in 2026-09 | changelog (done (B2)) |
 | R-091 | tenant-export-review-2026-09.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi.md | allowed header list tenantStage(.*) | added |
 | R-092 | tenant-export-review-2026-09.md | pitfall | pitfall | KIND pitfall | open question |
 | R-093 | tenant-export-review-2026-09.md | fact | changelog | Generic Inbound changelog addition | changelog (done (B2)) |
-| R-094 | tenant-export-review-2026-09.md | fact | changelog | skipRetry only in 2026-09-current | changelog (done (B2)) |
-| R-095 | tenant-export-review-2026-09.md | fact | changelog | skipRetry only in 2026-09-current | changelog (done (B2)) |
-| R-096 | tenant-export-review-2026-09.md | fact | changelog | stopRetry/skipRetry branch only in 2026-09-current | changelog (done (B2)) |
-| R-097 | tenant-export-review-2026-09.md | fact | changelog | checkExceptionType only in 2026-09-current | changelog (done (B2)) |
+| R-094 | tenant-export-review-2026-09.md | fact | changelog | skipRetry only in 2026-09 | changelog (done (B2)) |
+| R-095 | tenant-export-review-2026-09.md | fact | changelog | skipRetry only in 2026-09 | changelog (done (B2)) |
+| R-096 | tenant-export-review-2026-09.md | fact | changelog | stopRetry/skipRetry branch only in 2026-09 | changelog (done (B2)) |
+| R-097 | tenant-export-review-2026-09.md | fact | changelog | checkExceptionType only in 2026-09 | changelog (done (B2)) |
 | R-098 | tenant-export-review-2026-09.md | pitfall | pitfall | KIND pitfall | pitfall |
-| R-099 | tenant-export-review-2026-09.md | fact | changelog | checkExceptionType only in 2026-09-current | changelog (done (B2)) |
-| R-100 | tenant-export-review-2026-09.md | fact | changelog | checkExceptionType only in 2026-09-current | changelog (done (B2)) |
+| R-099 | tenant-export-review-2026-09.md | fact | changelog | checkExceptionType only in 2026-09 | changelog (done (B2)) |
+| R-100 | tenant-export-review-2026-09.md | fact | changelog | checkExceptionType only in 2026-09 | changelog (done (B2)) |
 | R-101 | tenant-export-review-2026-09.md | fact | tenant→profile | tenant-specific value | profile |
 | R-102 | tenant-export-review-2026-09.md | fact | tenant→profile | tenant-specific value | profile |
 | R-103 | tenant-export-review-2026-09.md | fact | tenant→profile | tenant-specific value | profile |
-| R-104 | tenant-export-review-2026-09.md | fact | changelog | skip-retry source Default only in 2026-09-current | changelog (done (B2)) |
-| R-105 | tenant-export-review-2026-09.md | fact | changelog | skip-retry sources only in 2026-09-current | changelog (done (B2)) |
-| R-106 | tenant-export-review-2026-09.md | fact | changelog | SkipRetriesProfile only in 2026-09-current | changelog (done (B2)) |
-| R-107 | tenant-export-review-2026-09.md | fact | changelog | SkipRetriesProfile only in 2026-09-current | changelog (done (B2)) |
+| R-104 | tenant-export-review-2026-09.md | fact | changelog | skip-retry source Default only in 2026-09 | changelog (done (B2)) |
+| R-105 | tenant-export-review-2026-09.md | fact | changelog | skip-retry sources only in 2026-09 | changelog (done (B2)) |
+| R-106 | tenant-export-review-2026-09.md | fact | changelog | SkipRetriesProfile only in 2026-09 | changelog (done (B2)) |
+| R-107 | tenant-export-review-2026-09.md | fact | changelog | SkipRetriesProfile only in 2026-09 | changelog (done (B2)) |
 | R-108 | tenant-export-review-2026-09.md | pitfall | pitfall | KIND pitfall | pitfall |
-| R-109 | tenant-export-review-2026-09.md | fact | changelog | Skip Retry Value Mapping only in 2026-09-current | changelog (done (B2)) |
+| R-109 | tenant-export-review-2026-09.md | fact | changelog | Skip Retry Value Mapping only in 2026-09 | changelog (done (B2)) |
 | R-110 | tenant-export-review-2026-09.md | pitfall | pitfall | KIND pitfall | pitfall |
-| R-111 | tenant-export-review-2026-09.md | fact | changelog | PD Upload Helper only in 2026-09-current | changelog (done (B2)) |
-| R-112 | tenant-export-review-2026-09.md | fact | changelog | PD Upload Helper only in 2026-09-current | changelog (done (B2)) |
-| R-113 | tenant-export-review-2026-09.md | fact | changelog | PD Upload Helper only in 2026-09-current | changelog (not observable (B2)) |
-| R-114 | tenant-export-review-2026-09.md | fact | changelog | PD Upload Helper only in 2026-09-current | changelog (not observable (B2)) |
+| R-111 | tenant-export-review-2026-09.md | fact | changelog | PD Upload Helper only in 2026-09 | changelog (done (B2)) |
+| R-112 | tenant-export-review-2026-09.md | fact | changelog | PD Upload Helper only in 2026-09 | changelog (done (B2)) |
+| R-113 | tenant-export-review-2026-09.md | fact | changelog | PD Upload Helper only in 2026-09 | changelog (not observable (B2)) |
+| R-114 | tenant-export-review-2026-09.md | fact | changelog | PD Upload Helper only in 2026-09 | changelog (not observable (B2)) |
 | R-115 | tenant-export-review-2026-09.md | fact | tenant→profile | tenant-specific value | profile |
 | R-116 | tenant-export-review-2026-09.md | fact | dropped (not pipeline) | document meta: helper was not run | n/a |
-| R-117 | tenant-export-review-2026-09.md | fact | changelog | backupMessage/restoreMessage only in 2026-09-current | changelog (done (B2)) |
-| R-118 | tenant-export-review-2026-09.md | fact | changelog | backup scripts only in 2026-09-current | changelog (done (B2)) |
-| R-119 | tenant-export-review-2026-09.md | fact | changelog | backup scripts only in 2026-09-current | changelog (done (B2)) |
-| R-120 | tenant-export-review-2026-09.md | fact | changelog | backup scripts only in 2026-09-current | changelog (done (B2)) |
+| R-117 | tenant-export-review-2026-09.md | fact | changelog | backupMessage/restoreMessage only in 2026-09 | changelog (done (B2)) |
+| R-118 | tenant-export-review-2026-09.md | fact | changelog | backup scripts only in 2026-09 | changelog (done (B2)) |
+| R-119 | tenant-export-review-2026-09.md | fact | changelog | backup scripts only in 2026-09 | changelog (done (B2)) |
+| R-120 | tenant-export-review-2026-09.md | fact | changelog | backup scripts only in 2026-09 | changelog (done (B2)) |
 | R-121 | tenant-export-review-2026-09.md | pitfall | pitfall | KIND pitfall | pitfall |
-| R-122 | tenant-export-review-2026-09.md | fact | changelog | backup scripts only in 2026-09-current | changelog (done (B2)) |
-| R-123 | tenant-export-review-2026-09.md | fact | changelog | restore script only in 2026-09-current | changelog (done (B2)) |
-| R-124 | tenant-export-review-2026-09.md | fact | changelog | backup scripts only in 2026-09-current | changelog (done (B2)) |
-| R-125 | tenant-export-review-2026-09.md | fact | changelog | bckAttachmentMetadata only in 2026-09-current | changelog (done (B2)) |
-| R-126 | tenant-export-review-2026-09.md | fact | changelog | getOriginalExceptionFromMplApi only in 2026-09-current | changelog (done (B2)) |
-| R-127 | tenant-export-review-2026-09.md | fact | changelog | CI_ODataAPI parameters only in 2026-09-current | changelog (done (B2)) |
-| R-128 | tenant-export-review-2026-09.md | fact | changelog | getOriginalExceptionFromMplApi only in 2026-09-current | changelog (done (B2)) |
-| R-129 | tenant-export-review-2026-09.md | fact | changelog | getOriginalExceptionFromMplApi only in 2026-09-current | changelog (done (B2)) |
-| R-130 | tenant-export-review-2026-09.md | open-question | changelog | API parameters only in 2026-09-current | changelog (not observable (B2)) |
-| R-131 | tenant-export-review-2026-09.md | fact | changelog | getOriginalExceptionFromMplApi only in 2026-09-current | changelog (done (B2)) |
+| R-122 | tenant-export-review-2026-09.md | fact | changelog | backup scripts only in 2026-09 | changelog (done (B2)) |
+| R-123 | tenant-export-review-2026-09.md | fact | changelog | restore script only in 2026-09 | changelog (done (B2)) |
+| R-124 | tenant-export-review-2026-09.md | fact | changelog | backup scripts only in 2026-09 | changelog (done (B2)) |
+| R-125 | tenant-export-review-2026-09.md | fact | changelog | bckAttachmentMetadata only in 2026-09 | changelog (done (B2)) |
+| R-126 | tenant-export-review-2026-09.md | fact | changelog | getOriginalExceptionFromMplApi only in 2026-09 | changelog (done (B2)) |
+| R-127 | tenant-export-review-2026-09.md | fact | changelog | CI_ODataAPI parameters only in 2026-09 | changelog (done (B2)) |
+| R-128 | tenant-export-review-2026-09.md | fact | changelog | getOriginalExceptionFromMplApi only in 2026-09 | changelog (done (B2)) |
+| R-129 | tenant-export-review-2026-09.md | fact | changelog | getOriginalExceptionFromMplApi only in 2026-09 | changelog (done (B2)) |
+| R-130 | tenant-export-review-2026-09.md | open-question | changelog | API parameters only in 2026-09 | changelog (not observable (B2)) |
+| R-131 | tenant-export-review-2026-09.md | fact | changelog | getOriginalExceptionFromMplApi only in 2026-09 | changelog (done (B2)) |
 | R-132 | tenant-export-review-2026-09.md | pitfall | pitfall | KIND pitfall | pitfall |
 | R-133 | tenant-export-review-2026-09.md | fact | changelog | queue-name monitoring added per export changelog | changelog (done (B2)) |
-| R-134 | tenant-export-review-2026-09.md | fact | changelog | payload size headers only in 2026-09-current | changelog (done (B2)) |
+| R-134 | tenant-export-review-2026-09.md | fact | changelog | payload size headers only in 2026-09 | changelog (done (B2)) |
 | R-135 | tenant-export-review-2026-09.md | fact | tenant→profile | tenant-specific value | profile |
 | R-136 | tenant-export-review-2026-09.md | fact | tenant→profile | tenant-specific value | profile |
 | R-137 | tenant-export-review-2026-09.md | fact | changelog | PayloadSizeMeasurement mapping in export | changelog (done (B2)) |
 | R-138 | tenant-export-review-2026-09.md | fact | fact→iflows/com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi.md | business-system PID branch (also Step08 IDoc) | already on page |
 | R-139 | tenant-export-review-2026-09.md | fact | fact→scripts/readPDValuesForXI.md | precedence of business system, alias, defaults | added |
 | R-140 | tenant-export-review-2026-09.md | fact | fact→scripts/readPDValuesForXI.md | business-system branch condition (also IDoc script) | added |
-| R-141 | tenant-export-review-2026-09.md | fact | changelog | scenario parameter keys only in 2026-09-current scripts | changelog (done (B2)) |
-| R-142 | tenant-export-review-2026-09.md | fact | changelog | scenarioKeys only in 2026-09-current readPDValuesForXI | changelog (done (B2)) |
-| R-143 | tenant-export-review-2026-09.md | fact | changelog | scenario keys only in 2026-09-current IDoc script | changelog (done (B2)) |
+| R-141 | tenant-export-review-2026-09.md | fact | changelog | scenario parameter keys only in 2026-09 scripts | changelog (done (B2)) |
+| R-142 | tenant-export-review-2026-09.md | fact | changelog | scenarioKeys only in 2026-09 readPDValuesForXI | changelog (done (B2)) |
+| R-143 | tenant-export-review-2026-09.md | fact | changelog | scenario keys only in 2026-09 IDoc script | changelog (done (B2)) |
 | R-144 | tenant-export-review-2026-09.md | fact | fact→scripts/setAllDefaultAndScenarioValuesFromPDForIDoc.md | pidParameterReadSuffixPattern | already on page |
 | R-145 | tenant-export-review-2026-09.md | pitfall | pitfall | KIND pitfall | already on page |
-| R-146 | tenant-export-review-2026-09.md | fact | changelog | scenarioKeys list only in 2026-09-current | changelog (not observable (B2)) |
-| R-147 | tenant-export-review-2026-09.md | fact | changelog | ID Mapper only in 2026-09-current | changelog (done (B2)) |
-| R-148 | tenant-export-review-2026-09.md | fact | changelog | PassMessageIdFromE2E only in 2026-09-current | changelog (done (B2)) |
+| R-146 | tenant-export-review-2026-09.md | fact | changelog | scenarioKeys list only in 2026-09 | changelog (not observable (B2)) |
+| R-147 | tenant-export-review-2026-09.md | fact | changelog | ID Mapper only in 2026-09 | changelog (done (B2)) |
+| R-148 | tenant-export-review-2026-09.md | fact | changelog | PassMessageIdFromE2E only in 2026-09 | changelog (done (B2)) |
 | R-149 | tenant-export-review-2026-09.md | fact | changelog | SapMessageIdEx mapping in export Step08 XI | changelog (done (B2)) |
 | R-150 | tenant-export-review-2026-09.md | fact | changelog | Generic Outbound 1.0.5 fix | changelog (done (B2)) |
 | R-151 | tenant-export-review-2026-09.md | pitfall | pitfall | KIND pitfall | already on page |
-| R-152 | tenant-export-review-2026-09.md | fact | changelog | prepIdMapperForXiMessageId only in 2026-09-current | changelog (done (B2)) |
-| R-153 | tenant-export-review-2026-09.md | fact | changelog | prepIdMapperForXiMessageId only in 2026-09-current | changelog (done (B2)) |
-| R-154 | tenant-export-review-2026-09.md | fact | changelog | prepIdMapperForXiMessageId only in 2026-09-current | changelog (done (B2)) |
+| R-152 | tenant-export-review-2026-09.md | fact | changelog | prepIdMapperForXiMessageId only in 2026-09 | changelog (done (B2)) |
+| R-153 | tenant-export-review-2026-09.md | fact | changelog | prepIdMapperForXiMessageId only in 2026-09 | changelog (done (B2)) |
+| R-154 | tenant-export-review-2026-09.md | fact | changelog | prepIdMapperForXiMessageId only in 2026-09 | changelog (done (B2)) |
 | R-155 | tenant-export-review-2026-09.md | fact | changelog | Step08 IDoc 1.0.3 behaviour in export | changelog (done (B2)) |
 | R-156 | tenant-export-review-2026-09.md | fact | changelog | Step08 IDoc 1.0.3 behaviour in export | changelog (done (B2)) |
 | R-157 | tenant-export-review-2026-09.md | fact | changelog | Templates 1.2.0 new template | changelog (done (B2)) |
@@ -172,18 +172,18 @@ One row per claim of tenant-export-review-2026-09.md and confluence-2026-10.md w
 | R-166 | tenant-export-review-2026-09.md | fact | fact→templates/com.sap.integration.cloud.pipeline.v2.script.collection.md | templates referencing the collection | already on page |
 | R-167 | tenant-export-review-2026-09.md | fact | tenant→profile | tenant-specific value | profile |
 | R-168 | tenant-export-review-2026-09.md | open-question | tenant→profile | whether the collection is deployed is tenant state | profile |
-| R-169 | tenant-export-review-2026-09.md | fact | changelog | PD Upload Helper only in 2026-09-current | changelog (not observable (B2)) |
+| R-169 | tenant-export-review-2026-09.md | fact | changelog | PD Upload Helper only in 2026-09 | changelog (not observable (B2)) |
 | R-170 | tenant-export-review-2026-09.md | fact | tenant→profile | tenant-specific value | profile |
 | R-171 | tenant-export-review-2026-09.md | procedure | procedure→Task 11 | team procedure or decision | n/a |
 | R-172 | tenant-export-review-2026-09.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | System.getenv TENANT_NAME | added |
 | R-173 | tenant-export-review-2026-09.md | fact | fact→scripts/mapSenderStageToReceiverStage.md | referenced copies | already on page |
-| R-174 | tenant-export-review-2026-09.md | fact | changelog | TenantName read only in 2026-09-current | changelog (done (B2)) |
+| R-174 | tenant-export-review-2026-09.md | fact | changelog | TenantName read only in 2026-09 | changelog (done (B2)) |
 | R-175 | tenant-export-review-2026-09.md | pitfall | pitfall | KIND pitfall | pitfall |
-| R-176 | tenant-export-review-2026-09.md | fact | changelog | checkExceptionType only in 2026-09-current | changelog (done (B2)) |
-| R-177 | tenant-export-review-2026-09.md | fact | changelog | readRetryHandlingFromPDOutbound only in 2026-09-current | changelog (done (B2)) |
+| R-176 | tenant-export-review-2026-09.md | fact | changelog | checkExceptionType only in 2026-09 | changelog (done (B2)) |
+| R-177 | tenant-export-review-2026-09.md | fact | changelog | readRetryHandlingFromPDOutbound only in 2026-09 | changelog (done (B2)) |
 | R-178 | tenant-export-review-2026-09.md | procedure | procedure→Task 11 | team procedure or decision | n/a |
 | R-179 | tenant-export-review-2026-09.md | pitfall | pitfall | KIND pitfall | pitfall |
-| R-180 | tenant-export-review-2026-09.md | fact | changelog | CustomXSkipRetriesProfile only in 2026-09-current | changelog (done (B2)) |
+| R-180 | tenant-export-review-2026-09.md | fact | changelog | CustomXSkipRetriesProfile only in 2026-09 | changelog (done (B2)) |
 | R-181 | tenant-export-review-2026-09.md | open-question | pitfall | open question no artifact settles | open question |
 | R-182 | tenant-export-review-2026-09.md | procedure | procedure→Task 11 | tenant-specific; profile note | profile |
 | R-183 | tenant-export-review-2026-09.md | fact | dropped (not pipeline) | document meta: material available to the analysis | n/a |

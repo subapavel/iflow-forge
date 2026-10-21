@@ -21,5 +21,5 @@ The owner scores the answers; the owner holds the key.
 16. **Q:** Where is a determination XSLT stored, how is it referenced, and which iFlows apply it?
 17. **Q:** Where does a message mapping go for async XI → IDoc, and for sync?
 18. **Q:** Which templates serve one-to-many and ordered delivery, and what is their limit?
-19. **Q:** What does 2026-09-current change for a migration (Step01 queue fallback, new templates, error handling)?
+19. **Q:** What does 2026-09 change for a migration (Step01 queue fallback, new templates, error handling)?
 20. **Q:** Which values on the async XI → IDoc path are tenant-specific, and how do pages write them?

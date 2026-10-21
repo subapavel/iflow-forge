@@ -1,6 +1,6 @@
 # Pipeline v2 Generic Step08 - Outbound Processing for Idoc (com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.idoc)
 
-Artifact: `com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.idoc` 1.0.2, package generic-outbound, label 2026-06-trial.
+Artifact: `com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.idoc` 1.0.2, package generic-outbound, label 2026-06.
 
 ## Purpose
 
@@ -157,4 +157,4 @@ Receiver cells: calling step, IDoc type, authentication. All receivers: `${prope
 
 ## Version notes
 
-- 2026-09-current 1.0.3: "Set SapMessageId" = UniqueID, the 12 IDoc channels on SapMessageIdDetermination Reuse, partner-directory keys read first from the business-system partner ID [2026-09-current: com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.idoc, step 29 "Set SapMessageId"] [2026-09-current: com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.idoc, adapter "CC_IDOC_Receiver_OnPremBasic" "OnPremise"] [2026-09-current: com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.idoc, scripts/setAllDefaultAndScenarioValuesFromPDForIDoc.groovy#L48] — see versions/2026-09-current/changelog.md
+- 2026-09 1.0.3: "Set SapMessageId" = UniqueID, the 12 IDoc channels on SapMessageIdDetermination Reuse, partner-directory keys read first from the business-system partner ID [2026-09: com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.idoc, step 29 "Set SapMessageId"] [2026-09: com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.idoc, adapter "CC_IDOC_Receiver_OnPremBasic" "OnPremise"] [2026-09: com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.idoc, scripts/setAllDefaultAndScenarioValuesFromPDForIDoc.groovy#L48] — see versions/2026-09/changelog.md

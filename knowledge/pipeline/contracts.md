@@ -1,6 +1,6 @@
 # Contracts
 
-Headers and exchange properties of the `2026-06-trial` pipeline artifacts, with setter and reader. Cells: 1I, 1X, 2i, 2a, 2s, 4, 5, 6, 8I, 8X (Step01 IDoc, XI; Step02 inbound, async, sync; Step08 IDoc, XI) or T <template>, plus dump step; scripts by stem (determinePartnerID* = both); del = Delete row. In the tables "—" means set by no artifact of the label and "none" means read by none (grep scope: every .iflw and Groovy script of the label). Message path, queues, endpoints, synchronous path: `message-path.md`.
+Headers and exchange properties of the `2026-06` pipeline artifacts, with setter and reader. Cells: 1I, 1X, 2i, 2a, 2s, 4, 5, 6, 8I, 8X (Step01 IDoc, XI; Step02 inbound, async, sync; Step08 IDoc, XI) or T <template>, plus dump step; scripts by stem (determinePartnerID* = both); del = Delete row. In the tables "—" means set by no artifact of the label and "none" means read by none (grep scope: every .iflw and Groovy script of the label). Message path, queues, endpoints, synchronous path: `message-path.md`.
 
 ## Headers
 

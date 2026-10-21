@@ -1,6 +1,6 @@
 # Pipeline v2 Generic Step02 - Integrated Messaging Runtime Async (com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async)
 
-Artifact: `com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async` 1.0.5, package generic-pipelines, label 2026-06-trial.
+Artifact: `com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async` 1.0.5, package generic-pipelines, label 2026-06.
 
 ## Purpose
 
@@ -188,4 +188,4 @@ From outside this flow (adapter, earlier or custom flows).
 
 ## Version notes
 
-- 2026-09-current 1.0.6: see versions/2026-09-current/changelog-generic-pipelines-step02.md § com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async
+- 2026-09 1.0.6: see versions/2026-09/changelog-generic-pipelines-step02.md § com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async

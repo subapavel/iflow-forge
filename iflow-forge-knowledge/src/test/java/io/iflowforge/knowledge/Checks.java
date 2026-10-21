@@ -65,6 +65,10 @@ final class Checks {
     private static final Pattern PAGE_CITE = Pattern.compile("\\[page: ([^\\]#]+)#([^\\]]+)\\]");
     /** A pattern cite {@code [pattern: <id>]}: group 1 the id. */
     private static final Pattern PATTERN_CITE = Pattern.compile("\\[pattern: ([^\\]]+)\\]");
+    /** A tenant-kind term (C10): the phrases before the word, bounded by anything but a letter, digit or {@code _}. */
+    private static final Pattern TENANT_KIND = Pattern.compile(
+            "(?<![\\p{L}\\p{N}_])(?:trial\\s+tenant|customer\\s+tenant|tenant\\s+export|trial)(?![\\p{L}\\p{N}_])",
+            Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE);
     /** A header or property call whose first argument is a plain single- or double-quoted string literal. */
     private static final Pattern CONTRACT_CALL = Pattern.compile("(?:"
             + "\\b(?:setHeader|getHeader|setProperty|getProperty)"
@@ -564,12 +568,7 @@ final class Checks {
      */
     static List<String> cites(Path repoRoot, Path... roots) throws IOException {
         Path base = absolute(repoRoot);
-        Map<String, Path> files = new TreeMap<>();
-        for (Path root : roots) {
-            for (Path file : KnowledgeBase.markdown(absolute(root))) {
-                files.putIfAbsent(KnowledgeBase.relative(base, file), file);
-            }
-        }
+        Map<String, Path> files = markdownByName(base, roots);
         Map<Path, Set<String>> headingsByFile = new HashMap<>();
         List<String> messages = new ArrayList<>();
         for (Map.Entry<String, Path> entry : files.entrySet()) {
@@ -632,6 +631,34 @@ final class Checks {
         return part.contains("<") || part.contains(">") || part.contains("…");
     }
 
+    // --- C10 tenant kind ----------------------------------------------------------------------------------------
+
+    /**
+     * No {@code *.md} under any of {@code roots} names the tenant kind a package export came from (KB-14, D-044): the
+     * case-insensitive terms {@code trial tenant}, {@code customer tenant}, {@code tenant export} and the standalone
+     * word {@code trial}, the phrases tried before the word. A term is bounded by anything but a letter, a digit or
+     * {@code _} ({@code -} is a boundary, so a label suffix {@code -trial} is a hit; {@code trials},
+     * {@code pretrial}, {@code industrial} are not). A missing root holds no files. One message per matching line,
+     * {@code <file>:<line> — tenant kind: <first term, lower case>} with the file relative to {@code repoRoot}, sorted
+     * by file, then line.
+     */
+    static List<String> tenantKind(Path repoRoot, Path... roots) throws IOException {
+        Path base = absolute(repoRoot);
+        Map<String, Path> files = markdownByName(base, roots);
+        List<String> messages = new ArrayList<>();
+        for (Map.Entry<String, Path> entry : files.entrySet()) {
+            List<String> lines = read(entry.getValue()).lines().toList();
+            for (int i = 0; i < lines.size(); i++) {
+                Matcher m = TENANT_KIND.matcher(lines.get(i));
+                if (m.find()) {
+                    String term = WHITESPACE.matcher(m.group().toLowerCase(Locale.ROOT)).replaceAll(" ");
+                    messages.add(entry.getKey() + ":" + (i + 1) + " — tenant kind: " + term);
+                }
+            }
+        }
+        return messages;
+    }
+
     // --- shared -------------------------------------------------------------------------------------------------
 
     /** {@code path} absolute and normalized. */
@@ -642,6 +669,17 @@ final class Checks {
     /** The parent of an absolute {@code path}; the path itself for a file-system root. */
     private static Path parent(Path path) {
         return path.getParent() == null ? path : path.getParent();
+    }
+
+    /** The {@code *.md} files under each of {@code roots} by their name relative to {@code base}, sorted by name. */
+    private static Map<String, Path> markdownByName(Path base, Path... roots) throws IOException {
+        Map<String, Path> files = new TreeMap<>();
+        for (Path root : roots) {
+            for (Path file : KnowledgeBase.markdown(absolute(root))) {
+                files.putIfAbsent(KnowledgeBase.relative(base, file), file);
+            }
+        }
+        return files;
     }
 
     /** The package folders of a label folder (directories only), sorted; none when it is not a folder. */

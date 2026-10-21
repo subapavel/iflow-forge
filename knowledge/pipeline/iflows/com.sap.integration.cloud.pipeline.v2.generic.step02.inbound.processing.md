@@ -1,6 +1,6 @@
 # Pipeline v2 Generic Step02 - Inbound Processing (com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing)
 
-Artifact: `com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing` 1.0.5, package generic-pipelines, label 2026-06-trial.
+Artifact: `com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing` 1.0.5, package generic-pipelines, label 2026-06.
 
 ## Purpose
 
@@ -162,4 +162,4 @@ Headers and properties that arrive from outside this flow (sender adapter, earli
 
 ## Version notes
 
-- 2026-09-current 1.0.6: see versions/2026-09-current/changelog-generic-pipelines-step02.md § com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing
+- 2026-09 1.0.6: see versions/2026-09/changelog-generic-pipelines-step02.md § com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing

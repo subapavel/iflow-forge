@@ -1,6 +1,6 @@
 # Conversion
 
-How PO adapter modules and mapping programs become Integration Suite constructs in a pipeline scenario on the `2026-06-trial` fact base; attributes per D-025, the tables per D-026.
+How PO adapter modules and mapping programs become Integration Suite constructs in a pipeline scenario on the `2026-06` fact base; attributes per D-025, the tables per D-026.
 
 ## Purpose
 

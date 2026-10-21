@@ -1,6 +1,6 @@
 # Proposal: `IF_OrderOut_to_RCV_SYS`
 
-Steps 1–3 of migration/po-ico-to-pipeline.md on benchmark/sample-ico.json (D-027), fact base `2026-06-trial`.
+Steps 1–3 of migration/po-ico-to-pipeline.md on benchmark/sample-ico.json (D-027), fact base `2026-06`.
 
 ## Scenario
 

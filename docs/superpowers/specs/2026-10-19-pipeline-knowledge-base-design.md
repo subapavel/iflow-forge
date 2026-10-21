@@ -2,6 +2,7 @@
 
 Design, 2026-10-19. Status: reviewed, open questions answered, awaiting Pavol's approval.
 
+**Changelog:** 2026-10-21 · F-12 · §13 labels: a label is the export date without a tenant kind (`2026-06`, `2026-09`); the tenant an export came from is never named in a page (D-044); the package versions of each label are recorded in `versions/README.md`.
 **Changelog:** 2026-10-20 · F-7 · §6 layout: `pitfalls.md` may move `## Draft versus artifact` to `pitfalls-drafts.md` when one page exceeds the budget; 2026-10-20 · F-6 · §6 layout: `versions/<version>/changelog[-<package>].md`, split per step group when one page exceeds the budget; 2026-10-19 · F-3 · §6 layout gains `open-questions/<task>[-<group>].md` (uncited draft claims per content task, triaged in pass B); `pitfalls.md` keeps lessons learned and contradictions and points to the folder — one page could not hold the open questions within the 1,500-word budget. 2026-10-20 · F-5 · §6 layout gains `message-path.md` (message path, queues and endpoints, synchronous path); `contracts.md` keeps the name registry — the 222-name registry with cites and the message path did not fit one 1,500-word page.
 
 ## 1. Where this sits

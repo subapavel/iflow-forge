@@ -1,6 +1,6 @@
 # Pipeline v2 Generic Step01 - Inbound Processing for XI (com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi)
 
-Artifact: `com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi` 1.0.5, package generic-inbound, label 2026-06-trial.
+Artifact: `com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi` 1.0.5, package generic-inbound, label 2026-06.
 
 ## Purpose
 
@@ -169,4 +169,4 @@ PD scripts throw when the header partnerID is missing [scripts/readInboundQueueF
 
 ## Version notes
 
-- 2026-09-current 1.0.6: see versions/2026-09-current/changelog.md § com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi
+- 2026-09 1.0.6: see versions/2026-09/changelog.md § com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi

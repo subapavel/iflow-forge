@@ -1,6 +1,6 @@
 # Scenario contribution
 
-Fact base `2026-06-trial`.
+Fact base `2026-06`.
 
 ## Scenario attributes
 

@@ -63,7 +63,7 @@ class ChecksTest {
      * file at label level, which is not a package.
      */
     private static Path sources(Path dir) throws IOException {
-        Path label = dir.resolve("2026-06-trial");
+        Path label = dir.resolve("2026-06");
         SyntheticArtifact.write(label.resolve("generic-pipelines").resolve(ID1), ID1, "script/A.groovy",
                 "mapping/B.xsl");
         SyntheticArtifact.write(label.resolve("templates").resolve(ID2), ID2, "script/C.groovy", "mapping/B.xsl");
@@ -238,7 +238,7 @@ class ChecksTest {
      * {@link #CONTRACT_SCRIPT}.
      */
     private static Path contractSources(Path dir) throws IOException {
-        Path label = dir.resolve("2026-06-trial");
+        Path label = dir.resolve("2026-06");
         Map<String, String> stepProperties = new LinkedHashMap<>();
         stepProperties.put("headerTable", tableRow("SAP_Receiver") + deleteRow("$name=SAP_Receiver"));
         stepProperties.put("propertyTable", tableRow("incomingQueue") + deleteRow("$include=custom*"));
@@ -690,6 +690,64 @@ class ChecksTest {
                 .containsExactly("patterns/README.md:2 — pattern cite: patterns/fan-in.md not found");
     }
 
+    // --- C10 tenant kind (KB-14, D-044) ---------------------------------------------------------------------------
+
+    @Test
+    void tenantKindFlagsAPageNamingTheTenantKind() throws IOException {
+        Path repo = dir.resolve("repo");
+        write(repo.resolve("knowledge/pipeline/versions/README.md"), lines(
+                "# Versions",
+                "",
+                "The first label was exported from a SAP trial tenant."));
+        write(repo.resolve("knowledge/pipeline/overview.md"), lines(
+                "# Overview",
+                "",
+                "Generic Inbound 1.0.7 and Templates 1.1.1 describe the knowledge base.",
+                "An industrial scenario runs on the tenant; trials and pretrial runs are not named.",
+                "The package export of the tenant holds the same versions."));
+
+        assertThat(Checks.tenantKind(repo, repo.resolve("knowledge/pipeline"))).containsExactly(
+                "knowledge/pipeline/versions/README.md:3 — tenant kind: trial tenant");
+    }
+
+    @Test
+    void tenantKindMatchesCaseInsensitivelyAndTheStandaloneWordTrialOnly() throws IOException {
+        Path repo = dir.resolve("repo");
+        write(repo.resolve("knowledge/pipeline/sources.md"), lines(
+                "# Sources",
+                "Copied from a Customer Tenant.",
+                "Nothing here: trials, industrial, pretrial.",
+                "One TENANT EXPORT per label.",
+                "Trial copy.",
+                "Cite [2026-06-trial/INDEX.md#L3]."));
+
+        assertThat(Checks.tenantKind(repo, repo.resolve("knowledge/pipeline"))).containsExactly(
+                "knowledge/pipeline/sources.md:2 — tenant kind: customer tenant",
+                "knowledge/pipeline/sources.md:4 — tenant kind: tenant export",
+                "knowledge/pipeline/sources.md:5 — tenant kind: trial",
+                "knowledge/pipeline/sources.md:6 — tenant kind: trial");
+    }
+
+    @Test
+    void tenantKindCoversSkillPages() throws IOException {
+        Path repo = dir.resolve("repo");
+        write(repo.resolve("knowledge/pipeline/a.md"), lines("# A", "Read from a customer tenant."));
+        write(repo.resolve("skills/demo/SKILL.md"), lines("# Demo", "", "Run it on a trial."));
+        write(repo.resolve("skills/demo/references/notes.md"), lines("Tenant export notes."));
+        write(repo.resolve("skills/demo/fixtures/sample.json"), lines("{\"origin\": \"trial tenant\"}"));
+        write(repo.resolve("skills/demo/data.txt"), lines("trial"));
+
+        assertThat(Checks.tenantKind(repo, repo.resolve("skills"))).containsExactly(
+                "skills/demo/SKILL.md:3 — tenant kind: trial",
+                "skills/demo/references/notes.md:1 — tenant kind: tenant export");
+        assertThat(Checks.tenantKind(repo, repo.resolve("knowledge/pipeline"), repo.resolve("absent"),
+                repo.resolve("skills"))).containsExactly(
+                "knowledge/pipeline/a.md:2 — tenant kind: customer tenant",
+                "skills/demo/SKILL.md:3 — tenant kind: trial",
+                "skills/demo/references/notes.md:1 — tenant kind: tenant export");
+        assertThat(Checks.tenantKind(repo, repo.resolve("absent"))).isEmpty();
+    }
+
     // --- KnowledgeBase --------------------------------------------------------------------------------------------
 
     @Test
@@ -763,6 +821,28 @@ class ChecksTest {
             assertThat(KnowledgeBase.requests().toAbsolutePath().normalize()).isEqualTo(repo.resolve("requests"));
         } finally {
             restore("kb.root", previousRoot);
+        }
+    }
+
+    @Test
+    void defaultSourcesLabelIsTheDate() {
+        String previousRoot = System.getProperty("kb.root");
+        String previousSources = System.getProperty("kb.sources");
+        try {
+            assertThat(KnowledgeBase.DEFAULT_SOURCES).isEqualTo("2026-06");
+
+            Path knowledge = dir.resolve("knowledge");
+            System.setProperty("kb.root", knowledge.toString());
+            System.clearProperty("kb.sources");
+            assertThat(KnowledgeBase.sources().toAbsolutePath().normalize())
+                    .isEqualTo(knowledge.resolve("sources").resolve("2026-06").toAbsolutePath().normalize());
+
+            System.setProperty("kb.sources", "2026-09");
+            assertThat(KnowledgeBase.sources().toAbsolutePath().normalize())
+                    .isEqualTo(knowledge.resolve("sources").resolve("2026-09").toAbsolutePath().normalize());
+        } finally {
+            restore("kb.root", previousRoot);
+            restore("kb.sources", previousSources);
         }
     }
 

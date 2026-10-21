@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 
 /**
- * Acceptance on the scrubbed SAP pipeline packages under {@code knowledge/sources/2026-06-trial}; skipped when the
+ * Acceptance on the scrubbed SAP pipeline packages under {@code knowledge/sources/2026-06}; skipped when the
  * directory is absent.
  */
 class SourcesAcceptanceTest {
@@ -23,8 +23,8 @@ class SourcesAcceptanceTest {
     private static List<IFlow> trial() throws IOException {
         String property = System.getProperty("iflowforge.sources");
         Path sources = property != null ? Path.of(property) : Path.of("..", "knowledge", "sources");
-        Path trial = sources.resolve("2026-06-trial");
-        assumeTrue(Files.isDirectory(trial), "knowledge/sources/2026-06-trial absent");
+        Path trial = sources.resolve("2026-06");
+        assumeTrue(Files.isDirectory(trial), "knowledge/sources/2026-06 absent");
         List<Path> packages;
         try (Stream<Path> list = Files.list(trial)) {
             packages = list.filter(Files::isDirectory).sorted().toList();

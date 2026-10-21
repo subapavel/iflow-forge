@@ -1,6 +1,6 @@
 # Partner Directory
 
-How the pipeline artifacts of `2026-06-trial` name, read and fall back on Partner Directory entries. Header names on this page are listed in contracts.md; here are the keys.
+How the pipeline artifacts of `2026-06` name, read and fall back on Partner Directory entries. Header names on this page are listed in contracts.md; here are the keys.
 
 ## Key scheme
 

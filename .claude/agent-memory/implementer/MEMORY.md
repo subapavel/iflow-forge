@@ -35,7 +35,7 @@ Durable facts only (build quirks, verified APIs, recurring findings). Never task
 - `git diff` misses untracked files and staged `git rm`: build target/<task>.diff from `git diff HEAD -- <paths>`
   plus `git diff --no-index /dev/null <new file>`.
 
-## .iflw / SAP artifact facts (knowledge/sources/2026-06-trial)
+## .iflw / SAP artifact facts (knowledge/sources/2026-06; label was 2026-06-trial before KB-14)
 - Some `.iflw` file names contain spaces: quote paths in shell loops (`find -print0 | xargs -0`).
 - All 75 `bpmn2:subProcess` are event subprocesses (no incoming sequenceFlow). No duplicate `ifl:property` keys.
 - `IdempotentProcessCall` steps also carry `processId` (a local process); the reader inlines under ANY step with a

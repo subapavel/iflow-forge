@@ -1,6 +1,6 @@
 # Pipeline v2 Template Step07 - Outbound Processing Synchronous (com.sap.integration.cloud.pipeline.v2.template.step07.outbound.processing.sync)
 
-Artifact: `com.sap.integration.cloud.pipeline.v2.template.step07.outbound.processing.sync` 1.0.1, package templates, label 2026-06-trial.
+Artifact: `com.sap.integration.cloud.pipeline.v2.template.step07.outbound.processing.sync` 1.0.1, package templates, label 2026-06.
 
 ## Purpose
 
@@ -95,4 +95,4 @@ Bold: the copy is not reachable without it; plain: needed only to switch on the 
 
 ## Version notes
 
-2026-09-current 1.0.1: no change in the dump; same Bundle-Version, only the manifest's Origin-ModifiedDate differs [2026-09-current: com.sap.integration.cloud.pipeline.v2.template.step07.outbound.processing.sync, manifest "Bundle-Version"].
+2026-09 1.0.1: no change in the dump; same Bundle-Version, only the manifest's Origin-ModifiedDate differs [2026-09: com.sap.integration.cloud.pipeline.v2.template.step07.outbound.processing.sync, manifest "Bundle-Version"].

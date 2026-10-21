@@ -12,9 +12,9 @@ For you, on your own machine: the local side of the field loop (docs/WORKFLOW.md
 - The pilot, MIG-07, is pending (agent/BACKLOG.md, row MIG-07). So far the skill has run only over synthetic fixtures
   (skills/sap-po-migration/fixtures/dry-run-2026-10-21.md, "Phases reached"; [spec §11]).
 - The knowledge pages describe Generic Inbound 1.0.7, Generic Pipelines 1.0.4, Generic Outbound 1.0.3 and Templates
-  1.1.1 (knowledge/sources/2026-06-trial/INDEX.md:3, :16, :14, :36; D-019; D-044). Package versions are the same on
+  1.1.1 (knowledge/sources/2026-06/INDEX.md:3, :16, :14, :36; D-019; D-044). Package versions are the same on
   every tenant [owner, 2026-10-21]. What 1.0.8, 1.0.5, 1.0.5 and 1.2.0 add is listed
-  [page: knowledge/pipeline/versions/features.md#Features by package] (knowledge/sources/2026-09-current/INDEX.md:6,
+  [page: knowledge/pipeline/versions/features.md#Features by package] (knowledge/sources/2026-09/INDEX.md:6,
   :19, :15, :41). KB-00a, still pending, moves the pages to the newest catalogue download (agent/BACKLOG.md, row KB-00a). Some
   runtime behaviour stays open (knowledge/pipeline/open-questions/kb-12b.md:3–4); expect such items on your open list.
 - The fixture's channel attribute keys are synthetic (issues/ISSUE-4.md:2); a real dump carries the real names

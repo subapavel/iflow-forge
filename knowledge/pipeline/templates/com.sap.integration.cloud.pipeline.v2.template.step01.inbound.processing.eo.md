@@ -1,6 +1,6 @@
 # Pipeline v2 Template Step01 - Inbound Processing Exactly Once (com.sap.integration.cloud.pipeline.v2.template.step01.inbound.processing.eo)
 
-Artifact: `com.sap.integration.cloud.pipeline.v2.template.step01.inbound.processing.eo` 1.0.1, package templates, label 2026-06-trial.
+Artifact: `com.sap.integration.cloud.pipeline.v2.template.step01.inbound.processing.eo` 1.0.1, package templates, label 2026-06.
 
 ## Purpose
 
@@ -81,4 +81,4 @@ Bold: the scenario author must set it; the template references it without a valu
 
 ## Version notes
 
-2026-09-current 1.0.1: no change in the dump; same Bundle-Version, only the manifest's Origin-ModifiedDate differs [2026-09-current: com.sap.integration.cloud.pipeline.v2.template.step01.inbound.processing.eo, manifest "Bundle-Version"].
+2026-09 1.0.1: no change in the dump; same Bundle-Version, only the manifest's Origin-ModifiedDate differs [2026-09: com.sap.integration.cloud.pipeline.v2.template.step01.inbound.processing.eo, manifest "Bundle-Version"].

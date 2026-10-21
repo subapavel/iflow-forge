@@ -1,6 +1,6 @@
 # Pipeline v2 Template - Custom Exit (com.sap.integration.cloud.pipeline.v2.template.custom.exit)
 
-Artifact: `com.sap.integration.cloud.pipeline.v2.template.custom.exit` 1.0.2, package templates, label 2026-06-trial.
+Artifact: `com.sap.integration.cloud.pipeline.v2.template.custom.exit` 1.0.2, package templates, label 2026-06.
 
 ## Purpose
 
@@ -100,4 +100,4 @@ Bold: the copy is not reachable without it.
 
 ## Version notes
 
-2026-09-current 1.0.2: no change in the dump; same Bundle-Version, only the manifest's Origin-ModifiedDate differs [2026-09-current: com.sap.integration.cloud.pipeline.v2.template.custom.exit, manifest "Bundle-Version"].
+2026-09 1.0.2: no change in the dump; same Bundle-Version, only the manifest's Origin-ModifiedDate differs [2026-09: com.sap.integration.cloud.pipeline.v2.template.custom.exit, manifest "Bundle-Version"].

@@ -1,6 +1,6 @@
 # Migration: PO ICO to pipeline
 
-From one PO Integrated Configuration (ICO) to an approved pipeline scenario on the `2026-06-trial` fact base; attributes per D-025. It reports ICO content and pipeline needs; no ICO assessment. Human decisions and defaults: migration/variants.md.
+From one PO Integrated Configuration (ICO) to an approved pipeline scenario on the `2026-06` fact base; attributes per D-025. It reports ICO content and pipeline needs; no ICO assessment. Human decisions and defaults: migration/variants.md.
 
 ## Inputs
 

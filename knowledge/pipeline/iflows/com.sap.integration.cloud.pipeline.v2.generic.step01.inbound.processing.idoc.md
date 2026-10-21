@@ -1,6 +1,6 @@
 # Pipeline v2 Generic Step01 - Inbound Processing for Idoc (com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc)
 
-Artifact: `com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc` 1.0.8, package generic-inbound, label 2026-06-trial.
+Artifact: `com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc` 1.0.8, package generic-inbound, label 2026-06.
 
 ## Purpose
 
@@ -167,4 +167,4 @@ PD scripts throw when the header partnerID is missing [scripts/readInboundQueueF
 
 ## Version notes
 
-- 2026-09-current 1.0.9: see versions/2026-09-current/changelog.md § com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc
+- 2026-09 1.0.9: see versions/2026-09/changelog.md § com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc

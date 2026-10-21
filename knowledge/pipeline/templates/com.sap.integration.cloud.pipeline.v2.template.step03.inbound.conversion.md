@@ -1,6 +1,6 @@
 # Pipeline v2 Template Step03 - Inbound Conversion (com.sap.integration.cloud.pipeline.v2.template.step03.inbound.conversion)
 
-Artifact: `com.sap.integration.cloud.pipeline.v2.template.step03.inbound.conversion` 1.0.1, package templates, label 2026-06-trial.
+Artifact: `com.sap.integration.cloud.pipeline.v2.template.step03.inbound.conversion` 1.0.1, package templates, label 2026-06.
 
 ## Purpose
 
@@ -75,4 +75,4 @@ Bold: the scenario author must set it; the template references it without a valu
 
 ## Version notes
 
-2026-09-current 1.0.1: no change in the dump; same Bundle-Version, only the manifest's Origin-ModifiedDate differs [2026-09-current: com.sap.integration.cloud.pipeline.v2.template.step03.inbound.conversion, manifest "Bundle-Version"].
+2026-09 1.0.1: no change in the dump; same Bundle-Version, only the manifest's Origin-ModifiedDate differs [2026-09: com.sap.integration.cloud.pipeline.v2.template.step03.inbound.conversion, manifest "Bundle-Version"].

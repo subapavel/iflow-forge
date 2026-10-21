@@ -55,7 +55,7 @@
                 <configuration>
                     <systemPropertyVariables combine.children="append">
                         <kb.root>${maven.multiModuleProjectDirectory}/knowledge</kb.root>
-                        <kb.sources>2026-06-trial</kb.sources>
+                        <kb.sources>2026-06</kb.sources>
                         <kb.skip>${kb.skip}</kb.skip>
                         <kb.forbidden>${kb.forbidden}</kb.forbidden>
                     </systemPropertyVariables>

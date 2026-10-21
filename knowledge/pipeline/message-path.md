@@ -1,6 +1,6 @@
 # Message path
 
-Hops, JMS queues, ProcessDirect endpoints and the synchronous path of the `2026-06-trial` pipeline artifacts; the short codes 1I, 1X, 2i, 2a, 2s, 4, 5, 6, 8I, 8X and T <template> are those of `contracts.md`, del = Content Modifier Delete row.
+Hops, JMS queues, ProcessDirect endpoints and the synchronous path of the `2026-06` pipeline artifacts; the short codes 1I, 1X, 2i, 2a, 2s, 4, 5, 6, 8I, 8X and T <template> are those of `contracts.md`, del = Content Modifier Delete row.
 
 ## Message path
 

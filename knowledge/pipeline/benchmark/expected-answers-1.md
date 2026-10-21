@@ -1,6 +1,6 @@
 # Benchmark expected answers (1 of 2)
 
-A fresh Claude Code session is told: "Load skill sap-is-pipeline. Answer every question in knowledge/pipeline/benchmark/questions.md in a file /tmp/benchmark-answers.md. Then follow knowledge/pipeline/migration/po-ico-to-pipeline.md for knowledge/pipeline/benchmark/sample-ico.json up to and including the proposal, into /tmp/benchmark-proposal.md." The owner scores answers correct, partial or wrong, naming the page to fix. Expected answers cite the artifact of knowledge/sources/2026-06-trial (D-019). The fresh session reads questions.md only; this file is the owner's key (D-028).
+A fresh Claude Code session is told: "Load skill sap-is-pipeline. Answer every question in knowledge/pipeline/benchmark/questions.md in a file /tmp/benchmark-answers.md. Then follow knowledge/pipeline/migration/po-ico-to-pipeline.md for knowledge/pipeline/benchmark/sample-ico.json up to and including the proposal, into /tmp/benchmark-proposal.md." The owner scores answers correct, partial or wrong, naming the page to fix. Expected answers cite the artifact of knowledge/sources/2026-06 (D-019). The fresh session reads questions.md only; this file is the owner's key (D-028).
 Owner review 2026-10-20: Q2, Q3, Q4, Q8, Q11, Q15 amended; Q7 reworded; Q19 reworded and extended.
 
 1. **Q:** In what order do iFlows and queues carry an async XI → IDoc message (integrated-async)?

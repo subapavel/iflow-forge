@@ -1,6 +1,6 @@
 # Pipeline v2 Template Step04 - Reuse Extended Receiver Determination (com.sap.integration.cloud.pipeline.v2.template.step04.reuse.extended.receiver.determination)
 
-Artifact: `com.sap.integration.cloud.pipeline.v2.template.step04.reuse.extended.receiver.determination` 1.0.0, package templates, label 2026-06-trial.
+Artifact: `com.sap.integration.cloud.pipeline.v2.template.step04.reuse.extended.receiver.determination` 1.0.0, package templates, label 2026-06.
 
 ## Purpose
 
@@ -70,4 +70,4 @@ Bold: the scenario author must set it; the propdef gives no value or description
 
 ## Version notes
 
-2026-09-current 1.0.0: no change in the dump; same Bundle-Version, only the manifest's Origin-ModifiedDate differs [2026-09-current: com.sap.integration.cloud.pipeline.v2.template.step04.reuse.extended.receiver.determination, manifest "Bundle-Version"].
+2026-09 1.0.0: no change in the dump; same Bundle-Version, only the manifest's Origin-ModifiedDate differs [2026-09: com.sap.integration.cloud.pipeline.v2.template.step04.reuse.extended.receiver.determination, manifest "Bundle-Version"].

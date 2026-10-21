@@ -1,6 +1,6 @@
 # Pipeline v2 - Script Collection (com.sap.integration.cloud.pipeline.v2.script.collection)
 
-Artifact: `com.sap.integration.cloud.pipeline.v2.script.collection` 1.0.0, package templates, label 2026-06-trial.
+Artifact: `com.sap.integration.cloud.pipeline.v2.script.collection` 1.0.0, package templates, label 2026-06.
 
 ## Purpose
 
@@ -94,4 +94,4 @@ None: a script collection has no parameters.propdef.
 
 ## Version notes
 
-- 2026-09-current 1.0.1: logMessage.groovy adds exception logging when CamelExceptionCaught is set and writes an ExceptionInfo attachment [2026-09-current: com.sap.integration.cloud.pipeline.v2.script.collection, scripts/logMessage.groovy#L29] [2026-09-current: com.sap.integration.cloud.pipeline.v2.script.collection, scripts/logMessage.groovy#L136] — see versions/2026-09-current/changelog.md
+- 2026-09 1.0.1: logMessage.groovy adds exception logging when CamelExceptionCaught is set and writes an ExceptionInfo attachment [2026-09: com.sap.integration.cloud.pipeline.v2.script.collection, scripts/logMessage.groovy#L29] [2026-09: com.sap.integration.cloud.pipeline.v2.script.collection, scripts/logMessage.groovy#L136] — see versions/2026-09/changelog.md

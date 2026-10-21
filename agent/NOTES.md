@@ -10,8 +10,8 @@ Facts only; the next exact action and the state live in `agent/HANDOFF.md`.
   xsd/*, parameters.propdef}`; `CHANGELOG.txt` per package; `INDEX.md` per label (package, type, name,
   symbolic name, version). Package short names: `generic-inbound`, `generic-pipelines`,
   `generic-outbound`, `templates`.
-- `2026-06-trial`: 29 artifacts (Step02 1.0.5, Step04 1.0.4, Step05 1.0.3, Templates 1.1.1 era).
-  `2026-09-current`: 32 (Step02 1.0.6, Step04 1.0.5, Templates 1.2.0: adds the o2m-to-IDoc template,
+- `2026-06`: 29 artifacts (Step02 1.0.5, Step04 1.0.4, Step05 1.0.3, Templates 1.1.1 era).
+  `2026-09`: 32 (Step02 1.0.6, Step04 1.0.5, Templates 1.2.0: adds the o2m-to-IDoc template,
   the skip-retry value mapping and the partner-directory upload helper). The three new artifacts
   had a creation-timestamp suffix in their symbolic names in the tenant export; stripped.
 - `parameters.prop` never present (configured values); `.propdef` carries SAP defaults.
@@ -79,7 +79,7 @@ Facts only; the next exact action and the state live in `agent/HANDOFF.md`.
 - `iflow-forge-knowledge` has no `src/main`; `Checks` and `KnowledgeBase` live in `src/test/java/io/iflowforge/knowledge/`.
   Run: `mvn -B -ntp -q -pl iflow-forge-knowledge -am test [-Dkb.skip=a,b] [-Dkb.forbidden=<file>]`.
 - `kb.skip` defaults to empty in the module pom since KB-06 (F-2 closed): every check runs; `-Dkb.skip=a,b` skips named
-  checks. `kb.root` = `<repo>/knowledge`, `kb.sources` = `2026-06-trial`.
+  checks. `kb.root` = `<repo>/knowledge`, `kb.sources` = `2026-06`.
 - `ForbiddenValuesTest` skips unless `-Dkb.forbidden` names an existing file; a relative value resolves against the
   repository root. The owner's file stays under `testdata/` (gitignored). Messages never contain the value.
 - `CitesTest` (MIG-04, skip name `cites`) resolves every `[page: <path>#<heading>]` (repo-relative path, exact H2/H3 text) and

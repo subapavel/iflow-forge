@@ -1,6 +1,6 @@
 # Pipeline v2 Template Step07 - Outbound Processing Point-to-Point to Generic XI Outbound (com.sap.integration.cloud.pipeline.v2.template.step07.outbound.processing.p2p.to.xi)
 
-Artifact: `com.sap.integration.cloud.pipeline.v2.template.step07.outbound.processing.p2p.to.xi` 1.0.0, package templates, label 2026-06-trial.
+Artifact: `com.sap.integration.cloud.pipeline.v2.template.step07.outbound.processing.p2p.to.xi` 1.0.0, package templates, label 2026-06.
 
 ## Purpose
 
@@ -97,4 +97,4 @@ Bold: the copy is not reachable or cannot deliver without it; plain: needed only
 
 ## Version notes
 
-2026-09-current 1.0.0: no change in the dump; same Bundle-Version, only the manifest's Origin-ModifiedDate differs [2026-09-current: com.sap.integration.cloud.pipeline.v2.template.step07.outbound.processing.p2p.to.xi, manifest "Bundle-Version"].
+2026-09 1.0.0: no change in the dump; same Bundle-Version, only the manifest's Origin-ModifiedDate differs [2026-09: com.sap.integration.cloud.pipeline.v2.template.step07.outbound.processing.p2p.to.xi, manifest "Bundle-Version"].

@@ -1,6 +1,6 @@
 # Pipeline v2 Generic Step02 - Integrated Messaging Runtime Sync (com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync)
 
-Artifact: `com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync` 1.0.5, package generic-pipelines, label 2026-06-trial.
+Artifact: `com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync` 1.0.5, package generic-pipelines, label 2026-06.
 
 ## Purpose
 
@@ -166,5 +166,5 @@ Headers and properties from outside this flow (Step01 XI, custom flows).
 
 ## Version notes
 
-- 2026-09-current 1.0.6: step 1 also sets TenantName = ${sysenv.TENANT_NAME} [2026-09-current: com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync, step 1 "Set custom extensions"] — see versions/2026-09-current/changelog-generic-pipelines-step02.md
-- 2026-09-current 1.0.6: determinePartnerID reads the landscape with TenantName [2026-09-current: com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync, scripts/determinePartnerID.groovy#L129] — see versions/2026-09-current/changelog-generic-pipelines-step02.md
+- 2026-09 1.0.6: step 1 also sets TenantName = ${sysenv.TENANT_NAME} [2026-09: com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync, step 1 "Set custom extensions"] — see versions/2026-09/changelog-generic-pipelines-step02.md
+- 2026-09 1.0.6: determinePartnerID reads the landscape with TenantName [2026-09: com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync, scripts/determinePartnerID.groovy#L129] — see versions/2026-09/changelog-generic-pipelines-step02.md

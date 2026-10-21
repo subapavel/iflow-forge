@@ -1,6 +1,6 @@
 # Migration: point-to-point iFlow to pipeline
 
-Procedure from one existing point-to-point Integration Suite iFlow to an approved pipeline scenario on the `2026-06-trial` fact base. Same shape as po-ico-to-pipeline.md; attribute names and values are D-025. The procedure reports what the iFlow contains and what the pipeline needs; it does not assess the iFlow.
+Procedure from one existing point-to-point Integration Suite iFlow to an approved pipeline scenario on the `2026-06` fact base. Same shape as po-ico-to-pipeline.md; attribute names and values are D-025. The procedure reports what the iFlow contains and what the pipeline needs; it does not assess the iFlow.
 
 ## Inputs
 

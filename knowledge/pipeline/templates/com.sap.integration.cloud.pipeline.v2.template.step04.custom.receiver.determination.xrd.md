@@ -1,6 +1,6 @@
 # Pipeline v2 Template Step04 - Custom Receiver and Interface Determination via Extended Receiver Determination (com.sap.integration.cloud.pipeline.v2.template.step04.custom.receiver.determination.xrd)
 
-Artifact: `com.sap.integration.cloud.pipeline.v2.template.step04.custom.receiver.determination.xrd` 1.0.1, package templates, label 2026-06-trial.
+Artifact: `com.sap.integration.cloud.pipeline.v2.template.step04.custom.receiver.determination.xrd` 1.0.1, package templates, label 2026-06.
 
 ## Purpose
 
@@ -80,4 +80,4 @@ Bold: the scenario author must set it; the propdef gives no value or description
 
 ## Version notes
 
-2026-09-current 1.0.1: no change in the dump; same Bundle-Version, only the manifest's Origin-ModifiedDate differs [2026-09-current: com.sap.integration.cloud.pipeline.v2.template.step04.custom.receiver.determination.xrd, manifest "Bundle-Version"].
+2026-09 1.0.1: no change in the dump; same Bundle-Version, only the manifest's Origin-ModifiedDate differs [2026-09: com.sap.integration.cloud.pipeline.v2.template.step04.custom.receiver.determination.xrd, manifest "Bundle-Version"].
