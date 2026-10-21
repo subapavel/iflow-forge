@@ -4,6 +4,9 @@ Design, 2026-10-20. Status: **draft — review at hand-over** (MIG-00; owner go-
 `docs/inputs/2026-10-20-owner-migration-flow.md` statement 13). Every decision in §12 is marked for
 the owner's review; nothing here is built yet.
 
+Changelog: 2026-10-21 F-9 — §8.1 installed version = the package CHANGELOG.txt's first dated entry (features.md), not the
+artifact's Bundle-Version.
+
 **Changelog:** 2026-10-20 · MIG-01 preparation · §6.1, §13: Gemini CLI reads `.agents/skills/` as an alias of `.gemini/skills/` and agent skills are enabled by default, so one `.agents/skills/` pointer serves Codex and Gemini; the `.gemini/skills/` pointer and the experimental-flag question are dropped [external: github.com/openai/codex codex-rs/ext/skills/src/host_roots.rs] [external: github.com/google-gemini/gemini-cli docs/cli/using-agent-skills.md].
 
 ## 1. Where this sits
@@ -223,8 +226,9 @@ phase 6 is a **placeholder** until part 4 exists — the skill writes "not avail
 ### 8.1 Tenant profile (part 2, minimum contract — draft)
 
 `local/<customer>/profile.md`, sections: input paths (the `testdata/` directories of §5), runtime (integrated or decoupled, from the first migration's
-answer or the tenant's deployed generic iFlows), installed pipeline versions per package (from
-`META-INF/MANIFEST.MF` Bundle-Version of the tenant's download, KB-11e), naming conventions (iFlow,
+answer or the tenant's deployed generic iFlows), installed pipeline versions per package (the first
+dated entry of each package's `CHANGELOG.txt` in the tenant's download, `versions/features.md` "How to read"; an
+artifact's `META-INF/MANIFEST.MF` Bundle-Version is a separate number, KB-11e; F-9), naming conventions (iFlow,
 package, Partner Directory alias, queue prefix and suffix as the tenant uses them), Partner Directory
 conventions (key scheme in use, alternative-partner use), decisions with dates (one line each, with the
 `M-<n>` that made it), tool and skill versions used per migration (git hash of the runner jar's
