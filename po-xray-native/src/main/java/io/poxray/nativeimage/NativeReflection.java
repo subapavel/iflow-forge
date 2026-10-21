@@ -12,6 +12,7 @@ import io.poxray.model.BuiltinFunction;
 import io.poxray.model.DataType;
 import io.poxray.model.DcRef;
 import io.poxray.model.DevelopmentComponent;
+import io.poxray.model.DiscoveryReport;
 import io.poxray.model.EjbModule;
 import io.poxray.model.EventDefinition;
 import io.poxray.model.Expression;
@@ -83,6 +84,8 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
             AttributesReport.ModuleRef.class,
             BpmInventoryReport.class, BpmInventoryReport.ProcessRow.class,
             BpmInventoryReport.EjbRow.class, BpmInventoryReport.Totals.class,
+            DiscoveryReport.class, DiscoveryReport.ProcessRow.class, DiscoveryReport.InterfaceRow.class,
+            DiscoveryReport.IcoRow.class, DiscoveryReport.ComponentRow.class,
             IFlow.class, Participant.class, Step.class, Param.class, PackageExport.class, PackageExport.Entry.class
         },
         classNames = {

@@ -15,7 +15,10 @@ Durable facts only (build quirks, verified APIs, recurring findings). Never task
   Synthetic CPI artifacts from there via the public bridge `io.poxray.cpi.SyntheticArtifact` (its test sources).
 - `[Fatal Error] :1:9: XML document structures...` on stderr is a po-xray-core test's expected parse error.
 - CLI jar after `verify`: `po-xray-cli/target/po-xray-cli-<version>-runner.jar` (uber-jar, no `quarkus-app/`).
-- Reactor modules with surefire reports: po-xray-core, po-xray-cli, po-xray-mcp (not "iflow-forge-mcp"), iflow-forge-knowledge.
+- Reactor modules with surefire reports: po-xray-core, po-xray-native, po-xray-cli, po-xray-mcp (not "iflow-forge-mcp"), iflow-forge-knowledge.
+- Every new class under `io.poxray.model` (records AND nested records) must be added to `targets` of
+  `po-xray-native/.../nativeimage/NativeReflection.java`, else `NativeReflectionTest` fails root `verify`. Ask for that
+  path in the packet when a task adds a model type.
 
 ## APIs (verified)
 - JUnit Jupiter is 6.1.3 (javap): `Assumptions.assumeFalse(boolean, Supplier<String>)` exists.

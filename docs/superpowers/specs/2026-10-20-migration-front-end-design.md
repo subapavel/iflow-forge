@@ -15,6 +15,10 @@ Changelog: 2026-10-21 F-11 — §7 item 2 lists only the version-gated features 
 
 **Changelog:** 2026-10-20 · MIG-01 preparation · §6.1, §13: Gemini CLI reads `.agents/skills/` as an alias of `.gemini/skills/` and agent skills are enabled by default, so one `.agents/skills/` pointer serves Codex and Gemini; the `.gemini/skills/` pointer and the experimental-flag question are dropped [external: github.com/openai/codex codex-rs/ext/skills/src/host_roots.rs] [external: github.com/google-gemini/gemini-cli docs/cli/using-agent-skills.md].
 
+Changelog: 2026-10-21 F-13 — §5 the ICO row is derived by `po-xray discover` from the BPM exports and the system's ICOs, §6.3
+gains that helper (MIG-20, MIG-21), §7 item 1 the migrator names the customer, the system and the export directories, not the
+components or ICOs (D-045).
+
 ## 1. Where this sits
 
 iflow-forge produces pipeline-based iFlows from two inputs; the spine is a **scenario specification**

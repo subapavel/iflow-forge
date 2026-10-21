@@ -524,7 +524,7 @@ Facts verified on xipod (PO 7.50 SP28):
 
 ## Migration helpers
 
-Two read-only helpers of the migration skill (`sap-po-migration`) turn po-xray outputs into decision inputs. Both
+Three read-only helpers of the migration skill (`sap-po-migration`) turn po-xray outputs into decision inputs. All
 write Markdown by default and JSON with `--json`; `schemaVersion` "0.1", `generator` as in the other outputs, maps
 sorted by key, `issues` always written (`[]` = none found), other nulls and empty lists omitted.
 
@@ -594,3 +594,44 @@ issue `NOT_SCA_INVENTORY` (warning, `source` = the file). No usable inventory �
 metaclass also appears in `unknownMetaclasses`. A bean with two roles is listed under both in `beansByRole`.
 Markdown: `# BPM inventory`, `## Processes` table `| dc | process | steps | human tasks | unknown metaclasses |`,
 `### <process>` with `| kind | count |`, `## EJB roles` table `| dc | role | beans |`, `## Totals`, `## Issues` when any.
+
+### `po-xray discover …` → `DiscoveryReport`
+
+Core only (`io.poxray.migration.ScenarioDiscovery`); the CLI command comes with MIG-21.
+
+```jsonc
+{
+  "schemaVersion": "0.1", "generator": { … }, "inputs": [ "export/SYNTH.json" ],   // export files read as inventories
+  "icosInput": "icos-SYNTH.json",                    // the ICO inventory read; omitted when none or unreadable
+  "processes": [ {                                   // one per bpm[b].processes[p], in export order
+    "file": "export/SYNTH.json", "dc": "synth/bpm", "id": "P1", "name": "OrderApproval",
+    "processComponents": [ "BPM_CC" ],               // distinct, sorted
+    "inbound": [ {                                   // usage role start | intermediate, catalog order
+      "name": "OrderIn", "namespace": "urn:synth:orders", "role": "start",
+      "icos": [ { "oid": "ICO1", "senderComponent": "SRC_SYS", "senderInterface": "OrderIn",
+                  "senderNamespace": "urn:synth:orders", "receiverComponents": [ "BPM_CC" ] } ] } ],   // icos by oid
+    "outbound": [ { "name": "NotifyOut", "namespace": "urn:synth:notify", "role": "notification" } ]  // no ICO
+  } ],
+  "components": [ { "name": "BPM_CC", "roles": [ "process" ] }, { "name": "SRC_SYS", "roles": [ "source" ] } ],
+  "issues": [ { "severity": "warning", "code": "INTERFACE_WITHOUT_ICO", "message": "process OrderApproval …" } ]
+}
+```
+Input: the exports are listed as for `bpm-inventory` (every `*.json` directly in the directory, sorted by name, or the
+one file; `NOT_SCA_INVENTORY` for a file that is not an inventory with `bpm` or `ejb`; an inventory without `bpm` gives
+no rows). The ICO inventory is the JSON `po-xray ico` writes; a file that cannot be read or parsed, or has no `icos`,
+is issue `NOT_ICO_INVENTORY` (warning, `source` = the file) and every interface is then without an ICO.
+A process's interfaces are the `bpm[b].catalog.interfaces` with a `usedBy` entry whose `process` is the process
+name (`Interface.Usage.process` holds the name, not the id); one row per distinct role. Inbound (start,
+intermediate): an ICO matches when some `receivers[r].interfaces[a].targets[t].iface` has the interface's name and
+namespace (exact, case-sensitive); that receiver's component gets role `process`, the ICO's sender component `source`.
+Outbound (outbound, notification): an ICO matches when `sender.iface` has the name and namespace; the sender component
+gets `process`, every receiver component `target`. `processComponents` are the components in role `process` of that
+process's matches; `components` holds every component of a matched ICO, sorted by name, roles sorted. Null parts
+(catalog, interfaces, usedBy, receivers, interfaces, targets, iface, sender) match nothing.
+Issues (all warnings, `location` = dc and process, `source` = the export file): `INTERFACE_WITHOUT_ICO` (process,
+interface, namespace, role; the row stays with no `icos`), `PROCESS_WITHOUT_INTERFACES` (no inbound or outbound row),
+`UNKNOWN_INTERFACE_ROLE` (a usage role outside the four; the interface is not listed for it).
+Markdown: `# Scenario discovery` with the inputs, `## Processes`, per process `### <name, else id>` with a line naming
+dc, file and process components and a table `| Role | Interface | Namespace | ICO | Sender | Receivers |` (one row
+per ICO, `—` in the last three cells for an interface without ICO; Sender is `party / component` when a party is
+set), `## Components` table `| Component | Roles |`, `## Issues` with `none` or a table `| Code | Message |`.

@@ -1,9 +1,9 @@
 # Handoff
 
-state: IDLE_NO_READY_TASK — MIG-19 quick start done (docs/QUICK-START.md, kb-reviewer PASS); no ready row; the owner inputs below decide the next task
-last commit: docs: one-screen quick start for a BPM process with its ICOs (MIG-19) — hash in git log; prev e39fac5 KB-14, 3b2414d, 9a3d8f3 MIG-18
-branch: claude/eager-brown-uw61ft (D-017; owner fast-forwards main); CI e39fac5 run 39581894366 green on attempt 2 (attempt 1: Maven Central 429); 3b2414d green
-next exact action: none ready — owner inputs: ISSUE-3/FIX-03, ISSUE-4, ISSUE-5, KB-12b, KB-00a, KB-09, MIG-07 pilot; the first real run yields requests
+state: RUNNING — MIG-20 scenario discovery core done (D-045, F-13); MIG-21 CLI discover ready; MIG-22 intake after it
+last commit: feat: scenario discovery derives the ICOs around a BPM process from the artifacts (MIG-20) — hash in git log; prev 33707a2 MIG-19
+branch: claude/eager-brown-uw61ft (D-017; owner fast-forwards main); CI 33707a2 run 39584178282 green; e39fac5 run 39581894366 green on attempt 2 (429 first)
+next exact action: MIG-21 — acceptance spec from scratchpad mig-21/scout-facts.md (systems-dir override, --icos offline), test-author, implementer, reviewer
 spec: docs/superpowers/specs/2026-10-20-migration-front-end-design.md — §6.3 tool, §7 phases (F-11), §8, §9, §10 gate, §11 pilot, §12 P-1 to P-12
 dry run: fixtures/dry-run-2026-10-21.md runs 1–3; all run-3 gaps closed (MIG-15 skill, MIG-16 pages, MIG-17 tool); a 4th run or a real pilot is the next test
 D-036 routing; D-037 profile at step 6; D-038 silent pages; D-039 skill; D-040 helper; D-041 run-3 conventions; D-042 queue shape; D-043 esr check, keys

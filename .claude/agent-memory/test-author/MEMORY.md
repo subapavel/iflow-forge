@@ -30,3 +30,5 @@ Durable facts only (build quirks, verified APIs, recurring findings). Never task
 - ScenarioAttributesTest has esr-mapping builders (MIG-17): `mappingEsr(oms, mms)`, `operationMapping(name, ns, steps...)`, `step(kind, type, name, ns)`, `messageMapping(name, ns, mult)`, `inv(List<Ico>, Esr, Channel...)`; `esr(List,List)` overload is impossible (same erasure as `esr(interfaces, messageTypes)`).
 - The `po-xray attributes` markdown renders a row's note after the source (` — <note>`), so a markdown doesNotContain on a note text is meaningful.
 - iflow-forge-knowledge pom sets `kb.sources` for surefire; a test of the default clears it and restores it in finally (ChecksTest.restore). Real-page acceptance checks are one class per check (CitesTest, BudgetTest, TenantKindTest).
+- `Interface.Usage.process` holds the process NAME (ProcessReader passes `collab.name()`), not `Process.id`; BpmIntegrationTest fixtures do the same.
+- Strict record round trip `readValue(json, R.class).equals(r)` under the NON_EMPTY mapper only holds if empty lists survive (compact ctor null→List.of() or per-field NON_NULL); flag it when a spec asks for equality.
