@@ -21,3 +21,13 @@ repository and record that in `docs/DECISIONS.md`. (c) Something else.
 
 ## Status
 Open. Not blocking; a BACKLOG row is added as `blocked` on this issue.
+
+## Scope addendum (2026-10-21, found during MIG-18)
+The same two identifiers (the customer name, the PO system name) also sit in: `README.md:76` and `:91` (neutralised
+2026-10-21 by the architect — a documentation example, not in the list above), `tools/dist-windows.ps1:35`, the javadoc
+of `po-xray-core/src/main/java/io/poxray/po/PoSystem.java:20`, `integration/Secrets.java:11`, `IntegrationQuery.java:34`,
+`MappingLogicReader.java:32`, `IntegrationReader.java:213`, `ObjectCatalog.java:44`, `ArchiveReader.java:31`,
+`sca/DcDefinition.java:45`, `xi/XiBlob.java:15`, the tests `po/PoClientTest.java:134–153`, `po/TpzGatewayTest.java:70–133`,
+`integration/ArchiveReaderTest.java:26`, `MappingLogicReaderTest.java:22`, `CachingObjectSourceTest.java:41`, and the
+system hostname in `docs/SOURCES-ESR-DIRECTORY.md:3`. The hostname is the one item CLAUDE.md names explicitly; option (a)
+should take it first. `git grep -n -i -w '<name>\|<system>'` over tracked files outside `testdata/` and `local/` is the check.

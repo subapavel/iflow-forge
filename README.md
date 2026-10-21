@@ -73,7 +73,7 @@ A system available only as TPZ exports (no network access to it) is configured w
 no user or password needed:
 
 ```properties
-tpz=D:/customers/eon/tpz-prod
+tpz=D:/customers/<customer>/tpz-prod
 ```
 
 All commands and MCP tools then read the `.tpz` files of that directory **including subdirectories** (ESR and
@@ -88,7 +88,7 @@ underlying/common SWCVs), Directory *Tools → Export Configuration Objects* per
 Optional (online systems): `truststore=windows|jdk|<file>` (+ `truststorePassword`) for HTTPS — by default a
 certificate is accepted if the JDK certificates or, on Windows, the Windows certificate store trust it (company CAs,
 as in the browser) — and `proxy=host:port`. Environment variables override the file: `POXRAY_<SYSTEM>_USER` / `POXRAY_<SYSTEM>_PASSWORD`
-for one system (name upper case, other characters as `_`, e.g. `POXRAY_EON_DEV_PASSWORD` for `eon-dev`), then
+for one system (name upper case, other characters as `_`, e.g. `POXRAY_PO_DEV_PASSWORD` for `po-dev`), then
 `POXRAY_USER` / `POXRAY_PASSWORD` for all systems. A read-only user is enough (roles `SAP_XI_DISPLAY_USER_J2EE`,
 `SAP_XI_API_DISPLAY_J2EE`). Objects read from the system are kept as raw `xiObj` XML in `~/.po-xray/cache/<system>`
 (`--refresh` re-reads them, `--cache <dir>` changes the location): the first `ico` query reads all ICOs, later

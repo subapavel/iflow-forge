@@ -442,3 +442,14 @@ Fix: the value replaced; a case-insensitive `git grep` of the prefix over tracke
 History: two pushed commits keep the token; rewriting pushed history is owner-only → issues/ISSUE-5.md.
 Ledger: MIG-17 hash 7ee752c (CI pending at the time of writing; result in the next entry).
 Next: MIG-18 — docs/FIRST-REAL-RUN.md guide (owner asked 2026-10-21): scout running, then page packet → kb-author → kb-reviewer → verifier.
+
+## MIG-18 · 2026-10-21 · (hash in the next entry)
+Task: owner-facing guide for the first real migration run, `docs/FIRST-REAL-RUN.md` (owner asked 2026-10-21). Content; page packet → kb-author → kb-reviewer. No deviation.
+Page: H1 + 8 H2 (what exists today, prepare the machine, produce the dumps, start the skill, phases 1–5, what never leaves the machine, after the run, which scenario first); 1,459 words; every statement cites a page heading, the spec, a decision or a code/docs line; placeholders only.
+Findings handled in the same commit: docs/inputs/README.md:27 named the per-system credential variables without the `POXRAY_` prefix the code requires (PoSystem.envPrefix, PoSystem.java:113–116) → corrected; README.md:76 and :91 carried a customer name in examples → `<customer>`, `po-dev`; the remaining identifiers outside testdata/ (javadocs, tests, a Windows script, the hostname in docs/SOURCES-ESR-DIRECTORY.md:3) → ISSUE-3 scope addendum, FIX-03 stays blocked on the owner.
+Correction of the architect's chat claim: spec §11's pilot is the owner's first BPM process (MIG-07), not a single ICO; the guide says so and offers the single-ICO run as a warm-up (BACKLOG row reworded).
+Checks: words 1,459 ≤ 1,480; `grep -c '^## '` 8; 16 `[page:]` cites found verbatim; "trial" only inside one cite path (D-044); customer grep 0 over the page, README.md, docs/inputs/README.md, ISSUE-3; knowledge module NOT_RUN (no file under knowledge/ or skills/ changed); no Maven.
+Review: kb-reviewer r1 FAIL 1 (fact-base sentences claimed more than knowledge/sources/README.md:9–10 says) + 9 notes → kb-author r2; owner rule D-044 → kb-author r3 (package versions, no tenant kind in prose); kb-reviewer r2 FAIL 2 (BACKLOG line cites shifted by the KB-14 row) → kb-author r4 (section and row-id cites) → kb-reviewer r3 PASS. Word count 1,459 observed by the architect (awk), 8 H2, customer grep 0.
+Ledger: MIG-17 hash 7ee752c (CI 39575259102 green); FIX-04 hash 8841b1e (CI 39575581940 green).
+Findings: none filed. Decisions: D-044 (owner 2026-10-21: no tenant kind in any text, the package versions identify the knowledge base) → row KB-14 relabel. Issues: ISSUE-3 addendum.
+Next: KB-14 — relabel the source folders by date, rewrite cites, prose and `kb.sources`, "trial" leaves every page (D-044); then idle unless the owner answers ISSUE-3/4/5, KB-12b, KB-00a, MIG-07.

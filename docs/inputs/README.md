@@ -24,7 +24,7 @@ local Claude Code session in the same clone, where the tests that need it stop s
 
 - Online: `~/.po-xray/systems/<name>.properties` with `url=https://<po-host>:<port>`, optionally
   `truststore`, `truststorePassword`, `proxy`. Credentials go to the environment, never into the file:
-  `POXRAY_USER` and `POXRAY_PASSWORD` (or `<NAME>_USER` / `<NAME>_PASSWORD` per system).
+  `POXRAY_USER` and `POXRAY_PASSWORD` (or `POXRAY_<NAME>_USER` / `POXRAY_<NAME>_PASSWORD` per system, `<NAME>` upper case, other characters as `_`; `PoSystem.envPrefix`).
 - Offline: the same file with `tpz=<directory of .tpz exports>` (relative to `~/.po-xray/systems/`), holding
   the Integration Directory and ESR exports of the objects.
 - Then, per communication component of the process (sender and receiver side, wildcards allowed):
