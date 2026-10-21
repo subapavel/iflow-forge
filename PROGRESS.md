@@ -309,3 +309,14 @@ Review: reviewer r1 FAIL 2 (several cites of one kind per line and cross-file so
 Ledger: MIG-02b hash 3b88963, CI 39520985125 green.
 Open: spec §10 L288 calls a version gap a "blocking question" while §7 item 3 and attributes.md type it `version` — spec-internal, no page retypes it (kb-reviewer item 102).
 Next: KB-11d ready; MIG-05, MIG-06 after it.
+
+## KB-11d · 2026-10-21 · (hash in the next entry)
+Task: remaining follow-ups from the owner's benchmark review of 2026-10-20 (items 1–2 were done in KB-12b). Content only, no red test (CLAUDE.md "Tests": a content task's acceptance is the kb-reviewer's PASS plus a green knowledge run).
+Changed: conversion/README.md "Rules" — new last bullet: the owner-confirmed split of responsibilities (generic Step01: SAP sender/interface, Partner Directory partner, no fragile logic; Step03: what the PO sender channel did before the runtime; Step07: mappings, outbound conversion, receiver-channel modules) `[owner, 2026-10-20]` paired with the artifact cites step01 XI step 1 "Set SAP headers", step 4 "Determine partner ID", p2p step 2 "Call Mappings", step 7 "Call Outbound Conversion"; module rows stay proposals (D-026). open-questions/kb-11b.md and migration/variants.md: one-to-many and ordered scenarios exist in the owner's landscape `[owner, 2026-10-20]`, receiver types not stated.
+Check-only: versions/2026-09-current/changelog.md (1,499 words, at the limit) — covers the owner's "value mapping of errors" (L55 templates 1.2.0 Skip Retry Configuration; L113–114 value.mapping.skipretry read by Step06 checkExceptionType.groovy#L117, upload helper; L46/L51 no retry → DLQ); unchanged.
+Skipped: the BACKLOG wish items on scenario-contribution.md (pointer on row 62, "PID" on row 50): SC is at 1,479 words, no room.
+Checks: knowledge module exit 0 (target/kb-11d-kb.log, -kb-r2.log, verifier -kb-v.log; 67/0/0/2); words README 1,121, kb-11b 229, variants 947 (SC 1,479, contracts 1,478, po-ico 1,477 untouched); forbidden grep 0; no heading changed; diff target/kb-11d.diff (3 files +3 −2).
+Review: kb-reviewer r1 FAIL 2 (kb-11b.md and variants.md stretched the owner's Q18 answer to IDoc/XI receivers: "live for the pilot", "Such scenarios"), observation Step01 → "the generic Step01"; round 2 fixed all three → r2 PASS. Reviewer memory 104–105.
+Ledger: MIG-04 hash 4ec942e, CI 39523214189 green.
+Findings: none. Not a deviation. Decisions: none new (D-026, D-029 applied). Issues: none new. KB-11d done.
+Next: MIG-05 ready; MIG-06 after it.

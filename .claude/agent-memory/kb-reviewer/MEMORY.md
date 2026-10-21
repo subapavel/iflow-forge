@@ -106,3 +106,5 @@ Durable facts only (build quirks, verified APIs, recurring findings). Never task
 101. Plan pages tend to describe the round layout twice (per-block section list vs. the Iterations order); compare the two line by line.
 102. Spec §10 (L288) calls a missing version feature a "blocking question", while §7 item 3 and attributes.md L53 type it `version`. Check that a page citing §10 does not quietly retype it.
 103. D-034 widens the cite-check scope of spec L202 ("templates and references") to every markdown page under skills/ and patterns/; Checks.cites also resolves `[pattern: <id>]` to patterns/<id>.md, so a page saying "references and templates only" is wrong.
+104. An `[owner, <date>]` quote without a receiver type or scope does not support a sentence placed after a receiver-scoped clause ("Such scenarios", "so the question is live"): check the nearest antecedent and every inferred "so …" clause against the exact quote.
+105. Step01 XI "Set SAP headers" is CallActivity_6 (headerTable at .iflw L1763, SAP_Sender and SAP_SenderInterface); "Determine partner ID" is CallActivity_64695, script determinePartnerID.groovy (L1457).

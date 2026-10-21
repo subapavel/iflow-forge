@@ -1,9 +1,9 @@
 # Handoff
 
-state: MIG-04 done (cite check, phases 3–4 pages); MIG-02b done 3b88963; KB-12b owner judgement pending (GATE check 5); next KB-11d, MIG-05
-last commit: feat: cite check for skill pages and references for the question round and the plan (MIG-04); before it 3b88963, 6218ac9
-branch: claude/eager-brown-uw61ft (D-017; owner fast-forwards main); CI green 3b88963 (39520985125), 6218ac9 (39517967726), 84ba389 (39515866770)
-next exact action: KB-11d — re-read its BACKLOG row and the spec section it names; page packet; then MIG-05, MIG-06
+state: KB-11d done (owner follow-ups); MIG-04 done 4ec942e; KB-12b owner judgement pending (GATE check 5); next MIG-05, MIG-06
+last commit: kb: owner-confirmed 01/03/07 placement, live one-to-many question, changelog check (KB-11d); before it 4ec942e, 3b88963
+branch: claude/eager-brown-uw61ft (D-017; owner fast-forwards main); CI green 4ec942e (39523214189), 3b88963 (39520985125), 6218ac9 (39517967726)
+next exact action: MIG-05 (content) — spec §8 + §12 P-2/P-8; page packet for references/retrospective.md, templates/profile.md, scenario.md, request.md
 MIG-00 spec: docs/superpowers/specs/2026-10-20-migration-front-end-design.md — §6 layout, §7 phases, §8 learning, §9 field loop, §12 P-1…P-12, §13
 benchmark: 20 q first run 10/9/1, reruns 4/2/1 then Q10 correct; open-questions/kb-12b.md (missing Binary receiverDetermination); the owner judges the page
 reader: io.poxray.cpi per plan Task 2 + F-1; order D-016; ScriptCollection 0 steps; propdef no defaults (D-015); ifl:property not exposed (NOTES)
@@ -17,4 +17,4 @@ customer data: spec/plan/backlog/PROGRESS neutralised 2026-10-20 (`<tenant>` pla
 build: `mvn -B -ntp -q verify > target/<task>-verify.log 2>&1`; JDK 25, Maven 3.9; counts in <module>/target/surefire-reports; CI .github/workflows/verify.yml
 notes: agent/NOTES.md (by section); helpers io.poxray.migration, rules in docs/OUTPUT-MODEL.md "Migration helpers"; PROGRESS headings take the next hash
 turn economy: WORKFLOW §10 (D-024) — foreground waits; target/.batch-in-review during review; gated hook via SessionStart (a6bfbef); self-check dc3644e
-reviewer memory: .claude/agent-memory/kb-reviewer/MEMORY.md items 1–103 (architect appends; the reviewer is read-only); dumps reusable in target/kb-11b/
+reviewer memory: .claude/agent-memory/kb-reviewer/MEMORY.md items 1–105 (architect appends; the reviewer is read-only); dumps reusable in target/kb-11b/
