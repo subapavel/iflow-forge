@@ -464,3 +464,12 @@ Review: reviewer PASS (code and tests; non-blocking: untested if/while and white
 Ledger: MIG-18 hash 9a3d8f3 (CI run cancelled by the next push), 3b2414d (CI 39578403487 green).
 Findings: F-12. Decisions: D-044 (written in MIG-18). Issues: none.
 Next: IDLE_NO_READY_TASK unless the owner answers — ISSUE-3/FIX-03, ISSUE-4, ISSUE-5, KB-12b, KB-00a (download → label `2026-10`), KB-09, MIG-07 pilot.
+
+## MIG-19 · 2026-10-21 · (hash in the next entry)
+Task: quick start for the owner's own first run (owner 2026-10-21: the full guide is too long; several BPM processes with their follow-on ICOs to try) — `docs/QUICK-START.md`, one screen, eight numbered steps, each one command or one file with its cite; `docs/FIRST-REAL-RUN.md` points to it. Content; page packet → kb-author → kb-reviewer. No deviation. Context compacted once during the review wait.
+Page: 389 words, H1 + 5 H2 (Before the first run, Dumps, Run, When it stops or ends, Then), steps 1–8 (3/2/3), nine `[page:]` cites and four FIRST-REAL-RUN section cites; six packet departures accepted where the sources decide (the skill allocates M-1, `unknown` in the profile, per-component output folders, step 1 cites docs/inputs/README.md:9–10, no page names where components are found, the field branch is pushed only after the forbidden-values check); `docs/FIRST-REAL-RUN.md:3` pointer, `git diff --numstat` 2 0.
+Checks: 389 words (awk), 5 H2, 8 steps, customer grep 0 over the five changed files, the word tenant only inside the exact cite heading `#Tenant profile` (D-031; not a tenant kind, D-044); knowledge module not run (no knowledge/ or skills/ file changed).
+Review: kb-reviewer r1 PASS (2026-10-21; every cite opened; six non-blocking notes — `<SYSTEM>` defined only in FIRST-REAL-RUN.md:43–44, the `passes` of step 8 could name a zero skip count, `(its name)` inside the start prompt is a sixth placeholder — left for the field loop).
+Ledger: KB-14 hash e39fac5 (CI run 39581894366: attempt 1 Maven Central 429 before any build step, attempt 2 green).
+Findings: none. Decisions: none. Issues: none.
+Next: IDLE_NO_READY_TASK unless the owner answers — ISSUE-3/FIX-03, ISSUE-4, ISSUE-5, KB-12b, KB-00a, KB-09, MIG-07 pilot; the owner's first real run (BPM + ICOs) will produce requests for the field loop.

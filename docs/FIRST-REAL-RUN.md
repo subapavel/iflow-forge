@@ -1,5 +1,7 @@
 # First real run — migrating one SAP PO scenario with the sap-po-migration skill
 
+Short version for one BPM process and its ICOs: `docs/QUICK-START.md`.
+
 For you, on your own machine: the local side of the field loop (docs/WORKFLOW.md:215–217), running the skill
 `sap-po-migration` against a real SAP PO system for the first time.
 

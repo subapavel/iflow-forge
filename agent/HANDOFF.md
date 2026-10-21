@@ -1,9 +1,9 @@
 # Handoff
 
-state: IDLE_NO_READY_TASK — KB-14 done (D-044 relabel: sources 2026-06, 2026-09; Checks.tenantKind); every open row waits on the owner (list below)
-last commit: refactor: source labels are export dates without a tenant kind; a check keeps the words out (KB-14); prev 3b2414d, 9a3d8f3 MIG-18
-branch: claude/eager-brown-uw61ft (D-017; owner fast-forwards main); CI green 3b2414d (39578403487; 9a3d8f3 run cancelled by the next push), 8841b1e
-next exact action: none ready — owner inputs: ISSUE-3 (FIX-03 identifiers), ISSUE-4 (attribute names), ISSUE-5 (history), KB-12b, KB-00a, KB-09, MIG-07
+state: IDLE_NO_READY_TASK — MIG-19 quick start done (docs/QUICK-START.md, kb-reviewer PASS); no ready row; the owner inputs below decide the next task
+last commit: docs: one-screen quick start for a BPM process with its ICOs (MIG-19) — hash in git log; prev e39fac5 KB-14, 3b2414d, 9a3d8f3 MIG-18
+branch: claude/eager-brown-uw61ft (D-017; owner fast-forwards main); CI e39fac5 run 39581894366 green on attempt 2 (attempt 1: Maven Central 429); 3b2414d green
+next exact action: none ready — owner inputs: ISSUE-3/FIX-03, ISSUE-4, ISSUE-5, KB-12b, KB-00a, KB-09, MIG-07 pilot; the first real run yields requests
 spec: docs/superpowers/specs/2026-10-20-migration-front-end-design.md — §6.3 tool, §7 phases (F-11), §8, §9, §10 gate, §11 pilot, §12 P-1 to P-12
 dry run: fixtures/dry-run-2026-10-21.md runs 1–3; all run-3 gaps closed (MIG-15 skill, MIG-16 pages, MIG-17 tool); a 4th run or a real pilot is the next test
 D-036 routing; D-037 profile at step 6; D-038 silent pages; D-039 skill; D-040 helper; D-041 run-3 conventions; D-042 queue shape; D-043 esr check, keys
