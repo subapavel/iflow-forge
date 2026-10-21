@@ -27,6 +27,11 @@ class AttributesCommandTest {
                 .map(Attribute::value).findFirst().orElseThrow();
     }
 
+    private static String question(AttributesReport report, int scenario, String name) {
+        return report.scenarios().get(scenario).attributes().stream().filter(a -> a.name().equals(name))
+                .map(Attribute::question).findFirst().orElseThrow();
+    }
+
     private static String json(String stdout) {
         return stdout.substring(stdout.indexOf('{'), stdout.lastIndexOf('}') + 1);
     }
@@ -69,7 +74,8 @@ class AttributesCommandTest {
         assertThat(value(report, 1, "receiver_type")).isEqualTo("?");
         assertThat(value(report, 1, "receiver_count")).isEqualTo("n");
         assertThat(value(report, 1, "receiver_determination")).isEqualTo("xpath");
-        assertThat(value(report, 1, "custom_exit")).isEqualTo("post");
+        assertThat(value(report, 1, "custom_exit")).isEqualTo("?");
+        assertThat(question(report, 1, "custom_exit")).startsWith("receiver module MyCustomModule");
         assertThat(report.scenarios().get(1).modules())
                 .containsExactly(new ModuleRef("receiver", "CC_RCV2_FILE", 2, "MyCustomModule"));
         // (c) async EO, SOAP sender with a module before CallSapAdapter, dynamic routing, 1:n of one interface
@@ -77,8 +83,10 @@ class AttributesCommandTest {
         assertThat(value(report, 2, "receiver_count")).isEqualTo("n");
         assertThat(value(report, 2, "receiver_determination")).isEqualTo("reuse-xrd");
         assertThat(value(report, 2, "mapping")).isEqualTo("one-to-many-one-type");
-        assertThat(value(report, 2, "custom_exit")).isEqualTo("pre");
+        assertThat(value(report, 2, "custom_exit")).isEqualTo("?");
         assertThat(value(report, 2, "inbound_conversion")).isEqualTo("?");
+        assertThat(question(report, 2, "custom_exit")).isEqualTo(question(report, 2, "inbound_conversion"))
+                .startsWith("sender module localejbs/MyPreModule");
         assertThat(report.scenarios().get(2).modules())
                 .containsExactly(new ModuleRef("sender", "CC_SND_SOAP", 1, "localejbs/MyPreModule"));
     }

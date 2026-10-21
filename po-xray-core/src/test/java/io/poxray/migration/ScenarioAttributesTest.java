@@ -192,6 +192,16 @@ class ScenarioAttributesTest {
         assertThat(a.source()).as(a.name()).isEqualTo(source);
     }
 
+    /** D-032 question of a sender module other than MessageTransformBean, naming its raw module name. */
+    private static String senderModuleQuestion(String rawName) {
+        return "sender module " + rawName + ": conversion to XML (Step03, default custom) or pre-processing exit";
+    }
+
+    /** D-033 question of a module on a resolved receiver channel, naming its raw module name. */
+    private static String receiverModuleQuestion(String rawName) {
+        return "receiver module " + rawName + ": outbound conversion (Step07) or post-processing exit";
+    }
+
     // ---------------------------------------------------------------- shape
 
     @Test
@@ -538,35 +548,75 @@ class ScenarioAttributesTest {
     }
 
     @Test
-    void customExitIsPreForAModuleOfTheSenderChannel() {
+    void senderModuleOtherThanMtbMakesCustomExitAQuestionBetweenNoneAndPre() {
         AttributesReport report = derive(inv(ico(plainReceiver("EO")), xiReceiver(),
                 xiSender(module(1, "localejbs/MyPreModule"), module(2, "localejbs/CallSapAdapter"))));
 
-        assertResolved(attr(report, "custom_exit"), "pre", "channels[1].modules[0].name");
+        Attribute exit = attr(report, "custom_exit");
+        assertOpen(exit, "none", "pre");
+        assertThat(exit.source()).isEqualTo("channels[1].modules[0].name");
+        assertThat(exit.question()).isEqualTo(senderModuleQuestion("localejbs/MyPreModule"));
         assertThat(report.scenarios().get(0).modules())
                 .containsExactly(new ModuleRef("sender", "CC_SND", 1, "localejbs/MyPreModule"));
     }
 
     @Test
-    void customExitIsPostForAModuleOfAReceiverChannel() {
+    void receiverModuleMakesCustomExitAQuestionBetweenNoneAndPost() {
         AttributesReport report = derive(inv(ico(plainReceiver("EO")), xiSender(),
                 xiReceiver(module(1, "CallSapAdapter"), module(2, "MyPostModule"))));
 
-        assertResolved(attr(report, "custom_exit"), "post", "channels[1].modules[1].name");
+        Attribute exit = attr(report, "custom_exit");
+        assertOpen(exit, "none", "post");
+        assertThat(exit.source()).isEqualTo("channels[1].modules[1].name");
+        assertThat(exit.question()).isEqualTo(receiverModuleQuestion("MyPostModule"));
         assertThat(report.scenarios().get(0).modules())
                 .containsExactly(new ModuleRef("receiver", "CC_RCV", 2, "MyPostModule"));
     }
 
     @Test
-    void customExitIsPrePlusPostWhenBothSidesHaveOneAndNamesTheSenderModule() {
+    void receiverModuleWithAnUnresolvedReceiverChannelAsksAndNotesTheUnknownChannel() {
+        AttributesReport report = derive(inv(ico(plainReceiver("EO"),
+                receiver("RCV_SYS", "EO", null, List.of(oneToOne()), ref("RCV_SYS", "CC_RCV_NOT_IN_INVENTORY"))),
+                xiSender(), xiReceiver(module(1, "CallSapAdapter"), module(2, "MyPostModule"))));
+
+        Attribute exit = attr(report, "custom_exit");
+        assertOpen(exit, "none", "post");
+        assertThat(exit.source()).isEqualTo("channels[1].modules[1].name");
+        assertThat(exit.question()).isEqualTo(receiverModuleQuestion("MyPostModule")
+                + "; modules of channel(s) not in channels[] are unknown: RCV_SYS/CC_RCV_NOT_IN_INVENTORY;"
+                + " do they run custom modules");
+        assertThat(report.scenarios().get(0).modules())
+                .containsExactly(new ModuleRef("receiver", "CC_RCV", 2, "MyPostModule"));
+    }
+
+    @Test
+    void senderAndReceiverModulesLeaveAllFourExitCandidatesWithBothQuestions() {
         AttributesReport report = derive(inv(ico(plainReceiver("EO")),
                 xiReceiver(module(1, "CallSapAdapter"), module(2, "MyPostModule")),
                 xiSender(module(1, "MyPreModule"), module(2, "CallSapAdapter"))));
 
-        assertResolved(attr(report, "custom_exit"), "pre+post", "channels[1].modules[0].name");
+        Attribute exit = attr(report, "custom_exit");
+        assertOpen(exit, "none", "pre", "post", "pre+post");
+        assertThat(exit.source()).isEqualTo("channels[1].modules[0].name");
+        assertThat(exit.question())
+                .isEqualTo(senderModuleQuestion("MyPreModule") + "; " + receiverModuleQuestion("MyPostModule"));
         assertThat(report.scenarios().get(0).modules()).containsExactly(
                 new ModuleRef("sender", "CC_SND", 1, "MyPreModule"),
                 new ModuleRef("receiver", "CC_RCV", 2, "MyPostModule"));
+    }
+
+    @Test
+    void senderModuleWithAnUnresolvedReceiverChannelLeavesAllFourExitCandidates() {
+        AttributesReport report = derive(inv(ico(
+                receiver("RCV_SYS", "EO", null, List.of(oneToOne()), ref("RCV_SYS", "CC_RCV_NOT_IN_INVENTORY"))),
+                xiSender(module(1, "localejbs/MyPreModule"), module(2, "localejbs/CallSapAdapter"))));
+
+        Attribute exit = attr(report, "custom_exit");
+        assertOpen(exit, "none", "pre", "post", "pre+post");
+        assertThat(exit.source()).isEqualTo("channels[0].modules[0].name");
+        assertThat(exit.question()).isEqualTo(senderModuleQuestion("localejbs/MyPreModule")
+                + "; modules of channel(s) not in channels[] are unknown: RCV_SYS/CC_RCV_NOT_IN_INVENTORY;"
+                + " do they run custom modules");
     }
 
     // ---------------------------------------------------------------- inbound_conversion
@@ -598,6 +648,31 @@ class ScenarioAttributesTest {
                 xiReceiver())), "inbound_conversion");
 
         assertOpen(ic, "none", "custom");
+    }
+
+    @Test
+    void senderModuleOtherThanMtbMakesInboundConversionAQuestionEvenForAnXiSender() {
+        AttributesReport report = derive(inv(ico(plainReceiver("EO")), xiReceiver(),
+                xiSender(module(1, "localejbs/MyPreModule"), module(2, "localejbs/CallSapAdapter"))));
+
+        Attribute ic = attr(report, "inbound_conversion");
+        assertOpen(ic, "none", "custom");
+        assertThat(ic.source()).isEqualTo("channels[1].modules[0].name");
+        assertThat(ic.question()).isEqualTo(senderModuleQuestion("localejbs/MyPreModule"));
+        assertThat(attr(report, "custom_exit").question()).isEqualTo(ic.question());
+    }
+
+    @Test
+    void senderModuleOtherThanMtbReplacesTheGenericConversionQuestionForAnOtherSender() {
+        DirRef soap = ref("SND_SYS", "CC_SND_SOAP");
+        Attribute ic = attr(derive(inv(ico(soap, null, plainReceiver("EO")), xiReceiver(),
+                channel(soap, "sender", "SOAP/SOAP 1.1", module(1, "localejbs/MyPreModule"),
+                        module(2, "localejbs/CallSapAdapter")))), "inbound_conversion");
+
+        assertOpen(ic, "none", "custom");
+        assertThat(ic.source()).isEqualTo("channels[1].modules[0].name");
+        assertThat(ic.question()).isEqualTo(senderModuleQuestion("localejbs/MyPreModule"))
+                .isNotEqualTo(ScenarioAttributes.Q_CONVERSION);
     }
 
     // ---------------------------------------------------------------- acceptance spec §8 decisions
@@ -645,25 +720,31 @@ class ScenarioAttributesTest {
     }
 
     @Test
-    void messageTransformBeanBesideAnotherSenderModuleKeepsTheConversionCustomAndTheExitPre() {
+    void messageTransformBeanWithAnotherSenderModuleKeepsCustomConversionAndAsksAboutTheExit() {
         AttributesReport report = derive(inv(ico(plainReceiver("EO")), xiReceiver(),
                 xiSender(module(1, "localejbs/AF_Modules/MessageTransformBean"), module(2, "localejbs/MyPreModule"),
                         module(3, "localejbs/CallSapAdapter"))));
 
         assertResolved(attr(report, "inbound_conversion"), "custom", "channels[1].modules[0].name");
-        assertResolved(attr(report, "custom_exit"), "pre", "channels[1].modules[1].name");
-        assertThat(report.scenarios().get(0).modules()).containsExactlyInAnyOrder(
+        Attribute exit = attr(report, "custom_exit");
+        assertOpen(exit, "none", "pre");
+        assertThat(exit.source()).isEqualTo("channels[1].modules[1].name");
+        assertThat(exit.question()).isEqualTo(senderModuleQuestion("localejbs/MyPreModule"));
+        assertThat(report.scenarios().get(0).modules()).containsExactly(
                 new ModuleRef("sender", "CC_SND", 1, "localejbs/AF_Modules/MessageTransformBean"),
                 new ModuleRef("sender", "CC_SND", 2, "localejbs/MyPreModule"));
     }
 
     @Test
-    void messageTransformBeanOnAReceiverChannelIsAPostExitAndLeavesAnXiSendersConversionNone() {
+    void messageTransformBeanOnAReceiverChannelIsAReceiverModuleQuestionAndLeavesAnXiSendersConversionNone() {
         AttributesReport report = derive(inv(ico(plainReceiver("EO")), xiSender(),
                 xiReceiver(module(1, "localejbs/AF_Modules/MessageTransformBean"),
                         module(2, "localejbs/CallSapAdapter"))));
 
-        assertResolved(attr(report, "custom_exit"), "post", "channels[1].modules[0].name");
+        Attribute exit = attr(report, "custom_exit");
+        assertOpen(exit, "none", "post");
+        assertThat(exit.source()).isEqualTo("channels[1].modules[0].name");
+        assertThat(exit.question()).isEqualTo(receiverModuleQuestion("localejbs/AF_Modules/MessageTransformBean"));
         assertResolved(attr(report, "inbound_conversion"), "none", "channels[0].adapter");
         assertThat(report.scenarios().get(0).modules())
                 .containsExactly(new ModuleRef("receiver", "CC_RCV", 1, "localejbs/AF_Modules/MessageTransformBean"));
@@ -727,7 +808,7 @@ class ScenarioAttributesTest {
         assertThat(runtimeRow).contains("? (", "integrated-async", "decoupled");
         String exitRow = lines.stream().filter(l -> l.matches("^\\|\\s*`?custom_exit`?\\s*\\|.*")).findFirst()
                 .orElseThrow();
-        assertThat(exitRow).matches("^\\|\\s*`?custom_exit`?\\s*\\|\\s*`?pre`?\\s*\\|.*")
+        assertThat(exitRow).matches("^\\|\\s*`?custom_exit`?\\s*\\|\\s*\\? \\(none, pre\\)\\s*\\|.*")
                 .contains("channels[1].modules[0].name");
 
         long open = report.scenarios().get(0).attributes().stream().filter(a -> "?".equals(a.value())).count();
@@ -737,8 +818,11 @@ class ScenarioAttributesTest {
         assertThat(questionBullets).anySatisfy(l -> assertThat(l).endsWith("`runtime` — tenant or scenario choice"));
         assertThat(questionBullets).anySatisfy(l -> assertThat(l).endsWith(
                 "`error_handling` — tenant-level switch CustomXError_Enabled (D-025); record the request"));
-        assertThat(questionBullets).anySatisfy(l -> assertThat(l).endsWith(
-                "`inbound_conversion` — does the sender payload need conversion to XML (Step03)"));
+        assertThat(questionBullets).filteredOn(l -> l.endsWith(
+                "`inbound_conversion` — " + senderModuleQuestion("MyPreModule"))).hasSize(1);
+        assertThat(questionBullets).filteredOn(l -> l.endsWith(
+                "`custom_exit` — " + senderModuleQuestion("MyPreModule"))).hasSize(1);
+        assertThat(questionBullets).noneSatisfy(l -> assertThat(l).contains(ScenarioAttributes.Q_CONVERSION));
         assertThat(lines).anySatisfy(l -> assertThat(l).matches("^[-*] sender CC_SND_SOAP #1 MyPreModule$"));
         assertThat(md.indexOf("## IF_Synth")).isLessThan(md.indexOf("### Questions"));
         assertThat(md.indexOf("### Questions")).isLessThan(md.indexOf("### Modules"));
@@ -768,7 +852,7 @@ class ScenarioAttributesTest {
         assertThat(back.scenarios()).hasSize(2);
         assertThat(back.scenarios().get(1).attributes()).extracting(Attribute::name, Attribute::value)
                 .contains(tuple("receiver_determination", "reuse-xrd"),
-                        tuple("custom_exit", "pre"));
+                        tuple("custom_exit", "?"));
         assertThat(back.scenarios().get(1).modules())
                 .containsExactly(new ModuleRef("sender", "CC_SND_SOAP", 1, "MyPreModule"));
     }

@@ -23,3 +23,4 @@ Durable facts only (build quirks, verified APIs, recurring findings). Never task
 - Real reader `Channel.adapter` = `transportProtocol + "/" + messageProtocol` (XI sender on Java PO: `SOAP/XI`); NW BPM `Node.metaclass` is set only for kind `unknown` (values like `Galaxy.Workflow.*`).
 - An overload `m(Receiver...)` next to `m(DirRef, X, Receiver...)` makes `m(null, null, r)` ambiguous; cast the first null.
 - `io.poxray.json.Json` mapper uses NON_EMPTY value inclusion (empty lists/maps omitted, round-trip to null) and default pretty printer (`"issues" : [ ]`); a field that must always appear needs its own inclusion override.
+- Multi-module red: a test failure in po-xray-core skips po-xray-cli tests (reactor stops); add `-Dmaven.test.failure.ignore=true` to a second run to observe the downstream red (exit 0, read the counts lines).

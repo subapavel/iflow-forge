@@ -561,10 +561,11 @@ BE → `integrated-sync`, EO/EOIO → `?`; adapter `transport/message`, a part s
 else OTHER (`SOAP/XI` → XI); dynamic routing → `n` receivers and `reuse-xrd`; a receiver or assignment condition →
 `xpath`; mapping shape from targets and multiplicities, "one type" only when every target interface has the
 same name and namespace (`ordered` and receiver_determination `custom` are never derived);
-`error_handling` is always `?` (tenant switch, D-025); exit modules = channel modules that are not adapter beans
-(`CallSapAdapter`, `CallAdapterWithMessageAsXMB`, `XISOAPAdapterBean`, `CallXIAdapter`, optional `localejbs/`) →
-`pre` / `post` / `pre+post`; `AF_Modules/MessageTransformBean` on the sender channel is `inbound_conversion` `custom`,
-not an exit. `modules` lists every non-adapter module with its raw name.
+`error_handling` is always `?` (tenant switch, D-025); `modules` = channel modules, raw names, except adapter beans (`CallSapAdapter`,
+`CallAdapterWithMessageAsXMB`, `XISOAPAdapterBean`, `CallXIAdapter`, optional `localejbs/`); receiver module → exit `?` none/post with a
+receiver-module question (D-033); sender `AF_Modules/MessageTransformBean` → `inbound_conversion` `custom`; another sender module → both
+rows `?` with one sender-module question (D-032), exit none/pre; with a receiver module all four and both questions;
+an unresolved receiver channel opens post, an unresolved sender channel opens pre.
 Markdown: `# Scenario attributes`, per scenario `## <generatedFrom, else oid>`, the description, `sender … → receivers
 …`, a table `| attribute | value | source |` (open rows show `? (candidates)`), `### Questions` and `### Modules`
 (omitted when empty), `## Issues` when any. A file that cannot be read or parsed fails the command (exit 1).

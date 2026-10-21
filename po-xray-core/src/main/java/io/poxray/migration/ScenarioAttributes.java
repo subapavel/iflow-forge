@@ -57,6 +57,16 @@ public final class ScenarioAttributes {
     static final String Q_CONVERSION = "does the sender payload need conversion to XML (Step03)";
     static final String NOTE_ONE_TO_MANY = "ordered if PO keeps order at runtime (not in the dump)";
 
+    /** D-032: the question both {@code custom_exit} and {@code inbound_conversion} ask about a sender module. */
+    static String senderModuleQuestion(String rawName) {
+        return "sender module " + rawName + ": conversion to XML (Step03, default custom) or pre-processing exit";
+    }
+
+    /** D-033: the question {@code custom_exit} asks about a module of a resolved receiver channel. */
+    static String receiverModuleQuestion(String rawName) {
+        return "receiver module " + rawName + ": outbound conversion (Step07) or post-processing exit";
+    }
+
     private ScenarioAttributes() {
     }
 
@@ -239,6 +249,9 @@ public final class ScenarioAttributes {
         private final List<ChannelUse> receiverChannels = new ArrayList<>();
         private final List<ModuleRef> modules = new ArrayList<>();
         private String conversionModule;
+        /** Path and raw name of the first sender module that is neither an adapter bean nor MessageTransformBean. */
+        private String senderModule;
+        private String senderModuleName;
 
         IcoDerivation(List<Channel> channels, Ico ico, String path) {
             this.channels = channels;
@@ -466,10 +479,12 @@ public final class ScenarioAttributes {
                     pre = true;
                     if (firstExit == null) {
                         firstExit = path;
+                        senderModule = path;
+                        senderModuleName = ms.get(m).name();
                     }
                 }
             }
-            boolean postFound = false;
+            String receiverModuleName = null;
             List<String> unresolved = new ArrayList<>();
             Set<Integer> seen = new HashSet<>();
             for (ChannelUse use : receiverChannels) {
@@ -488,28 +503,43 @@ public final class ScenarioAttributes {
                         continue;
                     }
                     modules.add(new ModuleRef("receiver", channelName(ch), ms.get(m).position(), ms.get(m).name()));
-                    postFound = true;
                     if (firstExit == null) {
                         firstExit = "channels[" + use.index() + "].modules[" + m + "].name";
                     }
+                    if (receiverModuleName == null) {
+                        receiverModuleName = ms.get(m).name();
+                    }
                 }
             }
-            Boolean post = postFound ? Boolean.TRUE : unresolved.isEmpty() ? Boolean.FALSE : null;
+            // D-032 / D-033: a sender module (other than MTB) or a receiver module is a question, never a value;
+            // an unknown channel leaves its side open as well.
+            boolean preOpen = pre == null || pre;
+            boolean postOpen = receiverModuleName != null || !unresolved.isEmpty();
             String source = firstExit != null ? firstExit : p + ".sender.channel";
-            if (pre != null && post != null) {
-                return resolved("custom_exit", exit(pre, post), source, null);
+            if (!preOpen && !postOpen) {
+                return resolved("custom_exit", "none", source, null);
             }
             if (pre == null) {
                 unresolved.addFirst(senderRef == null ? "sender channel (none named)" : label(senderRef));
             }
+            List<String> questions = new ArrayList<>();
+            if (senderModuleName != null) {
+                questions.add(senderModuleQuestion(senderModuleName));
+            }
+            if (receiverModuleName != null) {
+                questions.add(receiverModuleQuestion(receiverModuleName));
+            }
+            if (!unresolved.isEmpty()) {
+                questions.add("modules of channel(s) not in channels[] are unknown: " + String.join(", ", unresolved)
+                        + "; do they run custom modules");
+            }
             Set<String> candidates = new HashSet<>();
-            for (boolean a : pre == null ? new boolean[] {false, true} : new boolean[] {pre}) {
-                for (boolean b : post == null ? new boolean[] {false, true} : new boolean[] {post}) {
+            for (boolean a : preOpen ? new boolean[] {false, true} : new boolean[] {false}) {
+                for (boolean b : postOpen ? new boolean[] {false, true} : new boolean[] {false}) {
                     candidates.add(exit(a, b));
                 }
             }
-            return open("custom_exit", EXIT, candidates, "modules of channel(s) not in channels[] are unknown: "
-                    + String.join(", ", unresolved) + "; do they run custom modules", source);
+            return open("custom_exit", EXIT, candidates, String.join("; ", questions), source);
         }
 
         private static String exit(boolean pre, boolean post) {
@@ -524,6 +554,9 @@ public final class ScenarioAttributes {
             if (conversionModule != null) {
                 return resolved("inbound_conversion", "custom", conversionModule,
                         "MessageTransformBean on the sender channel");
+            }
+            if (senderModule != null) {
+                return open("inbound_conversion", CONVERSION, senderModuleQuestion(senderModuleName), senderModule);
             }
             return switch (senderType.value()) {
                 case "XI", "IDOC" -> resolved("inbound_conversion", "none", senderType.source(), null);
