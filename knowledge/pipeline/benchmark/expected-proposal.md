@@ -58,7 +58,7 @@ Status: proposed
 
 | n | question | attribute | default |
 |---|---|---|---|
-| 1 | Integrated-async on the tenant default queue, or decoupled or a queue of its own? | `runtime` | integrated-async, no `InboundQueue` |
+| 1 | Integrated-async on the tenant default queue (DefaultJMSQueueNumber X01), or decoupled or a queue of its own? | `runtime` | integrated-async, no `InboundQueue` |
 | 2 | Custom error handling, pre or post exit (migration/variants.md)? | `error_handling`, `custom_exit` | standard, none |
 | 3 | MessageTransformBean in a Step03 copy or a pre-processing exit? Step02 async calls inbound conversion before receiver determination [com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async, step 33 "Call inbound conversion"] [com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async, step 45 "Determine receivers & interfaces"] [com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async, resource "scenarioflows/integrationflow/PIP_02_Generic_IntegratedMessagingAsync.iflw"] | `inbound_conversion` | Step03 copy |
 | 4 | Confirm `qos` EO, sender alias and partner ID (migration/variants.md) | `qos`, — | EO, `SND_SYS`, `SND_SYS~OrderOut_Async` |

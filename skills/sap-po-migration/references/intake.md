@@ -17,7 +17,7 @@ Phase 1 of the flow (spec ยง7 item 1) and the reading surface of phase 2 (spec ย
    - **Runtime**: the runtime the tenant uses for pipeline scenarios, as the migrator states it; the values are those of `runtime` in [page: knowledge/pipeline/scenario-contribution.md#Scenario attributes].
    - **Installed pipeline versions**: the tenant's version of each of the four packages, as [page: knowledge/pipeline/versions/features.md#The tenant's installed version] describes them.
    - **Naming conventions**: the tenant's naming for the values [page: knowledge/pipeline/naming.md#Tenant placeholders] lists.
-3. An answer the migrator does not know is written as "unknown" in the profile and becomes an open-list item in phase 2: type blocking for the runtime, version for the installed versions, naming for the naming conventions; an unknown input path leaves its input row `missing`. The other profile sections are filled when a migration settles them and amended in the retrospective (SKILL.md, "Local files").
+3. An answer the migrator does not know is written as "unknown" in the profile and becomes an open-list item in phase 2: type blocking for the runtime, version for the installed versions, naming for the naming conventions; an unknown input path leaves its input row `missing`. The other profile sections are filled when a migration settles them and amended by the question round (`references/questions.md`, step 6) and the retrospective (D-037; SKILL.md, "Local files").
 4. Record in `intake.md`: profile read or created, and which answers are "unknown".
 
 ## Inputs present and missing

@@ -18,6 +18,7 @@ The migration front end: from a customer's PO artifacts to an approved migration
 | to write the scenario specification per pipeline scenario | phase 5, `templates/scenario.md` |
 | the generated package and converted code | phase 6 (placeholder) |
 | to close the migration and file what was learned | phase 7, `references/retrospective.md`, `references/requests.md` |
+| the design behind a rule a reference cites | the spec section the `[page: docs/…#…]` cite names, read by section, never whole |
 
 ## Two rules
 

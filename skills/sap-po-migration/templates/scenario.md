@@ -41,7 +41,7 @@ By reference to `analysis.md`: what this scenario comes from, nothing beyond wha
 |---|---|---|---|---|
 | `<SAP template id>` | `<copy iFlow id>` | `<parameter>` | `{{tenant.<path>}}` | `<value from the profile>` |
 
-One row per parameter of each template copy in the plan's "Target artifacts" (the rows of [page: knowledge/pipeline/scenario-contribution.md#What a scenario contributes] it took). The template by its SAP id [page: knowledge/pipeline/naming.md#SAP's own naming]; the copy's id by the profile's "Naming conventions" [page: knowledge/pipeline/scenario-contribution.md#Naming]. Exit: every placeholder resolves against the profile (spec §7 item 5); one that does not resolve means the phase does not exit (SKILL.md, "Phases"); a change after approval is a new plan round (`references/plan.md`, "Approval").
+One row per parameter of each template copy in the plan's "Target artifacts" (the rows of [page: knowledge/pipeline/scenario-contribution.md#What a scenario contributes] it took). The template by its SAP id [page: knowledge/pipeline/naming.md#SAP's own naming]; the copy's id by the profile's "Naming conventions" [page: knowledge/pipeline/scenario-contribution.md#Naming]. An adapter setting without an externalized parameter (a sender SOAP address, a File receiver directory, a Step08 ProcessDirect call the template does not carry) is a row with `adapter "<name>" <setting>` in the parameter column and `—` as placeholder (D-039). Exit: every placeholder resolves against the profile (spec §7 item 5); one that does not resolve means the phase does not exit (SKILL.md, "Phases"); a change after approval is a new plan round (`references/plan.md`, "Approval").
 
 ## Partner directory entries
 
@@ -61,11 +61,11 @@ One row per module and mapping program of the plan's "Conversions needed". A rec
 
 ## Target version
 
-| package | installed (profile) | feature | since |
-|---|---|---|---|
-| `<package>` | `<version>` | `<feature>` | `<version>` |
+| package | installed (profile) | target (Q-<n>) | feature | since |
+|---|---|---|---|---|
+| `<package>` | `<version>` | `<version> (Q-<n>)` or `—` | `<feature>` | `<version>` |
 
-One row per feature this scenario needs, its version from [page: knowledge/pipeline/versions/features.md#Features by package]. A feature newer than the installed version is a version item (spec §10: a blocking question), never assumed.
+One row per feature this scenario needs, its version from [page: knowledge/pipeline/versions/features.md#Features by package]. A feature newer than the installed version is a version item (spec §10: a blocking question), never assumed; a decided update names its target here with the `Q-<n>` (D-037); the installed column stays the profile's value.
 
 ## Risks and assumptions
 
