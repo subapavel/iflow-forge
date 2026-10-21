@@ -14,8 +14,11 @@ import io.poxray.model.IntegrationInventory.Endpoint;
 import io.poxray.model.IntegrationInventory.Esr;
 import io.poxray.model.IntegrationInventory.Ico;
 import io.poxray.model.IntegrationInventory.InterfaceAssignment;
+import io.poxray.model.IntegrationInventory.MappingStep;
+import io.poxray.model.IntegrationInventory.MessageMapping;
 import io.poxray.model.IntegrationInventory.MessageType;
 import io.poxray.model.IntegrationInventory.ObjRef;
+import io.poxray.model.IntegrationInventory.OperationMapping;
 import io.poxray.model.IntegrationInventory.Operation;
 import io.poxray.model.IntegrationInventory.Receiver;
 import io.poxray.model.IntegrationInventory.ServiceInterface;
@@ -65,6 +68,12 @@ public final class ScenarioAttributes {
     static final String Q_ERROR_HANDLING = "tenant-level switch CustomXError_Enabled (D-025); record the request";
     static final String Q_CONVERSION = "does the sender payload need conversion to XML (Step03)";
     static final String NOTE_ONE_TO_MANY = "ordered if PO keeps order at runtime (not in the dump)";
+
+    /** D-043 (a): the note of a message mapping whose multiplicity disagrees with the ICO targets. */
+    static String esrDisagreement(String messageMapping, String multiplicity, String expected) {
+        return "esr: message mapping " + messageMapping + " is " + multiplicity + ", the targets say "
+                + expected;
+    }
 
     /** D-040: the receiver_determination question of a BE ICO with dynamic routing. */
     static final String Q_BE_DYNAMIC_ROUTING = "dynamic routing with qos BE: the reuse-XRD copy routes only on the decoupled runtime (Step04); a custom receiver determination returning one receiver (Step02 sync rejects several), or a blocking entry";
@@ -542,20 +551,80 @@ public final class ScenarioAttributes {
             if (classes.isEmpty()) {
                 return resolved("mapping", "none", p + ".receivers", null);
             }
+            String esrNote = esrDisagreements();
             if (classes.size() == 1) {
                 Map.Entry<String, String> only = classes.entrySet().iterator().next();
                 return resolved("mapping", only.getKey(), only.getValue(),
-                        only.getKey().startsWith("one-to-many") ? NOTE_ONE_TO_MANY : null);
+                        join(only.getKey().startsWith("one-to-many") ? NOTE_ONE_TO_MANY : null, esrNote));
             }
             List<String> seen = MAPPING.stream().filter(classes::containsKey).toList();
-            return open("mapping", MAPPING, classes.keySet(), "interface assignments differ in mapping shape: "
-                    + String.join(", ", seen) + "; one scenario or several", p + ".receivers");
+            Attribute row = open("mapping", MAPPING, classes.keySet(),
+                    "interface assignments differ in mapping shape: " + String.join(", ", seen)
+                            + "; one scenario or several", p + ".receivers");
+            return new Attribute(row.name(), row.value(), row.source(), row.candidates(), row.question(),
+                    esrNote);
+        }
+
+        /** {@code first} and {@code second} joined by {@code "; "}; a null part is left out. */
+        private static String join(String first, String second) {
+            return first == null ? second : second == null ? first : first + "; " + second;
+        }
+
+        /**
+         * D-043 (a): the multiplicity of each request {@code XI_TRAFO} message mapping of the assignments'
+         * operation mappings, compared with the targets; the disagreement texts joined by {@code "; "} in ICO
+         * order (receivers, interfaces, steps), or null. No esr, an operation or message mapping not in it,
+         * or a multiplicity without {@code ':'} gives no text.
+         */
+        private String esrDisagreements() {
+            if (esr == null) {
+                return null;
+            }
+            List<String> texts = new ArrayList<>();
+            for (Receiver r : receivers) {
+                for (InterfaceAssignment a : Reports.list(r.interfaces())) {
+                    OperationMapping om = a.mapping() == null ? null
+                            : Reports.list(esr.operationMappings()).stream()
+                                    .filter(o -> sameObject(o.id(), a.mapping())).findFirst().orElse(null);
+                    if (om == null) {
+                        continue;
+                    }
+                    String expected = unbounded(a) ? "1:n" : "1:1";
+                    for (MappingStep s : Reports.list(om.steps())) {
+                        if (!"request".equals(s.kind()) || s.program() == null
+                                || !"XI_TRAFO".equals(s.program().type())) {
+                            continue;
+                        }
+                        MessageMapping mm = Reports.list(esr.messageMappings()).stream()
+                                .filter(m -> sameObject(m.id(), s.program())).findFirst().orElse(null);
+                        String found = mm == null ? null : multiplicityClass(mm.multiplicity());
+                        if (found != null && !found.equals(expected)) {
+                            texts.add(esrDisagreement(mm.id().name(), mm.multiplicity(), expected));
+                        }
+                    }
+                }
+            }
+            return texts.isEmpty() ? null : String.join("; ", texts);
+        }
+
+        /** {@code "1:1"} when the side after the last {@code ':'} is {@code 1}, else {@code "1:n"}; null without it. */
+        private static String multiplicityClass(String multiplicity) {
+            int colon = multiplicity == null ? -1 : multiplicity.lastIndexOf(':');
+            if (colon < 0) {
+                return null;
+            }
+            return multiplicity.substring(colon + 1).trim().equals("1") ? "1:1" : "1:n";
+        }
+
+        /** Any target multiplicity contains {@code unbounded} or {@code n} (case-insensitive). */
+        private static boolean unbounded(InterfaceAssignment a) {
+            return Reports.list(a.targets()).stream().map(Target::multiplicity).filter(Objects::nonNull)
+                    .map(m -> m.toLowerCase(Locale.ROOT)).anyMatch(m -> m.contains("unbounded") || m.contains("n"));
         }
 
         private static String mappingClass(InterfaceAssignment a) {
             List<Target> targets = Reports.list(a.targets());
-            boolean unbounded = targets.stream().map(Target::multiplicity).filter(Objects::nonNull)
-                    .map(m -> m.toLowerCase(Locale.ROOT)).anyMatch(m -> m.contains("unbounded") || m.contains("n"));
+            boolean unbounded = unbounded(a);
             if (targets.size() < 2 && !unbounded) {
                 return "one";
             }

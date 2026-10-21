@@ -7,6 +7,7 @@ import io.poxray.model.AttributesReport;
 import io.poxray.model.AttributesReport.Attribute;
 import io.poxray.model.AttributesReport.ModuleRef;
 import io.poxray.model.IntegrationInventory;
+import io.poxray.model.IntegrationInventory.Channel;
 import io.poxray.model.IntegrationInventory.Esr;
 import io.poxray.model.IntegrationInventory.ObjRef;
 import io.quarkus.test.junit.main.LaunchResult;
@@ -17,6 +18,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -115,6 +117,42 @@ class AttributesCommandTest {
                 .map(ObjRef::name).toList();
         assertThat(esr.operationMappings()).extracting(m -> m.id().name())
                 .containsExactlyInAnyOrderElementsOf(referenced);
+    }
+
+    /**
+     * D-043 b: adapter settings of the fixture channels, as the ICO dump exports them (passwords never are). The keys
+     * are synthetic placeholders ({@code synthetic.<setting>}) pending ISSUE-4, so values, not key names, are asserted.
+     */
+    @Test
+    void everyFixtureChannelCarriesSyntheticAttributes() {
+        IntegrationInventory inventory = Json.mapper().readerFor(IntegrationInventory.class)
+                .with(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES).readValue(ICOS.toFile());
+
+        assertThat(inventory.channels()).extracting(c -> c.id().name())
+                .containsExactly("CC_SND_XI", "CC_SND_IDOC", "CC_SND_SOAP", "CC_RCV_XI", "CC_RCV2_FILE");
+        assertThat(inventory.channels()).allSatisfy(c -> assertThat(c.attributes())
+                .as("attributes of %s", c.id().name()).isNotEmpty().hasSizeBetween(2, 5));
+        assertThat(attributes(inventory, "CC_SND_SOAP")).containsValue("/orderbatch/SND_SYS/inbound");
+        assertThat(attributes(inventory, "CC_RCV2_FILE"))
+                .containsValues("/out/orders", "OrderFile_${header.UniqueID}.xml");
+        inventory.channels().forEach(c -> c.attributes().forEach((key, value) -> assertThat(key + "=" + value)
+                .as("attribute of %s", c.id().name())
+                .doesNotContainIgnoringCase("password").doesNotContainIgnoringCase("secret")));
+    }
+
+    @Test
+    void theFixtureMarkdownCarriesNoEsrDisagreement(QuarkusMainLauncher launcher) {
+        LaunchResult result = launcher.launch("attributes", ICOS.toString());
+
+        assertThat(result.exitCode()).isZero();
+        // notes are rendered (scenario c's one-to-many note), and none of them is an esr disagreement
+        assertThat(result.getOutput()).contains("ordered if PO keeps order at runtime (not in the dump)")
+                .doesNotContain("esr: message mapping");
+    }
+
+    private static Map<String, String> attributes(IntegrationInventory inventory, String channel) {
+        return inventory.channels().stream().filter(c -> c.id().name().equals(channel)).findFirst()
+                .map(Channel::attributes).orElseThrow();
     }
 
     @Test

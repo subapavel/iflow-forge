@@ -20,10 +20,13 @@ import io.poxray.model.IntegrationInventory.Endpoint;
 import io.poxray.model.IntegrationInventory.Esr;
 import io.poxray.model.IntegrationInventory.Ico;
 import io.poxray.model.IntegrationInventory.InterfaceAssignment;
+import io.poxray.model.IntegrationInventory.MappingStep;
+import io.poxray.model.IntegrationInventory.MessageMapping;
 import io.poxray.model.IntegrationInventory.MessageType;
 import io.poxray.model.IntegrationInventory.Module;
 import io.poxray.model.IntegrationInventory.ObjRef;
 import io.poxray.model.IntegrationInventory.Operation;
+import io.poxray.model.IntegrationInventory.OperationMapping;
 import io.poxray.model.IntegrationInventory.Receiver;
 import io.poxray.model.IntegrationInventory.ServiceInterface;
 import io.poxray.model.IntegrationInventory.Target;
@@ -164,6 +167,33 @@ class ScenarioAttributesTest {
     private static Esr esr(List<ServiceInterface> interfaces, List<MessageType> messageTypes) {
         return new Esr(interfaces, List.of(), List.of(), messageTypes, List.of(), List.of(), List.of(), List.of(),
                 List.of());
+    }
+
+    /** An {@code esr} section with operation and message mappings only (D-043 a cross-check). */
+    private static Esr mappingEsr(List<OperationMapping> operationMappings, List<MessageMapping> messageMappings) {
+        return new Esr(List.of(), operationMappings, messageMappings, List.of(), List.of(), List.of(), List.of(),
+                List.of(), List.of());
+    }
+
+    private static OperationMapping operationMapping(String name, String namespace, MappingStep... steps) {
+        return new OperationMapping(new ObjRef("MAPPING", name, namespace, null, null, null), null, null,
+                List.of(steps), null);
+    }
+
+    /** A mapping step whose program is {@code programType} ({@code XI_TRAFO}, {@code MAP_ARCHIVE_PRG}, ...). */
+    private static MappingStep step(String kind, String programType, String programName, String namespace) {
+        return new MappingStep(kind, new ObjRef(programType, programName, namespace, null, null, null), null, null);
+    }
+
+    private static MessageMapping messageMapping(String name, String namespace, String multiplicity) {
+        return new MessageMapping(new ObjRef("XI_TRAFO", name, namespace, null, null, null), null, null, multiplicity,
+                null, null);
+    }
+
+    /** Several ICOs with an {@code esr} section. */
+    private static IntegrationInventory inv(List<Ico> icos, Esr esr, Channel... channels) {
+        return new IntegrationInventory("0.1", new ScaInventory.Generator("po-xray", "t", "2026-01-01T00:00:00Z"),
+                null, null, List.of(), icos, List.of(channels), List.of(), esr, List.of());
     }
 
     /** XI sender, one XI receiver, one 1:1 mapping, no modules; qos as given. */
@@ -775,6 +805,162 @@ class ScenarioAttributesTest {
         AttributesReport report = derive(inv(ico(split, plainReceiver("EO")), xiSender(), xiReceiver()));
 
         assertOpen(attr(report, "mapping"), "one", "one-to-many-one-type");
+    }
+
+    // ---------------------------------------------------------------- mapping: esr cross-check (D-043 a)
+
+    private static final String NS = "urn:example:orders";
+
+    /** One receiver with one interface assignment of operation mapping {@code omName} and the given targets. */
+    private static Ico mappedIco(String omName, Target... targets) {
+        return ico(receiver("RCV_SYS", "EO", null, List.of(assign(om(omName), targets)), RCV));
+    }
+
+    /** Operation mapping {@code omName} with one request step running message mapping {@code mmName}. */
+    private static OperationMapping requestTrafo(String omName, String mmName) {
+        return operationMapping(omName, NS, step("request", "XI_TRAFO", mmName, NS));
+    }
+
+    @Test
+    void mappingNoteNamesAMessageMappingWhoseMultiplicityDisagreesWithTheTargets() {
+        Esr esr = mappingEsr(List.of(requestTrafo("OM_X", "MM_X"), requestTrafo("OM_Y", "MM_Y")),
+                List.of(messageMapping("MM_X", NS, "1:n"), messageMapping("MM_Y", NS, "1 : 0..unbounded")));
+        AttributesReport report = derive(inv(List.of(mappedIco("OM_X", target("Synth_In", "1")),
+                mappedIco("OM_Y", target("Synth_In", "1"))), esr, xiSender(), xiReceiver()));
+
+        Attribute mapping = attr(report, 0, "mapping");
+        assertResolved(mapping, "one", "icos[0].receivers[0].interfaces[0].mapping");
+        assertThat(mapping.note()).isEqualTo("esr: message mapping MM_X is 1:n, the targets say 1:1");
+        // the multiplicity is quoted as read
+        Attribute asRead = attr(report, 1, "mapping");
+        assertResolved(asRead, "one", "icos[1].receivers[0].interfaces[0].mapping");
+        assertThat(asRead.note()).isEqualTo("esr: message mapping MM_Y is 1 : 0..unbounded, the targets say 1:1");
+    }
+
+    @Test
+    void mappingHasNoNoteWhenTheMessageMappingMultiplicityAgreesWithTheTargets() {
+        Esr esr = mappingEsr(
+                List.of(requestTrafo("OM_One", "MM_One"), requestTrafo("OM_Split", "MM_Split"),
+                        requestTrafo("OM_Unbounded", "MM_Unbounded"), requestTrafo("OM_Spaced", "MM_Spaced")),
+                List.of(messageMapping("MM_One", NS, "1:1"), messageMapping("MM_Split", NS, "1:1"),
+                        messageMapping("MM_Unbounded", NS, "1:n"), messageMapping("MM_Spaced", NS, "1 : 1")));
+        AttributesReport report = derive(inv(List.of(
+                mappedIco("OM_One", target("Synth_In", "1")),
+                // Q-14: two targets of multiplicity 1 with a 1:1 message mapping agree
+                mappedIco("OM_Split", target("Order_In", "1"), target("Order_In", "1")),
+                mappedIco("OM_Unbounded", target("Order_In", "0..unbounded")),
+                mappedIco("OM_Spaced", target("Synth_In", "1"))), esr, xiSender(), xiReceiver()));
+
+        Attribute one = attr(report, 0, "mapping");
+        assertResolved(one, "one", "icos[0].receivers[0].interfaces[0].mapping");
+        assertThat(one.note()).isNull();
+        Attribute split = attr(report, 1, "mapping");
+        assertResolved(split, "one-to-many-one-type", "icos[1].receivers[0].interfaces[0].mapping");
+        assertThat(split.note()).isEqualTo(ScenarioAttributes.NOTE_ONE_TO_MANY);
+        Attribute unbounded = attr(report, 2, "mapping");
+        assertResolved(unbounded, "one-to-many-one-type", "icos[2].receivers[0].interfaces[0].mapping");
+        assertThat(unbounded.note()).isEqualTo(ScenarioAttributes.NOTE_ONE_TO_MANY);
+        Attribute spaced = attr(report, 3, "mapping");
+        assertResolved(spaced, "one", "icos[3].receivers[0].interfaces[0].mapping");
+        assertThat(spaced.note()).isNull();
+    }
+
+    @Test
+    void anUnboundedTargetWithAOneToOneMessageMappingIsADisagreementAppendedToTheOneToManyNote() {
+        Esr esr = mappingEsr(List.of(requestTrafo("OM_X", "MM_X")), List.of(messageMapping("MM_X", NS, "1:1")));
+        Attribute mapping = attr(derive(inv(mappedIco("OM_X", target("Order_In", "0..unbounded")), esr,
+                xiSender(), xiReceiver())), "mapping");
+
+        assertResolved(mapping, "one-to-many-one-type", "icos[0].receivers[0].interfaces[0].mapping");
+        assertThat(mapping.note()).isEqualTo(ScenarioAttributes.NOTE_ONE_TO_MANY
+                + "; esr: message mapping MM_X is 1:1, the targets say 1:n");
+    }
+
+    @Test
+    void mappingNoteIsUnchangedWithoutAnEsrOrWhenTheOperationOrMessageMappingIsNotInIt() {
+        Ico ico = mappedIco("OM_X", target("Synth_In", "1"));
+        Map<String, IntegrationInventory> cases = new LinkedHashMap<>();
+        cases.put("no esr", inv(ico, xiSender(), xiReceiver()));
+        cases.put("operation mapping absent", inv(ico, mappingEsr(List.of(requestTrafo("OM_Other", "MM_X")),
+                List.of(messageMapping("MM_X", NS, "1:n"))), xiSender(), xiReceiver()));
+        cases.put("operation mapping in another namespace", inv(ico, mappingEsr(
+                List.of(operationMapping("OM_X", NS + ":v2", step("request", "XI_TRAFO", "MM_X", NS))),
+                List.of(messageMapping("MM_X", NS, "1:n"))), xiSender(), xiReceiver()));
+        cases.put("message mapping absent", inv(ico, mappingEsr(List.of(requestTrafo("OM_X", "MM_X")),
+                List.of(messageMapping("MM_Other", NS, "1:n"), messageMapping("MM_X", NS + ":v2", "1:n"))),
+                xiSender(), xiReceiver()));
+        cases.put("multiplicity null", inv(ico, mappingEsr(List.of(requestTrafo("OM_X", "MM_X")),
+                List.of(messageMapping("MM_X", NS, null))), xiSender(), xiReceiver()));
+        cases.put("multiplicity blank", inv(ico, mappingEsr(List.of(requestTrafo("OM_X", "MM_X")),
+                List.of(messageMapping("MM_X", NS, "  "))), xiSender(), xiReceiver()));
+        cases.put("multiplicity without colon", inv(ico, mappingEsr(List.of(requestTrafo("OM_X", "MM_X")),
+                List.of(messageMapping("MM_X", NS, "n"))), xiSender(), xiReceiver()));
+
+        cases.forEach((name, inventory) -> {
+            Attribute mapping = attr(derive(inventory), "mapping");
+            assertThat(mapping.value()).as(name).isEqualTo("one");
+            assertThat(mapping.source()).as(name).isEqualTo("icos[0].receivers[0].interfaces[0].mapping");
+            assertThat(mapping.note()).as(name).isNull();
+        });
+    }
+
+    @Test
+    void onlyRequestXiTrafoStepsAreCompared() {
+        Esr esr = mappingEsr(List.of(operationMapping("OM_X", NS,
+                        step("request", "MAP_ARCHIVE_PRG", "MM_Java", NS),
+                        step("response", "XI_TRAFO", "MM_Response", NS),
+                        step("fault", "XI_TRAFO", "MM_Fault", NS),
+                        // a request step without a program (the reader: message links, no REQUEST_TRAFO)
+                        new MappingStep("request", null, null, null),
+                        step("request", "XI_TRAFO", "MM_X", NS))),
+                List.of(messageMapping("MM_Java", NS, "1:n"), messageMapping("MM_Response", NS, "1:n"),
+                        messageMapping("MM_Fault", NS, "1:n"), messageMapping("MM_X", NS, "1:1")));
+        Attribute mapping = attr(derive(inv(mappedIco("OM_X", target("Synth_In", "1")), esr, xiSender(),
+                xiReceiver())), "mapping");
+
+        assertResolved(mapping, "one", "icos[0].receivers[0].interfaces[0].mapping");
+        assertThat(mapping.note()).isNull();
+    }
+
+    @Test
+    void severalDisagreeingStepsAreJoinedInOrder() {
+        Esr esr = mappingEsr(List.of(
+                        operationMapping("OM_X", NS, step("request", "XI_TRAFO", "MM_B", NS),
+                                step("request", "XI_TRAFO", "MM_A", NS)),
+                        requestTrafo("OM_First", "MM_C"), requestTrafo("OM_Second", "MM_D")),
+                List.of(messageMapping("MM_A", NS, "1:n"), messageMapping("MM_B", NS, "1:n"),
+                        messageMapping("MM_C", NS, "1:n"), messageMapping("MM_D", NS, "1:n")));
+        // steps in their order; assignments in ICO order (receivers, then interfaces), not by name
+        Ico acrossReceivers = ico(
+                receiver("RCV_SYS", "EO", null, List.of(assign(om("OM_Second"), target("Synth_In", "1"))), RCV),
+                receiver("RCV2_SYS", "EO", null, List.of(assign(om("OM_First"), target("Synth_In", "1"))), RCV));
+        AttributesReport report = derive(inv(List.of(mappedIco("OM_X", target("Synth_In", "1")), acrossReceivers),
+                esr, xiSender(), xiReceiver()));
+
+        assertResolved(attr(report, 0, "mapping"), "one", "icos[0].receivers[0].interfaces[0].mapping");
+        assertThat(attr(report, 0, "mapping").note()).isEqualTo(
+                "esr: message mapping MM_B is 1:n, the targets say 1:1; "
+                        + "esr: message mapping MM_A is 1:n, the targets say 1:1");
+        assertResolved(attr(report, 1, "mapping"), "one", "icos[1].receivers[0].interfaces[0].mapping");
+        assertThat(attr(report, 1, "mapping").note()).isEqualTo(
+                "esr: message mapping MM_D is 1:n, the targets say 1:1; "
+                        + "esr: message mapping MM_C is 1:n, the targets say 1:1");
+    }
+
+    @Test
+    void anOpenMappingRowKeepsItsQuestionAndGetsTheDisagreementAsNote() {
+        Receiver split = receiver("RCV2_SYS", "EO", null,
+                List.of(assign(om("OM_Split"), target("Order_In", "1"), target("Order_In", "1"))), RCV);
+        Esr esr = mappingEsr(List.of(requestTrafo("OM_Split", "MM_Split"), requestTrafo("OM_Synth", "MM_Synth")),
+                List.of(messageMapping("MM_Split", NS, "1:1"), messageMapping("MM_Synth", NS, "1:n")));
+        Attribute mapping = attr(derive(inv(ico(split, plainReceiver("EO")), esr, xiSender(), xiReceiver())),
+                "mapping");
+
+        assertOpen(mapping, "one", "one-to-many-one-type");
+        assertThat(mapping.question()).isEqualTo(
+                "interface assignments differ in mapping shape: one, one-to-many-one-type; one scenario or several");
+        assertThat(mapping.source()).isEqualTo("icos[0].receivers");
+        assertThat(mapping.note()).isEqualTo("esr: message mapping MM_Synth is 1:n, the targets say 1:1");
     }
 
     // ---------------------------------------------------------------- error_handling

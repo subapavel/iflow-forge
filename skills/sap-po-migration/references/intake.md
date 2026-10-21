@@ -57,7 +57,7 @@ Both write Markdown, `--json` gives JSON. For `attributes`, a file that cannot b
 
 Read in this order; each step writes into `analysis.md` (next section).
 
-1. **ICO dump** (`icos-<component>.json`): sender, receivers, channels, mappings, as [page: knowledge/pipeline/migration/po-ico-to-pipeline.md#Inputs] and [page: knowledge/pipeline/migration/po-ico-to-pipeline.md#Steps] list the fields.
+1. **ICO dump** (`icos-<component>.json`): sender, receivers, channels, mappings, as [page: knowledge/pipeline/migration/po-ico-to-pipeline.md#Inputs] and [page: knowledge/pipeline/migration/po-ico-to-pipeline.md#Steps] list the fields. Adapter settings such as an address are `channels[].attributes` of the dump; passwords are never exported, and a value whose name looks like a secret is masked (as `<hidden>`, ISSUE-4) and is asked, not read [page: docs/OUTPUT-MODEL.md#Integration inventory (ESR / Integration Directory)]. A setting without an externalized parameter is read from there into its `adapter` row of `templates/scenario.md` (D-039), not asked; the fixture's keys are synthetic placeholders (ISSUE-4).
 2. **Attributes report**: the 11 rows per ICO and its modules; procedure in `references/attributes.md`.
 3. **BPM inventory** (BPM target): step counts, human tasks, EJB roles; procedure in `references/bpm.md`. A human task found here leads to the stop in `references/bpm.md`.
 4. **iFlow dumps**: the pre-process or existing iFlows, as [page: knowledge/pipeline/migration/is-iflow-to-pipeline.md#Inputs] describes the dump.

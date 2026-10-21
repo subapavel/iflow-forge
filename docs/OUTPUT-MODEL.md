@@ -561,8 +561,9 @@ BE → `integrated-sync`, EO/EOIO → `?`; adapter `transport/message`, a part s
 else OTHER (`SOAP/XI` → XI); dynamic routing → `n` receivers and `reuse-xrd`, with BE receiver_determination `?`
 {`custom`} and `receiver_count` `n` noted, with EO/EOIO the runtime question names the decoupled condition (D-040);
 a receiver or assignment condition → `xpath`, its prefixes noted with the sender request message type's `xmlNamespace`
-from `esr` or "ask" (D-040); mapping shape from targets and multiplicities, "one type" only when every target interface has the
-same name and namespace (`ordered` and receiver_determination `custom` are never derived);
+from `esr` or "ask" (D-040); mapping shape from targets and multiplicities (the esr's message-mapping multiplicity is
+cross-checked; a difference is a note `esr: …`, D-043), "one type" only when every target interface has the same name and
+namespace (`ordered` and receiver_determination `custom` are never derived);
 `error_handling` is always `?` (tenant switch, D-025); `modules` = channel modules, raw names, except adapter beans (`CallSapAdapter`,
 `CallAdapterWithMessageAsXMB`, `XISOAPAdapterBean`, `CallXIAdapter`, optional `localejbs/`); receiver module → exit `?` none/post with a
 receiver-module question (D-033); sender `AF_Modules/MessageTransformBean` → `inbound_conversion` `custom`; another sender module → both

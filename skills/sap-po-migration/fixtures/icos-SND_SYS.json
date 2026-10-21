@@ -221,6 +221,10 @@
     "adapter" : "XI/XI",
     "transportProtocol" : "XI",
     "messageProtocol" : "XI",
+    "attributes" : {
+      "synthetic.qos" : "EO",
+      "synthetic.endpoint" : "/synthetic/xi/SND_SYS/entry"
+    },
     "description" : "Synthetic XI sender channel of SND_SYS"
   }, {
     "id" : {
@@ -231,6 +235,10 @@
     "adapter" : "IDoc/IDoc XML",
     "transportProtocol" : "IDoc",
     "messageProtocol" : "IDoc XML",
+    "attributes" : {
+      "synthetic.endpoint" : "/synthetic/idoc/SND_SYS/inbound",
+      "synthetic.host" : "snd.example.invalid"
+    },
     "description" : "Synthetic IDoc sender channel of SND_SYS"
   }, {
     "id" : {
@@ -241,6 +249,10 @@
     "adapter" : "SOAP/SOAP 1.1",
     "transportProtocol" : "SOAP",
     "messageProtocol" : "SOAP 1.1",
+    "attributes" : {
+      "synthetic.endpoint" : "/orderbatch/SND_SYS/inbound",
+      "synthetic.credential" : "EXAMPLE_SOAP_ROLE"
+    },
     "modules" : [ {
       "position" : 1,
       "name" : "localejbs/MyPreModule",
@@ -262,6 +274,10 @@
     "adapter" : "XI/XI",
     "transportProtocol" : "XI",
     "messageProtocol" : "XI",
+    "attributes" : {
+      "synthetic.endpoint" : "/synthetic/xi/RCV_SYS/receiver",
+      "synthetic.host" : "rcv.example.invalid"
+    },
     "description" : "Synthetic XI receiver channel of RCV_SYS"
   }, {
     "id" : {
@@ -272,6 +288,13 @@
     "adapter" : "File/File",
     "transportProtocol" : "File",
     "messageProtocol" : "File",
+    "attributes" : {
+      "synthetic.directory" : "/out/orders",
+      "synthetic.fileName" : "OrderFile_${header.UniqueID}.xml",
+      "synthetic.host" : "rcv2.example.invalid",
+      "synthetic.port" : "22",
+      "synthetic.credential" : "EXAMPLE_SFTP_RCV2"
+    },
     "modules" : [ {
       "position" : 1,
       "name" : "CallSapAdapter",
