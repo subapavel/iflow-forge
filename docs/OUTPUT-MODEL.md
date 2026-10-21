@@ -558,8 +558,10 @@ Row contract: a resolved row has a `value` from the D-025 set and a `source`; an
 party, component and name; an unresolvable reference counts as missing).
 Rules in short: QoS normalised (ExactlyOnce → EO, ExactlyOnceInOrder → EOIO, BestEffort → BE; ALO never derived);
 BE → `integrated-sync`, EO/EOIO → `?`; adapter `transport/message`, a part starting with XI → XI, with IDoc → IDOC,
-else OTHER (`SOAP/XI` → XI); dynamic routing → `n` receivers and `reuse-xrd`; a receiver or assignment condition →
-`xpath`; mapping shape from targets and multiplicities, "one type" only when every target interface has the
+else OTHER (`SOAP/XI` → XI); dynamic routing → `n` receivers and `reuse-xrd`, with BE receiver_determination `?`
+{`custom`} and `receiver_count` `n` noted, with EO/EOIO the runtime question names the decoupled condition (D-040);
+a receiver or assignment condition → `xpath`, its prefixes noted with the sender request message type's `xmlNamespace`
+from `esr` or "ask" (D-040); mapping shape from targets and multiplicities, "one type" only when every target interface has the
 same name and namespace (`ordered` and receiver_determination `custom` are never derived);
 `error_handling` is always `?` (tenant switch, D-025); `modules` = channel modules, raw names, except adapter beans (`CallSapAdapter`,
 `CallAdapterWithMessageAsXMB`, `XISOAPAdapterBean`, `CallXIAdapter`, optional `localejbs/`); receiver module → exit `?` none/post with a

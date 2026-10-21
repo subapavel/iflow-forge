@@ -8,11 +8,17 @@ import io.poxray.model.AttributesReport.Scenario;
 import io.poxray.model.IntegrationInventory;
 import io.poxray.model.IntegrationInventory.Channel;
 import io.poxray.model.IntegrationInventory.Condition;
+import io.poxray.model.IntegrationInventory.ConditionLine;
 import io.poxray.model.IntegrationInventory.DirRef;
 import io.poxray.model.IntegrationInventory.Endpoint;
+import io.poxray.model.IntegrationInventory.Esr;
 import io.poxray.model.IntegrationInventory.Ico;
 import io.poxray.model.IntegrationInventory.InterfaceAssignment;
+import io.poxray.model.IntegrationInventory.MessageType;
+import io.poxray.model.IntegrationInventory.ObjRef;
+import io.poxray.model.IntegrationInventory.Operation;
 import io.poxray.model.IntegrationInventory.Receiver;
+import io.poxray.model.IntegrationInventory.ServiceInterface;
 import io.poxray.model.IntegrationInventory.Target;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -25,6 +31,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
@@ -40,6 +48,7 @@ public final class ScenarioAttributes {
     private static final List<String> RUNTIME = List.of("integrated-async", "integrated-sync", "decoupled");
     private static final List<String> ADAPTER = List.of("XI", "IDOC", "OTHER");
     private static final List<String> COUNT = List.of("1", "n");
+    private static final List<String> RECEIVER_DETERMINATION = List.of("static", "xpath", "custom", "reuse-xrd");
     private static final List<String> MAPPING = List.of("none", "one", "one-to-many-one-type",
             "one-to-many-many-types", "ordered");
     private static final List<String> ERROR_HANDLING = List.of("standard", "custom");
@@ -56,6 +65,19 @@ public final class ScenarioAttributes {
     static final String Q_ERROR_HANDLING = "tenant-level switch CustomXError_Enabled (D-025); record the request";
     static final String Q_CONVERSION = "does the sender payload need conversion to XML (Step03)";
     static final String NOTE_ONE_TO_MANY = "ordered if PO keeps order at runtime (not in the dump)";
+
+    /** D-040: the receiver_determination question of a BE ICO with dynamic routing. */
+    static final String Q_BE_DYNAMIC_ROUTING = "dynamic routing with qos BE: the reuse-XRD copy routes only on the decoupled runtime (Step04); a custom receiver determination returning one receiver (Step02 sync rejects several), or a blocking entry";
+    static final String NOTE_BE_DYNAMIC_COUNT = "BE: Step02 sync accepts one receiver; see receiver_determination";
+    /** D-040: appended to the EO/EOIO runtime question when the ICO uses dynamic routing. */
+    static final String Q_DYNAMIC_RUNTIME = "dynamic routing: reuse-xrd routes only on the decoupled runtime (Step04), integrated-async needs a custom receiver determination (D-036)";
+
+    /** D-040: a prefix {@code p:} before a name start, not preceded by a name character. */
+    private static final Pattern PREFIX = Pattern.compile("(?<![\\w.:-])([A-Za-z_][\\w.-]*):(?=[A-Za-z_*])");
+    private static final Pattern QUOTED = Pattern.compile("\"[^\"]*\"|'[^']*'");
+    /** A context-object operand as po-xray renders it: {@code context:<name>}, optionally {@code  (<namespace>)}. */
+    private static final Pattern CONTEXT_OBJECT = Pattern.compile("(?<![\\w.:-])context:[A-Za-z_][\\w.-]*(?: \\([^)]*\\))?");
+    private static final String CONTEXT = "context:";
 
     /** D-032: the question both {@code custom_exit} and {@code inbound_conversion} ask about a sender module. */
     static String senderModuleQuestion(String rawName) {
@@ -95,7 +117,7 @@ public final class ScenarioAttributes {
         List<Ico> icos = Reports.list(inv.icos());
         List<Scenario> out = new ArrayList<>();
         for (int i = 0; i < icos.size(); i++) {
-            out.add(new IcoDerivation(channels, icos.get(i), "icos[" + i + "]").scenario(label));
+            out.add(new IcoDerivation(channels, inv.esr(), icos.get(i), "icos[" + i + "]").scenario(label));
         }
         return List.copyOf(out);
     }
@@ -210,6 +232,33 @@ public final class ScenarioAttributes {
         return c != null && ((c.text() != null && !c.text().isBlank()) || (c.lines() != null && !c.lines().isEmpty()));
     }
 
+    /**
+     * D-040: the distinct prefixes of a condition in order of first appearance, from {@code lines[].left} (a
+     * context-object operand skipped); from {@code text} without its quoted strings and context-object operands only
+     * when there are no lines. {@code right} is never scanned.
+     */
+    static List<String> prefixes(Condition c) {
+        List<ConditionLine> lines = Reports.list(c.lines());
+        List<String> operands = !lines.isEmpty()
+                ? lines.stream().map(ConditionLine::left).filter(l -> l != null && !l.startsWith(CONTEXT)).toList()
+                : c.text() == null ? List.of()
+                        : List.of(CONTEXT_OBJECT.matcher(QUOTED.matcher(c.text()).replaceAll("")).replaceAll(""));
+        Set<String> out = new LinkedHashSet<>();
+        for (String operand : operands) {
+            Matcher m = PREFIX.matcher(operand);
+            while (m.find()) {
+                out.add(m.group(1));
+            }
+        }
+        return List.copyOf(out);
+    }
+
+    /** Same {@code name} and {@code namespace}; the ObjRef {@code type} is not compared. */
+    static boolean sameObject(ObjRef a, ObjRef b) {
+        return a != null && b != null && Objects.equals(a.name(), b.name())
+                && Objects.equals(a.namespace(), b.namespace());
+    }
+
     /** Module name without the {@code localejbs/} prefix. */
     static String bare(String name) {
         return name != null && name.startsWith(LOCALEJBS) ? name.substring(LOCALEJBS.length()) : name;
@@ -241,6 +290,7 @@ public final class ScenarioAttributes {
 
     private static final class IcoDerivation {
         private final List<Channel> channels;
+        private final Esr esr;
         private final Ico ico;
         private final String p;
         private final List<Receiver> receivers;
@@ -253,8 +303,9 @@ public final class ScenarioAttributes {
         private String senderModule;
         private String senderModuleName;
 
-        IcoDerivation(List<Channel> channels, Ico ico, String path) {
+        IcoDerivation(List<Channel> channels, Esr esr, Ico ico, String path) {
             this.channels = channels;
+            this.esr = esr;
             this.ico = ico;
             this.p = path;
             this.receivers = Reports.list(ico.receivers());
@@ -272,8 +323,8 @@ public final class ScenarioAttributes {
             Attribute qos = qos();
             Attribute senderType = senderType();
             Attribute customExit = customExit();
-            List<Attribute> rows = List.of(runtime(qos), qos, senderType, receiverType(), receiverCount(),
-                    receiverDetermination(), interfaceDetermination(), mapping(),
+            List<Attribute> rows = List.of(runtime(qos), qos, senderType, receiverType(), receiverCount(qos),
+                    receiverDetermination(qos), interfaceDetermination(), mapping(),
                     open("error_handling", ERROR_HANDLING, Q_ERROR_HANDLING, null), customExit,
                     inboundConversion(senderType));
             return new Scenario(file, icoRef(), rows, List.copyOf(modules));
@@ -323,8 +374,8 @@ public final class ScenarioAttributes {
         private Attribute runtime(Attribute qos) {
             return switch (qos.value()) {
                 case "BE" -> resolved("runtime", "integrated-sync", qos.source(), "from qos BE");
-                case "EO", "EOIO" -> open("runtime", RUNTIME, Set.of("integrated-async", "decoupled"), Q_RUNTIME,
-                        qos.source());
+                case "EO", "EOIO" -> open("runtime", RUNTIME, Set.of("integrated-async", "decoupled"),
+                        dynamicRouting() ? Q_RUNTIME + "; " + Q_DYNAMIC_RUNTIME : Q_RUNTIME, qos.source());
                 default -> open("runtime", RUNTIME, "qos is open; BE gives integrated-sync, EO or EOIO "
                         + "integrated-async or decoupled", qos.source());
             };
@@ -380,9 +431,10 @@ public final class ScenarioAttributes {
             return ico.dynamicRouting() != null && !Reports.list(ico.dynamicRouting().mappings()).isEmpty();
         }
 
-        private Attribute receiverCount() {
+        private Attribute receiverCount(Attribute qos) {
             if (dynamicRouting()) {
-                return resolved("receiver_count", "n", p + ".dynamicRouting", null);
+                return resolved("receiver_count", "n", p + ".dynamicRouting",
+                        "BE".equals(qos.value()) ? NOTE_BE_DYNAMIC_COUNT : null);
             }
             if (receivers.isEmpty()) {
                 return open("receiver_count", COUNT, "the ICO has no receiver and no dynamic routing; how many "
@@ -391,14 +443,20 @@ public final class ScenarioAttributes {
             return resolved("receiver_count", receivers.size() == 1 ? "1" : "n", p + ".receivers", null);
         }
 
-        private Attribute receiverDetermination() {
+        private Attribute receiverDetermination(Attribute qos) {
             if (dynamicRouting()) {
-                return resolved("receiver_determination", "reuse-xrd", p + ".dynamicRouting.mappings[0]",
-                        "custom if the mapping is rewritten");
+                String source = p + ".dynamicRouting.mappings[0]";
+                if ("BE".equals(qos.value())) {
+                    return open("receiver_determination", RECEIVER_DETERMINATION, Set.of("custom"),
+                            Q_BE_DYNAMIC_ROUTING, source);
+                }
+                return resolved("receiver_determination", "reuse-xrd", source, "custom if the mapping is rewritten");
             }
             for (int j = 0; j < receivers.size(); j++) {
-                if (hasCondition(receivers.get(j).condition())) {
-                    return resolved("receiver_determination", "xpath", p + ".receivers[" + j + "].condition", null);
+                Condition c = receivers.get(j).condition();
+                if (hasCondition(c)) {
+                    return resolved("receiver_determination", "xpath", p + ".receivers[" + j + "].condition",
+                            prefixNote(c));
                 }
             }
             return resolved("receiver_determination", "static", p + ".receivers", null);
@@ -410,12 +468,64 @@ public final class ScenarioAttributes {
                 for (int k = 0; k < as.size(); k++) {
                     if (hasCondition(as.get(k).condition())) {
                         return resolved("interface_determination", "xpath",
-                                p + ".receivers[" + j + "].interfaces[" + k + "].condition", null);
+                                p + ".receivers[" + j + "].interfaces[" + k + "].condition",
+                                prefixNote(as.get(k).condition()));
                     }
                 }
             }
             return resolved("interface_determination", "static",
                     receivers.isEmpty() ? p + ".receivers" : p + ".receivers[0].interfaces", null);
+        }
+
+        /** D-040: the note of an {@code xpath} row whose condition uses prefixes; null without a prefix. */
+        private String prefixNote(Condition c) {
+            List<String> prefixes = prefixes(c);
+            if (prefixes.isEmpty()) {
+                return null;
+            }
+            String messageType = senderMessageType();
+            return "prefixes " + String.join(", ", prefixes) + ": namespace not declared in the dump; "
+                    + (messageType != null ? messageType : "no sender message type in the esr section — ask");
+        }
+
+        /**
+         * The sender request message type with its {@code xmlNamespace} and esr path, or null when the esr section
+         * does not name it: interface by name and namespace, the operation named by {@code operations[0]} (else
+         * the first), its {@code request} message type by name and namespace.
+         */
+        private String senderMessageType() {
+            Endpoint s = ico.sender();
+            if (esr == null || s == null || s.iface() == null) {
+                return null;
+            }
+            List<ServiceInterface> interfaces = Reports.list(esr.serviceInterfaces());
+            for (int i = 0; i < interfaces.size(); i++) {
+                if (!sameObject(interfaces.get(i).id(), s.iface())) {
+                    continue;
+                }
+                List<Operation> ops = Reports.list(interfaces.get(i).operations());
+                if (ops.isEmpty()) {
+                    return null;
+                }
+                List<String> named = Reports.list(s.operations());
+                int j = 0;
+                for (int o = 0; o < ops.size() && !named.isEmpty(); o++) {
+                    if (named.get(0).equals(ops.get(o).name())) {
+                        j = o;
+                        break;
+                    }
+                }
+                ObjRef request = ops.get(j).request();
+                for (MessageType mt : Reports.list(esr.messageTypes())) {
+                    if (request != null && sameObject(mt.id(), request)) {
+                        return mt.xmlNamespace() == null ? null : "sender request message type " + mt.id().name()
+                                + " {" + mt.xmlNamespace() + "} (esr.serviceInterfaces[" + i + "].operations[" + j
+                                + "].request)";
+                    }
+                }
+                return null;
+            }
+            return null;
         }
 
         private Attribute mapping() {

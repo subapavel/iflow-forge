@@ -6,6 +6,9 @@ import io.poxray.json.Json;
 import io.poxray.model.AttributesReport;
 import io.poxray.model.AttributesReport.Attribute;
 import io.poxray.model.AttributesReport.ModuleRef;
+import io.poxray.model.IntegrationInventory;
+import io.poxray.model.IntegrationInventory.Esr;
+import io.poxray.model.IntegrationInventory.ObjRef;
 import io.quarkus.test.junit.main.LaunchResult;
 import io.quarkus.test.junit.main.QuarkusMainLauncher;
 import io.quarkus.test.junit.main.QuarkusMainTest;
@@ -13,8 +16,11 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import tools.jackson.databind.DeserializationFeature;
 
 /** {@code po-xray attributes <ico.json>... [--json]} on the committed synthetic fixture of the migration skill. */
 @QuarkusMainTest
@@ -89,6 +95,26 @@ class AttributesCommandTest {
                 .startsWith("sender module localejbs/MyPreModule");
         assertThat(report.scenarios().get(2).modules())
                 .containsExactly(new ModuleRef("sender", "CC_SND_SOAP", 1, "localejbs/MyPreModule"));
+    }
+
+    @Test
+    void theFixtureCarriesAnEsrSectionWithMappingProgramKinds() {
+        IntegrationInventory inventory = Json.mapper().readerFor(IntegrationInventory.class)
+                .with(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES).readValue(ICOS.toFile());
+
+        Esr esr = inventory.esr();
+        assertThat(esr).isNotNull();
+        assertThat(esr.operationMappings()).extracting(m -> m.steps().get(0).program().type())
+                .contains("MAP_ARCHIVE_PRG", "XI_TRAFO");
+        assertThat(esr.importedArchives().get(0).programs().get(0).kind()).isEqualTo("javaMapping");
+        // every mapping the ICOs reference (interface mappings and the dynamic-routing mapping) is in the section
+        List<String> referenced = inventory.icos().stream()
+                .flatMap(ico -> Stream.concat(
+                        ico.receivers().stream().flatMap(r -> r.interfaces().stream()).map(a -> a.mapping()),
+                        ico.dynamicRouting() == null ? Stream.empty() : ico.dynamicRouting().mappings().stream()))
+                .map(ObjRef::name).toList();
+        assertThat(esr.operationMappings()).extracting(m -> m.id().name())
+                .containsExactlyInAnyOrderElementsOf(referenced);
     }
 
     @Test

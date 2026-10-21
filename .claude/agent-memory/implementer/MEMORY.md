@@ -53,3 +53,5 @@ Durable facts only (build quirks, verified APIs, recurring findings). Never task
 - Reader literals: condition `operator` is the SAP code (`EQ`, `CP`, `EX`), constants quoted (`"\"X\""`), `text`
   renders `=`/`like`; ICO target `multiplicity` from real data is `1` (message mapping's is `1:1`); XI sender's
   standard module is `CallSapAdapter` (type `L`, param `ignoreDuplicate`).
+- po-xray ObjRef types: service interface `ifmmessif`, message type `ifmmessage` (TypeKeys); match esr refs on
+  name + namespace, never on type. `po-xray-core` alone tests fine with `-pl po-xray-core test -Dtest=X` (no `-am`).

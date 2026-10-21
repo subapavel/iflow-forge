@@ -17,17 +17,22 @@ import io.poxray.model.IntegrationInventory.ConditionLine;
 import io.poxray.model.IntegrationInventory.DirRef;
 import io.poxray.model.IntegrationInventory.DynamicRouting;
 import io.poxray.model.IntegrationInventory.Endpoint;
+import io.poxray.model.IntegrationInventory.Esr;
 import io.poxray.model.IntegrationInventory.Ico;
 import io.poxray.model.IntegrationInventory.InterfaceAssignment;
+import io.poxray.model.IntegrationInventory.MessageType;
 import io.poxray.model.IntegrationInventory.Module;
 import io.poxray.model.IntegrationInventory.ObjRef;
+import io.poxray.model.IntegrationInventory.Operation;
 import io.poxray.model.IntegrationInventory.Receiver;
+import io.poxray.model.IntegrationInventory.ServiceInterface;
 import io.poxray.model.IntegrationInventory.Target;
 import io.poxray.model.ScaInventory;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -58,6 +63,15 @@ class ScenarioAttributesTest {
             Map.entry("error_handling", List.of("standard", "custom")),
             Map.entry("custom_exit", List.of("none", "pre", "post", "pre+post")),
             Map.entry("inbound_conversion", List.of("none", "custom")));
+
+    /** MIG-13 texts (acceptance spec §3, D-040), asserted literally. */
+    private static final String Q_BE_DYNAMIC_ROUTING = "dynamic routing with qos BE: the reuse-XRD copy routes only "
+            + "on the decoupled runtime (Step04); a custom receiver determination returning one receiver (Step02 sync "
+            + "rejects several), or a blocking entry";
+    private static final String Q_DYNAMIC_RUNTIME = "dynamic routing: reuse-xrd routes only on the decoupled runtime "
+            + "(Step04), integrated-async needs a custom receiver determination (D-036)";
+    private static final String ASK_NS0 = "prefixes ns0: namespace not declared in the dump; no sender message type "
+            + "in the esr section — ask";
 
     private static final DirRef SND = ref("SND_SYS", "CC_SND");
     private static final DirRef RCV = ref("RCV_SYS", "CC_RCV");
@@ -135,6 +149,21 @@ class ScenarioAttributesTest {
 
     private static IntegrationInventory inv(Ico ico, Channel... channels) {
         return inv(List.of(ico), channels);
+    }
+
+    /** One ICO with an {@code esr} section (the inventory's 9th component). */
+    private static IntegrationInventory inv(Ico ico, Esr esr, Channel... channels) {
+        return new IntegrationInventory("0.1", new ScaInventory.Generator("po-xray", "t", "2026-01-01T00:00:00Z"),
+                null, null, List.of(), List.of(ico), List.of(channels), List.of(), esr, List.of());
+    }
+
+    private static ObjRef messageType(String name, String namespace) {
+        return new ObjRef("ifmmessage", name, namespace, null, null, null);
+    }
+
+    private static Esr esr(List<ServiceInterface> interfaces, List<MessageType> messageTypes) {
+        return new Esr(interfaces, List.of(), List.of(), messageTypes, List.of(), List.of(), List.of(), List.of(),
+                List.of());
     }
 
     /** XI sender, one XI receiver, one 1:1 mapping, no modules; qos as given. */
@@ -448,6 +477,230 @@ class ScenarioAttributesTest {
 
         assertResolved(attr(report, "interface_determination"), "xpath",
                 "icos[0].receivers[1].interfaces[1].condition");
+    }
+
+    // ---------------------------------------------------------------- dynamic routing and the runtime (D-036, D-040)
+
+    @Test
+    void dynamicRoutingWithQosBeMakesReceiverDeterminationAQuestionWithCustomAsTheOnlyCandidate() {
+        AttributesReport report = derive(inv(ico(SND, new DynamicRouting(false, List.of(om("OM_Routing"))),
+                plainReceiver("BE")), xiSender(), xiReceiver()));
+
+        Attribute rd = attr(report, "receiver_determination");
+        assertOpen(rd, "custom");
+        assertThat(rd.source()).isEqualTo("icos[0].dynamicRouting.mappings[0]");
+        assertThat(rd.question()).isEqualTo(Q_BE_DYNAMIC_ROUTING);
+        Attribute count = attr(report, "receiver_count");
+        assertResolved(count, "n", "icos[0].dynamicRouting");
+        assertThat(count.note()).isEqualTo("BE: Step02 sync accepts one receiver; see receiver_determination");
+        Attribute runtime = attr(report, "runtime");
+        assertResolved(runtime, "integrated-sync", attr(report, "qos").source());
+        assertThat(runtime.note()).isEqualTo("from qos BE");
+    }
+
+    @Test
+    void dynamicRoutingWithQosEoOrEoioAddsTheDecoupledConditionToTheRuntimeQuestion() {
+        for (String qos : List.of("EO", "EOIO")) {
+            AttributesReport report = derive(inv(ico(SND, new DynamicRouting(false, List.of(om("OM_Routing"))),
+                    plainReceiver(qos)), xiSender(), xiReceiver()));
+
+            Attribute runtime = attr(report, "runtime");
+            assertOpen(runtime, "integrated-async", "decoupled");
+            assertThat(runtime.question()).as(qos).isEqualTo("tenant or scenario choice; " + Q_DYNAMIC_RUNTIME);
+            Attribute rd = attr(report, "receiver_determination");
+            assertResolved(rd, "reuse-xrd", "icos[0].dynamicRouting.mappings[0]");
+            assertThat(rd.note()).as(qos).isEqualTo("custom if the mapping is rewritten");
+            Attribute count = attr(report, "receiver_count");
+            assertResolved(count, "n", "icos[0].dynamicRouting");
+            assertThat(count.note()).as(qos).isNull();
+        }
+    }
+
+    @Test
+    void dynamicRoutingWithMixedQosKeepsTodaysRows() {
+        AttributesReport report = derive(inv(ico(SND, new DynamicRouting(false, List.of(om("OM_Routing"))),
+                plainReceiver("BE"), plainReceiver("EO")), xiSender(), xiReceiver()));
+
+        assertOpen(attr(report, "qos"), "EO", "BE");
+        Attribute runtime = attr(report, "runtime");
+        assertOpen(runtime, "integrated-async", "integrated-sync", "decoupled");
+        assertThat(runtime.question())
+                .isEqualTo("qos is open; BE gives integrated-sync, EO or EOIO integrated-async or decoupled")
+                .doesNotContain("dynamic routing");
+        Attribute rd = attr(report, "receiver_determination");
+        assertResolved(rd, "reuse-xrd", "icos[0].dynamicRouting.mappings[0]");
+        assertThat(rd.note()).isEqualTo("custom if the mapping is rewritten");
+        assertThat(attr(report, "receiver_count").note()).isNull();
+    }
+
+    // ---------------------------------------------------------------- condition prefixes (D-040 c)
+
+    @Test
+    void xpathConditionWithPrefixesNotesTheSenderMessageTypeNamespaceFromTheEsr() {
+        // decoys before the sender's entries prove the lookup by name + namespace and the indices in the note:
+        // the sender interface is serviceInterfaces[1], its operation Synth_Out is operations[1], and the message
+        // type Order of the repository namespace is the second Order in messageTypes
+        ServiceInterface sameNameOtherNamespace = new ServiceInterface(
+                new ObjRef("ifmmessif", "Synth_Out", "urn:example:other", null, null, null), "O", null,
+                "urn:example:other", List.of(new Operation("Synth_Out", "async",
+                        messageType("Order", "urn:example:other"), null, List.of(), null)), null);
+        ServiceInterface sender = new ServiceInterface(iface("Synth_Out"), "O", null, "urn:example:orders",
+                List.of(new Operation("Other_Op", "async", messageType("Other", "urn:example:orders"), null,
+                                List.of(), null),
+                        new Operation("Synth_Out", "async", messageType("Order", "urn:example:orders"), null,
+                                List.of(), null)), null);
+        Esr esr = esr(List.of(sameNameOtherNamespace, sender), List.of(
+                new MessageType(messageType("Order", "urn:example:other"), null, "urn:example:wrong", null),
+                new MessageType(messageType("Other", "urn:example:orders"), null, "urn:example:other:xml", null),
+                new MessageType(messageType("Order", "urn:example:orders"), null, "urn:example:orders:xml", null)));
+        Condition prefixed = new Condition("/ns0:Order/ns1:Type = \"A\"",
+                List.of(new ConditionLine(1, "/ns0:Order/ns1:Type", "EQ", "\"A\"")));
+        AttributesReport report = derive(inv(ico(plainReceiver("EO"),
+                receiver("RCV2_SYS", "EO", prefixed, List.of(oneToOne()), RCV)), esr, xiSender(), xiReceiver()));
+
+        String note = "prefixes ns0, ns1: namespace not declared in the dump; sender request message type Order "
+                + "{urn:example:orders:xml} (esr.serviceInterfaces[1].operations[1].request)";
+        Attribute rd = attr(report, "receiver_determination");
+        assertResolved(rd, "xpath", "icos[0].receivers[1].condition");
+        assertThat(rd.note()).isEqualTo(note);
+        assertThat(ScenarioAttributes.markdown(report).split("\n"))
+                .contains("| receiver_determination | `xpath` | `icos[0].receivers[1].condition` — " + note + " |");
+        assertThat(Json.write(report)).contains("\"note\" : \"" + note + "\"");
+    }
+
+    @Test
+    void xpathConditionWithPrefixesWithoutAnEsrMessageTypeAsks() {
+        ObjRef order = messageType("Order", "urn:example:orders");
+        ServiceInterface sender = new ServiceInterface(iface("Synth_Out"), "O", null, "urn:example:orders",
+                List.of(new Operation("Synth_Out", "async", order, null, List.of(), null)), null);
+        ServiceInterface senderWithoutRequest = new ServiceInterface(iface("Synth_Out"), "O", null,
+                "urn:example:orders", List.of(new Operation("Synth_Out", "async", null, null, List.of(), null)),
+                null);
+        ServiceInterface senderWithoutOperations = new ServiceInterface(iface("Synth_Out"), "O", null,
+                "urn:example:orders", List.of(), null);
+        Map<String, Esr> esrs = new LinkedHashMap<>();
+        esrs.put("esr null", null);
+        esrs.put("empty esr", esr(List.of(), List.of()));
+        esrs.put("interface without matching message type", esr(List.of(sender),
+                List.of(new MessageType(messageType("Order", "urn:example:other"), null, "urn:x", null))));
+        esrs.put("message type without xmlNamespace", esr(List.of(sender),
+                List.of(new MessageType(order, null, null, null))));
+        esrs.put("operation without request", esr(List.of(senderWithoutRequest),
+                List.of(new MessageType(order, null, "urn:example:orders:xml", null))));
+        esrs.put("interface without operations", esr(List.of(senderWithoutOperations),
+                List.of(new MessageType(order, null, "urn:example:orders:xml", null))));
+        Receiver conditional = receiver("RCV2_SYS", "EO", new Condition(null,
+                List.of(new ConditionLine(1, "/ns0:Order/Type", "EQ", "\"A\""))), List.of(oneToOne()), RCV);
+
+        esrs.forEach((label, esr) -> {
+            Attribute rd = attr(derive(inv(ico(plainReceiver("EO"), conditional), esr, xiSender(), xiReceiver())),
+                    "receiver_determination");
+            assertResolved(rd, "xpath", "icos[0].receivers[1].condition");
+            assertThat(rd.note()).as(label).isEqualTo(ASK_NS0);
+        });
+    }
+
+    @Test
+    void xpathConditionWithoutPrefixesHasNoNote() {
+        Receiver idoc = receiver("RCV2_SYS", "EO", new Condition("/ORDERS05/IDOC/E1EDK01/BSART = \"NB\"",
+                List.of(new ConditionLine(1, "/ORDERS05/IDOC/E1EDK01/BSART", "EQ", "\"NB\""))), List.of(oneToOne()),
+                RCV);
+        Receiver textOnly = receiver("RCV2_SYS", "EO", new Condition("/ns0:A = \"urn:x\"", List.of()),
+                List.of(oneToOne()), RCV);
+        Receiver singleQuoted = receiver("RCV2_SYS", "EO", new Condition("/ns0:A = 'urn:y'", null),
+                List.of(oneToOne()), RCV);
+        AttributesReport report = derive(inv(List.of(ico(plainReceiver("EO"), idoc),
+                ico(plainReceiver("EO"), textOnly), ico(plainReceiver("EO"), singleQuoted)), xiSender(),
+                xiReceiver()));
+
+        Attribute noPrefix = attr(report, 0, "receiver_determination");
+        assertResolved(noPrefix, "xpath", "icos[0].receivers[1].condition");
+        assertThat(noPrefix.note()).isNull();
+        for (int s = 1; s <= 2; s++) {
+            Attribute fromText = attr(report, s, "receiver_determination");
+            assertResolved(fromText, "xpath", "icos[" + s + "].receivers[1].condition");
+            assertThat(fromText.note()).as("scenario %s", s).isEqualTo(ASK_NS0);
+        }
+    }
+
+    @Test
+    void xpathConditionPrefixesComeFromTheLeftOfEveryLineDistinctInOrderOfFirstAppearance() {
+        // the text names ns7 and is ignored because lines are present; right is never scanned (ns9)
+        Condition grouped = new Condition("/ns7:Ignored = \"A\"", List.of(
+                new ConditionLine(1, "/ns1:Order/ns0:Type", "EQ", "ns9:X"),
+                new ConditionLine(1, "/ns1:Order/ns1:Code", "NE", "\"B\""),
+                new ConditionLine(2, "/ns2:Order/@xsi:type", "EQ", "\"C\"")));
+        Attribute rd = attr(derive(inv(ico(plainReceiver("EO"),
+                receiver("RCV2_SYS", "EO", grouped, List.of(oneToOne()), RCV)), xiSender(), xiReceiver())),
+                "receiver_determination");
+
+        assertResolved(rd, "xpath", "icos[0].receivers[1].condition");
+        assertThat(rd.note()).isEqualTo("prefixes ns1, ns0, ns2, xsi: namespace not declared in the dump; "
+                + "no sender message type in the esr section — ask");
+    }
+
+    @Test
+    void interfaceDeterminationXpathNotesPrefixesTheSameWay() {
+        InterfaceAssignment conditional = new InterfaceAssignment("Synth_Out", xpath(), om("OM_Synth2"),
+                List.of(target("Synth2_In", "1")), Map.of());
+        AttributesReport report = derive(inv(ico(plainReceiver("EO"),
+                receiver("RCV_SYS", "EO", null, List.of(oneToOne(), conditional), RCV)), xiSender(), xiReceiver()));
+
+        Attribute id = attr(report, "interface_determination");
+        assertResolved(id, "xpath", "icos[0].receivers[1].interfaces[1].condition");
+        assertThat(id.note()).isEqualTo(ASK_NS0);
+        assertThat(attr(report, "receiver_determination").note()).isNull();
+    }
+
+    @Test
+    void contextObjectOperandsAreNotPrefixes() {
+        Receiver linesWithContext = receiver("RCV2_SYS", "EO", new Condition(null, List.of(
+                new ConditionLine(1, "context:Receiver (urn:example:ctx)", "EQ", "\"A\""),
+                new ConditionLine(1, "/ns0:Order/Type", "EQ", "\"B\""))), List.of(oneToOne()), RCV);
+        Receiver textContextOnly = receiver("RCV2_SYS", "EO", new Condition("context:Receiver = \"A\"", List.of()),
+                List.of(oneToOne()), RCV);
+        Receiver textContextAndXpath = receiver("RCV2_SYS", "EO",
+                new Condition("context:Receiver = \"A\" and /ns1:X = \"B\"", List.of()), List.of(oneToOne()), RCV);
+        // the rendered form of a context object with a namespace (Conditions.java L131): the " (<ns>)" suffix goes too
+        Receiver textContextWithNamespace = receiver("RCV2_SYS", "EO",
+                new Condition("context:Receiver (urn:example:ctx) = \"A\"", List.of()), List.of(oneToOne()), RCV);
+        AttributesReport report = derive(inv(List.of(ico(plainReceiver("EO"), linesWithContext),
+                ico(plainReceiver("EO"), textContextOnly), ico(plainReceiver("EO"), textContextAndXpath),
+                ico(plainReceiver("EO"), textContextWithNamespace)), xiSender(), xiReceiver()));
+
+        for (int s = 0; s < 4; s++) {
+            assertResolved(attr(report, s, "receiver_determination"), "xpath",
+                    "icos[" + s + "].receivers[1].condition");
+        }
+        assertThat(attr(report, 0, "receiver_determination").note()).isEqualTo(ASK_NS0);
+        assertThat(attr(report, 1, "receiver_determination").note()).isNull();
+        assertThat(attr(report, 2, "receiver_determination").note()).isEqualTo("prefixes ns1: namespace not declared "
+                + "in the dump; no sender message type in the esr section — ask");
+        assertThat(attr(report, 3, "receiver_determination").note()).isNull();
+    }
+
+    @Test
+    void senderMessageTypeFallsBackToTheFirstOperationWhenTheSenderNamesNone() {
+        // the sender names Missing_Op, which the interface does not have: the first operation (Synth_Out) is taken,
+        // not the second (Other_Op, whose message type has another xmlNamespace), and the lookup does not ask
+        ServiceInterface sender = new ServiceInterface(iface("Synth_Out"), "O", null, "urn:example:orders",
+                List.of(new Operation("Synth_Out", "async", messageType("Order", "urn:example:orders"), null,
+                                List.of(), null),
+                        new Operation("Other_Op", "async", messageType("Other", "urn:example:orders"), null,
+                                List.of(), null)), null);
+        Esr esr = esr(List.of(sender), List.of(
+                new MessageType(messageType("Other", "urn:example:orders"), null, "urn:example:other:xml", null),
+                new MessageType(messageType("Order", "urn:example:orders"), null, "urn:example:orders:xml", null)));
+        Ico missingOperation = new Ico("00000000000000000000000000000001", "Synthetic ICO", "IF_Synth",
+                new Endpoint(null, "SND_SYS", iface("Synth_Out"), List.of("Missing_Op"), SND),
+                List.of(plainReceiver("EO"), receiver("RCV2_SYS", "EO", xpath(), List.of(oneToOne()), RCV)), null,
+                null, null, null);
+
+        Attribute rd = attr(derive(inv(missingOperation, esr, xiSender(), xiReceiver())), "receiver_determination");
+
+        assertResolved(rd, "xpath", "icos[0].receivers[1].condition");
+        assertThat(rd.note()).isEqualTo("prefixes ns0: namespace not declared in the dump; sender request message type "
+                + "Order {urn:example:orders:xml} (esr.serviceInterfaces[0].operations[0].request)");
     }
 
     // ---------------------------------------------------------------- mapping

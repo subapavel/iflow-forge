@@ -284,5 +284,548 @@
       "namespace" : "post"
     } ],
     "description" : "Synthetic File receiver channel of RCV2_SYS"
-  } ]
+  } ],
+  "esr" : {
+    "serviceInterfaces" : [ {
+      "id" : {
+        "type" : "ifmmessif",
+        "name" : "OrderQuery_Sync",
+        "namespace" : "urn:example:orders",
+        "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+      },
+      "category" : "O",
+      "xmlNamespace" : "urn:example:orders",
+      "operations" : [ {
+        "name" : "OrderQuery_Sync",
+        "mode" : "sync",
+        "request" : {
+          "type" : "ifmmessage",
+          "name" : "OrderQuery_Request",
+          "namespace" : "urn:example:orders",
+          "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+        },
+        "response" : {
+          "type" : "ifmmessage",
+          "name" : "OrderQuery_Response",
+          "namespace" : "urn:example:orders",
+          "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+        },
+        "faults" : [ ]
+      } ]
+    }, {
+      "id" : {
+        "type" : "ifmmessif",
+        "name" : "OrderQuery_In",
+        "namespace" : "urn:example:orders",
+        "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+      },
+      "category" : "I",
+      "xmlNamespace" : "urn:example:orders",
+      "operations" : [ {
+        "name" : "OrderQuery_In",
+        "mode" : "sync",
+        "request" : {
+          "type" : "ifmmessage",
+          "name" : "OrderQueryIn_Request",
+          "namespace" : "urn:example:orders",
+          "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+        },
+        "response" : {
+          "type" : "ifmmessage",
+          "name" : "OrderQueryIn_Response",
+          "namespace" : "urn:example:orders",
+          "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+        },
+        "faults" : [ ]
+      } ]
+    }, {
+      "id" : {
+        "type" : "ifmmessif",
+        "name" : "ORDERS.ORDERS05",
+        "namespace" : "urn:example:idoc",
+        "swc" : "SC_EXAMPLE_IDOC, 1.0 of example"
+      },
+      "category" : "O",
+      "xmlNamespace" : "urn:example:idoc",
+      "operations" : [ {
+        "name" : "ORDERS.ORDERS05",
+        "mode" : "async",
+        "request" : {
+          "type" : "ifmmessage",
+          "name" : "ORDERS.ORDERS05",
+          "namespace" : "urn:example:idoc",
+          "swc" : "SC_EXAMPLE_IDOC, 1.0 of example"
+        },
+        "faults" : [ ]
+      } ]
+    }, {
+      "id" : {
+        "type" : "ifmmessif",
+        "name" : "Order_In",
+        "namespace" : "urn:example:orders",
+        "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+      },
+      "category" : "I",
+      "xmlNamespace" : "urn:example:orders",
+      "operations" : [ {
+        "name" : "Order_In",
+        "mode" : "async",
+        "request" : {
+          "type" : "ifmmessage",
+          "name" : "Order",
+          "namespace" : "urn:example:orders",
+          "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+        },
+        "faults" : [ ]
+      } ]
+    }, {
+      "id" : {
+        "type" : "ifmmessif",
+        "name" : "OrderFile_In",
+        "namespace" : "urn:example:orders",
+        "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+      },
+      "category" : "I",
+      "xmlNamespace" : "urn:example:orders",
+      "operations" : [ {
+        "name" : "OrderFile_In",
+        "mode" : "async",
+        "request" : {
+          "type" : "ifmmessage",
+          "name" : "OrderFile",
+          "namespace" : "urn:example:orders",
+          "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+        },
+        "faults" : [ ]
+      } ]
+    }, {
+      "id" : {
+        "type" : "ifmmessif",
+        "name" : "OrderBatch_Async",
+        "namespace" : "urn:example:orders",
+        "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+      },
+      "category" : "O",
+      "xmlNamespace" : "urn:example:orders",
+      "operations" : [ {
+        "name" : "OrderBatch_Async",
+        "mode" : "async",
+        "request" : {
+          "type" : "ifmmessage",
+          "name" : "OrderBatch",
+          "namespace" : "urn:example:orders",
+          "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+        },
+        "faults" : [ ]
+      } ]
+    } ],
+    "operationMappings" : [ {
+      "id" : {
+        "type" : "MAPPING",
+        "name" : "OM_OrderQuery_to_RCV_SYS",
+        "namespace" : "urn:example:orders",
+        "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+      },
+      "sourceOperation" : {
+        "type" : "ifmmessif",
+        "name" : "OrderQuery_Sync",
+        "namespace" : "urn:example:orders",
+        "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+      },
+      "targetOperation" : {
+        "type" : "ifmmessif",
+        "name" : "OrderQuery_In",
+        "namespace" : "urn:example:orders",
+        "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+      },
+      "steps" : [ {
+        "kind" : "request",
+        "program" : {
+          "type" : "XI_TRAFO",
+          "name" : "MM_OrderQuery_to_RCV_SYS",
+          "namespace" : "urn:example:orders",
+          "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+        },
+        "sourceMessage" : {
+          "type" : "ifmmessage",
+          "name" : "OrderQuery_Request",
+          "namespace" : "urn:example:orders",
+          "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+        },
+        "targetMessage" : {
+          "type" : "ifmmessage",
+          "name" : "OrderQueryIn_Request",
+          "namespace" : "urn:example:orders",
+          "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+        }
+      } ]
+    }, {
+      "id" : {
+        "type" : "MAPPING",
+        "name" : "OM_ORDERS05_to_Order",
+        "namespace" : "urn:example:orders",
+        "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+      },
+      "sourceOperation" : {
+        "type" : "ifmmessif",
+        "name" : "ORDERS.ORDERS05",
+        "namespace" : "urn:example:idoc",
+        "swc" : "SC_EXAMPLE_IDOC, 1.0 of example"
+      },
+      "targetOperation" : {
+        "type" : "ifmmessif",
+        "name" : "Order_In",
+        "namespace" : "urn:example:orders",
+        "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+      },
+      "steps" : [ {
+        "kind" : "request",
+        "program" : {
+          "type" : "XI_TRAFO",
+          "name" : "MM_ORDERS05_to_Order",
+          "namespace" : "urn:example:orders",
+          "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+        },
+        "sourceMessage" : {
+          "type" : "ifmmessage",
+          "name" : "ORDERS.ORDERS05",
+          "namespace" : "urn:example:idoc",
+          "swc" : "SC_EXAMPLE_IDOC, 1.0 of example"
+        },
+        "targetMessage" : {
+          "type" : "ifmmessage",
+          "name" : "Order",
+          "namespace" : "urn:example:orders",
+          "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+        }
+      } ]
+    }, {
+      "id" : {
+        "type" : "MAPPING",
+        "name" : "OM_ORDERS05_to_OrderFile",
+        "namespace" : "urn:example:orders",
+        "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+      },
+      "sourceOperation" : {
+        "type" : "ifmmessif",
+        "name" : "ORDERS.ORDERS05",
+        "namespace" : "urn:example:idoc",
+        "swc" : "SC_EXAMPLE_IDOC, 1.0 of example"
+      },
+      "targetOperation" : {
+        "type" : "ifmmessif",
+        "name" : "OrderFile_In",
+        "namespace" : "urn:example:orders",
+        "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+      },
+      "steps" : [ {
+        "kind" : "request",
+        "program" : {
+          "type" : "XI_TRAFO",
+          "name" : "MM_ORDERS05_to_OrderFile",
+          "namespace" : "urn:example:orders",
+          "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+        },
+        "sourceMessage" : {
+          "type" : "ifmmessage",
+          "name" : "ORDERS.ORDERS05",
+          "namespace" : "urn:example:idoc",
+          "swc" : "SC_EXAMPLE_IDOC, 1.0 of example"
+        },
+        "targetMessage" : {
+          "type" : "ifmmessage",
+          "name" : "OrderFile",
+          "namespace" : "urn:example:orders",
+          "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+        }
+      } ]
+    }, {
+      "id" : {
+        "type" : "MAPPING",
+        "name" : "OM_OrderBatch_to_Orders",
+        "namespace" : "urn:example:orders",
+        "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+      },
+      "sourceOperation" : {
+        "type" : "ifmmessif",
+        "name" : "OrderBatch_Async",
+        "namespace" : "urn:example:orders",
+        "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+      },
+      "targetOperation" : {
+        "type" : "ifmmessif",
+        "name" : "Order_In",
+        "namespace" : "urn:example:orders",
+        "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+      },
+      "steps" : [ {
+        "kind" : "request",
+        "program" : {
+          "type" : "XI_TRAFO",
+          "name" : "MM_OrderBatch_to_Orders",
+          "namespace" : "urn:example:orders",
+          "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+        },
+        "sourceMessage" : {
+          "type" : "ifmmessage",
+          "name" : "OrderBatch",
+          "namespace" : "urn:example:orders",
+          "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+        },
+        "targetMessage" : {
+          "type" : "ifmmessage",
+          "name" : "Order",
+          "namespace" : "urn:example:orders",
+          "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+        }
+      } ]
+    }, {
+      "id" : {
+        "type" : "MAPPING",
+        "name" : "OM_OrderBatch_Routing",
+        "namespace" : "urn:example:orders",
+        "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+      },
+      "sourceOperation" : {
+        "type" : "ifmmessif",
+        "name" : "OrderBatch_Async",
+        "namespace" : "urn:example:orders",
+        "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+      },
+      "steps" : [ {
+        "kind" : "request",
+        "program" : {
+          "type" : "MAP_ARCHIVE_PRG",
+          "name" : "example-routing",
+          "namespace" : "urn:example:orders",
+          "program" : "com.example.routing.OrderBatchRouting"
+        }
+      } ]
+    } ],
+    "messageMappings" : [ {
+      "id" : {
+        "type" : "XI_TRAFO",
+        "name" : "MM_OrderQuery_to_RCV_SYS",
+        "namespace" : "urn:example:orders",
+        "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+      },
+      "source" : {
+        "type" : "ifmmessage",
+        "name" : "OrderQuery_Request",
+        "namespace" : "urn:example:orders",
+        "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+      },
+      "target" : {
+        "type" : "ifmmessage",
+        "name" : "OrderQueryIn_Request",
+        "namespace" : "urn:example:orders",
+        "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+      },
+      "multiplicity" : "1:1"
+    }, {
+      "id" : {
+        "type" : "XI_TRAFO",
+        "name" : "MM_ORDERS05_to_Order",
+        "namespace" : "urn:example:orders",
+        "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+      },
+      "source" : {
+        "type" : "ifmmessage",
+        "name" : "ORDERS.ORDERS05",
+        "namespace" : "urn:example:idoc",
+        "swc" : "SC_EXAMPLE_IDOC, 1.0 of example"
+      },
+      "target" : {
+        "type" : "ifmmessage",
+        "name" : "Order",
+        "namespace" : "urn:example:orders",
+        "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+      },
+      "multiplicity" : "1:1"
+    }, {
+      "id" : {
+        "type" : "XI_TRAFO",
+        "name" : "MM_ORDERS05_to_OrderFile",
+        "namespace" : "urn:example:orders",
+        "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+      },
+      "source" : {
+        "type" : "ifmmessage",
+        "name" : "ORDERS.ORDERS05",
+        "namespace" : "urn:example:idoc",
+        "swc" : "SC_EXAMPLE_IDOC, 1.0 of example"
+      },
+      "target" : {
+        "type" : "ifmmessage",
+        "name" : "OrderFile",
+        "namespace" : "urn:example:orders",
+        "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+      },
+      "multiplicity" : "1:1"
+    }, {
+      "id" : {
+        "type" : "XI_TRAFO",
+        "name" : "MM_OrderBatch_to_Orders",
+        "namespace" : "urn:example:orders",
+        "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+      },
+      "source" : {
+        "type" : "ifmmessage",
+        "name" : "OrderBatch",
+        "namespace" : "urn:example:orders",
+        "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+      },
+      "target" : {
+        "type" : "ifmmessage",
+        "name" : "Order",
+        "namespace" : "urn:example:orders",
+        "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+      },
+      "multiplicity" : "1:1"
+    } ],
+    "messageTypes" : [ {
+      "id" : {
+        "type" : "ifmmessage",
+        "name" : "OrderQuery_Request",
+        "namespace" : "urn:example:orders",
+        "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+      },
+      "dataType" : {
+        "type" : "ifmtypedef",
+        "name" : "DT_OrderQuery_Request",
+        "namespace" : "urn:example:orders",
+        "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+      },
+      "xmlNamespace" : "urn:example:orders"
+    }, {
+      "id" : {
+        "type" : "ifmmessage",
+        "name" : "OrderQuery_Response",
+        "namespace" : "urn:example:orders",
+        "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+      },
+      "dataType" : {
+        "type" : "ifmtypedef",
+        "name" : "DT_OrderQuery_Response",
+        "namespace" : "urn:example:orders",
+        "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+      },
+      "xmlNamespace" : "urn:example:orders"
+    }, {
+      "id" : {
+        "type" : "ifmmessage",
+        "name" : "OrderQueryIn_Request",
+        "namespace" : "urn:example:orders",
+        "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+      },
+      "dataType" : {
+        "type" : "ifmtypedef",
+        "name" : "DT_OrderQueryIn_Request",
+        "namespace" : "urn:example:orders",
+        "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+      },
+      "xmlNamespace" : "urn:example:orders"
+    }, {
+      "id" : {
+        "type" : "ifmmessage",
+        "name" : "OrderQueryIn_Response",
+        "namespace" : "urn:example:orders",
+        "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+      },
+      "dataType" : {
+        "type" : "ifmtypedef",
+        "name" : "DT_OrderQueryIn_Response",
+        "namespace" : "urn:example:orders",
+        "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+      },
+      "xmlNamespace" : "urn:example:orders"
+    }, {
+      "id" : {
+        "type" : "ifmmessage",
+        "name" : "ORDERS.ORDERS05",
+        "namespace" : "urn:example:idoc",
+        "swc" : "SC_EXAMPLE_IDOC, 1.0 of example"
+      },
+      "dataType" : {
+        "type" : "ifmtypedef",
+        "name" : "DT_ORDERS.ORDERS05",
+        "namespace" : "urn:example:idoc",
+        "swc" : "SC_EXAMPLE_IDOC, 1.0 of example"
+      },
+      "xmlNamespace" : "urn:example:idoc"
+    }, {
+      "id" : {
+        "type" : "ifmmessage",
+        "name" : "Order",
+        "namespace" : "urn:example:orders",
+        "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+      },
+      "dataType" : {
+        "type" : "ifmtypedef",
+        "name" : "DT_Order",
+        "namespace" : "urn:example:orders",
+        "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+      },
+      "xmlNamespace" : "urn:example:orders"
+    }, {
+      "id" : {
+        "type" : "ifmmessage",
+        "name" : "OrderFile",
+        "namespace" : "urn:example:orders",
+        "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+      },
+      "dataType" : {
+        "type" : "ifmtypedef",
+        "name" : "DT_OrderFile",
+        "namespace" : "urn:example:orders",
+        "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+      },
+      "xmlNamespace" : "urn:example:orders"
+    }, {
+      "id" : {
+        "type" : "ifmmessage",
+        "name" : "OrderBatch",
+        "namespace" : "urn:example:orders",
+        "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+      },
+      "dataType" : {
+        "type" : "ifmtypedef",
+        "name" : "DT_OrderBatch",
+        "namespace" : "urn:example:orders",
+        "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+      },
+      "xmlNamespace" : "urn:example:orders"
+    } ],
+    "dataTypes" : [ ],
+    "externalDefinitions" : [ ],
+    "mappingPrograms" : [ {
+      "type" : "MAP_ARCHIVE_PRG",
+      "name" : "example-routing"
+    } ],
+    "functionLibraries" : [ ],
+    "importedArchives" : [ {
+      "id" : {
+        "type" : "TRAFO_JAR",
+        "name" : "example-routing",
+        "namespace" : "urn:example:orders",
+        "swc" : "SC_EXAMPLE_ORDERS, 1.0 of example"
+      },
+      "fileName" : "example-routing.jar",
+      "maven" : "com.example:example-routing:1.0.0",
+      "programs" : [ {
+        "path" : "com/example/routing/OrderBatchRouting.class",
+        "kind" : "javaMapping",
+        "className" : "com.example.routing.OrderBatchRouting",
+        "superclass" : "com.sap.aii.mapping.api.AbstractTransformation",
+        "interfaces" : [ ],
+        "mappingApi" : "AbstractTransformation",
+        "sapApis" : [ "Trace" ]
+      } ],
+      "packages" : {
+        "com.example.routing" : 1
+      },
+      "otherFiles" : [ ],
+      "sapApis" : [ "Trace" ]
+    } ]
+  }
 }
