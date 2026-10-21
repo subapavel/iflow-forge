@@ -111,3 +111,103 @@ Facts only; the next exact action and the state live in `agent/HANDOFF.md`.
 - Codex discovers repository skills under `.agents/skills/` (constants `AGENTS_DIR_NAME = ".agents"`, `SKILLS_DIR_NAME = "skills"`, repo-scoped roots between project root and cwd) [external: github.com/openai/codex codex-rs/ext/skills/src/host_roots.rs]; user scope `~/.agents/skills/`; it reads only `name` and `description` until the skill triggers.
 - Gemini CLI reads workspace skills from `.gemini/skills/` or the `.agents/skills/` alias; agent skills are enabled by default (`skills.enabled` default true) [external: github.com/google-gemini/gemini-cli docs/cli/using-agent-skills.md "Discovery tiers"; packages/cli/src/config/settingsSchema.ts]. One `.agents/skills/` pointer therefore serves Codex and Gemini; spec §6.1 changelog 2026-10-20.
 - The cloud environment's network policy blocks developers.openai.com (curl 403 via the proxy, WebFetch ENOTFOUND); Context7 (`/openai/codex`, `/google-gemini/gemini-cli`) is the reachable source for these facts.
+
+## MIG-21 — CLI `discover`: acceptance spec and scout facts (architect, 2026-10-21; owner continues locally)
+
+Written in the cloud session before the hand-over; the next architect session starts MIG-21 from here (test-author first).
+
+### Acceptance spec
+
+
+Context: D-045 / F-13; MIG-20 built `ScenarioDiscovery` / `DiscoveryReport` (po-xray-core, commit 72d54e3). Facts
+from the scout: scout-facts.md in this folder (read it). Modules: po-xray-cli (Quarkus + Aesh) and po-xray-core.
+
+#### Command (draft — review at hand-over)
+
+`po-xray discover (-s <system> | --icos <icos.json>) [-o <dir>] [-l cs|en] [--json] [--refresh] [--cache <dir>] <export-dir>...`
+- `<export-dir>...` (1..n, required): directories written by `po-xray export -o`, or single inventory JSON files;
+  each is read as `ScenarioDiscovery.read` reads one (same listing and `NOT_SCA_INVENTORY` rule). Core gains a public
+  overload `ScenarioDiscovery.read(List<Path> exports, IntegrationInventory icos, String icosLabel)` (or equivalent)
+  so the CLI never re-implements the listing.
+- `-s <system>`: every ICO of the system — `po.query(system, cache, refresh).icos("*", Direction.BOTH)` exactly as
+  IcoCommand does for one component (live simple query or `tpz=`); the inventory label is `system:<name>`.
+- `--icos <file>`: an existing all-ICO inventory JSON (`po-xray ico -s <system> -c '*' -d both -f json`), offline;
+  label = the file path. Exactly one of `-s` / `--icos` must be given, else exit 1 with
+  `Error: give -s <system> or --icos <icos.json>` on stderr.
+- stdout: the report's Markdown, or JSON with `--json` (as `bpm-inventory`). stderr: one summary line
+  `Discovered <p> process(es), <c> component(s), <i> issue(s) from <n> export path(s)`.
+- `-o <dir>`: additionally writes `discover.json` and `discover.md`, and for every component of the report (every
+  role) `icos-<component>.json` and `icos-<component>.md` (base name via `PoService.baseName`, locale `-l`, default
+  `cs`, Markdown through the same `DocFormat` path IcoCommand uses). The per-component inventory is a slice of the
+  all-ICO inventory fetched once — a new core helper `IntegrationInventories.slice(IntegrationInventory all, String
+  component)` (name free, in io.poxray.integration or io.poxray.migration): the ICOs whose sender component or any
+  receiver component equals `component` (exact, case-sensitive), `components` = [that component], the other fields
+  copied, issues copied. No second query per component. Each written path is reported on stderr as `Written <path>`.
+- Exit 1 with `Error: ...` when an export path does not exist, when no export path holds an inventory with `bpm`
+  (`No SCA inventory with bpm in <paths>`), or when `--icos` is unreadable (`NOT_ICO_INVENTORY` is an issue in core;
+  the CLI turns it into exit 1 so the migrator notices).
+- Registry: PoXrayCommand `groupCommands` and the usage text gain `discover`.
+
+#### Systems directory override (core)
+
+`PoSystem.defaultDirectory()` honours, in this order, the system property `poxray.systems`, the environment variable
+`POXRAY_SYSTEMS`, then `~/.po-xray/systems`. Documented in PoSystem's Javadoc and docs/inputs/README.md §3.
+(Reason: tests and CI must point `-s` at a synthetic system without touching the home directory.)
+
+#### Docs
+
+docs/inputs/README.md §3: a paragraph after the `ico` command — `discover` as the way to get the ICOs around a BPM
+process from the exports (command line, what it writes), `ico -c` stays for a single component.
+docs/OUTPUT-MODEL.md `discover` section: replace "the CLI command comes with MIG-21" with the command line and `-o`
+files.
+
+#### Red tests (test-author)
+
+1. po-xray-cli/src/test/java/io/poxray/cli/DiscoverCommandTest.java (@QuarkusMainTest, QuarkusMainLauncher,
+   @TempDir): the test builds its own export (a ScaInventory with one process `OrderApproval`, interfaces
+   OrderIn/urn:synth:orders start, ShipOut/urn:synth:ship outbound, NotifyOut/urn:synth:notify notification — mirror
+   the MIG-20 core test fixture, Json.write into `<tmp>/export/SYNTH.json` plus a `notes.json`) and its own all-ICO
+   inventory (ICO1 SRC_SYS→BPM_CC on OrderIn, ICO2 BPM_CC→WMS_SYS,ERP_SYS on ShipOut, ICO3 unrelated OTHER→X) written
+   to `<tmp>/icos-all.json`. Cases:
+   - `discover --icos <icos-all.json> <export>`: exit 0; stdout has `# Scenario discovery`, `### OrderApproval`,
+     `ICO1`, `| BPM_CC |`; stderr has `Discovered 1 process(es), 4 component(s), 1 issue(s)`.
+   - `--json`: stdout parses as DiscoveryReport; processes[0].processComponents == [BPM_CC]; components names
+     [BPM_CC, ERP_SYS, SRC_SYS, WMS_SYS]; icosInput ends with `icos-all.json`.
+   - `-o <out> -l en`: `discover.json`, `discover.md`, `icos-BPM_CC.json`, `icos-BPM_CC.md`, `icos-SRC_SYS.json`,
+     `icos-WMS_SYS.json`, `icos-ERP_SYS.json` exist; `icos-BPM_CC.json` parses as IntegrationInventory with exactly
+     ICO1 and ICO2 and components [BPM_CC]; `icos-SRC_SYS.json` has only ICO1; no `icos-OTHER.json`, no `icos-X.json`.
+   - two export paths (a directory and a single file) → both in `inputs`.
+   - neither `-s` nor `--icos` → exit 1, stderr `give -s <system> or --icos`; both given → exit 1.
+   - missing export path → exit 1, stderr names the path; export without bpm → exit 1 `No SCA inventory with bpm`.
+   - unreadable `--icos` file → exit 1, stderr contains `NOT_ICO_INVENTORY` or the file name.
+   - `-s` on a synthetic tpz system: ONLY if FakePo/SyntheticTpz (po-xray-core test-jar is on the cli test classpath)
+     already offer an AllInOne/ICO XML builder that TpzGateway + IntegrationReader read into an Ico with sender and
+     receiver interfaces (look in TpzGatewayTest, ObjectCatalogTest, BpmIntegrationTest, IntegrationReaderTest for
+     an existing AllInOne xiObj). If it exists: write `systems/<name>.properties` with `tpz=../exports` in @TempDir,
+     set `System.setProperty("poxray.systems", ...)` in the test (restore in @AfterEach), run `discover -s <name>
+     <export>` and assert ICO1 in stdout. If no such builder exists, do not invent one: say so in the handback and
+     leave `-s` to the shared IcoCommand path.
+2. po-xray-core/src/test/java/io/poxray/po/PoSystemTest.java (new or extended if one exists): `poxray.systems`
+   property → `PoSystem.load(name)` reads `<dir>/<name>.properties` (restore the property in @AfterEach); property
+   absent + env absent → default under `user.home` (assert the path shape, no file access).
+3. po-xray-core/src/test/java/io/poxray/migration/ScenarioDiscoveryTest.java: at most two new tests for the overload
+   `read(List<Path>, IntegrationInventory, String)` (two paths, inputs order follows the argument order) and for the
+   slice helper (sender match, receiver match, exactness, components = [component], unrelated ICO dropped). The
+   existing 17 tests stay untouched.
+Red evidence: `mvn -B -ntp -q -pl po-xray-core,po-xray-cli test -Dtest='DiscoverCommandTest,PoSystemTest,ScenarioDiscoveryTest' -Dsurefire.failIfNoSpecifiedTests=false > target/mig-21-red.log 2>&1`
+(compile failure on the missing command/helper is the expected red; if Quarkus main tests need the cli module built,
+say what you ran). Handback ≤ 40 lines: files, test names, the red's last lines, choices made (esp. the `-s` test).
+No production code, no fixture files under skills/.
+
+### Scout facts
+
+- PoService.java (37 lines): L21 `IntegrationQuery query(String system, String cache, boolean refresh)` = PoConnection.open(PoSystem.load(system), cache, refresh) → new IntegrationQuery(gateway, source); L27 `catalog(system)`; L33 `static String baseName(component)` = "icos-" + component with [^A-Za-z0-9_.-] → "_". No file writes.
+- IcoCommand.java: -s req (27-29), -c req (31-33), -d both|in|out (35-37), -f json|markdown|jira|all (39-41), -l cs|en default cs (43-45), -o default "." (47-48), --refresh (50-51), --cache (53-54); execute 63-65 `po.query(system, cache, refresh).icos(component, Direction)`; stderr summary 67-74; writes 75-88 via ScaService.write (76-87): json 78-80 `Json.write(inv)` → icos-<base>.json; docs 81-87 per DocFormat (MARKDOWN .md, JIRA .jira.txt) with Locale.forLanguageTag(lang); "Written <path>" stderr; nothing on stdout.
+- ScaService.run (34-43): CliException → "Error: msg" stderr, exit 1; CliException 25-28.
+- No CLI test uses a PO system; no IcoCommandTest. SyntheticTpz.write(Path file, String metadata, List<String> xiObjs) (core test, L20) generic zip (Metadata.properties + content.tpt); XML via FakePo.xiObj(vcType, type, oid, key, content, links) (FakePo.java:136-137). TpzGatewayTest: exports(dir) 28-39 builds esr.tpz + directory.tpz (Service, RoutingRelation; no AllInOne), L43 `new TpzGateway(PoSystem.tpz(name, dir))`, L66-80 writes systems/<name>.properties `tpz=../exports`, `PoSystem.load(name, systems, Map.of())` (package-private, io.poxray.po), `PoConnection.open(system, null, false)`.
+- PoSystem.load: defaultDirectory() 67-70 = user.home/.po-xray/systems, no override property; load(name) 72-74 public; load(name, dir, env) 76 package-private; tpz key 92-96 relative to systems dir; url 97-101; env POXRAY_USER/_PASSWORD, POXRAY_<SYS>_USER/_PASSWORD.
+- IntegrationQuery.icos("*", BOTH) selects every ICO with non-null key(1) (glob 262-275 `*`→`.*`; loop 98-122); list(type) 207-212 via source.list with MODIFYUSER LIKE *. TpzGateway.query 94-120 enumerates objects.ofType(type), `*`/blank value → true (145-147); AllInOne keys TypeKeys.java:24-25 (FROMPARTY, FROMSRVC, FROMACTIONNS, FROMACTION, TOPARTY, TOSRVC); default list = XiObjectSource.java:25.
+- Registry: PoXrayCommand.java:15-17 groupCommands {..., IcoCommand, ..., AttributesCommand, BpmInventoryCommand}; usage text 22-24 lists commands — add discover to both.
+- Tests: BpmInventoryCommandTest (@QuarkusMainTest, launcher.launch(args), exitCode/getOutput/getErrorOutput, fixture ../skills/sap-po-migration/fixtures/bpm-export); CliTest (SyntheticSca.write, launch("export", ..., "-o", out, "-l", "en")).
+- docs/inputs/README.md 23-33 ico section (properties file url=/tpz=, command line 31-33); docs/OUTPUT-MODEL.md 525-530 "## Migration helpers" intro says "Two read-only helpers" — becomes three.
+- Design choice (architect): a systems-directory override for tests and CI — system property `poxray.systems` (then env `POXRAY_SYSTEMS`) read in PoSystem.defaultDirectory(); the CLI test writes systems/<name>.properties with tpz= and a synthetic directory.tpz holding AllInOne objects (FakePo.xiObj), sets the property, launches `discover -s <name> -o <dir> <fixture-export>`. Also `--icos <icos.json>` offline alternative to -s (reads an existing all-ICO dump) — decide in the acceptance spec.

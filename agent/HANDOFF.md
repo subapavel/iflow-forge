@@ -1,9 +1,9 @@
 # Handoff
 
-state: RUNNING — MIG-20 scenario discovery core done (D-045, F-13); MIG-21 CLI discover ready; MIG-22 intake after it
-last commit: feat: scenario discovery derives the ICOs around a BPM process from the artifacts (MIG-20) — hash in git log; prev 33707a2 MIG-19
-branch: claude/eager-brown-uw61ft (D-017; owner fast-forwards main); CI 33707a2 run 39584178282 green; e39fac5 run 39581894366 green on attempt 2 (429 first)
-next exact action: MIG-21 — acceptance spec from scratchpad mig-21/scout-facts.md (systems-dir override, --icos offline), test-author, implementer, reviewer
+state: PAUSED — owner 2026-10-21 continues locally this week; MIG-20 done (72d54e3); MIG-21 ready (spec in agent/NOTES.md, last section); MIG-22 pending
+last commit: chore: hand-over for local continuation — MIG-21 spec and scout facts in NOTES; prev 72d54e3 MIG-20, 33707a2 MIG-19
+branch: claude/eager-brown-uw61ft (D-017; owner fast-forwards main); CI 72d54e3 run 39587302862 green; 33707a2 run 39584178282 green; e39fac5 green (attempt 2)
+next exact action: MIG-21 — test-author red tests per agent/NOTES.md "MIG-21" (DiscoverCommandTest, PoSystemTest, 2 core tests); implementer; reviewer
 spec: docs/superpowers/specs/2026-10-20-migration-front-end-design.md — §6.3 tool, §7 phases (F-11), §8, §9, §10 gate, §11 pilot, §12 P-1 to P-12
 dry run: fixtures/dry-run-2026-10-21.md runs 1–3; all run-3 gaps closed (MIG-15 skill, MIG-16 pages, MIG-17 tool); a 4th run or a real pilot is the next test
 D-036 routing; D-037 profile at step 6; D-038 silent pages; D-039 skill; D-040 helper; D-041 run-3 conventions; D-042 queue shape; D-043 esr check, keys

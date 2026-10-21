@@ -483,3 +483,6 @@ Review: reviewer r1 PASS (tests real: id≠name fixture, namespace and case case
 Ledger: MIG-19 hash 33707a2 (CI run 39584178282 green).
 Findings: F-13. Decisions: D-045. Issues: none.
 Next: MIG-21 CLI `discover` (every ICO of the system through PoService, report + `icos-<component>` dumps with `-o`), then MIG-22 intake and quick start.
+
+## HAND-OVER · 2026-10-21 · (hash in the next entry)
+Owner 2026-10-21: stop the cloud loop, continue locally this week. MIG-20 committed as 72d54e3 (CI run 39587302862 green). MIG-21 not started: its acceptance spec and the scout facts (CLI `discover`, systems-directory override, offline `--icos`, slice helper, test plan) are in agent/NOTES.md, last section, so the local session starts at the test-author. BACKLOG: MIG-20 done, MIG-21 ready, MIG-22 pending; no other ready row. Owner inputs still open: ISSUE-3/FIX-03, ISSUE-4, ISSUE-5, KB-12b, KB-00a, KB-09, MIG-07.
