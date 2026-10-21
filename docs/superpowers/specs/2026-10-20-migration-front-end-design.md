@@ -10,6 +10,9 @@ artifact's Bundle-Version.
 Changelog: 2026-10-21 F-10 — §8.1 the profile is amended when an answer settles a profile value (§7 item 3, step 6), not
 only in the retrospective, so the §7 item 5 exit (every placeholder resolves against the profile) can hold.
 
+Changelog: 2026-10-21 F-11 — §7 item 2 lists only the version-gated features the tenant lacks or cannot judge ("absent",
+"unknown"), as §10 intends; a feature present at the installed version raises no question (D-041 c).
+
 **Changelog:** 2026-10-20 · MIG-01 preparation · §6.1, §13: Gemini CLI reads `.agents/skills/` as an alias of `.gemini/skills/` and agent skills are enabled by default, so one `.agents/skills/` pointer serves Codex and Gemini; the `.gemini/skills/` pointer and the experimental-flag question are dropped [external: github.com/openai/codex codex-rs/ext/skills/src/host_roots.rs] [external: github.com/google-gemini/gemini-cli docs/cli/using-agent-skills.md].
 
 ## 1. Where this sits
@@ -186,7 +189,7 @@ phase 6 is a **placeholder** until part 4 exists — the skill writes "not avail
    scenario, orchestration outside the pipeline, conversion, or **human task → stop** (statement 7: the
    skill reports the human tasks and ends the migration as out of scope). The analysis is neutral about
    the customer's PO (reader rule). Exit: every attribute has a value or a `?`; every `?`, every open
-   question of `knowledge/pipeline/open-questions/` the scenario touches, every version-gated feature
+   question of `knowledge/pipeline/open-questions/` the scenario touches, every version-gated feature the tenant lacks or cannot judge (§10)
    (`versions/features.md` against the profile's installed versions) and every recipe in `proposal`
    status is on the **open list**.
 3. **Question round.** One question at a time (statement 7), in the order: blocking (no plan without

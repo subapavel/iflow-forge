@@ -402,3 +402,14 @@ Review: kb-reviewer r1 FAIL 4 (gap lines without an existing file and heading: a
 Ledger: MIG-13 hash 71fc425, CI 39539381995 green.
 Findings: none. Decisions: none. Issues: none.
 Next: MIG-15, MIG-16 (content) and MIG-17 (code) ready; then IDLE_NO_READY_TASK — KB-12b judgement, KB-00a, KB-09, MIG-07, MIG-08, PR-00, SRC-00, FIX-03 wait on the owner.
+
+## MIG-15 · 2026-10-21 · (hash in the next entry)
+Context compacted before this task; re-verified with `git status` and `git log -3` (HEAD 08893f4, clean).
+Task: dry-run-3 gaps F (skill references and templates): six conventions the run left to the runner. Content, no red test. Deviation: spec §7 item 2 (F-11).
+D-041: (a) open-list touch only by title or Unknown line, a "Pass A (drafts vs artifacts)" list never, a `?` candidate like a value; (b) one item per recipe row, adapter beans no rows; (c) a features.md row at or below the installed version raises no item (like `present in`, D-038 b); (d) scheme rows in the profile, profile questions T-1…T-4 with source `M-<n>, T-<n>`; (e) an unused template parameter is a `not set` row and counts as resolved; (f) a profile row assumed "not needed".
+Changed: skills/sap-po-migration/SKILL.md (1,021 → 1,044), references/attributes.md (1,471 → 1,478; prose cut), intake.md (1,188 → 1,220), questions.md (1,237 → 1,273), retrospective.md (995 → 1,011; intake-asked sources), templates/profile.md (590 → 655), templates/scenario.md (616 → 636); docs/DECISIONS.md D-041; docs/findings/F-11.md; spec §7 item 2 + changelog line; agent/BACKLOG.md.
+Checks: knowledge module exit 0 (verifier target/mig-15-kb-v.log; 67/0/0/2 baseline); every page ≤ 1,480; "stop" lines 18, unchanged from HEAD; customer grep 0; local/ and testdata/ untouched.
+Review: kb-reviewer r1 PASS (2026-10-21); non-blocking: kb-06 is headed "Pass A (drafts vs scripts)" — excluded by the title/Unknown rule, not the literal; questions.md:13 conversion bullet still reads per module; profile.md L40–42 bullets lack `not needed`; SKILL.md:33 and intake.md:80 exits name only `proposal` recipes (pre-existing).
+Ledger: MIG-14 hash 08893f4, CI 39566640773 green.
+Findings: F-11 (version gate: §7 item 2 listed present features too; §10 intent kept). Decisions: D-041. Issues: none.
+Next: MIG-16 (knowledge pages: jms queue shape, request-only BE mapping, interface_determination contradiction), then MIG-17 (code); then IDLE_NO_READY_TASK.

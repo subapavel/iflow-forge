@@ -12,13 +12,13 @@ Phase 1 of the flow (spec §7 item 1) and the reading surface of phase 2 (spec �
 ## Tenant profile
 
 1. Read `local/<customer>/profile.md` when it exists.
-2. Else create it from `templates/profile.md` and ask the profile questions first, before any input is listed (spec §7 item 1):
-   - **Input paths**: where the BPM exports, the ICO dumps and any iFlow dumps are (default: the `testdata/` layout of `docs/inputs/README.md` §2–3, spec §5).
-   - **Runtime**: the runtime the tenant uses for pipeline scenarios, as the migrator states it; the values are those of `runtime` in [page: knowledge/pipeline/scenario-contribution.md#Scenario attributes].
-   - **Installed pipeline versions**: the tenant's version of each of the four packages, as [page: knowledge/pipeline/versions/features.md#The tenant's installed version] describes them.
-   - **Naming conventions**: the tenant's naming for the values [page: knowledge/pipeline/naming.md#Tenant placeholders] lists.
+2. Else create it from `templates/profile.md` and ask the profile questions T-1 to T-4 first, before any input is listed (spec §7 item 1):
+   - **T-1 Input paths**: where the BPM exports, the ICO dumps and any iFlow dumps are (default: the `testdata/` layout of `docs/inputs/README.md` §2–3, spec §5).
+   - **T-2 Runtime**: the runtime the tenant uses for pipeline scenarios, as the migrator states it; the values are those of `runtime` in [page: knowledge/pipeline/scenario-contribution.md#Scenario attributes].
+   - **T-3 Installed pipeline versions**: the tenant's version of each of the four packages, as [page: knowledge/pipeline/versions/features.md#The tenant's installed version] describes them.
+   - **T-4 Naming conventions**: the tenant's naming for the values [page: knowledge/pipeline/naming.md#Tenant placeholders] lists.
 3. An answer the migrator does not know is written as "unknown" in the profile and becomes an open-list item in phase 2: type blocking for the runtime, version for the installed versions, naming for the naming conventions; an unknown input path leaves its input row `missing`. The other profile sections are filled when a migration settles them and amended by the question round (`references/questions.md`, step 6) and the retrospective (D-037; SKILL.md, "Local files").
-4. Record in `intake.md`: profile read or created, and which answers are "unknown".
+4. Record in `intake.md`: profile read or created, each answer with its `T-<n>`, and which answers are "unknown". An answer given here has source `M-<n>, T-<n>` in the profile; one settled later `M-<n>, Q-<n>` (D-041).
 
 ## Inputs present and missing
 
@@ -77,4 +77,4 @@ Before step 1 of phase 2, read `knowledge/pipeline/SKILL.md` and its loaded set 
 7. **Stop** (only when reached): the human-task report (`references/bpm.md`).
 8. **Open list**: one line per item in the format of `references/attributes.md`, "Open list entries".
 
-**Exit** (spec §7 item 2): every attribute has a value or a `?`; every `?`, every open question of `knowledge/pipeline/open-questions/` the scenario touches, every version-gated feature and every recipe in `proposal` status is on the open list.
+**Exit** (spec §7 item 2): every attribute has a value or a `?`; every `?`, every open question of `knowledge/pipeline/open-questions/` the scenario touches, every version-gated feature "absent" or "unknown" and every recipe in `proposal` status is on the open list.

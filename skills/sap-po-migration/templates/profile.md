@@ -14,7 +14,7 @@ Defaults: `docs/inputs/README.md` §2–3; the iFlow path is spec §5's future p
 
 ## Runtime
 
-`runtime: <value | unknown> — source: <M-<n>, Q-<n> | deployed generic iFlows of the tenant>`
+`runtime: <value | unknown> — source: <M-<n>, T-<n> | M-<n>, Q-<n> | deployed generic iFlows of the tenant>`
 
 Values: `runtime` of [page: knowledge/pipeline/scenario-contribution.md#Scenario attributes]; `unknown` is a blocking open-list item. The value is the tenant default for EO senders: DefaultJMSQueueNumber X01 → integrated-async, Q01 → decoupled [page: knowledge/pipeline/migration/variants.md#runtime: integrated-async or decoupled] (EOIO: no runtime — a blocking entry of the qos row, D-038; [page: knowledge/pipeline/migration/po-ico-to-pipeline.md#ICO fields to scenario attributes]); BE is integrated-sync by rule [page: docs/OUTPUT-MODEL.md#Migration helpers]. A scenario's `?` runtime row takes this value as its proposed answer, source `profile`; the migrator confirms (D-039).
 
@@ -33,13 +33,13 @@ A value is a version or `unknown`; packages and versions as [page: knowledge/pip
 
 | placeholder | the tenant's value | source |
 |---|---|---|
-| `{{tenant.<path>}}` | `<value>` or `unknown` | `<M-<n>, Q-<n>>` |
+| `{{tenant.<path>}}` | `<value>`, `<scheme>`, `unknown` or `not needed` | `<M-<n>, T-<n>>` or `<M-<n>, Q-<n>>` |
 
-One row per path of [page: knowledge/pipeline/naming.md#Tenant placeholders], by its groups endpoint, xi, idoc, security, pipeline, jms, name, cloudconnector; the queue prefix and suffix are rows of the pipeline group. Then:
+One row per path of [page: knowledge/pipeline/naming.md#Tenant placeholders], by its groups endpoint, xi, idoc, security, pipeline, jms, name, cloudconnector; the queue prefix and suffix are rows of the pipeline group. A placeholder whose value differs per scenario holds a scheme (a form with `<part>`s each scenario resolves in phase 5), never one value (D-041). Source: `M-<n>, T-<n>` for an answer at intake, `M-<n>, Q-<n>` for one settled later (D-037); `not needed` carries `(assumption)` as [page: skills/sap-po-migration/references/questions.md#Assumptions] says. Then:
 
-- iFlow id of a template copy: `<scheme>` or `unknown` (SAP's: [page: knowledge/pipeline/naming.md#SAP's own naming]) — source: `<M-<n>, Q-<n>>`;
-- package: `<scheme>` or `unknown` — source: `<M-<n>, Q-<n>>`;
-- Partner Directory alias, sender and receiver: `<scheme>` or `unknown` — source: `<M-<n>, Q-<n>>` (D-039).
+- iFlow id of a template copy: `<scheme>` or `unknown` (SAP's: [page: knowledge/pipeline/naming.md#SAP's own naming]) — source: `<M-<n>, T-<n>>` or `<M-<n>, Q-<n>>`;
+- package: `<scheme>` or `unknown` — source: `<M-<n>, T-<n>>` or `<M-<n>, Q-<n>>`;
+- Partner Directory alias, sender and receiver: `<scheme>` or `unknown` — source: `<M-<n>, T-<n>>` or `<M-<n>, Q-<n>>` (D-039).
 
 ## Partner Directory conventions
 

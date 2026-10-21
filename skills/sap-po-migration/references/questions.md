@@ -50,7 +50,7 @@ One record per question, the fields of `templates/question.md` (spec §7 item 3)
 ## Assumptions
 
 1. An item nobody can settle now is closed by an explicit assumption, never deferred (spec §12 P-4): the answer reads `assume <X>; verify at <event>`, `<event>` a named point such as the first test on the tenant or the scenario specification of phase 5.
-2. The assumption is the record's answer; its consequence applies to `analysis.md` as an answer does, with the source `Q-<n>`; an assumed profile value goes into the profile row as an answer does ("One question at a time", step 6), source `M-<n>, Q-<n> (assumption)` (D-039).
+2. The assumption is the record's answer; its consequence applies to `analysis.md` as an answer does, with the source `Q-<n>`; an assumed profile value goes into the profile row as an answer does ("One question at a time", step 6), source `M-<n>, Q-<n> (assumption)` (D-039). A profile row assumed not needed is written `not needed`, source `M-<n>, Q-<n> (assumption)`; it is not "unknown" and raises no item until a scenario needs the path, then it is a naming item again (D-041).
 3. The plan's "Risks and assumptions" section carries every assumption with its `Q-<n>` and event (`references/plan.md`; D-034).
 4. "Later", "to be clarified" or an empty answer is not an assumption: ask again or write the assumption.
 
