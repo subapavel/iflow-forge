@@ -36,7 +36,7 @@ Derived from dynamic routing (`dynamicRouting.mappings` non-empty, D-036); witho
 
 ## interface_determination: custom
 
-Never derived (no ICO field); decoupled only: only Step05 reads CustomXIDEndpoint (grep of every .iflw) [com.sap.integration.cloud.pipeline.v2.generic.step05.interface.determination, scripts/readCustomInterfaceDeterminationFromPD.groovy#L21] [com.sap.integration.cloud.pipeline.v2.generic.step05.interface.determination, step 33 "Custom ID?"]. Human decides (default the static or xpath rule's value).
+Never derived (no ICO field); decoupled only: only Step05 reads CustomXIDEndpoint (grep of every .iflw) [com.sap.integration.cloud.pipeline.v2.generic.step05.interface.determination, scripts/readCustomInterfaceDeterminationFromPD.groovy#L21] [com.sap.integration.cloud.pipeline.v2.generic.step05.interface.determination, step 33 "Custom ID?"]; integrated: see scenario-contribution.md `receiver_determination` custom — a scripts or xrd copy's result carries the interfaces [com.sap.integration.cloud.pipeline.v2.template.step04.custom.receiver.determination.scripts, step 3 "Add interfaces to XML"] [com.sap.integration.cloud.pipeline.v2.template.step04.custom.receiver.determination.xrd, step 3 "Merge interfaces with XML Receivers"]. Human decides (default the static or xpath rule's value).
 
 ## mapping: one-to-many and ordered
 

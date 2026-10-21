@@ -413,3 +413,13 @@ Review: kb-reviewer r1 PASS (2026-10-21); non-blocking: kb-06 is headed "Pass A 
 Ledger: MIG-14 hash 08893f4, CI 39566640773 green.
 Findings: F-11 (version gate: §7 item 2 listed present features too; §10 intent kept). Decisions: D-041. Issues: none.
 Next: MIG-16 (knowledge pages: jms queue shape, request-only BE mapping, interface_determination contradiction), then MIG-17 (code); then IDLE_NO_READY_TASK.
+
+## MIG-16 · 2026-10-21 · (hash in the next entry)
+Task: dry-run-3 gaps G (knowledge pages): the inbound queue shape, a request-only BE mapping, the custom interface determination contradiction. Content, no red test. No deviation.
+D-042: (a) `{{tenant.jms.queue.inbound}}` is `<prefix>X01` (integrated-async, step02.integrated.messaging.async InboundProcessingQueueX) or `<prefix>Q01` (decoupled, step02.inbound.processing InboundProcessingQueue), by the scenario's runtime; (b) BE with a request step only: the request call takes the program, the response call stays as shipped (sync template step 16 "Content Modifier"), value `one`; (c) `interface_determination` custom is the Step05 copy, decoupled only; integrated interfaces come from the XSLT result or a `receiver_determination` scripts or xrd copy's result (step 3 "Add interfaces to XML" / "Merge interfaces with XML Receivers").
+Changed: knowledge/pipeline/naming.md L70 (1,478 → 1,480), migration/po-ico-to-pipeline.md L41 (1,474 → 1,480), scenario-contribution.md L29 (1,480 → 1,480), migration/variants.md L39 (1,308 → 1,338); prose cuts on the three pages at the ceiling; docs/DECISIONS.md D-042; agent/BACKLOG.md. kb-04.md L8 (default queue name) stays open — (a) does not answer it.
+Checks: knowledge module exit 0 (verifier target/mig-16-kb-v2.log; 67/0/0/2 baseline); every page ≤ 1,480; heading lines changed 0; customer grep 0.
+Review: kb-reviewer r1 FAIL 3 (po-ico L59 cut dropped the spec §8 condition "about the pipeline"; "no Step05 (Q03 grep)" an uncited negative claim; "custom copy" generalised "scripts or xrd" — the plain Step04 custom copy has no interface step) → kb-author r2 → kb-reviewer r2 PASS (2026-10-21). Non-blocking: scenario-contribution L29 cites async step 45 only; sync has the same step (L1758).
+Ledger: MIG-15 hash 3e20251, CI 39568803472 green.
+Findings: none. Decisions: D-042. Issues: none.
+Next: MIG-17 (code: mapping-shape cross-check against `esr.messageMappings[].multiplicity`, fixture channel `attributes`, intake.md source of channel attributes; acceptance spec, red tests first); then IDLE_NO_READY_TASK.

@@ -1,6 +1,6 @@
 # Naming
 
-SAP's naming in the `2026-06-trial` packages, and the `{{tenant.*}}` placeholders for tenant-specific values; the list is part 2's interface (tenant profile).
+SAP's naming in the `2026-06-trial` packages and the `{{tenant.*}}` placeholders (part 2's tenant-profile interface).
 
 ## SAP's own naming
 
@@ -12,11 +12,11 @@ SAP's naming in the `2026-06-trial` packages, and the `{{tenant.*}}` placeholder
 - Externalized parameters: CustomX<exit>_Enabled and _Endpoint [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, parameter "CustomXPreGlobal_Endpoint"] [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, parameter "CustomXError_Endpoint"], JMS_<setting> with infixes such as JMS_RQ_ [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, parameter "JMS_RQ_EncryptStoredMessage"], DLQ_<setting> [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, parameter "DLQ_ExpirationPeriod"], Default_<EDIDC field> [com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.idoc, parameter "Default_SNDPOR"]. The queue prefix has three names: PipelinePrefix [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi, parameter "PipelinePrefix"], DefaultJMSQueuePrefix [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc, parameter "DefaultJMSQueuePrefix"], PipelineJMSQueuePrefix [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, parameter "PipelineJMSQueuePrefix"].
 - JMS queues are `<prefix>Q0<N>`, one per pipeline step: Step02 inbound reads `<prefix>Q01` [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, adapter "JMS" "InboundProcessingQueue"], writes `<prefix>Q02` [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, adapter "JMS" "ReceiverDeterminationQueue"], its dead-letter queue appends `_DLQ` [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, adapter "JMS" "DeadLetterQueue"]; property incomingQueue is `${property.PipelineJMSQueuePrefix}Q01` [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, step 20 "Set custom status"]; Step06 reads `<prefix>Q04<suffix>` [com.sap.integration.cloud.pipeline.v2.generic.step06.outbound.processing, adapter "JMS" "OutboundProcessingQueue"]; the integrated runtime uses `<prefix>X01` [com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async, adapter "JMS" "InboundProcessingQueueX"] and `/<prefix>/XS01` [com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.sync, adapter "ProcessDirect" "InboundProcessingSync"]. All queues: message-path.md "Queues and endpoints".
 - ProcessDirect address parameters are spelled three ways: ProcessDirect_Address [com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.idoc, parameter "ProcessDirect_Address"], ProcessDirect_EndPoint [com.sap.integration.cloud.pipeline.v2.generic.step08.outbound.processing.xi, parameter "ProcessDirect_EndPoint"], ProcessDirect_Endpoint [com.sap.integration.cloud.pipeline.v2.template.step07.outbound.processing.p2p, parameter "ProcessDirect_Endpoint"].
-- Partner Directory keys: partner-directory.md "Key scheme". Header and property names: contracts.md.
+- Partner Directory keys: partner-directory.md "Key scheme"; headers, properties: contracts.md.
 
 ## Tenant placeholders
 
-Shapes show form, never values; "Used by" names the pages writing the placeholder.
+Shapes show form, never values; "used by" names the writing pages.
 
 ### endpoint
 
@@ -61,13 +61,13 @@ Shapes show form, never values; "Used by" names the pages writing the placeholde
 
 ### pipeline
 
-- `{{tenant.pipeline.prefix}}`: queue and address prefix of one pipeline [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi, parameter "PipelinePrefix"] [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc, parameter "DefaultJMSQueuePrefix"] [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, parameter "PipelineJMSQueuePrefix"]; shape `<prefix>` (queues `<prefix>Q01`); used by the iflows/ pages of the eight generic iFlows other than Step08, scripts/attachAdditionallnformation.md, open-questions/kb-07.md, message-path.md, overview.md, scenario-contribution.md.
+- `{{tenant.pipeline.prefix}}`: queue and address prefix of one pipeline [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.xi, parameter "PipelinePrefix"] [com.sap.integration.cloud.pipeline.v2.generic.step01.inbound.processing.idoc, parameter "DefaultJMSQueuePrefix"] [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, parameter "PipelineJMSQueuePrefix"]; shape `<prefix>`; used by the iflows/ pages of the eight generic iFlows other than Step08, scripts/attachAdditionallnformation.md, open-questions/kb-07.md, message-path.md, overview.md, scenario-contribution.md.
 - `{{tenant.pipeline.outbound.suffix}}`: suffix of the Step06 queue `<prefix>Q04<suffix>` and its DLQ, empty unless a receiver-specific outbound processing flow is set up [com.sap.integration.cloud.pipeline.v2.generic.step06.outbound.processing, parameter "PipelineJMSQueueSuffix"]; shape `_<receiver>`; used by iflows/com.sap.integration.cloud.pipeline.v2.generic.step06.outbound.processing.md, open-questions/kb-07.md, message-path.md, overview.md, scenario-contribution.md.
 - `{{tenant.pipeline.version.generic_inbound}}`, `{{tenant.pipeline.version.generic_outbound}}`, `{{tenant.pipeline.version.generic_pipelines}}`, `{{tenant.pipeline.version.templates}}`: package version from its CHANGELOG.txt's first dated entry [knowledge/sources/README.md#L27]; shape `<major>.<minor>.<micro>`; used by versions/features.md.
 
 ### jms
 
-- `{{tenant.jms.queue.inbound}}`: pipeline inbound queue a Step01 template copy writes to [com.sap.integration.cloud.pipeline.v2.template.step01.inbound.processing.eo, parameter "JMS_Outgoing"] [com.sap.integration.cloud.pipeline.v2.template.step01.inbound.processing.alo, parameter "JMS_Outgoing"]; shape `<prefix>Q01`; used by templates/com.sap.integration.cloud.pipeline.v2.template.step01.inbound.processing.eo.md, templates/com.sap.integration.cloud.pipeline.v2.template.step01.inbound.processing.alo.md, message-path.md, scenario-contribution.md.
+- `{{tenant.jms.queue.inbound}}`: pipeline inbound queue a Step01 template copy writes to [com.sap.integration.cloud.pipeline.v2.template.step01.inbound.processing.eo, parameter "JMS_Outgoing"] [com.sap.integration.cloud.pipeline.v2.template.step01.inbound.processing.alo, parameter "JMS_Outgoing"]; shape `<prefix>X01` (integrated-async) [com.sap.integration.cloud.pipeline.v2.generic.step02.integrated.messaging.async, adapter "JMS" "InboundProcessingQueueX"] or `<prefix>Q01` (decoupled) [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, adapter "JMS" "InboundProcessingQueue"], by the scenario's runtime; used by templates/com.sap.integration.cloud.pipeline.v2.template.step01.inbound.processing.eo.md, templates/com.sap.integration.cloud.pipeline.v2.template.step01.inbound.processing.alo.md, message-path.md, scenario-contribution.md.
 - `{{tenant.jms.queue.receiver.specific}}`: receiver-specific queue, Partner Directory ReceiverSpecificQueue_<SAP_ReceiverAlias> (PID partnerID) or ReceiverSpecificQueue (PID receiver alias) [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/readReceiverSpecificQueueFromPD.groovy#L19] [com.sap.integration.cloud.pipeline.v2.generic.step02.inbound.processing, scripts/readReceiverSpecificQueueFromPD.groovy#L23]; no externalized parameter; shape `<prefix>Q04<suffix>`; used by message-path.md, scenario-contribution.md.
 
 ### name
@@ -80,4 +80,4 @@ Shapes show form, never values; "Used by" names the pages writing the placeholde
 
 ## Reserved
 
-- tenant.deviations.* (spec §12.2): a tenant's changes to a generic iFlow at its extension points, filled from the deviations section of part 2's tenant profile. No page uses it, hence no token form.
+- tenant.deviations.* (spec §12.2): a tenant's changes to a generic iFlow at its extension points, filled from the deviations section of part 2's tenant profile. No page uses it: no token form.
