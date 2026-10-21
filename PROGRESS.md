@@ -300,3 +300,12 @@ Review: reviewer r1 PASS, r2 PASS after the evidence files (status/stat/cli diff
 Ledger: MIG-03 hash 6218ac9, CI 39517967726 green.
 Next: MIG-04 (questions.md, plan.md, template question.md, Java cite check) ready; KB-11d ready.
 
+
+## MIG-04 · 2026-10-21 · (hash in the next entry)
+Test first: CitesTest (real repository: every `[page: …#heading]` and `[pattern: <id>]` under skills/ and patterns/ resolves), ChecksTest +7 synthetic cases for `Checks.cites`, SkillMirrorTest +1 "canonical without frontmatter" (reviewer MIG-01 gap). Red observed: testCompile 10× "cannot find symbol cites" (target/mig-04-red.log); the SkillMirror case was already green (regression guard).
+Changed: iflow-forge-knowledge Checks.cites (page regex, heading = exact H2/H3 text, pattern → patterns/<id>.md, form descriptions with `<`, `>`, `…` skipped, messages `<file>:<line> — …`); skills/sap-po-migration/references/questions.md, plan.md, templates/question.md (stubs → procedures for phases 3–4); DECISIONS D-034 (question-round and plan bookkeeping, incl. the conventions the kb-author fixed); agent/NOTES.md knowledge-module line.
+Checks: knowledge module exit 0 (target/mig-04-kb-green.log; 54 → 63 tests, 56 real cites resolve); mvn verify exit 0 (target/mig-04-verify.log, final verifier run target/mig-04-verify-v.log, knowledge module after content round 2 target/mig-04-kb-final.log exit 0; core 182/0/0/22, cli 22/0/0/1, native 2/0/0/0, mcp 8/0/0/1, knowledge 67/0/0/2 after the round-2 pins); tokens questions 1,042, plan 1,126, question.md 152 (after content round 2); 25 real page cites, 23 distinct, all resolve (CitesTest); forbidden-pattern grep 1 hit = the form `{{tenant.<path>}}` on plan.md:12 (no value), agent-syntax grep 0.
+Review: reviewer r1 FAIL 2 (several cites of one kind per line and cross-file sort unpinned) → test-author pinned both + 3 extras (ChecksTest 37) → r2 PASS; kb-reviewer r1 FAIL 3 (plan.md flow gap: no step created the alias/partner-ID items; two round layouts; cite-check scope "references and templates only") → D-034 amended, kb-author round 2 → r2 PASS. Context compacted once during the close-out; re-verified with git status and git log -3.
+Ledger: MIG-02b hash 3b88963, CI 39520985125 green.
+Open: spec §10 L288 calls a version gap a "blocking question" while §7 item 3 and attributes.md type it `version` — spec-internal, no page retypes it (kb-reviewer item 102).
+Next: KB-11d ready; MIG-05, MIG-06 after it.

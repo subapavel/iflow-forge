@@ -178,6 +178,17 @@ class SkillMirrorTest {
     }
 
     @Test
+    void canonicalWithoutAFrontmatterBlockFailsOnceAtLineOne() throws IOException {
+        for (String opening : List.of("", "---\nname: demo\n")) {
+            correctPair();
+            write(CANONICAL, opening + CANONICAL_BODY);
+
+            assertThat(check()).as("canonical opening %s", opening.isEmpty() ? "none" : "unclosed")
+                    .containsExactly(CANONICAL + ":1 — no frontmatter block");
+        }
+    }
+
+    @Test
     void missingCanonicalFails() throws IOException {
         correctPair();
         Files.delete(repo.resolve(CANONICAL));

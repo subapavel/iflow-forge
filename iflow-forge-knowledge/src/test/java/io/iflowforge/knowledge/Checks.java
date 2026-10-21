@@ -9,12 +9,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -59,6 +61,10 @@ final class Checks {
     private static final String RESOURCES = "src/main/resources";
     /** The {@code Name} cell of a content-modifier table row. */
     private static final Pattern NAME_CELL = Pattern.compile("<cell id=['\"]Name['\"]>([^<]*)</cell>");
+    /** A page cite {@code [page: <path>#<heading>]}: group 1 the path, group 2 the heading. */
+    private static final Pattern PAGE_CITE = Pattern.compile("\\[page: ([^\\]#]+)#([^\\]]+)\\]");
+    /** A pattern cite {@code [pattern: <id>]}: group 1 the id. */
+    private static final Pattern PATTERN_CITE = Pattern.compile("\\[pattern: ([^\\]]+)\\]");
     /** A header or property call whose first argument is a plain single- or double-quoted string literal. */
     private static final Pattern CONTRACT_CALL = Pattern.compile("(?:"
             + "\\b(?:setHeader|getHeader|setProperty|getProperty)"
@@ -544,6 +550,86 @@ final class Checks {
             return "backticked tool invocation";
         }
         return null;
+    }
+
+    // --- C9 cite resolution -------------------------------------------------------------------------------------
+
+    /**
+     * Every cite in every {@code *.md} under each of {@code roots} resolves (MIG-04, D-030, D-031). A page cite
+     * {@code [page: <path>#<heading>]} names a file relative to {@code repoRoot} that exists and has an H2 or H3
+     * whose text (prefix removed, stripped) equals the stripped heading verbatim; a pattern cite
+     * {@code [pattern: <id>]} names {@code patterns/<id>.md} under {@code repoRoot}. A cite whose path, heading or id
+     * contains {@code <}, {@code >} or {@code …} describes the form and is skipped. A missing root holds no files.
+     * Messages {@code <file>:<line> — <reason>} with the file relative to {@code repoRoot}, sorted by file, then line.
+     */
+    static List<String> cites(Path repoRoot, Path... roots) throws IOException {
+        Path base = absolute(repoRoot);
+        Map<String, Path> files = new TreeMap<>();
+        for (Path root : roots) {
+            for (Path file : KnowledgeBase.markdown(absolute(root))) {
+                files.putIfAbsent(KnowledgeBase.relative(base, file), file);
+            }
+        }
+        Map<Path, Set<String>> headingsByFile = new HashMap<>();
+        List<String> messages = new ArrayList<>();
+        for (Map.Entry<String, Path> entry : files.entrySet()) {
+            List<String> lines = read(entry.getValue()).lines().toList();
+            for (int i = 0; i < lines.size(); i++) {
+                String where = entry.getKey() + ":" + (i + 1) + " — ";
+                for (String reason : citeProblems(base, lines.get(i), headingsByFile)) {
+                    messages.add(where + reason);
+                }
+            }
+        }
+        return messages;
+    }
+
+    /** The unresolved cites of one line, in order of occurrence; {@code headingsByFile} caches the targets. */
+    private static List<String> citeProblems(Path repoRoot, String line, Map<Path, Set<String>> headingsByFile)
+            throws IOException {
+        List<String> problems = new ArrayList<>();
+        Matcher page = PAGE_CITE.matcher(line);
+        while (page.find()) {
+            String path = page.group(1).strip();
+            String heading = page.group(2).strip();
+            if (isFormDescription(path) || isFormDescription(heading)) {
+                continue;
+            }
+            Path target = repoRoot.resolve(path).normalize();
+            if (!Files.isRegularFile(target)) {
+                problems.add("page cite: file not found " + path);
+            } else if (!citableHeadings(target, headingsByFile).contains(heading)) {
+                problems.add("page cite: heading not found in " + path + ": " + heading);
+            }
+        }
+        Matcher pattern = PATTERN_CITE.matcher(line);
+        while (pattern.find()) {
+            String id = pattern.group(1).strip();
+            if (!isFormDescription(id) && !Files.isRegularFile(repoRoot.resolve("patterns").resolve(id + ".md"))) {
+                problems.add("pattern cite: patterns/" + id + ".md not found");
+            }
+        }
+        return problems;
+    }
+
+    /** The stripped texts of the H2 and H3 headings of {@code file}, read once into {@code cache}. */
+    private static Set<String> citableHeadings(Path file, Map<Path, Set<String>> cache) throws IOException {
+        Set<String> headings = cache.get(file);
+        if (headings == null) {
+            headings = new HashSet<>();
+            for (String line : read(file).lines().toList()) {
+                if (line.startsWith("## ") || line.startsWith("### ")) {
+                    headings.add(line.substring(line.indexOf(' ') + 1).strip());
+                }
+            }
+            cache.put(file, headings);
+        }
+        return headings;
+    }
+
+    /** True when a cite part describes the form ({@code <…>} or an ellipsis) rather than naming a target. */
+    private static boolean isFormDescription(String part) {
+        return part.contains("<") || part.contains(">") || part.contains("…");
     }
 
     // --- shared -------------------------------------------------------------------------------------------------

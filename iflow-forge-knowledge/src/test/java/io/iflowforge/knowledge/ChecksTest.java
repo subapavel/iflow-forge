@@ -500,6 +500,196 @@ class ChecksTest {
                 repo.resolve("requests"))).isEmpty();
     }
 
+    // --- C9 cite resolution (MIG-04) ------------------------------------------------------------------------------
+
+    /**
+     * A synthetic repository with the cite targets: {@code knowledge/pipeline/contracts.md} (H1 "Contracts", H2
+     * "Headers", H3 "Exchange properties" with trailing blanks, H4 "Deep detail"), {@code docs/OUTPUT-MODEL.md} (H2
+     * "inbound_conversion: custom", H3 "Node") and the pattern page {@code patterns/fan-out.md}.
+     */
+    private static Path citeRepo(Path dir) throws IOException {
+        Path repo = dir.resolve("repo");
+        write(repo.resolve("knowledge/pipeline/contracts.md"), String.join("\n", "# Contracts", "",
+                "## Headers", "", "Text.", "", "### Exchange properties  ", "", "Text.", "", "#### Deep detail", "",
+                "Text.", ""));
+        write(repo.resolve("docs/OUTPUT-MODEL.md"), String.join("\n", "# Output model", "",
+                "## inbound_conversion: custom", "", "Text.", "", "### Node", "", "Text.", ""));
+        write(repo.resolve("patterns/fan-out.md"), "# Fan-out\n\n## Shape\n\nText.\n");
+        return repo;
+    }
+
+    /** {@code lines} joined as a file, line 1 first. */
+    private static String lines(String... lines) {
+        return String.join("\n", lines) + "\n";
+    }
+
+    @Test
+    void citesResolvingToH2AndH3HeadingsAndToAPatternPageProduceNoMessages() throws IOException {
+        Path repo = citeRepo(dir);
+        write(repo.resolve("skills/demo/references/plan.md"), lines(
+                "# Plan",
+                "Headers [page: knowledge/pipeline/contracts.md#Headers], padded [page: "
+                        + "knowledge/pipeline/contracts.md# Headers ].",
+                "Properties [page: knowledge/pipeline/contracts.md#Exchange properties] and "
+                        + "[page: docs/OUTPUT-MODEL.md#inbound_conversion: custom].",
+                "Node [page: docs/OUTPUT-MODEL.md#Node], shape [pattern: fan-out].",
+                "Self [page: skills/demo/references/plan.md#Targets].",
+                "",
+                "## Targets",
+                "",
+                "Text."));
+        write(repo.resolve("patterns/README.md"), lines("# Patterns", "", "See [pattern: fan-out]."));
+
+        assertThat(Checks.cites(repo, repo.resolve("skills"), repo.resolve("patterns"))).isEmpty();
+    }
+
+    @Test
+    void pageCiteToAMissingFileIsReportedWithTheFileRelativeToTheRepositoryRootAndItsLine() throws IOException {
+        Path repo = citeRepo(dir);
+        write(repo.resolve("skills/demo/SKILL.md"), lines(
+                "# Demo",
+                "",
+                "See [page: knowledge/pipeline/missing.md#Headers].",
+                "4", "5", "6", "7", "8", "9", "10", "11",
+                "And [page: docs/GONE.md#Node]."));
+
+        assertThat(Checks.cites(repo, repo.resolve("skills/demo"))).containsExactly(
+                "skills/demo/SKILL.md:3 — page cite: file not found knowledge/pipeline/missing.md",
+                "skills/demo/SKILL.md:12 — page cite: file not found docs/GONE.md");
+    }
+
+    @Test
+    void pageCiteToAHeadingThatIsNoH2OrH3OfTheFileIsReportedNamingTheHeading() throws IOException {
+        Path repo = citeRepo(dir);
+        write(repo.resolve("skills/demo/SKILL.md"), lines(
+                "# Demo",
+                "",
+                "Missing [page: knowledge/pipeline/contracts.md#Footers].",
+                "Title [page: knowledge/pipeline/contracts.md#Contracts].",
+                "Too deep [page: knowledge/pipeline/contracts.md#Deep detail].",
+                "Fine [page: knowledge/pipeline/contracts.md#Headers]."));
+
+        assertThat(Checks.cites(repo, repo.resolve("skills"))).containsExactly(
+                "skills/demo/SKILL.md:3 — page cite: heading not found in knowledge/pipeline/contracts.md: Footers",
+                "skills/demo/SKILL.md:4 — page cite: heading not found in knowledge/pipeline/contracts.md: Contracts",
+                "skills/demo/SKILL.md:5 — page cite: heading not found in knowledge/pipeline/contracts.md: "
+                        + "Deep detail");
+    }
+
+    @Test
+    void patternCiteWithoutAPatternPageIsReported() throws IOException {
+        Path repo = citeRepo(dir);
+        write(repo.resolve("skills/demo/SKILL.md"), lines(
+                "# Demo",
+                "Shape [pattern: fan-out].",
+                "Other shape [pattern: fan-in]."));
+
+        assertThat(Checks.cites(repo, repo.resolve("skills"), repo.resolve("patterns")))
+                .containsExactly("skills/demo/SKILL.md:3 — pattern cite: patterns/fan-in.md not found");
+    }
+
+    @Test
+    void formDescriptionsWithAngleBracketsOrAnEllipsisAreSkipped() throws IOException {
+        Path repo = citeRepo(dir);
+        write(repo.resolve("skills/demo/templates/question.md"), lines(
+                "# Question",
+                "Cite as [page: <path>#<heading>] or [pattern: <id>].",
+                "For example [page: knowledge/pipeline/…#…] or [pattern: …].",
+                "A page of the folder [page: knowledge/pipeline/<page>.md#Headers].",
+                "A heading of the page [page: knowledge/pipeline/contracts.md#<heading>].",
+                "Real [page: knowledge/pipeline/contracts.md#Footers]."));
+
+        assertThat(Checks.cites(repo, repo.resolve("skills"))).containsExactly(
+                "skills/demo/templates/question.md:6 — page cite: heading not found in "
+                        + "knowledge/pipeline/contracts.md: Footers");
+    }
+
+    @Test
+    void everyCiteOnOneLineIsCheckedOnItsOwn() throws IOException {
+        Path repo = citeRepo(dir);
+        write(repo.resolve("skills/demo/SKILL.md"), lines(
+                "# Demo",
+                "",
+                "All [pattern: fan-in], [page: docs/GONE.md#Node], [page: docs/OUTPUT-MODEL.md#Node], "
+                        + "[pattern: fan-up], [page: knowledge/pipeline/missing.md#Headers] and [pattern: fan-out]."));
+
+        // Order within one line: the page cites in order of occurrence, then the pattern cites likewise.
+        assertThat(Checks.cites(repo, repo.resolve("skills"))).containsExactly(
+                "skills/demo/SKILL.md:3 — page cite: file not found docs/GONE.md",
+                "skills/demo/SKILL.md:3 — page cite: file not found knowledge/pipeline/missing.md",
+                "skills/demo/SKILL.md:3 — pattern cite: patterns/fan-in.md not found",
+                "skills/demo/SKILL.md:3 — pattern cite: patterns/fan-up.md not found");
+    }
+
+    @Test
+    void messagesAreSortedByFileThenLineAcrossRootsAndFiles() throws IOException {
+        Path repo = citeRepo(dir);
+        String[] body = {"# Page", "x", "[pattern: gone-a]", "4", "5", "6", "7", "8", "9", "10", "11",
+                "[page: docs/GONE.md#Node]"};
+        write(repo.resolve("skills/z-demo/SKILL.md"), lines(body));
+        write(repo.resolve("patterns/b-shape.md"), lines(body));
+        write(repo.resolve("patterns/a-shape.md"), lines(body));
+
+        assertThat(Checks.cites(repo, repo.resolve("skills/z-demo"), repo.resolve("patterns"))).containsExactly(
+                "patterns/a-shape.md:3 — pattern cite: patterns/gone-a.md not found",
+                "patterns/a-shape.md:12 — page cite: file not found docs/GONE.md",
+                "patterns/b-shape.md:3 — pattern cite: patterns/gone-a.md not found",
+                "patterns/b-shape.md:12 — page cite: file not found docs/GONE.md",
+                "skills/z-demo/SKILL.md:3 — pattern cite: patterns/gone-a.md not found",
+                "skills/z-demo/SKILL.md:12 — page cite: file not found docs/GONE.md");
+    }
+
+    @Test
+    void formDescriptionsWithOnlyOneAngleBracketOrOnlyAnEllipsisAreSkipped() throws IOException {
+        Path repo = citeRepo(dir);
+        write(repo.resolve("skills/demo/SKILL.md"), lines(
+                "# Demo",
+                "Open [page: docs/<draft.md#Node], close [page: docs/OUTPUT-MODEL.md#Node>], [pattern: fan<in].",
+                "Ellipsis [page: docs/…#Node], [page: docs/OUTPUT-MODEL.md#No…], [pattern: fan…],"
+                        + " close [pattern: x>y].",
+                "Control [pattern: fan-in]."));
+
+        assertThat(Checks.cites(repo, repo.resolve("skills")))
+                .containsExactly("skills/demo/SKILL.md:4 — pattern cite: patterns/fan-in.md not found");
+    }
+
+    @Test
+    void paddedPathsAndPatternIdsResolve() throws IOException {
+        Path repo = citeRepo(dir);
+        write(repo.resolve("skills/demo/SKILL.md"), lines(
+                "# Demo",
+                "Padded [page:  knowledge/pipeline/contracts.md #Headers] and [pattern:  fan-out ].",
+                "Control [page:  docs/GONE.md #Node]."));
+
+        assertThat(Checks.cites(repo, repo.resolve("skills")))
+                .containsExactly("skills/demo/SKILL.md:3 — page cite: file not found docs/GONE.md");
+    }
+
+    @Test
+    void headingDifferingOnlyInCaseIsNotFound() throws IOException {
+        Path repo = citeRepo(dir);
+        write(repo.resolve("skills/demo/SKILL.md"), lines(
+                "# Demo",
+                "Lower [page: knowledge/pipeline/contracts.md#headers], upper [page: docs/OUTPUT-MODEL.md#NODE]."));
+
+        assertThat(Checks.cites(repo, repo.resolve("skills"))).containsExactly(
+                "skills/demo/SKILL.md:2 — page cite: heading not found in knowledge/pipeline/contracts.md: headers",
+                "skills/demo/SKILL.md:2 — page cite: heading not found in docs/OUTPUT-MODEL.md: NODE");
+    }
+
+    @Test
+    void citesScanOnlyMarkdownAndTreatAMissingRootAsEmpty() throws IOException {
+        Path repo = citeRepo(dir);
+        write(repo.resolve("skills/demo/data.txt"), lines("[page: docs/GONE.md#Node]"));
+        write(repo.resolve("skills/demo/fixtures/sample.json"), lines("{\"cite\": \"[pattern: fan-in]\"}"));
+        write(repo.resolve("patterns/README.md"), lines("# Patterns", "[pattern: fan-in]"));
+
+        assertThat(Checks.cites(repo, repo.resolve("absent"))).isEmpty();
+        assertThat(Checks.cites(repo, repo.resolve("skills"), repo.resolve("absent"))).isEmpty();
+        assertThat(Checks.cites(repo, repo.resolve("skills"), repo.resolve("absent"), repo.resolve("patterns")))
+                .containsExactly("patterns/README.md:2 — pattern cite: patterns/fan-in.md not found");
+    }
+
     // --- KnowledgeBase --------------------------------------------------------------------------------------------
 
     @Test

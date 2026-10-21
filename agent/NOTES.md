@@ -82,6 +82,8 @@ Facts only; the next exact action and the state live in `agent/HANDOFF.md`.
   checks. `kb.root` = `<repo>/knowledge`, `kb.sources` = `2026-06-trial`.
 - `ForbiddenValuesTest` skips unless `-Dkb.forbidden` names an existing file; a relative value resolves against the
   repository root. The owner's file stays under `testdata/` (gitignored). Messages never contain the value.
+- `CitesTest` (MIG-04, skip name `cites`) resolves every `[page: <path>#<heading>]` (repo-relative path, exact H2/H3 text) and
+  `[pattern: <id>]` under `skills/` and `patterns/`; cites containing `<`, `>` or `…` are form descriptions and are skipped.
 - Synthetic sources for checks tests: `io.poxray.cpi.SyntheticArtifact` (public bridge to the package-private
   `IFlowFixture` of the po-xray-core test-jar), one Script step plus the given resources.
 - MIG-01 roots: `KnowledgeBase.repoRoot()` (parent of `kb.root`), `skills()`, `patterns()`, `requests()`; a missing folder is empty.
