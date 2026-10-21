@@ -24,7 +24,7 @@ or: assume <X>; verify at <event>
 
 ## Consequence
 
-<analysis.md section and row changed, with the new value and source Q-<n>; or none>
+<analysis.md section and row changed, with the new value and source Q-<n>, and the profile row amended (questions.md step 6); or none>
 
 ## New open-list items
 

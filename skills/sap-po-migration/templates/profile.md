@@ -1,6 +1,6 @@
 # Tenant profile: `<customer>`
 
-This file lives as `local/<customer>/profile.md`: read at intake, amended in the retrospective, never committed [page: docs/superpowers/specs/2026-10-20-migration-front-end-design.md#8.1 Tenant profile (part 2, minimum contract — draft)] (spec §12 P-2). Replace every `<…>`; an answer nobody knows is `unknown`, an open-list item (D-031). A later design may extend the seven sections, never rename them.
+This file lives as `local/<customer>/profile.md`: read at intake, amended when an answer settles one of its values and in the retrospective, never committed [page: docs/superpowers/specs/2026-10-20-migration-front-end-design.md#8.1 Tenant profile (part 2, minimum contract — draft)] (spec §12 P-2). Replace every `<…>`; an answer nobody knows is `unknown`, an open-list item (D-031). A later design may extend the seven sections, never rename them.
 
 ## Input paths
 
@@ -27,7 +27,7 @@ Values: `runtime` of [page: knowledge/pipeline/scenario-contribution.md#Scenario
 | Generic Pipelines | `{{tenant.pipeline.version.generic_pipelines}}`: `<version>` | `<source>` | `<date>` |
 | Templates | `{{tenant.pipeline.version.templates}}`: `<version>` | `<source>` | `<date>` |
 
-A value is a version or `unknown`; packages and versions as [page: knowledge/pipeline/versions/features.md#The tenant's installed version] defines them; an artifact's MANIFEST Bundle-Version is its own number, so "read from" names the file. Update available on the tenant: `<package> <version> — <changelog lines it brings>` (spec §10).
+A value is a version or `unknown`; packages and versions as [page: knowledge/pipeline/versions/features.md#The tenant's installed version] defines them; an artifact's MANIFEST Bundle-Version is its own number, so "read from" names the file. Update available on the tenant: `<package> <version> — <changelog lines it brings>` (spec §10). A decided update is a Decisions line `<yyyy-mm-dd> — M-<n> — update <package> <installed> → <version> decided (Q-<n>)` (D-037); this table shows what the tenant has.
 
 ## Naming conventions
 
@@ -50,9 +50,9 @@ One row per path of [page: knowledge/pipeline/naming.md#Tenant placeholders], by
 
 ## Decisions
 
-Appended by the retrospective, never edited:
+Appended when an answer settles a profile value (`references/questions.md`, "One question at a time", step 6) and by the retrospective, never edited:
 
-`<yyyy-mm-dd> — M-<n> — <decision>`
+`<yyyy-mm-dd> — M-<n> — <decision> (Q-<n>)`, without `(Q-<n>)` when no answer made it.
 
 ## Tool and skill versions
 

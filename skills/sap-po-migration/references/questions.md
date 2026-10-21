@@ -26,7 +26,7 @@ For an agent "one at a time" (spec §7 item 3) means:
    - a BPM classification row gets its confirmed class and the rule's status `confirmed M-<n>`;
    - the settled open-list line becomes `- [x] …` with ` — closed: Q-<n>` appended; it is never deleted;
    - each new item is appended to the open list in the line format, source `Q-<n>`.
-6. A naming answer is also noted for the profile amendment of the retrospective (SKILL.md, "Local files").
+6. An answer that settles a profile value — the runtime, a `{{tenant.<path>}}` naming row, an input path, a Partner Directory convention — amends `local/<customer>/profile.md` now, not in the retrospective (D-037; [page: docs/superpowers/specs/2026-10-20-migration-front-end-design.md#8.1 Tenant profile (part 2, minimum contract — draft)]): the value goes into its row, with source `M-<n>, Q-<n>` where the row has a source field ([page: skills/sap-po-migration/templates/profile.md#Runtime], [page: skills/sap-po-migration/templates/profile.md#Naming conventions], [page: skills/sap-po-migration/templates/profile.md#Input paths], [page: skills/sap-po-migration/templates/profile.md#Partner Directory conventions]), and the line `<yyyy-mm-dd> — M-<n> — <what changed> (Q-<n>)` is appended to [page: skills/sap-po-migration/templates/profile.md#Decisions]. A decided package update is that Decisions line only: [page: skills/sap-po-migration/templates/profile.md#Installed pipeline versions] keeps the version read from the tenant until the update is observed, and the scenario specification names its target version with the `Q-<n>`. Amend, never rewrite history; the retrospective lists these amendments (`references/retrospective.md`, "Tenant profile amendments").
 7. Then the next question.
 
 ## Question record
@@ -37,7 +37,7 @@ One record per question, the fields of `templates/question.md` (spec §7 item 3)
 - why the analysis could not settle it: the report's question, the missing input, or the page that leaves it to a human;
 - the options, each with its evidence: a page cite `[page: knowledge/pipeline/<path>#<heading>]`, a dump field such as `icos[0].receivers[0].qualityOfService`, an `analysis.md` row, or "no evidence — migrator's call";
 - the answer, in one of the two forms of "Assumptions" below or `answer: <value>`;
-- the consequence: the `analysis.md` row changed (section and row), or "none";
+- the consequence: the `analysis.md` row changed (section and row) and the profile row amended (step 6), or "none";
 - the new open-list items it raised, each in the open-list line format, or "none".
 
 ## Proposed answers and evidence

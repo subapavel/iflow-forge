@@ -7,6 +7,9 @@ the owner's review; nothing here is built yet.
 Changelog: 2026-10-21 F-9 — §8.1 installed version = the package CHANGELOG.txt's first dated entry (features.md), not the
 artifact's Bundle-Version.
 
+Changelog: 2026-10-21 F-10 — §8.1 the profile is amended when an answer settles a profile value (§7 item 3, step 6), not
+only in the retrospective, so the §7 item 5 exit (every placeholder resolves against the profile) can hold.
+
 **Changelog:** 2026-10-20 · MIG-01 preparation · §6.1, §13: Gemini CLI reads `.agents/skills/` as an alias of `.gemini/skills/` and agent skills are enabled by default, so one `.agents/skills/` pointer serves Codex and Gemini; the `.gemini/skills/` pointer and the experimental-flag question are dropped [external: github.com/openai/codex codex-rs/ext/skills/src/host_roots.rs] [external: github.com/google-gemini/gemini-cli docs/cli/using-agent-skills.md].
 
 ## 1. Where this sits
@@ -232,8 +235,8 @@ artifact's `META-INF/MANIFEST.MF` Bundle-Version is a separate number, KB-11e; F
 package, Partner Directory alias, queue prefix and suffix as the tenant uses them), Partner Directory
 conventions (key scheme in use, alternative-partner use), decisions with dates (one line each, with the
 `M-<n>` that made it), tool and skill versions used per migration (git hash of the runner jar's
-commit and of `skills/sap-po-migration/`). The profile is read at intake and amended in the
-retrospective; a later part-2 design may extend it but not rename these sections.
+commit and of `skills/sap-po-migration/`). The profile is read at intake, amended when a question-round answer settles one of its values
+(§7 item 3, step 6; F-10) and in the retrospective; a later part-2 design may extend it but not rename these sections.
 
 ### 8.2 Scenario library
 

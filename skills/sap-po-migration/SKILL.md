@@ -30,11 +30,11 @@ Each phase has an entry, an output file under `local/<customer>/scenarios/M-<n>/
 
 1. **Intake.** Entry: the migrator names the target (a BPM process, or ICOs); allocate the next `M-<n>` in `local/migrations.md`, read or create the profile, list inputs present and missing. Output: `intake.md`. Exit: every input row is present or marked "not needed, because …".
 2. **Analysis.** Entry: intake exit holds; read `knowledge/pipeline/SKILL.md` and its loaded set, then the dumps. Output: `analysis.md`. Exit: every attribute has a value or a `?`; every `?`, touched open question, version-gated feature and recipe in `proposal` status is on the open list.
-3. **Question round.** Entry: the open list from phase 2 (or a plan statement without a cite). Output: `questions.md`, append-only, one record per question, asked one at a time. Exit: the open list is empty; an item nobody can settle is closed by a recorded assumption.
+3. **Question round.** Entry: the open list from phase 2 (or a plan statement without a cite). Output: `questions.md`, append-only, one record per question, asked one at a time; an answer that settles a profile value amends the profile at once (`references/questions.md`, step 6). Exit: the open list is empty; an item nobody can settle is closed by a recorded assumption.
 4. **Plan.** Entry: the open list is empty. Output: `plan.md`, each iteration a dated section. Exit: the migrator writes `approved <date>` in the approval section.
 5. **Scenario specification.** Entry: the plan is approved. Output: `scenario-<k>.md` per pipeline scenario of the plan's decomposition. Exit: every attribute has a value and every placeholder resolves against the profile.
 6. **Artifacts.** Entry: the specifications exist. Output: `artifacts/`. Exit: until the generator and the code conversion exist, write "not available" into `retrospective.md` and go on to phase 7.
-7. **Retrospective.** Entry: phase 6 is done, or a stop was reached. Output: `retrospective.md`. Exit: profile amended, scenario filed, requests, if any, written and on a field branch; only then is the migration done.
+7. **Retrospective.** Entry: phase 6 is done, or a stop was reached. Output: `retrospective.md`. Exit: profile amendments listed (the ones made during the migration and the retrospective's own), scenario filed, requests, if any, written and on a field branch; only then is the migration done.
 
 The flow leaves this order only at two named stops:
 
@@ -55,7 +55,7 @@ The flow leaves this order only at two named stops:
 
 ## Local files
 
-- `local/<customer>/profile.md`: the tenant profile, read at intake, amended in the retrospective (`templates/profile.md`).
+- `local/<customer>/profile.md`: the tenant profile, read at intake, amended by the question round and the retrospective, never committed (`templates/profile.md`).
 - `local/<customer>/scenarios/M-<n>/`: the phase outputs of one migration, the scenario library searched at intake.
 - `local/migrations.md`: the only map from a code `M-<n>` to customer and scenario.
 - `testdata/`: the customer's PO artifacts in the layout of `docs/inputs/README.md`; the profile records the input paths.

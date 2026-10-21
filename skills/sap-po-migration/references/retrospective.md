@@ -12,14 +12,14 @@ Phase 7 of the flow (spec §7 item 7; [page: docs/superpowers/specs/2026-10-20-m
 
 ## Tenant profile amendments
 
-Amend `local/<customer>/profile.md` (`templates/profile.md`; [page: docs/superpowers/specs/2026-10-20-migration-front-end-design.md#8.1 Tenant profile (part 2, minimum contract — draft)]). Amend, never rewrite history: rows of items 1–4 are updated in place; every change is recorded as a Decisions line `<date> — M-<n> — <what changed>`.
+The question round already amended the profile rows its answers settled, each with a Decisions line (`references/questions.md`, "One question at a time", step 6; D-037). The retrospective (a) lists those amendments, from the profile's Decisions lines of this `M-<n>`, each as section, row and source, and (b) adds items 1, 3, 5 and 7 below and anything else learned (`templates/profile.md`; [page: docs/superpowers/specs/2026-10-20-migration-front-end-design.md#8.1 Tenant profile (part 2, minimum contract — draft)]). Amend, never rewrite history: rows of items 1–4 are updated in place; every change is recorded as a Decisions line `<yyyy-mm-dd> — M-<n> — <what changed>`, ending `(Q-<n>)` when an answer made it.
 
-1. **Input paths**: a path that changed or was `unknown` at intake.
-2. **Runtime**: on the first migration, the answer that settled it, source `M-<n>, Q-<n>`.
-3. **Installed pipeline versions**: each version read during the migration, with "read from" and the date; an update available on the tenant with its version and changelog lines (spec §10).
-4. **Naming conventions**: each naming answer noted in the question round (`references/questions.md`, "One question at a time", step 6), as a row with source `M-<n>, Q-<n>`.
+1. **Input paths**: a path that changed or was `unknown` at intake and no answer wrote.
+2. **Runtime**: on the first migration, confirm the row written in the question round, source `M-<n>, Q-<n>`, or write it now if the answer came later.
+3. **Installed pipeline versions**: each version read during the migration, with "read from" and the date; an update available on the tenant with its version and changelog lines (spec §10). A decided update stays the Decisions line of its answer; the row changes only when the update is observed (D-037).
+4. **Naming conventions**: for each naming answer (`references/questions.md`, "One question at a time", step 6), confirm the row written in the question round, source `M-<n>, Q-<n>`, or write it now if the answer came later.
 5. **Partner Directory conventions**: the partner ID form, alternative-partner use and keys the plan settled.
-6. **Decisions**: one line `<yyyy-mm-dd> — M-<n> — <decision>` per tenant-level decision of the migration, appended.
+6. **Decisions**: one line `<yyyy-mm-dd> — M-<n> — <decision>` per tenant-level decision of the migration not yet appended by the question round, appended.
 7. **Tool and skill versions**: the line `M-<n> — runner jar <git hash> — skills/sap-po-migration <git hash>`, the hashes of the commits used.
 
 Write into `retrospective.md` which profile sections changed.
@@ -46,10 +46,10 @@ Then commit the requests on a branch `field/<date>` and run the forbidden-values
 
 1. **Human task stop** (SKILL.md, "Phases"): phase 7 still runs, with `analysis.md` as the record of the migration; the stop and the human tasks are a lesson. No plan and no `scenario-<k>.md` exist, so the entry holds `intake.md`, `analysis.md` and `retrospective.md`.
 2. **Artifacts placeholder**: until the generator exists, write "not available" under artifacts in `retrospective.md` (SKILL.md, "Phases", item 6).
-3. **Version answer**: a version answer "update the packages first" (spec §10) is not a stop: it is recorded as a profile amendment ("Tenant profile amendments", item 3) and the migration continues.
+3. **Version answer**: a version answer "update the packages first" (spec §10) is not a stop: it is the question round's Decisions line (`references/questions.md`, "One question at a time", step 6), the Installed row stays as read until the update is observed ("Tenant profile amendments", item 3), and the migration continues.
 
 ## Exit
 
-1. The profile is amended ("Tenant profile amendments"), the scenario is filed ("Scenario library entry"), and the requests, if any, are written and on a field branch (spec §7 item 7).
+1. The profile amendments are listed, those of the question round and the retrospective's own ("Tenant profile amendments"), the scenario is filed ("Scenario library entry"), and the requests, if any, are written and on a field branch (spec §7 item 7).
 2. Set the last field of the migration's line in `local/migrations.md` to `done`, or to the stop reached (`references/intake.md`, "Migration code", step 3).
 3. Only then is the migration done.
