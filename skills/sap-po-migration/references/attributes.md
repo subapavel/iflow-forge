@@ -14,7 +14,7 @@ A dry run on synthetic data: `po-xray attributes skills/sap-po-migration/fixture
 
 ## Attributes that need a question
 
-Some values the helper never derives: `qos` `ALO`, `mapping` `ordered` and `receiver_determination` `custom`; `error_handling` is always `?`, and `runtime` is `?` for EO and EOIO [page: docs/OUTPUT-MODEL.md#Migration helpers]. Each of these needs a question: add the open-list item. For the other values, the row is the helper's reading of the ICO; check it by hand on the page in the right column.
+Some values the helper never derives: `qos` `ALO`, `mapping` `ordered` and `receiver_determination` `custom`; `error_handling` is always `?`, and `runtime` is `?` for EO and EOIO [page: docs/OUTPUT-MODEL.md#Migration helpers]; the queue of a decoupled XI or IDOC sender is no attribute at all (last row). Each of these needs a question: add the open-list item. For the other values, the row is the helper's reading of the ICO; check it by hand on the page in the right column.
 
 | attribute | what the helper does | check by hand |
 |---|---|---|
@@ -26,6 +26,7 @@ Some values the helper never derives: `qos` `ALO`, `mapping` `ordered` and `rece
 | `error_handling` | always `?` (tenant switch, D-025) | [page: knowledge/pipeline/migration/variants.md#error_handling and custom_exit] |
 | `custom_exit` | non-adapter modules only (adapter beans such as `CallSapAdapter` excluded); a receiver module → `?` {none, post} with a receiver-module question (D-033); a sender module other than `AF_Modules/MessageTransformBean` → `?` {none, pre} with a sender-module question (D-032); both → all four candidates and both questions; all four also on an unresolved receiver channel [page: docs/OUTPUT-MODEL.md#Migration helpers] | the page: receiver module → post exit or Step07 outbound conversion, sender module → pre exit or Step03 conversion, human decides, default none [page: knowledge/pipeline/migration/po-ico-to-pipeline.md#ICO fields to scenario attributes]; [page: knowledge/pipeline/migration/variants.md#error_handling and custom_exit]; placement: [page: knowledge/pipeline/conversion/README.md#Rules]; the helper's `?` row is the open-list item (type blocking) |
 | `inbound_conversion` | `AF_Modules/MessageTransformBean` on the sender channel → `custom`, not an exit; another sender module → `?` {none, custom} with the same sender-module question (D-032) [page: docs/OUTPUT-MODEL.md#Migration helpers] | the page: every sender-side module but `CallSapAdapter` → the inbound conversion copy, the human decides, default custom when there is one [page: knowledge/pipeline/migration/po-ico-to-pipeline.md#ICO fields to scenario attributes] [page: knowledge/pipeline/migration/variants.md#inbound_conversion: custom]; the helper's `?` row is the open-list item (type blocking) |
+| queue of a decoupled XI or IDOC sender | no attribute row: not derived | default no `InboundQueue` entry: the Step01 XI or IDoc iFlow's default queue, decoupled only when its configured DefaultJMSQueueNumber is Q01 (the Step02 inbound queue); otherwise an `InboundQueue` entry names the queue, on the human's choice [page: knowledge/pipeline/migration/variants.md#runtime: integrated-async or decoupled] |
 
 The helper's rules are in [page: docs/OUTPUT-MODEL.md#Migration helpers]; the pipeline's rule for each value is on the pages in the right column. A value the helper derived from a rule the page does not state is checked as step 3 above says.
 
@@ -38,10 +39,10 @@ The helper's rules are in [page: docs/OUTPUT-MODEL.md#Migration helpers]; the pi
 
 ## Version-gated features
 
-1. For each pipeline feature the analysis relies on (the template or step a value selects, as [page: knowledge/pipeline/scenario-contribution.md#Scenario attributes] cites it), find its row in [page: knowledge/pipeline/versions/features.md#Features by package].
-2. Compare the row's version with the profile's installed version of that package, read as [page: knowledge/pipeline/versions/features.md#The tenant's installed version] says.
+1. For each pipeline feature the analysis relies on (the template or step a value selects, as [page: knowledge/pipeline/scenario-contribution.md#Scenario attributes] cites it), find its row in [page: knowledge/pipeline/versions/features.md#Features by package] or, for an artifact without a CHANGELOG entry, in [page: knowledge/pipeline/versions/present.md#Present by package].
+2. Compare the row's version with the profile's installed version of that package, read as [page: knowledge/pipeline/versions/features.md#The tenant's installed version] says; a `present in` row as [page: knowledge/pipeline/versions/present.md#How to read] says.
 3. Write into `analysis.md`, "Version-gated features": feature, package, version of the row, tenant version, and "present", "absent" or "unknown" (the profile has no version).
-4. Every such feature is an open-list item of type version (spec §7 item 2); "absent" and "unknown" say so in "why open".
+4. Every such feature is an open-list item of type version (spec §7 item 2), except a `present in` row at or below the profile's installed version [page: knowledge/pipeline/versions/present.md#How to read]; "absent" and "unknown" say so in "why open".
 
 ## Open list entries
 
