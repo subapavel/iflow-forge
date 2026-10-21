@@ -10,7 +10,10 @@ pages) rather than code. This file is binding for every session working on iflow
 1. Read `agent/HANDOFF.md`. Its `state` line decides whether work may start (`RUNNING` or
    `NOT_STARTED`; anything else needs the owner's explicit RESUME). Reconcile an interrupted task
    first: an `in-progress` row in BACKLOG whose commit is not on `main` is redone from its last
-   pushed state, never assumed done.
+   pushed state, never assumed done. Then fetch every `field/*` branch, merge each into the
+   designated branch (a merge, never a rewrite), and read `requests/`: every request with status
+   `open` becomes a BACKLOG row of its kind before step 2; an `urgent` request's row is inserted
+   as the first `ready` row at the top of BACKLOG, with no depends-on (§11).
 2. Pick the first `ready` row in `agent/BACKLOG.md`. A row is `ready` when every id in its
    depends-on column is `done`. Gates are rows too; nothing in the next phase becomes `ready` until
    the gate row is `done`. A row marked `owner` in its depends-on column waits for an input only
@@ -206,3 +209,42 @@ run under the same `CLAUDE.md`.
   the table.
 - **Stop-hook messages are advisory.** When one still arrives mid-batch, the architect answers in
   one sentence and does not commit: a batch commits only after review PASS and a green verify.
+
+## 11. Field loop (spec §9, P-10, P-11; MIG-06)
+
+The local side (the owner's checkout, where the migration runs) and the cloud side (this loop)
+exchange work through `requests/` and `field/<date>` branches. The local side never commits under
+`src/`, `knowledge/pipeline/` or `patterns/` (P-6).
+
+- **Request.** A migration's retrospective files each lesson as `requests/REQ-<n>.md` from
+  `skills/sap-po-migration/templates/request.md`, kind `kb`, `skill`, `pattern` or `tool`, with its
+  evidence as a synthetic fixture under `requests/REQ-<n>/` or a generic statement, never the
+  customer's file; `requests/README.md` indexes it with status `open`. A request the migration cannot
+  continue without carries `urgent` in its header; there is no other fast path.
+- **Before a push.** The local checkout runs the knowledge module with `-Dkb.forbidden=<local list>`
+  (a file outside the repository or under `local/`, one customer identifier per line, never
+  committed) over `requests/`, `patterns/` and `skills/`:
+  `mvn -B -ntp -q -pl iflow-forge-knowledge -am test -Dkb.forbidden=<path>`. A hit blocks the push; a
+  mistyped path makes the test skip, so the surefire report must show `ForbiddenValuesTest` run, not
+  skipped (D-035); list entries shorter than four characters are not checked (`Checks.MIN_FORBIDDEN_LENGTH`),
+  so a short system id is searched by hand with `git grep -n -i -w`.
+- **Field branch.** `field/<date>`, branched from the current `main` (D-035); its commits touch only
+  `requests/` (requests, pattern drafts, synthetic fixtures). It is pushed; on the local side `main` moves only by
+  the owner's fast-forward (D-017), never by a local merge.
+- **Cloud side.** §1 step 1: fetch every `field/*` branch, merge it into the designated branch (a
+  merge, never a rewrite — D-017 stays), read `requests/`. Each `open` request becomes a BACKLOG row
+  of its kind — `tool`: code row (red test from the fixture, implementer, reviewer); `kb` and
+  `skill`: content row (page packet, kb-author, kb-reviewer); `pattern`: content row writing
+  `patterns/<id>.md` from the request's generic text (kb-author, kb-reviewer) — named by the request
+  id (D-035); the index row becomes `row <id>`. An `urgent` request's row is inserted as the first
+  `ready` row (§1 step 1). The commit after the one that closes the row writes `done <hash>` into
+  the index (hash in the next entry, as PROGRESS and BACKLOG do); a pattern page cites the
+  migration as `[migration M-<n>, <date>]` (D-030). A merge conflict from a `field/*` branch can
+  touch only `requests/` (the index table); the architect resolves it in the merge commit, and
+  anything outside `requests/` is an issue for the owner (D-035).
+- **Back to the field.** The owner fast-forwards `main` (D-017), pulls, rebuilds the runner jar and
+  resumes; the tenant profile records the new runner and skill hashes
+  (`templates/profile.md`, "Tool and skill versions").
+- **Automation (MIG-08, optional).** A scheduled cloud session started by a push of a `field/*`
+  branch runs this loop over the new requests and stops at `IDLE_NO_READY_TASK`; until it is switched
+  on, the owner starts the cloud session by hand.
