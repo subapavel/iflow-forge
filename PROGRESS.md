@@ -434,3 +434,11 @@ Review: reviewer r1 FAIL 1 (null-program guard untested) → test-author r3 → 
 Ledger: MIG-16 hash b69e2f2, CI 39571099472 green.
 Findings: none. Decisions: D-043. Issues: ISSUE-4 (PO adapter attribute names, owner-only).
 Next: MIG-18 — a docs guide for the first real run (owner asked 2026-10-21); every other row waits on the owner (KB-12b, KB-00a, KB-09, MIG-07/08, PR-00, SRC-00, FIX-03, ISSUE-4).
+
+## FIX-04 · 2026-10-21 · (hash in the next entry)
+Task: neutralise a dry-run profile prefix in the D-042 reason (`docs/DECISIONS.md` row D-042) → `<prefix>Q01`. Docs, architect edit, no agents, no review (one token; the kb-reviewer memory keeps no item).
+Cause: the architect quoted the dry-run-3 profile's queue name in MIG-16 (b69e2f2); the staged-file customer grep before the MIG-17 commit printed 1 hit but the commit was chained after the grep, not guarded by it, so 7ee752c carries the row too.
+Fix: the value replaced; a case-insensitive `git grep` of the prefix over tracked files outside `testdata/` and `local/` is empty. The architect's commit guard is now `[ "$(grep -il <patterns> $FILES | wc -l)" -eq 0 ] &&` before `git commit` (same form as the HANDOFF guard).
+History: two pushed commits keep the token; rewriting pushed history is owner-only → issues/ISSUE-5.md.
+Ledger: MIG-17 hash 7ee752c (CI pending at the time of writing; result in the next entry).
+Next: MIG-18 — docs/FIRST-REAL-RUN.md guide (owner asked 2026-10-21): scout running, then page packet → kb-author → kb-reviewer → verifier.

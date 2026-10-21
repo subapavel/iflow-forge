@@ -75,3 +75,4 @@ Rows are added when their specs exist. Part 3 starts from `io.poxray.cpi.IFlowRe
 | Id | Title | Plan | Depends on | Kind | Status | Done when | Evidence |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | FIX-03 | ISSUE-3: customer identifiers in po-xray tests and `docs/OUTPUT-MODEL.md` examples → neutral names (rename test classes, example values, fragment literal as a `TestData` property) | — | owner (ISSUE-3) | code | blocked | tests green; grep of the identifiers outside `testdata/` empty | issues/ISSUE-3.md |
+| FIX-04 | A dry-run profile prefix in the D-042 reason (`docs/DECISIONS.md`) → `<prefix>Q01`; the architect's staged-file customer grep guards the commit from now on; history question → ISSUE-5 | — | — | docs | done | grep of the prefix outside `testdata/` and `local/` empty | review: n/a (one-token neutralisation, architect); ISSUE-5; grep 0 |
