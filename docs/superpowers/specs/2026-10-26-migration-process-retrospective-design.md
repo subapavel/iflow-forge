@@ -118,7 +118,8 @@ historii zpětně nepřepsal; report to označí `HISTORY_NOT_CHECKED`. Hash sá
 nepotvrzuje pravost zdroje ani souhlas vlastníka.
 
 Read-only příkaz `po-xray dossier-check <dossier.json> [--baseline <previous.json>]
-[--json]` je **navržený, dnes neexistuje**. Vrací JSON nebo Markdown včetně
+[--json]` byl při auditu navržen; nyní je implementován v P1, s readiness rozšířením
+v P2 (MIG-23/MIG-24, evidence výše). Vrací JSON nebo Markdown včetně
 aktuálního přehledu a diagnostik; nemění dossier ani podklady. Chybná struktura,
 konflikt, neplatné schválení nebo stale povinný podklad znemožní kladný výsledek.
 Otevřená otázka sama není chyba souboru; připravenost milníku je samostatná osa P2.

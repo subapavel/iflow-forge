@@ -5,6 +5,7 @@ import static io.poxray.doc.Doc.line;
 import static io.poxray.doc.Doc.text;
 
 import io.poxray.model.BpmComponent;
+import io.poxray.model.BpmSourceEvidence;
 import io.poxray.model.BuiltinFunction;
 import io.poxray.model.DataType;
 import io.poxray.model.DevelopmentComponent;
@@ -88,6 +89,7 @@ public final class DocumentBuilder {
             for (Process p : bpm.processes()) {
                 process(p, bpm);
             }
+            sourceEvidence(bpm.sourceEvidence());
             catalog(bpm);
         }
         if (!inv.ejb().isEmpty()) {
@@ -102,12 +104,60 @@ public final class DocumentBuilder {
 
     // ------------------------------------------------------------------------------------------ process
 
+    private void sourceEvidence(BpmSourceEvidence evidence) {
+        heading(3, l.get("evidence.title"));
+        if (evidence == null) {
+            paragraph(l.get("evidence.unavailable"));
+            return;
+        }
+        paragraph(l.get("evidence.boundary"));
+        bullets(
+                line(new Doc.Text(l.get("evidence.selection") + ": "), new Doc.Code(evidence.selectionVersion())),
+                line(new Doc.Text(l.get("evidence.indexed") + ": "),
+                        new Doc.Code(String.join(", ", evidence.indexedPartitions()))),
+                line(new Doc.Text(l.get("evidence.processPartitions") + ": "),
+                        new Doc.Code(String.join(", ", evidence.processPartitions()))));
+        Doc.TableBuilder elements = new Doc.TableBuilder(l.get("evidence.locator"), "ID",
+                l.get("evidence.metaclass"), l.get("evidence.attributes"));
+        for (BpmSourceEvidence.Element element : evidence.elements()) {
+            elements.row(code(evidenceLocator(element.location(), "E")), code(sourceValue(element.id())),
+                    code(sourceValue(element.metaclass())), code(element.attributes().toString()));
+        }
+        table(elements);
+        Doc.TableBuilder links = new Doc.TableBuilder(l.get("evidence.locator"), l.get("evidence.association"),
+                "f", "s");
+        for (BpmSourceEvidence.Link link : evidence.links()) {
+            links.row(code(evidenceLocator(link.location(), "L")), code(sourceValue(link.association())),
+                    code(evidenceEndpoint("f", link.first())), code(evidenceEndpoint("s", link.second())));
+        }
+        table(links);
+    }
+
+    private String evidenceEndpoint(String side, BpmSourceEvidence.Endpoint endpoint) {
+        String candidates = endpoint.candidates().stream()
+                .map(c -> evidenceLocator(c.location(), "E") + " " + sourceValue(c.metaclass())
+                        + " (" + l.get(c.included() ? "evidence.included" : "evidence.excluded") + ")")
+                .collect(Collectors.joining("; "));
+        return side + "=" + sourceValue(endpoint.id()) + " [" + endpoint.resolution() + "]"
+                + (candidates.isEmpty() ? "" : " → " + candidates);
+    }
+
+    private static String evidenceLocator(BpmSourceEvidence.Locator location, String kind) {
+        return location.archive() + "!/" + location.partition() + "#" + kind + location.ordinal();
+    }
+
+    private static String sourceValue(String value) {
+        return value == null ? "<null>" : value.isEmpty() ? "\"\"" : value;
+    }
+
     private void process(Process p, BpmComponent bpm) {
         heading(3, l.get("process.title", p.name()));
         paragraph(p.documentation());
         List<List<Doc.Inline>> facts = new ArrayList<>();
         if (p.pool() != null) {
-            facts.add(line(new Doc.Text(l.get("process.identifier") + ": "), new Doc.Code(p.pool().identifier())));
+            if (p.pool().identifier() != null) {
+                facts.add(line(new Doc.Text(l.get("process.identifier") + ": "), new Doc.Code(p.pool().identifier())));
+            }
             if (p.pool().subject() != null || p.pool().description() != null) {
                 facts.add(text(l.get("process.subject") + ": " + nz(p.pool().subject())
                         + (p.pool().description() == null ? "" : " — " + p.pool().description())));
@@ -145,6 +195,9 @@ public final class DocumentBuilder {
                 t.row(code(d.name()), code(d.type() == null ? null : d.type().name()), text(d.documentation()));
             }
             table(t);
+            for (Process.DataObject d : p.dataObjects()) {
+                mapping(l.get("process.initialValue", d.name()), d.initialValue());
+            }
         }
         List<Process.Role> roles = p.roles().stream().filter(r -> "process".equals(r.kind())).toList();
         if (!roles.isEmpty()) {
@@ -327,14 +380,16 @@ public final class DocumentBuilder {
         if (m == null) {
             return;
         }
-        List<Mapping.Assignment> rows = m.assignments().stream().filter(a -> a.expr() != null).toList();
+        List<Mapping.Assignment> rows = m.assignments();
         if (rows.isEmpty()) {
             return;
         }
         paragraph(List.of(new Doc.Strong(title)));
         Doc.TableBuilder t = new Doc.TableBuilder(l.get("col.target"), l.get("col.source"), l.get("col.mode"));
         for (Mapping.Assignment a : rows) {
-            t.row(code(a.target()), code(a.expr().text()), mode(a));
+            List<Doc.Inline> source = a.expr() == null ? text(l.get("mapping.structural"))
+                    : a.expr().text() == null ? text(l.get("mapping.expressionUnavailable")) : code(a.expr().text());
+            t.row(code(a.target()), source, mode(a));
         }
         table(t);
     }

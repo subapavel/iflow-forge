@@ -53,9 +53,11 @@ public final class BpmReader {
         ProcessReader.Usages usages = new ProcessReader.Usages();
         ProcessReader processReader = new ProcessReader(ctx, expressions, mappings, catalog, usages);
 
-        List<Process> processes = new ArrayList<>();
-        index.partitions().stream()
+        List<MoinPartition> processPartitions = index.partitions().stream()
                 .filter(p -> p.path().startsWith(PROCESS_DIR) && p.path().endsWith(".bpmn"))
+                .toList();
+        List<Process> processes = new ArrayList<>();
+        processPartitions.stream()
                 .sorted(Comparator.comparing(MoinPartition::path))
                 .forEach(p -> {
                     Process process = processReader.read(p);
@@ -79,7 +81,8 @@ public final class BpmReader {
         reportUnused(ctx, interfaces, serviceReferences, functions, eventDefinitions, usages);
 
         return new BpmComponent(ctx.dc, processes, new BpmComponent.Catalog(interfaces, serviceReferences,
-                functions, builtinFunctions(usages), eventDefinitions, builtinEventDefinitions(usages), dataTypes));
+                functions, builtinFunctions(usages), eventDefinitions, builtinEventDefinitions(usages), dataTypes),
+                BpmEvidenceReader.read(ctx, processPartitions.stream().map(MoinPartition::path).toList()));
     }
 
     /** SAP built-in functions called by the DC's processes, with their catalog semantics, ordered by name. */

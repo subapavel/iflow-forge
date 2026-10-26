@@ -31,7 +31,8 @@ Status: **accepted** (2026-10-09), BPM and EJB parts implemented.
 - **Lossless-ish**: every element carries `source` (`<archive>!/<entry>`) so the raw partition can be found. Element types the reader does not know go to `unmapped[]` (metaclass + attributes), never silently dropped.
 - **Source problems are reported in `issues[]`**, never fixed. Names/texts are emitted exactly as in source (typos included).
 - **Graph as seen in NWDS**: artificial uncontrolled joins (editor artefacts) are contracted; the contracted flow keeps `via: [joinIds]`.
-- Empty/default values are omitted (no `null`, no `[]`), to keep the output small.
+- Empty/default values are omitted (no `null`, no `[]`), to keep the output small, except inside
+  the optional `sourceEvidence` extension, which preserves explicit empty collections and null fields.
 
 ## Top level
 
@@ -88,9 +89,111 @@ Status: **accepted** (2026-10-09), BPM and EJB parts implemented.
     "eventDefinitions":  [ /* EventDefinition — DC triggers (src/triggers) */ ],
     "builtinEventDefinitions": [ /* EventDefinition — standard SAP triggers used (e.g. TechnicalError) */ ],
     "dataTypes":         [ /* DataType */ ]
-  }
+  },
+  "sourceEvidence": { /* BpmSourceEvidence; omitted when unavailable */ }
 }
 ```
+
+### BpmSourceEvidence
+
+The optional fourth component of [BpmComponent](../po-xray-core/src/main/java/io/poxray/model/BpmComponent.java)
+is [BpmSourceEvidence](../po-xray-core/src/main/java/io/poxray/model/BpmSourceEvidence.java), an independently
+versioned snapshot of selected **parsed-source evidence**. New inventories read by `BpmReader` include it.
+The shared `ScaInventory.schemaVersion` remains `"0.1"`; existing Process, Node, Flow and Mapping meanings
+remain unchanged, including true-only default/terminate and false-only enabled projections.
+
+Old JSON without `sourceEvidence` reads as null; null is omitted on serialization and means evidence is
+unavailable in that inventory. An explicit extension with empty `elements` and `links` means that its
+selection rule found no facts. Neither state establishes an empty or complete process. The existing
+three-argument `BpmComponent` constructor delegates with null, preserving source compatibility for those
+calls. Adding a record component does not guarantee binary compatibility, compatibility of record
+patterns, or compatibility with strict consumers of the older JSON shape.
+
+| Field | Meaning |
+|---|---|
+| `formatVersion` | Integer `1`, version of this extension's representation. |
+| `selectionVersion` | `"bpm-source-v1"`, the selection rule below. |
+| `indexedPartitions` | All actually indexed partition paths, in encounter order; not every archive entry. `.diagram` entries are excluded by the reader. |
+| `processPartitions` | All indexed paths starting `src/bpmn/` and ending `.bpmn`, in index encounter order. Includes candidates from which no Process can be interpreted, for example without Collaboration. The legacy `processes` list retains its separate sorting/filtering. |
+| `elements` | Selected full Element payloads, once per occurrence, in partition/element encounter order. |
+| `links` | Selected Link occurrences in partition/link encounter order, including duplicate links. |
+
+The nested record fields are:
+
+| Record | Fields and meaning |
+|---|---|
+| `Locator` | `archive`: the DC source archive (`BpmContext.sourceArchive`); `partition`: indexed entry path; `ordinal`: one-based occurrence in that partition's element **or** link list, not an XML line number. |
+| `Element` | `location`: Locator; `id`: parsed MOF ID; `metaclass`: parsed element tag; `attributes`: attribute-name/string map; `texts`: child-tag/`originalText` map; `values`: child-tag/list-of-`v`-strings map; `properties`: ordered Property entries from the parsed properties map. |
+| `Property` | `key`, `value`: nullable parsed strings. A missing key remains JSON null, not the string `"null"`; a missing value remains null. |
+| `Candidate` | `location`: element occurrence; `metaclass`: its parsed metaclass; `included`: whether its full Element payload is in this extension's `elements`. |
+| `Endpoint` | `id`: normalized parsed endpoint ID; `resolution`: `unique`, `missing` or `ambiguous`; `candidates`: all matching indexed element occurrences, in partition/element encounter order. |
+| `Link` | `location`: link occurrence; `association`: parsed association tag; `first`: the `f` Endpoint; `second`: the `s` Endpoint. Direction is preserved. |
+
+Occurrence identity is the Locator together with the element/link list kind. IDs may repeat within or
+across partitions; they do not uniquely identify retained occurrences. Endpoint resolution uses all
+indexed occurrences: one candidate is `unique`, zero is `missing`, more than one is `ambiguous`.
+Null and blank IDs remain as parsed and resolve as missing. There is no name fallback or first-match
+choice. A unique candidate with `included=false` is a boundary reference whose payload was not selected;
+it is neither a missing endpoint nor a full payload. Ambiguity is retained even when candidates are selected.
+
+All extension and nested-record collections are deeply immutable snapshots, including lists inside
+`values`. Parsed map iteration order and list encounter order are retained. Empty collections and
+nullable fields are explicit in JSON throughout the extension. A selected element's null property key
+retains `Property(null, value)` and emits `BPM_SOURCE_PROPERTY_KEY_MISSING` with its element occurrence
+and one-based property-entry index; a valid key with a null value is retained without fabricated content.
+
+### BPM source selection
+
+`bpm-source-v1` is implemented by
+[BpmEvidenceReader](../po-xray-core/src/main/java/io/poxray/bpm/BpmEvidenceReader.java) over the existing
+MOIN index:
+
+1. Seed every element occurrence in `processPartitions`, including unknown metaclasses. Also seed
+   elements anywhere whose metaclass starts `Galaxy.Workflow.`, `Galaxy.Mapping.` or `Galaxy.Rule.`,
+   or equals `Galaxy.ProcessSupplements.NotificationActivity`.
+2. Select every link occurrence in a process partition. Elsewhere, select links whose association
+   starts one of those three prefixes or whose endpoint ID matches an original seed ID. Selected links
+   with both endpoints missing and repeated links remain visible.
+3. Resolve selected endpoints against all indexed element occurrences. Add full payloads for direct
+   endpoint candidates of metaclass `XSD1.key.QName` or `properties.PropertyBag`. Other non-seed
+   candidates remain boundary references with `included=false`. Do not expand links of newly added
+   supports or recursively expand WSDL/XSD trees.
+4. Emit the selected elements and links in their original per-list order. `Candidate.included` reflects
+   the final selected-element set.
+
+The retained links preserve owner → mapping → root part → child part → QName/expression identities
+where present in the parsed source. Flattened `Assignment.target` paths and `Expression.reads` names
+do not replace those identities. Each missing endpoint emits `BPM_SOURCE_REFERENCE_UNRESOLVED`;
+each ambiguous endpoint emits `BPM_SOURCE_REFERENCE_AMBIGUOUS`, in `ScaInventory.issues`. Diagnostics
+retain association, `f`/`s` side, original ID and link occurrence; repeated bad links and both missing
+sides remain separate warnings. A unique boundary reference alone produces no such warning.
+
+This is a subset of the parsed index, not byte-exact XML or proof of runtime execution. The existing
+[MoinParser](../po-xray-core/src/main/java/io/poxray/moin/MoinParser.java) omits MOIN-internal attributes,
+strips `local:` from endpoint references, and collapses repeated map keys before selection. The
+extension cannot restore those losses or XML line offsets. Keep the original source and its
+`ScaInventory.source.sha256` digest for provenance. Raw flags preserve present string values such as
+`"false"`, `"true"` and unsupported tokens separately from absent keys. Loop declarations and fault
+attachments are retained facts; this slice does not establish current runtime behavior, reachability,
+name-to-ID binding, loop execution, fault interception or data producers.
+
+### BPM evidence output
+
+Use existing `po-xray json <sca> [-o file]` or `po-xray export <sca> -o <export-dir> [-l cs|en]`.
+Full JSON contains the extension. The existing MCP `write_sca_documentation` export includes it when
+writing JSON; P3a adds no behavior command or direct MCP evidence/process/step view.
+
+[DocumentBuilder](../po-xray-core/src/main/java/io/poxray/doc/DocumentBuilder.java) adds a component-level
+Markdown summary: selection version, indexed and selected process partitions, element IDs/metaclasses
+and present attribute maps, then associations with directed `f`/`s` IDs, resolution status and candidate
+payload selection. Locators render as `<archive>!/<partition>#E<n>` or `#L<n>`; these suffixes are
+element/link ordinals. Raw loop flags remain visible. Detailed texts, values and properties remain in
+JSON. A null extension is described as unavailable in this inventory.
+
+Markdown mapping tables include DataObject initial-value mappings and structural assignments even
+when `expr` is absent, and retain disabled rows. Absent `expr` is labelled structural; an expression
+with null text is labelled unavailable. A blank expression does not mean deletion. Missing `enabled`
+in the legacy projection does not establish execution. Supplied cell text is escaped for Markdown.
 
 ### Process
 
@@ -128,7 +231,7 @@ One process = one `src/bpmn/*.bpmn` partition (Collaboration → Pool).
   "id": "…", "name": "DO_CreateEnvelopeInput", "kind": "dataObject|textVariable",
   "scope": { "ref": "<scope id>", "name": "…" }, "documentation": "…",
   "type": { "ref": "<XsdElementDeclaration id>", "name": "EON_MT_CreateEnvelopeInput", "namespace": "urn:…" },
-  "initialValue": Expression                   // only when an init mapping exists (ViewContainsMapping)
+  "initialValue": Mapping                      // only when an init mapping exists (ViewContainsMapping)
 }
 ```
 
@@ -380,6 +483,9 @@ Codes in v0.1 (automatically detected):
 | `EXPRESSION_TEXT_MISMATCH` | `stringExpression` differs from the rendered tree |
 | `UNEXPECTED_STRUCTURE` | graph shape the reader does not expect (e.g. artificial join with ≠ 1 outgoing flow) |
 | `DUPLICATE_ID` | MOF ID declared in more than one partition |
+| `BPM_SOURCE_REFERENCE_UNRESOLVED` | selected source link endpoint has no indexed element candidate; includes link occurrence and `f`/`s` side |
+| `BPM_SOURCE_REFERENCE_AMBIGUOUS` | selected source link endpoint has multiple indexed element candidates; no target chosen |
+| `BPM_SOURCE_PROPERTY_KEY_MISSING` | selected element has a null parsed property key; entry retained with occurrence and property index |
 | `SUSPICIOUS_MAPPING` | heuristic: same source expression assigned to two sibling targets in one mapping |
 | `UNUSED_OBJECT` | interface, service reference, function, eventdef or data object not used by any process (SAP system data objects excluded) |
 | `MISSING_SOURCE` | `.function` lookupName points to an EJB not found in the SCA |

@@ -15,6 +15,16 @@ Phase 2 for an NW BPM process (spec §7 item 2): the step inventory, each step c
 
 A dry run on synthetic data: `po-xray bpm-inventory skills/sap-po-migration/fixtures/bpm-export` (one process with one human task, one EJB module, one file that is skipped; `skills/sap-po-migration/fixtures/README.md`).
 
+## Retained source evidence
+
+Read `bpm[].sourceEvidence` in existing `po-xray json <sca>` or `po-xray export <sca> -o <export-dir>` output. Absent evidence in old JSON means unavailable; explicit empty collections mean only that `bpm-source-v1` selected no facts. Candidate process partitions include those without an interpretable Process. [page: docs/OUTPUT-MODEL.md#BpmSourceEvidence]
+
+In `analysis.md`, retain archive/partition/element-or-link ordinal, raw attribute presence, directed `f`/`s` IDs and endpoint status. Duplicate IDs and links keep separate occurrences. Do not choose among ambiguous candidates or equate `included=false` with missing: it marks an unselected payload. Direct QName/PropertyBag supports are selected without recursive WSDL/XSD expansion. [page: docs/OUTPUT-MODEL.md#BPM source selection]
+
+Inspect initial-value mappings and structural assignments, including disabled rows; blank expressions do not mean deletion. Markdown summarizes flags, locators and link status; JSON retains detailed texts, values and ordered nullable properties. P3a adds no behavior command or direct MCP view. [page: docs/OUTPUT-MODEL.md#BPM evidence output]
+
+This evidence retains parser normalization/loss; keep source provenance. It proves no current runtime behavior, reachability, name-to-ID binding, loop execution, fault interception or producer analysis. Keep those conclusions unresolved unless separately evidenced. [page: docs/OUTPUT-MODEL.md#BPM source selection]
+
 ## Step classification
 
 Each step goes into one of four classes (spec §7 item 2): **1:1 pipeline scenario**, **orchestration outside the pipeline**, **conversion**, or **human task → stop**. Write one row per node into `analysis.md`: node id and name, kind, class, the reason (the field that decided), and the rule's status.

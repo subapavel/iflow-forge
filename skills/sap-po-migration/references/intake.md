@@ -43,6 +43,10 @@ For a missing input, tell the migrator which command fills it, with its argument
 
 Both write Markdown, `--json` gives JSON. For `attributes`, a file that cannot be read or parsed fails the command with exit 1 [page: docs/OUTPUT-MODEL.md#Migration helpers]: the input row goes back to `missing`. For `bpm-inventory`, which files are skipped and when the command fails: step 1 of `references/bpm.md`, "Step inventory". Synthetic inputs for a dry run: `skills/sap-po-migration/fixtures/README.md`.
 
+For BPM evidence, use existing `po-xray json <sca>` or `po-xray export <sca> -o <export-dir>`. Record `source.sha256`, `bpm[].sourceEvidence` availability and its format/selection versions. Old JSON without it has unavailable evidence; an explicit empty selection establishes no completeness. Keep the original source: parsed facts retain normalization/loss. [page: docs/OUTPUT-MODEL.md#BpmSourceEvidence] [page: docs/OUTPUT-MODEL.md#BPM source selection]
+
+Read locators, endpoint status, initial values and structural mappings as `references/bpm.md`, "Retained source evidence" describes. P3a adds no behavior command or direct MCP view and establishes no runtime execution or producer analysis. [page: docs/OUTPUT-MODEL.md#BPM evidence output] [page: docs/OUTPUT-MODEL.md#BPM source selection]
+
 **Exit** (spec §7 item 1): every input row of §5 is present or explicitly marked "not needed, because …".
 
 ## Scenario library search

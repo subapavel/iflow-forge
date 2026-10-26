@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import io.poxray.migration.DossierReport;
 import io.poxray.migration.DossierAssessment;
 import io.poxray.model.ScaInventory;
+import io.poxray.model.BpmSourceEvidence;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -59,6 +60,18 @@ class NativeReflectionTest {
                 DossierAssessment.Risk.class.getName(), DossierAssessment.BasisInput.class.getName(),
                 DossierAssessment.Basis.class.getName(), DossierAssessment.Coverage.class.getName(),
                 DossierAssessment.Blocker.class.getName(), DossierAssessment.Milestone.class.getName());
+    }
+
+    @Test
+    void bpmSourceEvidenceAndAllSixNestedRecordsAreRegistered() {
+        RegisterForReflection reg = NativeReflection.class.getAnnotation(RegisterForReflection.class);
+        Set<String> registered = Stream.concat(Arrays.stream(reg.targets()).map(Class::getName),
+                Arrays.stream(reg.classNames())).collect(Collectors.toSet());
+
+        assertThat(registered).contains(BpmSourceEvidence.class.getName(), BpmSourceEvidence.Locator.class.getName(),
+                BpmSourceEvidence.Element.class.getName(), BpmSourceEvidence.Property.class.getName(),
+                BpmSourceEvidence.Candidate.class.getName(), BpmSourceEvidence.Endpoint.class.getName(),
+                BpmSourceEvidence.Link.class.getName());
     }
 
     /** Class names under io/poxray/model in the core classes (directory or jar). */

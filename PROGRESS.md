@@ -617,3 +617,60 @@ Limits:24 absent-private-input skips and2 unset kb.forbidden skips verified from
 Preservation: original private evidence and unrelated pending governance/pilot work untouched; no tenant operation/deployment/push/customer-contract change.
 Decisions: D-048 authorization and D-049 v2 contract; revision identity and exact accepted-risk verification waiver clarified in packet.
 Next: scoped local P2 commit, then P3a metadata packet preflight corrections; P3–P7 continue under owner authorization until stop.
+
+## MIG-24 commit / MIG-25 P3a preparation · 2026-10-26
+MIG-24 committed125865f3efd4a1643948c0f38cf94142e5930d4f:33 files,2949 insertions132 deletions; no push.
+Checks: verifier VERIFIED_PASS precommit exact scope,7/7 hashes,26/26 product index/worktree bytes, staged privacy0; target/mig-p2-precommit-verifier.log tail read.
+Preservation: CODEX-01/MIG-07/D-046 and unrelated governance edits remain unstaged/untracked; no prior work discarded.
+MIG-25 selected under D-048: P3a retained parsed BPM source evidence, before P3b paths/data and P3c configured integration boundaries.
+Preflight: r1 FAIL on process-partition selection ambiguity and nullable PropertyBag keys; revision2 fixes candidate set/order and adds Property records without losing null evidence.
+Preflight: r2 PASS; exact source occurrence identity, selective support closure, explicit unresolved diagnostics, legacy compatibility and synthetic extraction acceptance approved.
+Decision: D-050; public sourceEvidence extension draft review at hand-over; original model meanings and shared schema0.1 retained.
+Packet: docs/superpowers/plans/2026-10-26-mig-25-p3a-packet.md; base125865f; no P3 production or test result yet.
+Next: independent test-author with Context7, observed red, architect test reading, bounded implementation, verification and review.
+
+## MIG-25 P3a test approval · 2026-10-26 · uncommitted
+Test first: architect read all4 files and approved20 new tests (core17, CLI2, native1) plus synthetic Process Composer SCA fixture.
+Checks: author EXECUTED_FAIL exit1 at core testCompile on missing BpmSourceEvidence/sourceEvidence API; target/mig-p3a-red.log tail read; no tests executed.
+Fixture: author javac exit0/JShell actual PoXray read observed1 BPM/1 process, initial mapping and disabled structural root/child; target/mig-p3a-fixture-check.log tail read.
+Scope: original native assertions retained, no production stub/source changes;4 approved hashes in packet and target/mig-p3a-approved-test-hashes.log.
+Context7: official lookups before test code; ambiguous Java ZIP lookup resolved by exact JDK/JAR APIs; target/mig-p3a-context7-tests.log.
+Doc status: retrospective design's historical 'command does not exist' sentence updated to reflect completed P1/P2; no behavior changed.
+Next: independent red/scope verification, then bounded metadata implementation. P3b public-source scouting continues without claiming runtime behavior.
+
+## MIG-25 continuation · 2026-10-26 · uncommitted
+Context compacted; re-read CODEX-WORKFLOW/HANDOFF, git status and log -3. HEAD remains125865f; approved P3a tests and unrelated edits preserved.
+Independent verifier assigned the approved20-test compile-red check; production implementation has not started.
+Checks: independent EXECUTED_FAIL exit1,95 missing API compile errors,0 executed tests; target/mig-p3a-red-verifier.log counts/tail read.
+Scope:4/4 hashes match; production/POM diff empty. Implementation authorized under canonical packet; final root verification remains pending.
+
+## MIG-25 P3a implementation handback · 2026-10-26 · uncommitted
+Writer released: parsed occurrence evidence, immutable explicit-null/empty model, reader selection, diagnostics, Markdown and native registration implemented.
+Checks: author first focused EXECUTED_FAIL core17/0/2/0 from missing Pool.identifier rendering; fixed within DocumentBuilder, approved tests unchanged.
+Checks: author focused+legacy VERIFIED_PASS56/0/0/16; target/mig-p3a-implementer-focused-legacy.log tail read; all20 new tests pass.
+Limits:16 private-input skips in this bounded run; final root verify, packaged smoke and independent code/docs review remain pending.
+Scope:4 approved test hashes unchanged; no dependency/POM changes. Context7 calls logged in target/mig-p3a-implementer-context7.log.
+Next: bounded documentation author and independent code reviewer, then final independent verification. P3b graph/producer split reviewed as sound but exact packet remains pending.
+
+## MIG-25 P3a independent review · 2026-10-26 · uncommitted
+Review: code r1 PASS; all20 tests assessed against wrong behavior,4 approved hashes retained, no blocking findings.
+Documentation writer released: OUTPUT-MODEL and canonical bpm/intake references only; independent documentation review next.
+Checks: final independent root verify and packaged CLI smoke authorized after documentation release; results pending.
+Evidence: target/mig-p3a-code.diff, target/mig-p3a-doc.diff; final root and smoke outputs will be recorded before commit.
+Review: documentation r1 PASS; exact source fields/commands/citation headings and limitations verified independently; budgets1423/1437.
+Checks: first independent root EXECUTED_FAIL core314/0/14/22 from local loopback sandbox restriction; failing section/tail read in target/mig-p3a-verify-final-verifier.log.
+Retry: same root verify authorized with local sandbox escalation, no source/test/config changes; target/mig-p3a-verify-final-verifier-escalated.log pending.
+
+## MIG-25 P3a acceptance · 2026-10-26 · ready to commit
+Test first:20 approved tests, independent compile-red exit1/95 missing API errors;4 approved hashes retained.
+Changed: parsed BPM occurrence evidence/diagnostics, immutable model, compatible constructor, initial/structural Markdown mappings, native registry, output/skill docs.
+Checks: independent root VERIFIED_PASS440/0/0/26; target/mig-p3a-verify-final-verifier-escalated.log tail and target/mig-p3a-final-counts.log read.
+Modules: core314/0/0/22,native5/0/0/0,CLI41/0/0/1,MCP8/0/0/1,KB72/0/0/2. No kb.skip or new skips.
+CLI: VERIFIED_PASS fresh packaged json/English export/Czech export,3/3 exit0; source SHA unchanged; target/mig-p3a-smoke-export-checks.log read.
+Observed: schema0.1,extension1/bpm-source-v1,15 elements/15 links,2 unresolved endpoints; initial/structural/disabled/escaped Markdown and raw locators/flags present.
+Review: code r1 PASS; documentation r1 PASS. Doc budgets1423/1437; root citation/budget/mirror checks included.
+Preservation: governance4/4,test hashes4/4 unchanged; no POM/skill-frontmatter/pointer changes; targeted added-text privacy0 hits.
+Limits: actual skipped reasons confirm24 absent private inputs and2 unset kb.forbidden checks; native executable/full forbidden-values NOT_RUN.
+Initial sandbox root EXECUTED_FAIL14 local-loopback errors; identical approved escalation retry passed. Logs preserve both outcomes.
+Decisions: D-050; no runtime, producer or whole-P3 completion claim. No private pilot evidence read/modified; no push.
+Next: scoped local commit, then MIG-26 structural path packet revision2 preflight and separate red tests; P3–P7 continue until owner stop.
