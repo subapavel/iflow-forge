@@ -890,3 +890,71 @@ Preservation:14approvedhashes,8source/docssnapshots,4governancehashes unchangedb
 Docs:Budget2/Cites1/SkillMirror13 pass; bpm1476/1500words;5sourcelinksresolve/headingspreserved; whitespaceclean,0sensitiveprivacyhits (3publicSAPURLs excluded).
 Limits:24absentprivate-fixture and2unsetkb.forbidden skips remainunverified; nativeexecutable/fullforbiddenvalues NOT_RUN withenvironmentreasons. No runtime orwholeP3completion claim.
 Next: selective localcommit19ownedpaths excludinggovernance/pilot/MIG29drafts, thenfinalP3configuredICO/CLI/MCP delivery perapprovedMIG29revision2. StopafterP3;noP4–P7/tenant/push.
+
+## MIG-28 commit / MIG-29 preparation · 2026-10-26
+MIG-28 committed3e2b716a5ca43a81a39b31ac234715c5c81fd55f:19files,2496insertions17deletions; no push.
+Checks: independentprecommit VERIFIED_PASS19/19paths,16worktreeblobs+3selectiveledgers,14approvedhashes/8verifiedsnapshots/4governancehashes,whitespaceexit0/privacy0; audit tailread.
+UnrelatedCODEX01/MIG07/D046/governance preserved; MIG29drafts excluded. Product/test workingtree clean aftercommit.
+MIG-29 selected underD053: finalP3 composite source/configuredintegration report andofflineCLI/MCP; base3e2b716.
+Revision2 independentdesignpreflight PASS after4contractclarifications; separate realSCA/TPZ/report/CLI/MCP/native tests authorized, thenarchitectapproval/independentred. No implementationyet.
+Baseline569/0/0/26 is MIG-28 evidence, not newbehavior delivery. P4–P7 remain unimplemented; stopafterP3acceptance.
+
+## MIG-29 test approval · 2026-10-26 · uncommitted
+Architect read all nine files and finaldeltas;51newtests approved (40core,6CLI,4MCP,1native). Frozen manifest target/mig-p3c-behavior-test-author-hashes.log.
+Pre-freeze expectation corrected to unknown for incompleteoutboundroutes; maporder asserts added. No production workaround or weakened sourcecontract.
+Author EXECUTED_FAIL finalcompile-red exit1 forintroduced BehaviorReport/BehaviorAnalysis; logtailread,no runtimetests executed. Independentconfirmation pending.
+Real fixture prerequisite VERIFIED_PASS readerexit0:1process,2interfaces,1service,2ICOs,3channels. Helper compileexit0 withone missingJacksonannotationclasspath warning; actualrun fullruntime dependencies passed.
+227previous source/test hashes unchanged; native14additions0deletions. Runtimebehavior/CLI/MCP/native acceptance NOT_RUN untilimplementation; no platformACL assumptions orskippedtests.
+Next: independentred, thenboundedimplementation on3e2b716. FinalP3only; noP4–P7/tenant/push.
+Checks: independent EXECUTED_FAIL compile-red exit1,100missing introducedAPI diagnostics,0runtime tests; summary/tailread. Frozen9/9 andprior227/227 hashes matchbefore/after; production/POM emptydiff,native14additions0deletions.
+BoundedMIG-29 implementation authorized with frozenacceptance; source/configurationsemantics remainpacketrevision2. Fullroot/newruntime acceptance stillpending.
+
+## MIG-29 implementation handback · 2026-10-26 · uncommitted
+Context compacted; CODEX-WORKFLOW/HANDOFF reread, status and log3 reconfirmed before changes.
+Writer released: eight new and three additive production files; existing parsers/analyses/ScenarioDiscovery/JSON helpers/POM/tests unchanged.
+Checks: author VERIFIED_PASS243/0/0/0 combined(core224/native9/CLI6/MCP4),exit0; summary/counts/logtails read. SeparateCLI6/MCP4 passed with actual inline and full-file spill.
+First focused EXECUTED_FAIL native9/1/0/0 after core40pass: existing allModelClassesAreRegistered requires BehaviorSnapshots in targets. Root read test and assertion section.
+Ruling: helper public final/private constructor/package-private copying methods and native registration; smallest compatibility change, no public operations or expectation changes. Packet amended; independent review must check it.
+Preservation: frozen9/9 and prior224/224 hashes retained; source whitespacepass. Context7 Java/Jackson/Quarkus/MCP plus exactJDK/JAR fallback recorded; no newdependencies.
+Next: independent code review and bounded four-file documentation, then independent rootverify/fresh packagedCLI. WholeP3acceptance stillpending; stopafterP3.
+
+## MIG-29 review round1 · 2026-10-26 · uncommitted
+Code review FAIL2 static counterexamples: empty-party-only channel reference loses compatible candidates; nested ICO/route/service gaps omitted from process reasons.
+All51 original tests meaningful and frozen9/review20 hashes retained. Findings not yet assertion-red; three separate completeness regressions authorized before two-file correction.
+Docs writer released four allowed paths,274 additions25 deletions. Observed whitespace/budget/privacy/links/headings/scope exit0; logs read.
+Canonical budgets bpm1470/intake1459 of1500; privacy0;13addedlinks and37citations resolve;6headingsadded,0removed. Initial linkchecker error on rootREADME fixed in checker-r2; no document fault.
+Next: test-author adds BehaviorCompletenessTest only, root approval/independent red, sameimplementer Channels/Discovery correction; final code/docs review and fullroot pending.
+Scope unchanged: finishP3 andstop; noP4–P7/tenant/push or runtime proof.
+
+## MIG-29 regression approval · 2026-10-26 · uncommitted
+Architect read all159lines of BehaviorCompletenessTest; three real-source regressions approved, SHAEB9804B7DDFBF07838BF8EA804036497540FD781B3252D81E3D9ECE7F34D19F5.
+Author EXECUTED_FAIL3/3/0/0,exit1; summary/failuresection/logtail read. Expected channels[2,5] wereempty; process omitted route and serviceambiguity reasons.
+All preceding fixture/snapshot/index/state/nested-reason assertions passed. Protected24/24 hashes unchanged (11production,9originaltests,4docs); writer released.
+Documentation review PASS: exact contract/source/tests/links checked, hashes4/4 and budgets1470/1459; final two-file sourceconsistency closure follows correction.
+Next: independent assertion-red, sameimplementer onlyChannels/Discovery correction, code r2/finaldocs and fullroot/CLI. No completion claim yet.
+Checks: independent EXECUTED_FAIL3/3/0/0,exit1,1.304s; verifier summary/excerpts/logtail read. All three expected assertion failures reproduced, noerrors/skips.
+New approvedhash, original9/9 andprotected24/24 matchbefore/after. Sameimplementer now authorized for onlyChannels/Discovery correction; sourcecontract/tests remain frozen.
+
+## MIG-29 correction handback · 2026-10-26 · uncommitted
+Writer released: only BehaviorChannels/BehaviorDiscovery corrected. Empty-party selector retains candidates; nested interface/match/route/call/service reasons reach process summary deterministically.
+Checks: author VERIFIED_PASS3/0/0/0 regressions and246/0/0/0 combined(core227/native9/CLI6/MCP4),exit0; summary/counts/logtails read.
+Preservation:23/23 protected files unchanged (10test/helper,4docs,9otherproduction); originalbaseline retained, no expectation/state/index/snapshot/grammar changes.
+Next: same code reviewer r2 and finaldocs sourceconsistency, then independent rootverify/fresh packagedCLI and selectivelocalcommit. P3 not yet accepted; D053stop remains binding.
+
+## MIG-29 independent review closure · 2026-10-27 · uncommitted
+Code reviewr2 PASS: both findings closed; three regressions meaningful;21/21 current snapshots and23/23 protectedfiles independently retained.
+Final docs consistency PASS: four frozen docs match corrected empty-party and nested-reason semantics; no remaining blockers.
+Independent fullroot mvn -B -ntp verify and fresh packagedCLI now in progress; no final acceptance claim before observed output.
+
+## MIG-29 / P3 final acceptance · 2026-10-27 · ready to commit
+Changed: stable BehaviorReport composes source paths/data/faults with configured ICO/channel/interface/service candidates; offline behavior CLI and bpm_behavior MCP, immutable snapshots and native registry.
+Test first:51 original tests plus3 independently confirmed assertion-red regressions; all54new pass. Code reviewr2 and finaldocs PASS; two review defects corrected without weakening expectations.
+Checks: independent root VERIFIED_PASS623/0/0/26,exit0,01:43; target/mig-p3c-behavior-verify-final-verifier.log and final summary/counts/logtail read.
+Modules:core483/0/0/22,native9/0/0/0,CLI47/0/0/1,MCP12/0/0/1,KB72/0/0/2. Actual MCP inline/full-file spill passed.
+CLI: fresh packaged8/8 logical cases passed, including expected missing-export failure; parsedJSON/Markdown semantics and four input hashes verified unchanged.
+Preservation:21source/test+4docs snapshots,10approved hashes,224priorfiles and4governance files unchanged; parser/analysis/ScenarioDiscovery/POM/JSON helpers/pointers preserved.
+Docs:Budget2/Cites1/SkillMirror13 pass; canonical budgets1470/1459 of1500; links/whitespace clean,0 sensitive added-line privacyhits (one publicSAPcitation excluded).
+Limits:24 absent private-input and2 unsetkb.forbidden skips remain unverified; native executable/fullforbidden values NOT_RUN for documented environment reasons. No liveMCP reload/deployment or runtime-delivery claim.
+Verifier harness correction: first malformed-ICO fixture was not created; exact single retry observed a real parse diagnostic. Accidental own file removed, original logs retained; no source/test changes or Maven rerun.
+P3 accepted; original plan updated to STOP underD053. P4–P7/MIG21/MIG22 campaign, tenant operations and push were not performed.
+Next: selective localcommit32 ownedpaths after independentprecommit audit; preserve unrelatedCODEX01/MIG07/D046/governance. No further implementation after this commit.

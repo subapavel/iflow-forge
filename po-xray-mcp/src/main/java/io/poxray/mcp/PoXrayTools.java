@@ -6,6 +6,7 @@ import io.poxray.doc.Documentation;
 import io.poxray.integration.BpmIntegration;
 import io.poxray.integration.ObjectCatalog;
 import io.poxray.json.Json;
+import io.poxray.migration.BehaviorAnalysis;
 import io.poxray.model.IntegrationInventory;
 import io.poxray.model.ScaInventory;
 import io.quarkiverse.mcp.server.Tool;
@@ -43,6 +44,14 @@ public class PoXrayTools {
 
     @Inject
     Inventories inventories;
+
+    @Tool(name = "bpm_behavior", description = "Compose local BPM source paths, data and fault declarations with optional ICO/channel configuration; candidates do not prove runtime behavior.",
+            annotations = @Tool.Annotations(readOnlyHint = true, openWorldHint = false))
+    public String bpm_behavior(@ToolArg(description = "Local export directory or SCA inventory JSON file") String exportPath,
+            @ToolArg(description = "Optional local ICO inventory JSON file", defaultValue = "") String icosPath) {
+        return call(() -> json("bpm_behavior", BehaviorAnalysis.read(Path.of(exportPath),
+                icosPath == null || icosPath.isBlank() ? null : Path.of(icosPath))));
+    }
 
     @Tool(name = "find_components", description = "Find communication components (business systems / business "
             + "components) in the Integration Directory of a SAP PO system. Use it first to get the exact component "

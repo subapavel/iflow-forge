@@ -33,6 +33,7 @@ Status: **accepted** (2026-10-09), BPM and EJB parts implemented.
 - **Graph as seen in NWDS**: artificial uncontrolled joins (editor artefacts) are contracted; the contracted flow keeps `via: [joinIds]`.
 - Empty/default values are omitted (no `null`, no `[]`), to keep the output small, except inside
   the optional `sourceEvidence` extension, which preserves explicit empty collections and null fields.
+  Separately versioned analysis reports below specify their own serialization rules.
 
 ## Top level
 
@@ -181,7 +182,8 @@ name-to-ID binding, loop execution, fault interception or data producers.
 
 Use existing `po-xray json <sca> [-o file]` or `po-xray export <sca> -o <export-dir> [-l cs|en]`.
 Full JSON contains the extension. The existing MCP `write_sca_documentation` export includes it when
-writing JSON; P3a adds no behavior command or direct MCP evidence/process/step view.
+writing JSON. The offline [behavior command and MCP tool](#behavior-cli-and-mcp-delivery) compose
+this evidence into source analysis and configured integration candidates.
 
 [DocumentBuilder](../po-xray-core/src/main/java/io/poxray/doc/DocumentBuilder.java) adds a component-level
 Markdown summary: selection version, indexed and selected process partitions, element IDs/metaclasses
@@ -207,9 +209,9 @@ label per non-null inventory; null arguments/elements or differing list sizes th
 `IllegalArgumentException`. Empty input returns explicit empty collections. Missing optional legacy
 fields are evidence gaps. This report does not change `ScaInventory` or its shared schema version.
 
-This slice adds no CLI or MCP command. Existing `po-xray json` and `po-xray export` still provide the
-source evidence described above; they do not emit this separate path report. The separate data helper
-below embeds the path report; configured integration and composite delivery remain pending.
+Existing `po-xray json` and `po-xray export` provide the source evidence described above. The data
+helper below embeds the path report, delivered at `data.paths` in the separate
+[BehaviorReport](#bpm-configured-behavior).
 
 The report uses `formatVersion=1`, `analysisVersion="bpm-paths-v1"`. All collections are deeply
 immutable snapshots. The new BpmPathReport records serialize null fields and empty collections
@@ -360,8 +362,8 @@ list sizes; empty input is valid. It performs no file IO, clock reads or input m
 
 This is a separate report of **declared source candidates and structural provenance**, not runtime
 values, successful calls, execution, overwrites or definite availability. It does not change the
-inventory schema or add a CLI/MCP entry point. Existing `json`/`export` outputs provide source
-evidence, not this report. Configured integration and composite delivery remain pending.
+inventory schema. Existing `json`/`export` outputs provide source evidence; the offline
+[BehaviorReport](#bpm-configured-behavior) embeds this report at `data`.
 
 [BpmDataReport](../po-xray-core/src/main/java/io/poxray/model/BpmDataReport.java) uses
 `formatVersion=1`, `analysisVersion="bpm-data-v1"`. New records have deeply immutable collection
@@ -558,9 +560,9 @@ BpmPathAnalysis: non-null lists of equal size, with no null inventory or label; 
 addressing and scope admission, without embedding that report. It performs no IO, clock reads or
 input mutation. `markdown(null)` also throws `IllegalArgumentException`.
 
-This slice exposes source declarations, not handler selection or observed fault handling. No new
-CLI/MCP entry exists: existing `json`/`export` provide source evidence, not this separate report.
-Configured integration and composite BehaviorReport delivery remain pending.
+This report exposes source declarations, not handler selection or observed fault handling.
+Existing `json`/`export` provide source evidence; the offline
+[BehaviorReport](#bpm-configured-behavior) embeds this separate report at `faults`.
 
 [BpmFaultReport](../po-xray-core/src/main/java/io/poxray/model/BpmFaultReport.java) has
 `formatVersion=1`, `analysisVersion="bpm-faults-v1"`. New records serialize null fields and empty
@@ -1149,9 +1151,10 @@ Facts verified on xipod (PO 7.50 SP28):
 
 ## Migration helpers
 
-Three read-only helpers of the migration skill (`sap-po-migration`) turn po-xray outputs into decision inputs. All
-write Markdown by default and JSON with `--json`; `schemaVersion` "0.1", `generator` as in the other outputs, maps
-sorted by key, `issues` always written (`[]` = none found), other nulls and empty lists omitted.
+Read-only migration helpers turn po-xray outputs into decision inputs. The attributes and BPM inventory CLI
+helpers write Markdown by default and JSON with `--json`. These reports and the core DiscoveryReport use
+`schemaVersion` "0.1", `generator` as in the other outputs, maps sorted by key, `issues` always written
+(`[]` = none found), other nulls and empty lists omitted. Behavior and dossier reports have separate contracts below.
 
 ### `po-xray attributes <ico.json>...` → `AttributesReport`
 
@@ -1260,6 +1263,242 @@ Markdown: `# Scenario discovery` with the inputs, `## Processes`, per process `#
 dc, file and process components and a table `| Role | Interface | Namespace | ICO | Sender | Receivers |` (one row
 per ICO, `—` in the last three cells for an interface without ICO; Sender is `party / component` when a party is
 set), `## Components` table `| Component | Roles |`, `## Issues` with `none` or a table `| Code | Message |`.
+
+### BPM configured behavior
+
+[BehaviorAnalysis](../po-xray-core/src/main/java/io/poxray/migration/BehaviorAnalysis.java) provides
+three public static methods:
+
+```java
+BehaviorReport of(List<ScaInventory> inventories, List<String> labels,
+                  IntegrationInventory icos, String icosLabel)
+BehaviorReport read(Path exportFileOrDirectory, Path icosJson) throws IOException
+String markdown(BehaviorReport report)
+```
+
+The [BehaviorReport](../po-xray-core/src/main/java/io/poxray/model/BehaviorReport.java) uses
+`formatVersion=1`, `analysisVersion="bpm-behavior-v1"`. It composes the accepted data report
+(embedding paths once), the independent fault report and existing ScenarioDiscovery matching with
+original ICO/channel configuration. Source declarations and configured candidates establish no
+runtime delivery, rejection, handler invocation, acknowledgment or transaction behavior.
+
+New record collections are required, immutable snapshots preserving encounter order and null entries.
+Nested legacy ICO, channel, interface, service-reference and discovery collections/maps are copied too,
+including Source.files. Legacy null versus empty fields, map null values and list holes are preserved;
+null map keys throw `IllegalArgumentException`. New BehaviorReport records serialize null fields and
+empty collections explicitly. Reused legacy records, including `Issue`/`Issue.Location`, retain their
+existing omission rules. A null discovery generator is therefore omitted from JSON.
+
+Analysis does not mutate inputs. Repeated `of` calls on identical inputs serialize identically.
+ScenarioDiscovery internally reads a clock; the copied discovery report has `generator=null`, removing
+that generated metadata. Original source values such as ICO `modifiedAt` remain. Top-level issues append
+data, faults, discovery, integration and read diagnostics in that order. Repeated child issues remain
+repeated; they do not demonstrate independent faults.
+
+Fields below are in record/JSON order. `reasons` contains explanatory tokens, not runtime observations.
+
+| Record | Fields |
+|---|---|
+| `BehaviorReport` | `formatVersion`, `analysisVersion`, `data`: BpmDataReport, `faults`: BpmFaultReport, `discovery`: DiscoveryReport, `integration`: Integration, `processes`: ProcessWiring list, `issues`. |
+| `Integration` | `input`: original ICO label, `schemaVersion`: supplied inventory version, `availability`, `selection`, `source`: IntegrationInventory.Source, `query`: Query, `icos`: IcoSource list, `channels`: ChannelSource list, `channelUses`: ChannelUse list, `issues`: original integration issues, `reasons`. |
+| `IcoSource` | `ordinal`, `configuration`: original Ico projection or null, `reasons`. |
+| `ChannelSource` | `ordinal`, `configuration`: original Channel projection or null, `reasons`. |
+| `ChannelUse` | `ordinal`, `ico`, `receiver`, `assignment`, `role`: `sender`, `receiver` or `parameter`, `parameter`: original map key or null, `reference`, `source`: original DirRef or null, `candidates`: channel ordinals, `resolution`, `association`, `direction`, `reasons`. |
+| `ProcessWiring` | `key`: BpmPathReport.ProcessKey, `state`, `interfaces`: InterfaceUse list, `calls`: StepCall list, `reasons`. |
+| `InterfaceUse` | `ordinal`, `direction`: `inbound` or `outbound`, `context`, `source`: DiscoveryReport.InterfaceRow, `candidates`: InterfaceCandidate list, `steps`: path Step ordinals, `matches`: IcoMatch list, `state`, `reasons`. |
+| `InterfaceCandidate` | `ordinal`, `source`: full catalogue Interface projection. |
+| `IcoMatch` | `discovery`, `ico`, `routes`: Route list, `state`, `reasons`. |
+| `Route` | `receiver`, `assignment`, `target`, `relation`, `reasons`. |
+| `StepCall` | `step`, `location`: source Locator, `relations`: raw Link list, `elements`: included Element payloads, `interfaces`: InterfaceUse ordinals, `services`: ServiceCandidate list, `state`, `acknowledgment`, `transaction`, `reasons`. |
+| `ServiceCandidate` | `ordinal`, `source`: full catalogue ServiceReference projection, `state`, `reasons`. |
+
+Numeric references are one-based and keep original list gaps:
+
+- `ProcessKey(input, component, process)` addresses the input inventory and its original BPM component
+  and process, as in `data.paths`. Duplicate labels, IDs and names never replace this key.
+- `IcoSource.ordinal` and `ChannelSource.ordinal` address original IntegrationInventory lists.
+  Every entry gets a wrapper, including null entries with `missing-ico` or `missing-channel`.
+- `ChannelUse.ordinal` is report-wide encounter order; `ico` selects IcoSource. `receiver` selects
+  `configuration.receivers`; `assignment` selects that receiver's `interfaces`. `reference` selects a
+  receiver's channel list entry or a parameter map entry in encounter order, and is null for senders
+  or an absent/empty receiver-channel list. `candidates` selects ChannelSource ordinals.
+- `InterfaceUse.ordinal` starts at one per process, inbound then outbound. InterfaceCandidate and
+  ServiceCandidate ordinals address the original component catalogue lists, not the candidate list.
+- `IcoMatch.discovery` selects the row in `InterfaceUse.source.icos`; `ico` selects IcoSource or is
+  null when reassociation fails. Route indices descend through that ICO's receiver, assignment and
+  target lists. Absent/empty structures use null; a null list entry retains its original index.
+- `StepCall.step` and InterfaceUse.steps select the same process's `data.paths` Steps. StepCall.interfaces
+  selects that ProcessWiring's InterfaceUse ordinals. Calls preserve path step order, even when disconnected.
+
+### Behavior inputs and configuration
+
+`of` requires non-null inventory/label lists of equal size, without null members; empty input is valid.
+SCA schema `"0.1"` and legacy null are admitted; another explicit version throws `IllegalArgumentException`
+before analysis. Optional `icos` and `icosLabel` may be null; the supplied label is retained unchanged.
+Absent or unsupported retained BPM evidence keeps the child reports' unavailable states.
+`markdown(null)` throws `IllegalArgumentException`.
+
+[BehaviorInputs](../po-xray-core/src/main/java/io/poxray/migration/BehaviorInputs.java) reads one local
+file, or direct regular files in a directory with a case-insensitive `.json` suffix, sorted
+lexicographically by filename; it does not recurse. A null, missing or unreadable root, or one that is
+neither a regular file nor a directory, throws `IOException`. An unreadable/malformed/null export,
+a document with both `bpm` and `ejb` null,
+or an unsupported SCA version is skipped with `BEHAVIOR_INPUT_UNAVAILABLE`, naming the file and reason.
+No usable exports produces an empty report with `BEHAVIOR_NO_USABLE_EXPORT`, including an empty directory.
+Labels are the original path strings. No network fetch, automatic export or input-file mutation occurs.
+
+Integration availability is independent of selection:
+
+| `availability` | Meaning |
+|---|---|
+| `absent` | No ICO object/path supplied; selection is `unknown`. |
+| `unavailable` | Optional ICO read, parse or null-document failure; `BEHAVIOR_ICO_UNAVAILABLE` is retained. |
+| `unsupported-schema` | Explicit ICO schema other than `"0.1"`; original source/configuration snapshots remain, without matching or derived channel uses. |
+| `missing-icos` | Admitted object with `icos=null`; source/query/channels remain, without matching or channel uses. |
+| `available` | Admitted schema and non-null ICO list; an empty list is only an observed empty collection. |
+
+Null ICO schema adds `legacy-schema`. Selection is `query-limited` when Query.component or direction
+is nonblank; otherwise `source-issues` when any source Issue is non-null; otherwise `unknown`.
+All source issues, including null entries, remain in Integration.issues. Query, Source and empty
+collections never establish whole-system completeness. Unavailable configuration cannot prove no match.
+
+Snapshots retain original receiver conditions, QoS, interface assignments, target multiplicities,
+mappings/parameters, dynamicRouting, noReceiverBehaviour, channel attributes/modules and source/query
+metadata. These are parsed projections, not byte-exact archives: prior reader omissions and defaults
+remain unknown. Basic interface operations, message patterns, input/output/fault QNames and service
+references are projections too. Recursive schema/import/resource contract completeness belongs to P4
+and is not delivered here.
+
+### Behavior interface and route candidates
+
+[BehaviorDiscovery](../po-xray-core/src/main/java/io/poxray/migration/BehaviorDiscovery.java) calls
+existing ScenarioDiscovery with the ICO inventory only when Integration.availability is `available`.
+Process-row count and each row's file/DC/id/name must agree with the path report's encounter order.
+A mismatch yields `discovery-process-mismatch`; it never shifts rows or recovers identity by name.
+ProcessWiring.state is `candidate` with stable discovery mapping and available path source, otherwise
+`unavailable`. Incomplete source may still yield candidates; child coverage and reasons remain decisive.
+
+Interface candidates reverse the lossy discovery projection using exact name/namespace, process name
+and usage role. Every matching original catalogue index remains. One gives `candidate`, several
+`ambiguous`, none `unavailable`; no state means confirmed binding. Null namespaces follow existing matching,
+not resolved QName proof. Candidate usage.node.ref selects all matching step IDs within the exact
+ProcessKey, in path order. Missing, blank or nonunique refs retain reasons; there is no name fallback.
+Unknown roles keep discovery diagnostics rather than a fabricated direction.
+
+Interface context is `pre-process` for role `start`, `existing-instance` for `intermediate`, and
+`process-outbound` for `outbound`/`notification` (`unknown` for an unrecognized role). These distinguish
+configured delivery before process entry from delivery to an existing instance; neither proves
+correlation or actual delivery. BPM fault declarations remain in `faults` and do not establish how
+configured ingress failures are handled.
+
+Each discovery ICO row is compared against the whole original summary: OID, sender party/component/
+interface/namespace and sorted distinct non-null receiver components. Every source match yields an
+IcoMatch: one is `candidate`, several `ambiguous`, no match `unavailable` with null `ico`. Duplicate or
+null OIDs cannot select a representative. Even exact summary coincidence is only a coarse candidate.
+
+Inbound Route rows contain only receiver/assignment/target triples with an exact target interface
+name/namespace match; `relation=interface-candidate`. Other incomplete/unmatched branches stay in the
+ICO snapshot and add `incomplete-other-route`, without becoming delivery candidates. Outbound rows
+enumerate all target combinations as `configured-candidate`; missing/null/empty structures retain
+placeholder indices with `relation=unknown` and `unknown-route`.
+
+InterfaceAssignment.operation is the **sender-side** operation, not the target BPM operation.
+Conditions, including literal false, remain unevaluated and never prune routes. No-receiver error
+policy and dynamic-routing configuration remain separate from BPM faults and observed rejection.
+Routing issues can indicate dropped unresolved alternatives; diagnostic prose is not an authoritative
+route identity. Keep those issues and uncertainty with the configured candidates.
+
+### Behavior channel references
+
+[BehaviorChannels](../po-xray-core/src/main/java/io/poxray/migration/BehaviorChannels.java) emits source
+uses in ICO order: one sender use even for a null ICO/channel, then each receiver's channel entries
+(one placeholder for a null/empty list), followed by that receiver's assignment parameter entries in
+map order. Null/empty parameter maps produce no invented entries. Null channel records remain
+snapshots but cannot match.
+
+`resolution` describes reference identity only:
+
+- Null channel catalogue: `unavailable`, no candidates, `channels-unavailable` reason. Empty catalogue:
+  `channels-observed-empty` on Integration and `observed-empty-catalogue` on uses; exact selectors can
+  be `missing`, partial/absent selectors stay `unknown`. Neither proves whole-system absence.
+- A nonblank OID selects all exact OID candidates and never falls back to a name. Supplied non-null
+  party/component/name fields corroborate identity. No candidate gives `missing`; multiple give
+  `ambiguous` even with conflicting fields; one conflicting candidate gives `conflict`, otherwise `unique`.
+- Without OID, supplied non-null fields filter candidates. A complete key requires non-null party
+  (empty is meaningful) and nonblank component/name: zero/one/multiple candidates give
+  `missing`/`unique`/`ambiguous`. Partial keys remain `unknown` regardless of candidate count.
+  Null/selectorless references stay `unknown`, without binding arbitrary catalogue entries.
+
+`association` is separate from identity. Receiver party/component projections lost whether text was
+literal or a dynamic extractor; receiver association therefore stays `unknown` with
+`receiver-identity-projection`, even when strings agree or disagree. For senders with unique identity,
+known owner/candidate party or component disagreement gives `conflict`; both parties and components known and
+matching gives `compatible`; missing values give `unknown`. Other identity states keep association
+unknown, retaining `candidate-owner-conflict` when applicable.
+
+Transport `direction` is `compatible` only for unique identity with the exact sender/receiver direction;
+the exact opposite gives `conflict`; otherwise it is `unknown`. Ambiguous/partial/conflicting identities
+never select a channel, and preserve candidate-direction-conflict/unknown reasons. Parameter uses
+always have `association=not-transport`, `direction=not-applicable`, even with a unique channel.
+Adapter attributes and module positions are configuration, not evidence of execution, ordering or acknowledgment.
+
+### Behavior step calls
+
+[BehaviorCalls](../po-xray-core/src/main/java/io/poxray/migration/BehaviorCalls.java) produces one StepCall
+per path Step, including disconnected steps. ActivityHasOperation and AutomatedActivityHasServiceReference
+use `f=target,s=activity`, qualified by source occurrence candidates. Raw relations retain all endpoint
+candidates; included endpoint payloads remain in elements. Raw lists deduplicate by occurrence in source order.
+
+A supported direct operation relation requires an included unique AutomatedActivity or
+ProcessSupplements.NotificationActivity owner and WSDL2.Operation target. A direct service-reference
+relation requires an included unique AutomatedActivity and mc.servicereferences.ServiceReference target.
+Each owner permits at most one relation of each kind; repeated or competing relations are unknown.
+Other kinds, including MappingActivity with these relations, are unsupported call grammar.
+
+CatchEventHasTrigger (`f=definition,s=catch`) plus incident MessageEventDefinitionHasOperation remains
+two-hop raw evidence. StartEvent/BoundaryEvent with MessageEventDefinition is the supported shape,
+but either operation-link orientation retains `unknown-operation-direction`; no normalized target is
+invented. A message trigger without an operation link retains `missing-message-operation`. Non-message
+triggers alone do not invent calls; their declarations are in the fault report.
+
+Service candidates use only exact raw target ID = ServiceReference.id, retaining all matching catalogue
+indices without UUID/name fallback. A valid unique target with one projection is `candidate`; several
+projections are `ambiguous`. A missing/excluded/ambiguous or wrong-kind target makes retained projected
+rows `unavailable`. With no catalogue match the list is empty and `service-projection-unavailable`
+remains; the raw relation is not discarded. Interface hints refer only to InterfaceUse.steps candidates.
+
+StepCall.state follows this precedence:
+
+1. `unknown`: source unavailable/unsupported, malformed or ambiguous required evidence, multiplicity,
+   missing/excluded endpoints or unverified catch operation direction, even alongside a valid direct link.
+2. `source-declared`: at least one supported direct relation without those gaps; source association only.
+3. `candidate`: catalogue interface hints only.
+4. `no-interface-call-observed`: admissible source with no call evidence or hints. This does not exclude
+   expression/function side effects or prove that a step cannot call anything at runtime.
+
+Every step has `acknowledgment=unknown` and `transaction=unknown`. Async patterns, adapters, modules and
+QoS do not establish these runtime properties. Source calls do not prove invocation, successful delivery,
+handler selection, fault propagation, retries or actual execution.
+
+### Behavior CLI and MCP delivery
+
+[CLI](../po-xray-cli/src/main/java/io/poxray/cli/BehaviorCommand.java):
+`po-xray behavior <export-dir-or-file> [--icos <inventory.json>] [--json]` reads local exported inventory
+JSON only. Default stdout is Markdown; `--json` emits the full BehaviorReport. Missing/unreadable export
+roots fail the command. Optional ICO failures and an empty usable export set return diagnostic reports
+successfully; inspect availability, coverage and issues rather than treating exit zero as completeness.
+
+[MCP](../po-xray-mcp/src/main/java/io/poxray/mcp/PoXrayTools.java): `bpm_behavior(exportPath, icosPath)`
+uses the same reader; icosPath is optional (default empty). It returns compact JSON inline up to 80,000
+characters. Larger results use the existing `message`/`file` envelope pointing to the full indented
+`<temp>/po-xray/bpm_behavior-*.json`, without truncation. A bad export root becomes ToolCallException;
+a bad optional ICO remains a diagnostic report. The tool needs no live PO connection or automatic export.
+This documents the implemented tool, not deployment or reload of an existing MCP server.
+
+Markdown includes structural paths, data candidates, source faults, configured ICO/channel snapshots,
+interface/call candidates and diagnostics. Source-derived table cells escape pipes/newlines and retain
+coverage, reasons and explicit unknown acknowledgment/transaction. The report supplies analysis evidence,
+not owner approval, a target design, generated artifacts or runtime validation.
 
 ### `po-xray dossier-check <dossier.json> [--baseline <previous.json>] [--json]` → `DossierReport`
 

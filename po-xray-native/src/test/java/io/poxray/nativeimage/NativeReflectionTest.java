@@ -9,6 +9,7 @@ import io.poxray.model.BpmSourceEvidence;
 import io.poxray.model.BpmPathReport;
 import io.poxray.model.BpmDataReport;
 import io.poxray.model.BpmFaultReport;
+import io.poxray.model.BehaviorReport;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -113,6 +114,19 @@ class NativeReflectionTest {
                 BpmFaultReport.Definition.class.getName(), BpmFaultReport.FaultReference.class.getName(),
                 BpmFaultReport.Builtin.class.getName(), BpmFaultReport.Parameter.class.getName(),
                 BpmFaultReport.Evidence.class.getName(), BpmFaultReport.Unattributed.class.getName());
+    }
+
+    @Test
+    void behaviorReportAndAllElevenNestedRecordsAreRegistered() {
+        RegisterForReflection reg = NativeReflection.class.getAnnotation(RegisterForReflection.class);
+        Set<String> registered = Stream.concat(Arrays.stream(reg.targets()).map(Class::getName),
+                Arrays.stream(reg.classNames())).collect(Collectors.toSet());
+        assertThat(registered).contains(BehaviorReport.class.getName(), BehaviorReport.Integration.class.getName(),
+                BehaviorReport.IcoSource.class.getName(), BehaviorReport.ChannelSource.class.getName(),
+                BehaviorReport.ChannelUse.class.getName(), BehaviorReport.ProcessWiring.class.getName(),
+                BehaviorReport.InterfaceUse.class.getName(), BehaviorReport.InterfaceCandidate.class.getName(),
+                BehaviorReport.IcoMatch.class.getName(), BehaviorReport.Route.class.getName(),
+                BehaviorReport.StepCall.class.getName(), BehaviorReport.ServiceCandidate.class.getName());
     }
 
     /** Class names under io/poxray/model in the core classes (directory or jar). */

@@ -15,7 +15,7 @@ import org.aesh.command.invocation.CommandInvocation;
         groupCommands = {JsonCommand.class, DocCommand.class, ExportCommand.class, ComponentsCommand.class,
             IcoCommand.class, SearchCommand.class, ShowCommand.class, WhereUsedCommand.class, IflowCommand.class,
             UnpackCommand.class, BpmFunctionsCommand.class, AttributesCommand.class, BpmInventoryCommand.class,
-            DossierCheckCommand.class})
+            DossierCheckCommand.class, BehaviorCommand.class})
 public class PoXrayCommand implements Command<CommandInvocation> {
 
     @Override
@@ -23,6 +23,7 @@ public class PoXrayCommand implements Command<CommandInvocation> {
         System.err.println("Usage: po-xray <json|doc|export> <file.sca> [options]  |  po-xray components -s <system>"
                 + "  |  po-xray ico -s <system> -c <component>  |  po-xray attributes <ico.json>... [--json]"
                 + "  |  po-xray bpm-inventory <export-dir> [--json]"
+                + "  |  po-xray behavior <export-dir-or-file> [--icos <inventory.json>] [--json]"
                 + "  |  po-xray dossier-check <dossier.json> [--baseline <previous.json>] [--json]"
                 + "   (po-xray --help, po-xray <command> --help)");
         return CommandResult.USAGE_ERROR;

@@ -40,11 +40,22 @@ java -jar po-xray-cli/target/po-xray-cli-0.1.0-SNAPSHOT-runner.jar --help
 | `json <file.sca> [-o file]` | Inventory as JSON (standard output by default) |
 | `doc <file.sca> [-f markdown\|jira\|all] [-l cs\|en] [-o dir]` | Documentation (Markdown and/or Jira wiki markup) |
 | `export <file.sca> [-l cs\|en] [-o dir]` | JSON + both documentation formats into a directory |
+| `behavior <export-dir-or-file> [--icos <inventory.json>] [--json]` | Offline BPM paths, data/fault declarations and configured ICO/channel candidates; Markdown by default, full JSON with `--json` |
 | `iflow <path> [--json]` | Integration Suite artifacts (iFlow folder or zip, package export, or a folder of these): channels, steps in flow order, parameters, resources |
 | `unpack <package> <out-dir> [--strip a,b]` | Package export into `<out-dir>/<symbolic-name>/` + `CHANGELOG.txt`, without `parameters.prop` and `Configured_Custom_Tags.txt`; tokens stripped from symbolic names |
 
-A one-line summary and written files are reported on standard error; standard output carries only command
-output (JSON). Exit code 0 = success, non-zero = error.
+A one-line summary and written files are reported on standard error; standard output carries command
+output in the selected format. Exit code 0 = success, non-zero = error.
+
+For an offline behavior report from existing SCA export JSON and optional ICO inventory JSON:
+
+```bash
+java -jar po-xray-cli/target/po-xray-cli-0.1.0-SNAPSHOT-runner.jar behavior <export-dir> --icos <inventory.json> --json
+```
+
+Omit `--json` for Markdown or `--icos` for source analysis without configuration. The command reads
+local files only. Inspect coverage, availability and issues: candidates do not establish runtime
+delivery, fault handling, acknowledgment or transactions. See the [behavior model](docs/OUTPUT-MODEL.md#bpm-configured-behavior).
 
 ### ESR / Integration Directory (online)
 
@@ -141,13 +152,14 @@ they need (app-local, nothing to install) and `INSTALL.txt`. Native images are b
 | `get_object` | one object of that inventory: ICO, channel, service interface, operation / message mapping (field logic, UDFs), function library, message / data type |
 | `search_objects`, `read_object`, `where_used` | any object type independent of ICOs: search by name, read one, find its users |
 | `bpm_integration` | cross-reference of the BPM processes of an SCA with a PO system: interfaces a process uses (inbound / outbound, ESR operation mapping called) and the ICOs, determinations, agreements and mappings referencing them |
+| `bpm_behavior` | offline behavior report from local `exportPath` (directory or inventory JSON) and optional `icosPath`; source declarations and configured candidates, without a live PO connection |
 | `write_integration_documentation` | Markdown / Jira / JSON files of the ICO inventory |
 | `read_sca`, `get_sca_object` | overview of an SCA, then a process outline, single steps with their mappings, process data, catalogs, EJB modules, issues |
 | `write_sca_documentation` | Markdown / Jira / JSON files of an SCA |
 
-Results are deliberately small (compact JSON, overview first, details on request): MCP clients truncate large tool
-results. A result above the client limit is written to `<temp>/po-xray/<tool>-*.json` as indented JSON and the tool
-returns the file path instead. When the PO system cannot be reached (network / VPN), listings come from the snapshot and the result carries
+Results use compact JSON; MCP clients can truncate large tool results. Above 80,000 characters, the full result
+is written to `<temp>/po-xray/<tool>-*.json` as indented JSON and the tool returns the existing `message`/`file`
+envelope instead. This also applies to `bpm_behavior`. When the PO system cannot be reached (network / VPN), listings come from the snapshot and the result carries
 a warning (`OFFLINE_SNAPSHOT` issue, `warnings` of `find_components`).
 PO systems are the ones configured in `~/.po-xray/systems/<name>.properties` (see CLI); the snapshot cache is shared
 with the CLI.

@@ -16,8 +16,13 @@ P3a/MIG-25 je dokončeno jako `c8b4f86`: code/docs review PASS, reactor440/0/0/2
 a čerstvé CLI3/3. MIG-26 dokončilo strukturální cesty: code r2/docs PASS,
 nezávislý reactor483/0/0/26 a43 nových testů. MIG-27 dokončilo datové kandidáty:
 code/docs r2 PASS, nezávislý reactor533/0/0/26 a50 nových testů včetně7 regresí.
-P3 pokračuje fault deklaracemi a propojením s ICO/CLI/MCP. Tyto části ještě nejsou
-implementované ani ověřené; P4–P7 se podle D-053 neimplementují. Přesná evidence je v PROGRESS.
+MIG-28 dokončilo fault deklarace v commitu `3e2b716`: code r2/docs PASS,
+nezávislý reactor569/0/0/26 a36 nových testů. MIG-29 dokončilo společný report,
+konfigurované ICO/kanálové kandidáty, CLI `behavior` a MCP `bpm_behavior`:
+code r2/finaldocs PASS, nezávislý reactor623/0/0/26,54 nových testů a čerstvé CLI8/8.
+**P3 je dokončeno a práce tímto končí (2026-10-27, D-053).** P4–P7 se neimplementovaly.
+26 stávajících vynechání zůstává neověřeno; report nedokazuje skutečný běh ani doručení.
+Přesná evidence a omezení jsou v PROGRESS.
 Historie: původně předloženo ke schválení; odpověď vlastníka „Schvaluji“ navazuje
 na otázku o schválení návrhu a zahájení pouze P1.
 

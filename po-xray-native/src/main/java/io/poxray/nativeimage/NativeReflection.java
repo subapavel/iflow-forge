@@ -11,6 +11,8 @@ import io.poxray.model.AttributesReport;
 import io.poxray.model.BpmComponent;
 import io.poxray.model.BpmDataReport;
 import io.poxray.model.BpmFaultReport;
+import io.poxray.model.BehaviorReport;
+import io.poxray.model.BehaviorSnapshots;
 import io.poxray.model.BpmInventoryReport;
 import io.poxray.model.BpmPathReport;
 import io.poxray.model.BpmSourceEvidence;
@@ -64,6 +66,10 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
             BpmFaultReport.Scope.class, BpmFaultReport.Definition.class, BpmFaultReport.FaultReference.class,
             BpmFaultReport.Builtin.class, BpmFaultReport.Parameter.class, BpmFaultReport.Evidence.class,
             BpmFaultReport.Unattributed.class,
+            BehaviorSnapshots.class, BehaviorReport.class, BehaviorReport.Integration.class, BehaviorReport.IcoSource.class,
+            BehaviorReport.ChannelSource.class, BehaviorReport.ChannelUse.class, BehaviorReport.ProcessWiring.class,
+            BehaviorReport.InterfaceUse.class, BehaviorReport.InterfaceCandidate.class, BehaviorReport.IcoMatch.class,
+            BehaviorReport.Route.class, BehaviorReport.StepCall.class, BehaviorReport.ServiceCandidate.class,
             Process.class, Process.Pool.class, Process.Lane.class, Process.Role.class, Process.Scope.class,
             Process.DataObject.class, Process.TypeRef.class, Process.Annotation.class, Process.EditorArtifacts.class,
             Node.class, Node.OperationRef.class, Node.InterfaceRef.class, Node.Trigger.class, Node.ErrorEvent.class,
