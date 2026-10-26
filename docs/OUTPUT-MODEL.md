@@ -208,8 +208,8 @@ label per non-null inventory; null arguments/elements or differing list sizes th
 fields are evidence gaps. This report does not change `ScaInventory` or its shared schema version.
 
 This slice adds no CLI or MCP command. Existing `po-xray json` and `po-xray export` still provide the
-source evidence described above; they do not emit this separate path report. Later data-producer and
-integration analysis/composition remain separate work.
+source evidence described above; they do not emit this separate path report. The separate data helper
+below embeds the path report; integration/fault composition remains pending.
 
 The report uses `formatVersion=1`, `analysisVersion="bpm-paths-v1"`. All collections are deeply
 immutable snapshots. The new BpmPathReport records serialize null fields and empty collections
@@ -347,6 +347,205 @@ apply. The report establishes no fault priority/interception, iteration count, j
 successful completion, target name binding, data-producer availability or runtime feasibility.
 Embedded exits are omitted: child effects at parent successors remain unknown unless separately
 justified completion evidence is supplied to later analysis.
+
+### BPM contextual data candidates
+
+The core Java helper
+[BpmDataAnalysis](../po-xray-core/src/main/java/io/poxray/bpm/BpmDataAnalysis.java) exposes
+`public static BpmDataReport of(List<ScaInventory> inventories, List<String> labels)` and
+`public static String markdown(BpmDataReport report)`. It computes BpmPathAnalysis once and embeds
+that report for exact process, step and arc addressing. The input contract is the same: one non-null
+label per non-null inventory, with `IllegalArgumentException` for null arguments/elements or differing
+list sizes; empty input is valid. It performs no file IO, clock reads or input mutation.
+
+This is a separate report of **declared source candidates and structural provenance**, not runtime
+values, successful calls, execution, overwrites or definite availability. It does not change the
+inventory schema or add a CLI/MCP entry point. Existing `json`/`export` outputs provide source
+evidence, not this report. P3c integration/fault composition remains pending.
+
+[BpmDataReport](../po-xray-core/src/main/java/io/poxray/model/BpmDataReport.java) uses
+`formatVersion=1`, `analysisVersion="bpm-data-v1"`. New records have deeply immutable collection
+snapshots and explicit null/empty JSON fields. Reused `Issue`/`Issue.Location` retain their existing
+omission behavior. Fields below are in record/JSON order. Element, Link, Endpoint and Locator mean
+BpmSourceEvidence types; ProcessKey and Fact mean BpmPathReport types.
+
+| Record | Fields and meaning |
+|---|---|
+| `BpmDataReport` | `formatVersion`, `analysisVersion`; `paths`: the embedded BpmPathReport; `processes`: ProcessData rows; `issues`: source-inventory issues, then path issues, then data diagnostics in stable order. |
+| `ProcessData` | `key`: ProcessKey; `dc`, `id`, `name`, `source`: process provenance; `coverage`: `complete`, `incomplete` or `unavailable`; `reasons`: uncertainty tokens; `objects`, `mappings`, `declarations`, `reads`, `steps`: the corresponding rows. |
+| `ObjectData` | `ordinal`: object row; `source`: full DataObject/TextVariable Element; `memberships`: source Links; `scopePath`: immediate containing scope through ancestors to pool, inner first; `types`: type Links; `typeCandidates`: included candidate Elements; `scopeState`: `active`, `inactive` or `unknown`; `reasons`. |
+| `MappingUse` | `ordinal`: contextual use; `parent`, `parentDeclaration`: enclosing use/declaration for arguments, null for top-level uses; `ownership`: source Link or null for an orphan; `mapping`: source Endpoint or null when no mapping fact exists; `rootOwner`: top-level owner Locator or null; `role`, `readDomain`, `writeDomain`: distinctions below; `evidence`: Evidence; `reasons`. |
+| `Evidence` | `path`: contextual traversal as Facts; `elements`: retained full Element payloads; `links`: retained source Links. |
+| `Name` | `links`: QName association Links; `candidates`: included candidate Elements, preserving raw name/namespace; `state`: `resolved`, `missing`, `ambiguous` or `invalid`. |
+| `Binding` | `state`: `owned`, `lexical-candidates`, `external`, `unknown` or `none-observed`; `objects`: ObjectData ordinals; `reasons`. |
+| `Declaration` | `ordinal`: contextual declaration; `mapping`: MappingUse ordinal; `part`: source Endpoint; `targetPath`: one Name per root/child part; `evidence`; `target`: Binding; `valueKind`: `expression`, `structural` or `unknown`; `candidacy`: `candidate`, `disabled`, `structural`, `external` or `unknown`; `reasons`. |
+| `Read` | `ordinal`: read row; `declaration`: enclosing Declaration ordinal; `domain`: read domain; `evidence`; `binding`: Binding; `candidates`: OriginSets; `reasons`. |
+| `OriginSet` | `object`: ObjectData ordinal; `declarations`: candidate Declaration ordinals; `coverage`: `complete`, `incomplete` or `not-applicable`; `reasons`. |
+| `StepState` | `step`: embedded path Step ordinal; `location`: its Locator; `connectivity`: its structural status; `before`, `after`: OriginSets; `reasons`. |
+
+Ordinals are one-based within ProcessData, except StepState.step addresses the matching path process's
+Step. Qualify Locators with ProcessKey and distinguish element/link Facts. Process order follows
+`paths`; objects follow source element order. Top-level ownership links follow source order, with
+nested argument uses inserted depth-first. Roots and child links are walked depth-first in source
+order; declarations/reads receive encounter ordinals. Remaining unattributed mappings/parts follow
+source order after attributed uses. OriginSets follow object order, with producer IDs in ascending
+declaration order. Repeated analysis of the same inputs/labels is deterministic.
+
+### BPM data bindings and evidence
+
+[BpmDataContext](../po-xray-core/src/main/java/io/poxray/bpm/BpmDataContext.java) uses admitted
+format-1/`bpm-source-v1` evidence and the exact process-source match used by the path report.
+Unavailable evidence gives ProcessData coverage `unavailable`, empty fact-derived lists and matching
+path StepState rows with unknown connectivity and explicit reasons; it invents no declarations.
+Object rows retain source membership/type evidence, including orphan or ambiguous scopes. Type
+declarations, absent/excluded schemas and schema defaults never become initializers.
+
+Attribution follows validated occurrence ancestry to this collaboration's pools, including passive
+pools. Positive ownership takes precedence over a link's physical partition. Ambiguous owner
+candidates touching several processes give an unknown use in each, with null rootOwner. Local
+orphan/malformed metadata can be attributed as unknown only when its partition belongs to exactly
+one interpreted process. Shared or otherwise unattributed component metadata produces
+`BPM_DATA_UNATTRIBUTED_SOURCE`, qualified by input/component ordinal, DC and exact source occurrence;
+it does not fabricate a process binding or copy the whole payload into that diagnostic. The original
+sourceEvidence remains its raw evidence. Affected component processes carry
+`unattributed-component-data` and incomplete coverage. Other uncertainties use `BPM_DATA_UNCERTAIN`
+with process/occurrence context; source and path diagnostics remain visible.
+
+Visibility requires unique acyclic scope ancestry to an active pool. Same-scope and ancestor objects
+are visible; children, siblings and passive-pool objects are excluded only when scope evidence
+supports that conclusion. Same-name inner/ancestor objects remain alternatives, with no shadowing
+precedence. Unknown ancestry retains plausible lexical candidates with unknown binding, even when
+the candidate list is empty.
+
+[BpmDataMappings](../po-xray-core/src/main/java/io/poxray/bpm/BpmDataMappings.java) keeps contextual
+ownership/root/child paths. A shared mapping or part under two owners or two diamond paths yields
+separate uses/declarations. Cycles terminate with a visible terminal row and reason; there is no
+legacy depth-64 truncation. Missing, ambiguous and wrong-kind part endpoints retain terminal
+declarations, raw Endpoint candidates and gaps instead of selecting the first match.
+
+`InputMappingOfMappableObject`, `OutputMappingOfMappableObject` and `ViewContainsMapping` use
+`f=mapping,s=owner`; `MappingContainsMappingParts` uses `f=part,s=mapping`, and
+`MappingPartHasChildren` uses `f=child,s=parent`. TargetPath retains every root/child QName state.
+Initial target Binding is `owned` by the exact DataObject/TextVariable occurrence, independently
+of the root QName. Other supported process writes use the root QName's exact raw name to find
+visible object-name candidates; even one match remains `lexical-candidates`. QName namespace and
+data-type namespace are retained separately and do not prove variable identity. A missing root
+name cannot fall back to a child's name, type name, prefix stripping or a guessed identifier.
+`none-observed` requires validated scope/root-name evidence and still does not prove runtime absence.
+
+The helper assigns these roles/domains to source declarations:
+
+| Ownership and owner | Role | Read domain | Write domain |
+|---|---|---|---|
+| ViewContainsMapping on DataObject/TextVariable | `initial` | `unknown` | `process-context` |
+| Input/output on MappingActivity | `mapping` | `process-context` | `process-context` |
+| Input on AutomatedActivity/NotificationActivity/EndEvent | `input` | `process-context` | `external-input` |
+| Output on AutomatedActivity/NotificationActivity/StartEvent/BoundaryEvent | `output` | `external-output` | `process-context` |
+| Input on StartEvent/BoundaryEvent, output on EndEvent, or other unsupported owner/direction | `unknown` | `unknown` | `unknown` |
+| Mapping on EmbeddedScope | `unsupported-embedded` | `unknown` | `unknown` |
+| ViewContainsMapping on process/lane role | `role-assignment` | `unknown` | `role` |
+| FunctionInvocationHasParameterMapping | `argument` | inherited from enclosing expression | `function-argument` |
+
+Argument uses retain parent/parentDeclaration and the top-level rootOwner; their targets are not
+process writes. Unsupported directions retain declarations and uncertainty, not supported writes.
+External-output reads never bind to same-named process objects.
+
+Each Evidence.path preserves contextual traversal and can repeat a Locator for a cycle. Raw
+Evidence.elements/links follow source order once per Locator within that Evidence; distinct source
+occurrences remain distinct. Interpreted read paths retain every segment's QName payload, including
+raw name and namespace, without requiring the original inventory to recover those values. Feature
+references remain independent evidence; excluded payloads retain `included=false` in their endpoints.
+MappingUse evidence includes mapping attributes/configuration even when it has no parts. Incident
+metadata links are retained in either direction; further traversal is limited to
+MappingPartConfiguration, NSPrefix and PropertyBag supports, with cycle protection. Unknown
+configuration remains `configuration-semantics-unknown`; it does not establish effective flags or
+precedence, and does not trigger traversal of a function implementation or XSD graph.
+
+[BpmDataExpressions](../po-xray-core/src/main/java/io/poxray/bpm/BpmDataExpressions.java) extracts
+syntax from source links, never from flattened Assignment/Expression.reads or parsed editor text.
+`valueKind=expression` requires one unique part expression and a nonempty ordered sequence of
+uniquely resolved Reference, Parent, Literal, FunctionInvocation or Condition steps. No expression,
+or a unique empty tree with absent/blank editor text, is structural; nonblank text without a tree is
+unknown. Structural rows do not imply scalar writes, deletion, object creation or defaults.
+Raw part flags, literal values/types and expression text remain evidence. Missing literal data,
+unknown function identity and malformed nested branches add uncertainty; independent reads and
+otherwise supported outer assignment syntax remain visible. No function arity/body or expression
+execution is evaluated.
+
+An ordinary read root is a leading Reference with a unique retained nonblank QName; the whole
+reference path is retained. A leading Parent gives unknown root, not lexical scope lookup.
+References after a literal/function result are result paths, not new process roots. Condition
+branches and argument expressions are traversed independently without pruning; unresolved,
+ambiguous or cyclic paths stop with gaps while independent reads survive. Initializer reads retain
+`initializer-order-unknown`. Contextual/process reads at loop hosts/contained scopes retain
+`loop-local-context-unknown` and unknown Binding: an exported same-name object cannot disprove a
+loop-local source. External-output reads retain external Binding.
+
+### BPM data flow and uncertainty
+
+[BpmDataFlow](../po-xray-core/src/main/java/io/poxray/bpm/BpmDataFlow.java) propagates two finite
+monotone unions over resolved structural arcs: known declaration IDs and uncertainty reasons.
+Joins retain alternatives; cycles reach a fixed point and may bring a declaration into its own
+before state. Conditions, including typed false/default declarations, never prune these sets.
+There is no destructive overwrite or removal based on set/append/merge flags or lexical guesses.
+
+A declaration is a candidate only for a supported process-context write, expression syntax and
+owned/lexical-candidate target. Exact local `enabled=false` remains a disabled row and contributes
+no propagated producer ID; child extraction continues. Missing/invalid enabled, a disabled ancestor
+and uninterpreted configuration retain uncertainty without inventing inherited flag values. A
+child's otherwise supported candidate can therefore remain alongside that uncertainty.
+
+Initial candidates seed their own validated scope entry before a connected StartEvent, never every
+step globally. Ancestor candidates may enter child scopes; child-local initials/writes cannot leak
+to parents or siblings. An absent valid entry adds uncertainty without a fabricated seed. Ordinary
+candidate writes are added after their connected owner step. Disconnected/unknown owners remain
+declarations without seeding an asserted connected flow.
+
+StepState.before/after list proven-visible objects in object order. Connected steps retain supported
+known candidates even when gaps remain. For a resolved boundary attachment, transfer the owner's
+before/after union with `boundary-timing-unknown`; do not assert that its output completed first.
+Embedded entry transfers visible parent candidates plus child-scope initials. No child exit is
+synthesized: an embedded host's parent successor and downstream states carry
+`child-effects-unmodeled`, without fabricated child producer IDs on a nonexistent return edge.
+
+`OriginSet.coverage` separates these outcomes:
+
+- `complete`: the supported selected-source calculation has no applicable uncertainty; this is not
+  exhaustive runtime producer coverage or definite availability.
+- `incomplete`: applicable scope/domain/graph/effect uncertainty remains alongside any known IDs.
+- `not-applicable`: a structurally disconnected step in the complete modeled graph has empty sets
+  and `not-reached-in-modeled-graph`; its declarations remain in the report.
+
+Empty candidates mean only that no supported declaration was observed on these modeled paths.
+They never establish no data, null, a scalar value or a schema default. Unknown connectivity or
+visibility remains incomplete, including when no visible-object rows can be established. A passive
+pool does not become a complete active state. ProcessData coverage is unavailable when evidence is
+inadmissible, incomplete when path/data evidence has unresolved or unsupported interpretation, and
+complete otherwise. Lexical-candidate binding is an explicit supported heuristic and alone need
+not make the source calculation incomplete.
+
+Missing roots, targets, parts, expressions or unsupported process-write effects can propagate
+`opaque-write` without any producer ID. At a known connected owner this starts after that step,
+affecting known target candidates or all proven-visible objects when the target is unknown, then
+travels through outgoing arcs, joins, cycles and boundary transfer. Initializer uncertainty starts
+at its known scope entry. Unknown owners/attribution or an incomplete graph introduce process-wide
+uncertainty. Scope filtering never turns missing knowledge into a complete empty result. Supported
+external-input, argument and role writes do not create opaque process writes merely by being
+external; missing reads do not themselves erase established provenance.
+
+Process reads normally use their enclosing step's before sets. MappingActivity reads also retain
+other eligible same-step writes with `intra-step-order-unknown` and incomplete coverage. The read's
+own declaration and argument-enclosing declaration chain are excluded from new same-step
+alternatives, but remain candidates if they already reach before through a structural cycle.
+A mapping-part parent is not automatically an argument-enclosing declaration. Ordinary activity
+inputs do not acquire that activity's later output as an input producer. Initializer/unknown-step
+reads stay incomplete; disconnected reads are not-applicable.
+
+Markdown shows object/source/type/scope evidence, contextual mapping roles/domains, declarations,
+read bindings and candidate sets, step before/after states and diagnostics, with escaped cells.
+All parsed-source loss/selection limits still apply. Neither source declarations nor these finite
+candidate sets establish successful calls, final values, exact intra-step ordering, loop execution,
+fault interception, runtime feasibility or definite data availability.
 
 ### Process
 

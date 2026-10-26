@@ -6,14 +6,18 @@
 
 **Stav:** Návrh schválen vlastníkem 2026-10-26; po dokončení P1 vlastník povolil
 průběžnou realizaci zbývajících P2–P7, dokud neřekne stop (D-048).
+Následně rozsah omezil na dokončení P3 a ukončení práce (D-053); P4–P7 se
+v tomto běhu neimplementují. Dosavadní souhlas a historie zůstávají zachované.
 P1 je implementováno a ověřeno jako MIG-23: code/doc review PASS, nezávislý
 reactor verify 371/0/0/26 a 16 cílených kontrol po dokumentační opravě PASS.
 P1 commit: `461ae13`. P2 je dokončeno jako MIG-24: code review r2 a docs review PASS,
 nezávislý reactor 420/0/0/26, 49 nových testů a 10/10 kontrol čerstvého CLI balíčku.
 P3a/MIG-25 je dokončeno jako `c8b4f86`: code/docs review PASS, reactor440/0/0/26
 a čerstvé CLI3/3. MIG-26 dokončilo strukturální cesty: code r2/docs PASS,
-nezávislý reactor483/0/0/26 a43 nových testů. P3 pokračuje datovými producenty;
-zbývající P3–P7 ještě nejsou implementované ani ověřené. Přesná evidence je v PROGRESS.
+nezávislý reactor483/0/0/26 a43 nových testů. MIG-27 dokončilo datové kandidáty:
+code/docs r2 PASS, nezávislý reactor533/0/0/26 a50 nových testů včetně7 regresí.
+P3 pokračuje fault deklaracemi a propojením s ICO/CLI/MCP. Tyto části ještě nejsou
+implementované ani ověřené; P4–P7 se podle D-053 neimplementují. Přesná evidence je v PROGRESS.
 Historie: původně předloženo ke schválení; odpověď vlastníka „Schvaluji“ navazuje
 na otázku o schválení návrhu a zahájení pouze P1.
 

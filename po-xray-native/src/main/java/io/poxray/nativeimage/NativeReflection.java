@@ -9,6 +9,7 @@ import io.poxray.migration.DossierReport;
 import io.poxray.migration.DossierAssessment;
 import io.poxray.model.AttributesReport;
 import io.poxray.model.BpmComponent;
+import io.poxray.model.BpmDataReport;
 import io.poxray.model.BpmInventoryReport;
 import io.poxray.model.BpmPathReport;
 import io.poxray.model.BpmSourceEvidence;
@@ -54,6 +55,10 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
             BpmPathReport.Fact.class, BpmPathReport.Flag.class, BpmPathReport.Endpoint.class,
             BpmPathReport.Condition.class, BpmPathReport.Step.class, BpmPathReport.Arc.class,
             BpmPathReport.Loop.class, BpmPathReport.ProcessPaths.class,
+            BpmDataReport.class, BpmDataReport.ProcessData.class, BpmDataReport.ObjectData.class,
+            BpmDataReport.MappingUse.class, BpmDataReport.Evidence.class, BpmDataReport.Name.class,
+            BpmDataReport.Binding.class, BpmDataReport.Declaration.class, BpmDataReport.Read.class,
+            BpmDataReport.OriginSet.class, BpmDataReport.StepState.class,
             Process.class, Process.Pool.class, Process.Lane.class, Process.Role.class, Process.Scope.class,
             Process.DataObject.class, Process.TypeRef.class, Process.Annotation.class, Process.EditorArtifacts.class,
             Node.class, Node.OperationRef.class, Node.InterfaceRef.class, Node.Trigger.class, Node.ErrorEvent.class,

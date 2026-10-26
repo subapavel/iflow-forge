@@ -78,6 +78,33 @@ final class BpmPathGraph {
         for (Element element : source.elements()) elements.put(element.location(), element);
     }
 
+    /** Snapshot for data visibility; does not change public path extraction or its diagnostics. */
+    record ScopeView(Map<Locator, List<Locator>> paths, Map<Locator, String> states, Set<Locator> members) { }
+
+    static ScopeView scopeView(BpmComponent component, Process process, ProcessKey key) {
+        BpmPathGraph graph = new BpmPathGraph(component, process, key, new ArrayList<>());
+        graph.selectRootAndMembers();
+        graph.collectMemberships();
+        graph.boundaries();
+        Map<Locator, List<Locator>> paths = new LinkedHashMap<>();
+        Map<Locator, String> states = new LinkedHashMap<>();
+        for (Locator object : graph.elements.keySet()) {
+            List<Locator> path = new ArrayList<>();
+            if (graph.root != null && graph.validScope(object, new HashSet<>())) {
+                Locator cursor = object;
+                if (graph.pools.contains(cursor)) path.add(cursor);
+                while (!graph.pools.contains(cursor)) {
+                    cursor = graph.scopes.get(cursor).getFirst();
+                    path.add(cursor);
+                }
+                states.put(object, graph.inactive(object) ? "inactive" : "active");
+            } else states.put(object, "unknown");
+            paths.put(object, List.copyOf(path));
+        }
+        return new ScopeView(java.util.Collections.unmodifiableMap(paths),
+                java.util.Collections.unmodifiableMap(states), Set.copyOf(graph.selected));
+    }
+
     ProcessPaths read() {
         selectRootAndMembers();
         collectMemberships();

@@ -757,3 +757,77 @@ Docs: Budget2/Cites1/SkillMirror13 pass; bpm1473 words;4 source links resolve. S
 Limits: actual XML skips24 absent private-input cases and2 unset kb.forbidden. Native executable/full forbidden-values NOT_RUN, reasons recorded in final-summary.log.
 No new CLI/MCP command in this slice; existing CLI41 tests pass. No runtime/whole-P3 completion claim, private pilot modification or push.
 Next: selective local commit; MIG-27 data-producer draft preflight running, then separate red tests/implementation under continuous owner authorization.
+
+## MIG-26 commit / MIG-27 preparation · 2026-10-26
+MIG-26 committed cb81f9506515ebbec54c87d0ca4770609d55c9e2:23 files,2872 insertions21 deletions; no push.
+Checks: precommit independent VERIFIED_PASS23/23 paths,20/20 worktree blobs,3/3 selective ledger copies,5/5 test hashes,9/9 verified snapshots; evidence tail read.
+Preservation: unrelated CODEX-01/MIG-07/D-046/governance changes and MIG-27 draft excluded from commit, remain local.
+MIG-27 selected under D-048/D-051: contextual mapping declarations, source read domains and structural candidate producer sets.
+Preflight r1 FAIL on7 contract gaps: read/mapping payload, grammar, owner-direction pairs, intra-step order, uncertainty transfer and orphan attribution.
+Revision2 specifies evidence closure, exact grammar/pairs, candidate-plus-uncertainty union and component-qualified orphan handling; same reviewer round2 next.
+No MIG-27 tests/code yet; accepted MIG-26 reactor483/0/0/26 is baseline, not verification of the new feature.
+Preflight r2 PASS; exact MappingPartContainsExpression spelling and argument-enclosure versus cycle-before precision incorporated. Proposed acceptance method names added.
+Decision D-052: independently versioned contextual data report embeds the accepted path report; known producer candidates and uncertainty remain separate.
+Next: separate test-author writes synthetic source/report/native cases and observes red; implementation awaits architect reading/approval and independent red verification.
+
+## MIG-27 test approval · 2026-10-26 · uncommitted
+Architect read all37 analysis tests, complete fixture/report files and additive native diff; approved43 tests (42 core,1 native).
+Correction before approval: external excluded-feature fixture moved from PROCESS to METADATA; final method/source-precondition assertions re-read. No weakened expectations or source edits.
+Checks: author EXECUTED_FAIL missing BpmData API compile errors,0 tests executed; red-escalated log inspected. Frozen final files require independent red confirmation next.
+Author initial sandbox access-denied/stall and interrupted final repeat are not acceptance evidence; no fullroot run before implementation.
+Context7 deferred tools unavailable; configured endpoint resolve/query succeeded after DNS escalation; exact JDK/JAR fallback documented, no new dependencies.
+Scope:4 frozen test/helper hashes in packet; existing4 path tests and SyntheticBpmSca unchanged; production/POM diff empty. Independent verifier next, then bounded implementer.
+Checks: independent EXECUTED_FAIL exit1/100 missing-API compiler errors/0 tests; red-verifier log tail and summary read, offline escalated run01:27.
+Preservation:4/4 approved hashes,4/4 prior path hashes; production/POM/helper diff empty; native14 additions/0 deletions. Implementation authorized within packet paths.
+
+## MIG-27 implementation handback · 2026-10-26 · uncommitted
+Context compacted; re-read Codex override/HANDOFF, actual status and last3 commits; base remains cb81f95.
+Writer released: six new data helper/model files, additive27-line immutable graph scope view and native registration; tests/parser/POM unchanged.
+Checks: author VERIFIED_PASS49/0/0/0 focused and final132/0/0/0 combined (core125/native7),exit0; final log tail/counts read.
+Preservation:4 approved data/native hashes and4 original path hashes match; Context7 official OpenJDK25/Jackson/Quarkus retrieval summary read.
+Limits: source candidates and uncertainty only; no runtime values, ordering proof, CLI/MCP entry or whole-P3 completion claim.
+Next: independent code review of target/mig-p3b-data-code.diff and bounded documentation author; final independent reactor pending.
+
+## MIG-27 review round1 · 2026-10-26 · uncommitted
+Code review FAIL: nested text-only Condition branch loses uncertainty; empty StepState loses unknown object visibility; disconnected child initializer contaminates unrelated scopes; malformed initializer part loses its known object target.
+These are static counterexamples, not yet observed failing tests. Packet adds separate source-based completeness regressions before correction; original43 tests remain frozen.
+Docs writer released: only OUTPUT-MODEL/bpm reference,205 additions7 deletions,1456 words,6 source links and targeted privacy0; author evidence read.
+Docs review FAIL on one sentence: loop-local unknown applies to contextual reads; external-output stays external. Same author will make the narrow clarification.
+Next: test-author observed-red regressions, architect approval and independent confirmation, same implementer correction, same reviewers round2. Fullroot NOT_RUN.
+Preparation only: MIG-28 fault-declaration packet drafted separately; no tests/code/acceptance claim and excluded from MIG-27 commit.
+
+## MIG-27 completeness regression approval · 2026-10-26 · uncommitted
+Reviewer r1 addendum found ambiguous PART_EXPRESSION owner reachable through orphan parts; accepted as fifth defect, without claiming false complete provenance for that case.
+Architect read full new BpmDataCompletenessTest/helpers; approved7 synthetic regressions (initializer terminal variants are separate cases).
+Checks: author EXECUTED_FAIL7/7/0/0,exit1,assertion failures only; final-red log tail read. SHA176DC48037C5C23EBE1CAA20A4D84A867D92AB6AA1A259EF26BEB3ED8DFA208B.
+Original4 approved data/native and4 path hashes unchanged. New total50 tests:43 initial plus7 review regressions; fullroot not yet run.
+Next: independent red confirmation; source correction and narrow docs precision after writer grants. MIG-28 draft preflight is read-only preparation.
+Checks: independent EXECUTED_FAIL7/7/0/0,exit1,assertion failures only; verifier log tail and summary read. Approved9 test/helper hashes and8 production snapshots unchanged.
+Bounded source correction authorized; finalroot remains pending. Separate docs precision uses the same author before source writer resumes.
+
+## Owner scope amendment · 2026-10-26
+Owner explicitly requested: finish P3 and then stop. This supersedes D-048 continuous P4–P7 execution authorization for this run.
+Complete the current data corrections, source fault declarations, configured integration composition and CLI/MCP delivery with required verification/review; then stop.
+P4–P7 remain unimplemented; prior source research is preparation only. No tenant operations or push.
+Previous ledger write was not executed because automatic approval review could not complete due to account usage limit; no unsafe-action rejection or bypass.
+The same normal write succeeded after the owner's renewed instruction; work resumed without an alternate approval path.
+Docs precision writer released: only loop-read sentence qualified, preserving external-output binding; changed text/privacy evidence read. Independent r2 precision review pending.
+MIG-28 design preflight r1 FAIL on5 contract gaps; revision2 closes kinds/state precedence/unconsumed evidence/per-owner scopes/orphan occurrence representation. Same reviewer r2 pending; no MIG-28 tests/code yet.
+
+## MIG-27 correction handback · 2026-10-26 · uncommitted
+Same implementer released: only BpmDataExpressions/Mappings/Flow corrected;5 other production snapshots unchanged,9 approved test/helper hashes retained.
+Checks: author VERIFIED_PASS7/0/0/0 regressions and139/0/0/0 combined (core132/native7),exit0; both log tails/counts read.
+Docs r2 precision review PASS; original single wording blocker closed. Same code reviewer r2 and independent root verify are next.
+MIG-28 draft preflight r2 PASS on revision2, all5 design blockers closed; test/implementation still gated on MIG-27 acceptance/commit.
+Review: MIG-27 code r2 PASS; all5 findings closed,7 new tests protect their counterexamples,9 hashes independently match. Final reactor is running against frozen source/docs.
+
+## MIG-27 P3b data acceptance · 2026-10-26 · ready to commit
+Changed: contextual mapping/read evidence, domains and structural candidate producer sets with independent uncertainty; immutable report/Markdown, native registry and documentation.
+Test first:43 initial tests plus7 independently confirmed assertion-red review regressions;50 new tests total. Five r1 findings corrected; code r2 and docs r2 PASS.
+Checks: independent root VERIFIED_PASS533/0/0/26,exit0,03:37; target/mig-p3b-data-verify-final-verifier.log tail and final-counts/summary read.
+Modules: core405/0/0/22,native7/0/0/0,CLI41/0/0/1,MCP8/0/0/1,KB72/0/0/2. No kb.skip or new skips.
+Preservation:9/9 approved hashes,4/4 governance hashes,10/10 production/docs snapshots unchanged; POM,old core tests,fixture helper,P1/P2 contracts and skill pointers/frontmatter preserved.
+Docs: bpm1456 words,6 source links, Budget2/Cites1/SkillMirror13 pass; scoped whitespace clean,0 sensitive added-line matches (4 public SAP links excluded from raw matches).
+Limits:24 absent private-input cases and2 unset kb.forbidden skips; native executable/full forbidden-values NOT_RUN with reasons in final-summary. No new CLI command in this slice.
+Scope D-053: complete remaining P3 source faults and configured integration/CLI/MCP, then stop; P4–P7 unimplemented. No tenant operation, private pilot edit or push.
+Next: selective local commit, excluding unrelated governance/pilot changes and both MIG-28 drafts. MIG-28 revision2 preflight PASS; its tests wait for the accepted base.

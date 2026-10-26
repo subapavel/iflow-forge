@@ -17,15 +17,15 @@ A dry run on synthetic data: `po-xray bpm-inventory skills/sap-po-migration/fixt
 
 ## Retained source evidence
 
-Read `bpm[].sourceEvidence` in existing `po-xray json <sca>` or `po-xray export <sca> -o <export-dir>` output. Absent evidence in old JSON means unavailable; explicit empty collections mean only that `bpm-source-v1` selected no facts. Candidate process partitions include those without an interpretable Process. [page: docs/OUTPUT-MODEL.md#BpmSourceEvidence]
+Read `bpm[].sourceEvidence` in `po-xray json <sca>` or `po-xray export <sca> -o <export-dir>` output. Absence means unavailable; explicit empty collections mean only that `bpm-source-v1` selected no facts. Candidate partitions include those without an interpretable Process. [page: docs/OUTPUT-MODEL.md#BpmSourceEvidence]
 
-In `analysis.md`, retain archive/partition/element-or-link ordinal, raw attribute presence, directed `f`/`s` IDs and endpoint status. Duplicate IDs and links keep separate occurrences. Do not choose among ambiguous candidates or equate `included=false` with missing: it marks an unselected payload. Direct QName/PropertyBag supports are selected without recursive WSDL/XSD expansion. [page: docs/OUTPUT-MODEL.md#BPM source selection]
+In `analysis.md`, retain archive/partition/element-or-link ordinal, attribute presence, directed `f`/`s` IDs and endpoint status. Duplicate IDs/links remain separate occurrences. Do not choose ambiguous candidates or equate `included=false` with missing: it marks an unselected payload. Direct QName/PropertyBag supports do not recursively expand WSDL/XSD. [page: docs/OUTPUT-MODEL.md#BPM source selection]
 
-Inspect initial-value mappings and structural assignments, including disabled rows; blank expressions do not mean deletion. Markdown summarizes flags, locators and link status; JSON retains detailed texts, values and ordered nullable properties. P3a adds no behavior command or direct MCP view. [page: docs/OUTPUT-MODEL.md#BPM evidence output]
+Inspect initial-value mappings and structural assignments, including disabled rows; blank expressions do not mean deletion. Markdown summarizes flags, locators and link status; JSON retains texts, values and ordered nullable properties. [page: docs/OUTPUT-MODEL.md#BPM evidence output]
 
-This evidence retains parser normalization/loss; keep source provenance. It proves no current runtime behavior, reachability, name-to-ID binding, loop execution, fault interception or producer analysis. Keep those conclusions unresolved unless separately evidenced. [page: docs/OUTPUT-MODEL.md#BPM source selection]
+Parsing normalizes/drops facts; keep source provenance. Declarations establish no runtime execution, loop behavior or fault interception. Keep unsupported conclusions unresolved. [page: docs/OUTPUT-MODEL.md#BPM source selection]
 
-The Java helper `BpmPathAnalysis.of(inventories, labels)` produces `BpmPathReport`; `markdown(report)` renders it. Coverage concerns retained structural evidence. A connected witness may include a literal-false condition; graph gaps make negative conclusions unknown. This slice adds no CLI/MCP command, runtime feasibility or data-producer analysis. See the graph contract and limits. [page: docs/OUTPUT-MODEL.md#BPM structural paths]
+Java helpers `BpmPathAnalysis.of(inventories, labels)` and `BpmDataAnalysis.of(inventories, labels)` produce structural paths and contextual data candidates; both offer `markdown(report)`. Conditions never prune paths/candidates. Empty candidates do not prove absent data. Scope/domain gaps, same-step ordering, boundary timing and missing embedded exits remain explicit uncertainty; candidates do not establish runtime availability. No CLI/MCP command is added: `json`/`export` provide source evidence. [page: docs/OUTPUT-MODEL.md#BPM structural paths] [page: docs/OUTPUT-MODEL.md#BPM contextual data candidates]
 
 ## Step classification
 
