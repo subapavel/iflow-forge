@@ -19,6 +19,10 @@ Changelog: 2026-10-21 F-13 — §5 the ICO row is derived by `po-xray discover` 
 gains that helper (MIG-20, MIG-21), §7 item 1 the migrator names the customer, the system and the export directories, not the
 components or ICOs (D-045).
 
+Changelog: 2026-10-26 MIG-23/P1 — §7 and P-8 gain an optional private dossier for scoped approval,
+immutable revision history and derived-document dependencies. D-034 plan rounds and whole-plan approval
+remain unchanged; question-dependency gates are outside P1. See `skills/sap-po-migration/references/dossier.md`.
+
 ## 1. Where this sits
 
 iflow-forge produces pipeline-based iFlows from two inputs; the spine is a **scenario specification**
@@ -216,6 +220,12 @@ phase 6 is a **placeholder** until part 4 exists — the skill writes "not avail
    statement with neither is an open question that reopens phase 3. The plan is iterated with the migrator; each
    round is a dated section, never an overwrite. Exit: the migrator writes `approved <date>` in the
    approval section.
+   Optionally maintain `dossier.json` beside the plan, using `references/dossier.md`: append proposals,
+   explicit section/revision approvals and scoped supersessions without editing older events or snapshots.
+   These rules govern the sidecar's detailed approval projection; they do not waive this whole-round exit.
+   Import uncertain earlier approvals as unresolved. `po-xray dossier-check` produces a read-only current
+   view and checks an explicitly supplied baseline; without one, history is not checked. It does not
+   establish approval authenticity, runtime evidence or milestone readiness, and changes no question gate.
 5. **Scenario specification.** `scenario-<k>.md` per pipeline scenario of the plan, `<k>` the
    scenario's number in the plan's decomposition (`templates/scenario.md`):
    the D-025 attributes, the Partner Directory entries by key, the template copies and their parameters
@@ -223,6 +233,9 @@ phase 6 is a **placeholder** until part 4 exists — the skill writes "not avail
    version it targets. This is the spine the part-4 generator consumes; until part 4 exists the
    phase ends here and the specification plus plan are the deliverable. Exit: every attribute of
    D-025 has a value and every placeholder resolves against the profile.
+   When a dossier is used, register the specification as a derived document consuming the exact approved
+   decision/section revisions and digests. The checker reports missing or stale required dependencies;
+   it does not validate the meaning of the specification's prose or approve the specification separately.
 6. **Artifacts.** Part 4 (generator) consumes the `scenario-<k>.md` files and produces the importable package; part
    5 converts the modules and Java mappings per the recipes. Not designed here; the phase is a named
    placeholder so the skill's flow does not change when they arrive. Output: `artifacts/` (the
@@ -351,6 +364,9 @@ it brings. The skill never assumes the newest version; it asks.
   commands (the agent reads a dump, never raw files).
 - P-8 The scenario specification file is the D-025 attribute set plus the proposal template's sections
   (`templates/scenario.md`); part 4 consumes exactly this file. (Expensive to reverse: public type.)
+  With the optional P1 dossier, its approval provenance also names the consumed decision IDs, section IDs,
+  revisions and digests. The sidecar is a dependency record, not a replacement generator input or a new
+  approval gate; the specification still derives from the explicitly approved whole plan round.
 - P-9 A committed top-level `patterns/` with the page contract of §8.3 (problem, options with
   trade-offs and page cites, where used by migration code, open points; ≤ 1,500 checker words;
   reviewed by the kb-reviewer). (Expensive to reverse: public directory and page contract.)

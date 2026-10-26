@@ -486,3 +486,49 @@ Next: MIG-21 CLI `discover` (every ICO of the system through PoService, report +
 
 ## HAND-OVER · 2026-10-21 · (hash in the next entry)
 Owner 2026-10-21: stop the cloud loop, continue locally this week. MIG-20 committed as 72d54e3 (CI run 39587302862 green). MIG-21 not started: its acceptance spec and the scout facts (CLI `discover`, systems-directory override, offline `--icos`, slice helper, test plan) are in agent/NOTES.md, last section, so the local session starts at the test-author. BACKLOG: MIG-20 done, MIG-21 ready, MIG-22 pending; no other ready row. Owner inputs still open: ISSUE-3/FIX-03, ISSUE-4, ISSUE-5, KB-12b, KB-00a, KB-09, MIG-07.
+
+## MIG-23 P1 preparation · 2026-10-26 · uncommitted
+Owner: approved retrospective design and implementation of P1 only; D-047. P2–P7 not authorized for execution.
+Packet: docs/superpowers/plans/2026-10-26-mig-23-p1-packet.md; base 1a25886; scoped tests and interfaces fixed before source edits.
+Checks: VERIFIED_PASS baseline root verify exit0, 323 tests / 0 failures / 0 errors / 26 baseline skips; target/mig-p1-baseline-unrestricted.log.
+Checks: initial sandbox run EXECUTED_FAIL with 14 loopback permission errors; unrestricted local-test rerun resolved them, no test changes.
+Skips: 24 absent private-input assumptions; 2 unset forbidden-values checks NOT_RUN; kb.skip empty, KB artifact checks ran.
+Environment: Java25.0.2, Maven3.9.11; actual POM JUnit6.1.3/Jackson3.2.3 overrides stale narrative version labels, no dependency change.
+Review: proposal independent review PASS (target/migration-retro-audit-review.log); product implementation review pending.
+Test first: pending test-author; no new production source written. Preserve prior local work; no push or tenant operation.
+Next: observed synthetic red, architect approval of test files, then bounded implementation and documentation.
+
+## MIG-23 P1 red tests · 2026-10-26 · uncommitted
+Test first: 44 new tests (core validator22, reader12, CLI9, native1); all four files read and approved by architect.
+Checks: EXECUTED_FAIL expected compilation red on absent DossierValidator/DossierReport, exit1; target/mig-p1-red.log.
+Scope: synthetic @TempDir fixtures only; no production stub/source change; native assertions additive; test hashes in packet.
+Context7: JUnit, AssertJ, Jackson3, Quarkus and Java25 resolve+query performed before test code; target/mig-p1-context7-tests.log.
+Review: packet preflight PASS (independent design_reviewer); product review still pending.
+Checks: verifier reproduced expected red exit1 (target/mig-p1-red-verifier.log), zero new production files; not an environment failure.
+Next: implementer on exact packet; no changes to P2 gates.
+
+## MIG-23 P1 implementation handback · 2026-10-26 · uncommitted
+Changed: strict dossier reader/report/projection, CLI command, native registration; four extra synthetic atomicity tests.
+Checks: author VERIFIED_PASS focused50/0/0/0; final root verify371/0/0/26 baseline skips, target/mig-p1-verify-implementation-final.log.
+Checks: packaged CLI smoke VERIFIED_PASS6 expected outcomes; 7 synthetic input files unchanged, target/mig-p1-cli-smoke-implementation.log.
+Test first: original44 approved test hashes unchanged; architect read additional4 atomicity tests; intentional mutation EXECUTED_FAIL4/4 then removed.
+Fixes: Markdown diagnostic underscore escaping, deterministic field-validation order; no weakened tests or dependency changes.
+Context7: recorded before code; official Quarkus Aesh integration docs plus resolved-JAR fallback for standalone lookup ambiguity; target/mig-p1-context7-implementation.log.
+Native executable: NOT_RUN; reflection registry tests passed. Forbidden-values suite remains baseline NOT_RUN without configured private list.
+Review: independent product review pending; scoped code diff target/mig-p1-code.diff; implementation not yet accepted as complete.
+Next: verifier focused/smoke; docs author; independent review; final root verification.
+
+## MIG-23 P1 acceptance · 2026-10-26 · (hash in the next entry)
+Delivered: strict opt-in dossier history, exact approval scope/revision, atomic supersession, current JSON/Markdown projection, stale dependencies and read-only CLI.
+Docs: canonical skill routing, dossier reference and empty synthetic template, plan/scenario provenance, OUTPUT-MODEL and original spec changelog; no P2 gate changes.
+Checks: verifier VERIFIED_PASS root verify exit0, 371 tests / 0 failures / 0 errors / 26 baseline skips; target/mig-p1-verify-final-verifier.log.
+Counts: core254/0/0/22, native3/0/0/0, CLI34/0/0/1, MCP8/0/0/1, knowledge72/0/0/2.
+Checks: after two documentation wording fixes, verifier VERIFIED_PASS Budget/Cites/SkillMirror16/0/0/0; target/mig-p1-doc-fix-verifier.log. Source/tests unchanged.
+Checks: verifier VERIFIED_PASS fresh packaged CLI smoke6 cases and template2 cases; all inputs unchanged; target/mig-p1-smoke-final-verifier.log and mig-p1-template-checks.log.
+Checks: approved44 test hashes unchanged; additional4 atomicity tests accepted and mutation caught4/4; independent focused50/0/0/0.
+Checks: VERIFIED_PASS skill frontmatter unchanged, tracked/untracked whitespace checks, targeted privacy scan of additions0 hits; target/mig-p1-static-final-verifier.log.
+Review: code r1 PASS; docs r1 FAIL on nullable diagnostic eventId JSON wording, corrected by same author; docs r2 PASS. No remaining blockers.
+Limits: native executable NOT_RUN (registry tested); 24 skips for absent private fixtures; 2 forbidden-values checks NOT_RUN without configured list. Targeted scan is not full forbidden-values coverage.
+Preservation: prior AGENTS/CLAUDE/WORKFLOW/CODEX-WORKFLOW hashes unchanged; existing private pilot evidence untouched. No tenant operation, deployment or push.
+Decision: D-047; P1 only. P2–P7 remain planned, not authorized for execution. No whole customer migration plan or runtime result is claimed.
+Next: owner may authorize P2 separately; MIG-21 ready and MIG-22 pending unchanged. Scoped local commit only; unrelated prior work stays outside it.

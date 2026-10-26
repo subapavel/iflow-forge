@@ -635,3 +635,71 @@ Markdown: `# Scenario discovery` with the inputs, `## Processes`, per process `#
 dc, file and process components and a table `| Role | Interface | Namespace | ICO | Sender | Receivers |` (one row
 per ICO, `—` in the last three cells for an interface without ICO; Sender is `party / component` when a party is
 set), `## Components` table `| Component | Roles |`, `## Issues` with `none` or a table `| Code | Message |`.
+
+### `po-xray dossier-check <dossier.json> [--baseline <previous.json>] [--json]` → `DossierReport`
+
+MIG-23/P1, `io.poxray.migration.DossierValidator`: a read-only projection of the optional private migration
+ledger. The input v1 schema and workflow are in
+[`skills/sap-po-migration/references/dossier.md`](../skills/sap-po-migration/references/dossier.md).
+It is separate from `ScaInventory`; the omission rule in "Principles" above does not apply to this report.
+
+| Field | Type and meaning |
+|---|---|
+| `formatVersion` | Integer input format version, normally `1`; malformed input may report `0`. |
+| `migrationId` | Input `M-<n>` identity; may be null for invalid root input. |
+| `ledgerSha256` | SHA-256 of the raw current ledger bytes. |
+| `valid` | Boolean: no error diagnostics; warnings may remain. |
+| `historyStatus` | `verified`, `not-checked`, `changed`, or `invalid-baseline`. |
+| `decisions` | Array of `Decision` records, in first-introduction order. |
+| `risks` | Array of separate `Risk` records, in event order. |
+| `derivedDocuments` | Array of latest valid registrations per document ID, in first-introduction order. |
+| `nextAction` | Latest valid `next-action` text, or null. |
+| `diagnostics` | Array of `Diagnostic` records in deterministic check order. |
+
+All top-level report fields are emitted, including null scalar fields. Empty arrays `[]` are retained
+at the top level and in nested records; lists are immutable snapshots. The six nested records have
+these exact fields (a null diagnostic `eventId` is omitted from JSON):
+
+| Record | Fields |
+|---|---|
+| `Scope` | `sectionId`, `revision`, `path`, `sha256` (strings). |
+| `Decision` | `id`, `status`, `text`, `source` (strings); `proposedScopes`, `activeScopes` (Scope arrays); `approvalEventIds` (string array). |
+| `Risk` | `id`, `text`, `source` (strings); `sections` (string array). |
+| `Dependency` | `decisionId`, `sectionId`, `revision`, `sha256` (strings). |
+| `DerivedDocument` | `id`, `path`, `status` (strings); `required` (boolean); `consumes` (Dependency array). |
+| `Diagnostic` | `severity`, `code`, `message` (strings); `eventId` (string when assigned, otherwise omitted in JSON; nullable in Java). |
+
+Decision statuses: `proposed`, `deferred`, `rejected`, `approval-unresolved`, `approved`,
+`partially-approved`, `superseded`, `partially-superseded`. Proposed scopes do not grant approval;
+`activeScopes` identifies precisely the surviving approved scopes. Approval event IDs retain the evidence
+references for applied approvals. Source locators are not opened or authenticated by the validator.
+
+Derived status is `missing` when the path is not a regular file; otherwise `current` when every declared
+dependency matches an active approved scope's decision, section, revision and digest, or `stale` when any
+does not. Missing/stale required documents produce errors; optional ones produce warnings. No prose
+semantics are checked. Every ever-approved section snapshot is checked for existence and raw-byte digest,
+including superseded scopes; a changed snapshot invalidates the report even if a derived dependency matches.
+
+The caller explicitly selects the baseline; it must share version/identity and contain an event array that
+is an unchanged structural prefix of the current ledger. Object key order/whitespace do not matter; array
+order/values do. `verified` means that comparison passed, not that the design or approvals are authentic.
+Without a baseline, `not-checked` and `HISTORY_NOT_CHECKED` are returned; the dossier can still be valid.
+Relative evidence paths resolve against the current dossier directory regardless of baseline location.
+
+Diagnostic severity is `error` or `warning`. Codes: `INVALID_DOCUMENT`, `UNSUPPORTED_FORMAT`,
+`DUPLICATE_EVENT_ID`, `INVALID_REFERENCE`, `INVALID_TRANSITION`, `INVALID_SCOPE`, `APPROVAL_CONFLICT`,
+`SUPERSESSION_CYCLE`, `SNAPSHOT_MISSING`, `SNAPSHOT_CHANGED`, `DERIVED_MISSING`, `DERIVED_STALE`,
+`HISTORY_NOT_CHECKED`, `HISTORY_CHANGED`, `INVALID_BASELINE`. Messages exclude snapshot payloads.
+Unreadable or malformed main JSON, duplicate keys and trailing tokens fail before a report is emitted.
+
+Default stdout is Markdown: `# Dossier current design`, ledger digest, history status, `## Decisions`,
+`## Risks`, `## Derived documents`, `## Next action`, `## Diagnostics`. Invalid reports explicitly mark the
+view as non-authoritative. Cells escape supplied text. `--json` emits the report; summary/errors use stderr.
+Exit `0` means valid (possibly with warnings), `1` means invalid or input/parse failure, without a stack trace.
+No input is written. Neither output proves question closure, milestone readiness, runtime behaviour or
+approval authenticity; exact-scoped approval does not waive the existing whole-plan phase gate.
+
+Public Java entry points are static `DossierValidator.check(Path)` and `check(Path, Path baseline)`, both
+returning `DossierReport` and declaring `IOException`, plus `markdown(DossierReport)` returning `String`.
+A null baseline means no history comparison. `DossierReader` is package-private. Native reflection includes
+`DossierReport` and all six nested records.

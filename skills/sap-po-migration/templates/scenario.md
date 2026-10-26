@@ -74,3 +74,5 @@ Copied unchanged from the approved round's "Risks and assumptions" (`references/
 ## Approval
 
 `plan round <r>, approved <date>`: the round this specification is cut from. The specification is not approved separately (`references/plan.md`, "Approval").
+
+When using a dossier, also record the consumed decision IDs, section IDs, revisions and SHA-256 digests in a `derived-document` event for this file. They must match the active approved scopes of that approved round. A stale or missing required specification fails the dossier check; partial section approval still cannot replace whole-plan approval. [page: skills/sap-po-migration/references/dossier.md#Approval and current state]

@@ -2,6 +2,7 @@ package io.poxray.nativeimage;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import io.poxray.migration.DossierReport;
 import io.poxray.model.ScaInventory;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import java.io.IOException;
@@ -32,6 +33,18 @@ class NativeReflectionTest {
     void catalogRecordsExist() {
         RegisterForReflection reg = NativeReflection.class.getAnnotation(RegisterForReflection.class);
         assertThat(reg.classNames()).allSatisfy(name -> assertThat(classExists(name)).as(name).isTrue());
+    }
+
+    @Test
+    void dossierReportAndAllSixNestedRecordsAreRegistered() {
+        RegisterForReflection reg = NativeReflection.class.getAnnotation(RegisterForReflection.class);
+        Set<String> registered = Stream.concat(Arrays.stream(reg.targets()).map(Class::getName),
+                Arrays.stream(reg.classNames())).collect(Collectors.toSet());
+
+        assertThat(registered).contains(DossierReport.class.getName(), DossierReport.Scope.class.getName(),
+                DossierReport.Decision.class.getName(), DossierReport.Risk.class.getName(),
+                DossierReport.Dependency.class.getName(), DossierReport.DerivedDocument.class.getName(),
+                DossierReport.Diagnostic.class.getName());
     }
 
     /** Class names under io/poxray/model in the core classes (directory or jar). */

@@ -15,6 +15,7 @@ The migration front end: from a customer's PO artifacts to an approved migration
 | to analyse the dumps and build the open list | phase 2, `references/intake.md`, `references/attributes.md`, `references/bpm.md` |
 | to settle the open list with the migrator | phase 3, `references/questions.md` |
 | to write and iterate the migration plan | phase 4, `references/plan.md` |
+| to track exact approval revisions and project current decisions | optional `references/dossier.md`, `templates/dossier.json` |
 | to write the scenario specification per pipeline scenario | phase 5, `templates/scenario.md` |
 | the generated package and converted code | phase 6 (placeholder) |
 | to close the migration and file what was learned | phase 7, `references/retrospective.md`, `references/requests.md` |
@@ -50,6 +51,7 @@ The flow leaves this order only at two named stops:
 | 2 Analysis | `references/intake.md`, `references/attributes.md`, `references/bpm.md` |
 | 3 Question round | `references/questions.md`, `templates/question.md` |
 | 4 Plan | `references/plan.md` |
+| Optional dossier alongside phases 3–5 | `references/dossier.md`, `templates/dossier.json`; existing exits still apply |
 | 5 Scenario specification | `templates/scenario.md` |
 | 6 Artifacts | none yet (placeholder) |
 | 7 Retrospective | `references/retrospective.md`, `references/requests.md`, `templates/request.md` |
@@ -58,6 +60,7 @@ The flow leaves this order only at two named stops:
 
 - `local/<customer>/profile.md`: the tenant profile, read at intake, amended by the question round and the retrospective, never committed (`templates/profile.md`).
 - `local/<customer>/scenarios/M-<n>/`: the phase outputs of one migration, the scenario library searched at intake.
+- Optional `dossier.json`, immutable `snapshots/` and generated current views stay in that private migration directory; `references/dossier.md` defines their checks and ownership.
 - `local/migrations.md`: the only map from a code `M-<n>` to customer and scenario.
 - `testdata/`: the customer's PO artifacts in the layout of `docs/inputs/README.md`; the profile records the input paths.
 - `local/` and `testdata/` are gitignored; nothing in them is ever copied into a committed file.

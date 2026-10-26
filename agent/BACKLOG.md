@@ -8,6 +8,12 @@ gate row is `done`. `owner` in depends-on = an input only the owner can give (WO
 Task detail (files, interfaces, steps, tests) lives in the plan:
 `docs/superpowers/plans/2026-10-19-pipeline-knowledge-base.md` (KB rows map to its Tasks 1–13).
 
+## Local Codex continuation
+
+| Id | Title | Plan | Depends on | Kind | Status | Done when | Evidence |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| MIG-23 | P1: opt-in dossier history, current design projection, scoped approvals and read-only validator/CLI | docs/superpowers/plans/2026-10-26-migration-process-improvements.md P1; docs/superpowers/plans/2026-10-26-mig-23-p1-packet.md | owner approval 2026-10-26 | code+docs | done | synthetic behavioral tests, root verify, CLI smoke, skill checks and independent review PASS; P2 gates unchanged | review: PASS code r1/docs r2; independent verify371/0/0/26; docs16/0/0/0; CLI8 cases; PROGRESS MIG-23 P1 acceptance (hash in next entry) |
+
 ## Phase KB — part 1, pipeline knowledge base (spec: `docs/superpowers/specs/2026-10-19-pipeline-knowledge-base-design.md`)
 
 | Id | Title | Plan | Depends on | Kind | Status | Done when | Evidence |
