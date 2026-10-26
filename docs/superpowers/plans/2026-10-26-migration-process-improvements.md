@@ -4,10 +4,14 @@
 > s rolemi a omezeními `docs/CODEX-WORKFLOW.md`. Realizace je omezena na výslovně
 > schválené části. Detailní task packety vznikají pouze pro ně.
 
-**Stav:** Návrh schválen vlastníkem 2026-10-26; realizace povolena pouze pro P1.
+**Stav:** Návrh schválen vlastníkem 2026-10-26; po dokončení P1 vlastník povolil
+průběžnou realizaci zbývajících P2–P7, dokud neřekne stop (D-048).
 P1 je implementováno a ověřeno jako MIG-23: code/doc review PASS, nezávislý
 reactor verify 371/0/0/26 a 16 cílených kontrol po dokumentační opravě PASS.
-P2–P7 zůstávají plánem bez povolení k realizaci. Přesná evidence je v PROGRESS.
+P1 commit: `461ae13`. P2 je dokončeno jako MIG-24: code review r2 a docs review PASS,
+nezávislý reactor 420/0/0/26, 49 nových testů a 10/10 kontrol čerstvého CLI balíčku.
+P3 je další část; P3–P7 mají povolení k realizaci, ale dosud nejsou implementované
+ani ověřené. Přesná evidence je v PROGRESS, MIG-24 P2 acceptance.
 Historie: původně předloženo ke schválení; odpověď vlastníka „Schvaluji“ navazuje
 na otázku o schválení návrhu a zahájení pouze P1.
 
@@ -286,6 +290,7 @@ vydávat za zrychlení, pokud jeho původní baseline chybí.
 - Stejné jméno s jiným QName/kontraktem nebo chováním: P4 a P5.
 - Zaměnění důkazu, přijatého rizika a schválení: P2 a P6.
 
-Doporučení: schválit směr a **zahájit pouze P1**, zhodnotit jeho konkrétní
-výstup a potom pokračovat P2. Tento dokument zatím nezakládá nové backlog
-řádky, nepřiděluje implementační packety a neoznačuje budoucí testy za spuštěné.
+Původní doporučení bylo zahájit pouze P1 a vyhodnotit výstup. P1 je dokončeno;
+navazující pokyn vlastníka D-048 nyní povoluje P2–P7 bez dalších průběžných
+potvrzení. Detailní packety a backlog řádky vznikají postupně pro nejbližší
+část; budoucí testy se neoznačují jako spuštěné.

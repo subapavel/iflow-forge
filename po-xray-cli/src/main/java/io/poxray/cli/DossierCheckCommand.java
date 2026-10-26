@@ -1,6 +1,7 @@
 package io.poxray.cli;
 
 import io.poxray.json.Json;
+import io.poxray.migration.DossierAssessment;
 import io.poxray.migration.DossierReport;
 import io.poxray.migration.DossierValidator;
 import jakarta.inject.Inject;
@@ -25,12 +26,34 @@ public class DossierCheckCommand implements Command<CommandInvocation> {
     @Option(name = "json", hasValue = false, description = "Print JSON instead of Markdown")
     boolean json;
 
+    @Option(name = "readiness", hasValue = false, description = "Assess explicit question dependencies and milestone readiness")
+    boolean readiness;
+
+    @Option(name = "milestone", description = "Assess readiness and require this milestone to be ready")
+    String milestone;
+
     @Inject
     ScaService service;
 
     @Override
     public CommandResult execute(CommandInvocation invocation) {
         return service.run(() -> {
+            if (readiness || milestone != null) {
+                DossierAssessment assessment = DossierValidator.assess(Path.of(dossier), baseline == null ? null : Path.of(baseline));
+                invocation.println(json ? Json.write(assessment).stripTrailing() : DossierValidator.markdown(assessment));
+                boolean success = assessment.dossier().valid();
+                if (milestone != null) {
+                    DossierAssessment.Milestone selected = assessment.milestones().stream()
+                            .filter(m -> m.id().equals(milestone)).findFirst().orElse(null);
+                    success = success && selected != null && selected.ready();
+                    System.err.println("Milestone " + milestone + ": " + (selected == null ? "unknown or not assessed" : selected.status())
+                            + ", ready " + success);
+                } else {
+                    System.err.println("Dossier " + assessment.dossier().migrationId() + ": " + assessment.status()
+                            + ", " + assessment.milestones().size() + " milestone(s)");
+                }
+                return success ? CommandResult.SUCCESS : CommandResult.FAILURE;
+            }
             DossierReport report = DossierValidator.check(Path.of(dossier), baseline == null ? null : Path.of(baseline));
             invocation.println(json ? Json.write(report).stripTrailing() : DossierValidator.markdown(report));
             System.err.println("Dossier " + report.migrationId() + ": " + (report.valid() ? "valid" : "invalid")

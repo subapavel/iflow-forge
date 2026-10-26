@@ -16,6 +16,7 @@ The migration front end: from a customer's PO artifacts to an approved migration
 | to settle the open list with the migrator | phase 3, `references/questions.md` |
 | to write and iterate the migration plan | phase 4, `references/plan.md` |
 | to track exact approval revisions and project current decisions | optional `references/dossier.md`, `templates/dossier.json` |
+| to continue independent work while questions wait, or check a milestone | opt-in `references/readiness.md`, `templates/dossier-v2.json` |
 | to write the scenario specification per pipeline scenario | phase 5, `templates/scenario.md` |
 | the generated package and converted code | phase 6 (placeholder) |
 | to close the migration and file what was learned | phase 7, `references/retrospective.md`, `references/requests.md` |
@@ -28,17 +29,17 @@ The migration front end: from a customer's PO artifacts to an approved migration
 
 ## Phases
 
-Each phase has an entry, an output file under `local/<customer>/scenarios/M-<n>/` and an exit. A phase starts only when the previous exit holds.
+Each phase has an entry, a private output file and an exit. The default sequence remains conservative; opt-in v2 readiness permits independent design work by explicit section/milestone dependencies (`references/readiness.md`). A missing classification or inventory grants no readiness. One question to the human at a time remains; waiting does not stop independent work.
 
 1. **Intake.** Entry: the migrator names the target (a BPM process, or ICOs); allocate the next `M-<n>` in `local/migrations.md`, read or create the profile, list inputs present and missing. Output: `intake.md`. Exit: every input row is present or marked "not needed, because …".
 2. **Analysis.** Entry: intake exit holds; read `knowledge/pipeline/SKILL.md` and its loaded set, then the dumps. Output: `analysis.md`. Exit: every attribute has a value or a `?`; every `?`, touched open question, absent or unknown version-gated feature and recipe in `proposal` status is on the open list.
-3. **Question round.** Entry: the open list from phase 2 (or a plan statement without a cite). Output: `questions.md`, append-only, one record per question, asked one at a time; an answer that settles a profile value amends the profile at once (`references/questions.md`, step 6). Exit: the open list is empty; an item nobody can settle is closed by a recorded assumption.
-4. **Plan.** Entry: the open list is empty. Output: `plan.md`, each iteration a dated section. Exit: the migrator writes `approved <date>` in the approval section.
-5. **Scenario specification.** Entry: the plan is approved. Output: `scenario-<k>.md` per pipeline scenario of the plan's decomposition. Exit: every attribute has a value and every placeholder resolves against the profile; a template parameter the scenario does not use is a `not set` row with its reason and counts as resolved.
+3. **Question round.** Entry: the open list from phase 2 or an uncited plan statement. Output: append-only `questions.md`, one record per question. Actual answers amend analysis/profile promptly (`references/questions.md`, step 6). Unknowns remain unknown; explicit assumptions permit only named design work and retain verification debt. Exit: relevant dependencies are clear under `references/questions.md`, "Exit".
+4. **Plan.** Entry: the question exit for the work's scope holds. Output: `plan.md`, each iteration a dated section. Exit: the migrator explicitly approves the whole round with `approved <date>`; v2 additionally binds its final-plan milestone to all required parts and connections.
+5. **Scenario specification.** Entry: the whole plan is approved; v2 also requires the specification milestone ready against that exact final-plan ancestor. Output: `scenario-<k>.md` per pipeline scenario. Exit: every attribute has a value and every placeholder resolves against the profile; an unused template parameter is a `not set` row with its reason.
 6. **Artifacts.** Entry: the specifications exist. Output: `artifacts/`. Exit: until the generator and the code conversion exist, write "not available" into `retrospective.md` and go on to phase 7.
 7. **Retrospective.** Entry: phase 6 is done, or a stop was reached. Output: `retrospective.md`. Exit: profile amendments listed (the ones made during the migration and the retrospective's own), scenario filed, requests, if any, written and on a field branch; only then is the migration done.
 
-The flow leaves this order only at two named stops:
+Two named stops still apply:
 
 - **Human task stop.** A human task found in phase 2 ends the migration as out of scope: `analysis.md` records the stop and the human tasks, no plan is written, and phase 7 still runs.
 - **Artifacts placeholder.** Phase 6 is a named placeholder until the generator exists; the specification and the plan are the deliverable.
@@ -51,7 +52,7 @@ The flow leaves this order only at two named stops:
 | 2 Analysis | `references/intake.md`, `references/attributes.md`, `references/bpm.md` |
 | 3 Question round | `references/questions.md`, `templates/question.md` |
 | 4 Plan | `references/plan.md` |
-| Optional dossier alongside phases 3–5 | `references/dossier.md`, `templates/dossier.json`; existing exits still apply |
+| Optional dossier alongside phases 3–5 | `references/dossier.md`; v1 history or opt-in v2 `references/readiness.md`; whole-plan approval remains |
 | 5 Scenario specification | `templates/scenario.md` |
 | 6 Artifacts | none yet (placeholder) |
 | 7 Retrospective | `references/retrospective.md`, `references/requests.md`, `templates/request.md` |
@@ -60,7 +61,7 @@ The flow leaves this order only at two named stops:
 
 - `local/<customer>/profile.md`: the tenant profile, read at intake, amended by the question round and the retrospective, never committed (`templates/profile.md`).
 - `local/<customer>/scenarios/M-<n>/`: the phase outputs of one migration, the scenario library searched at intake.
-- Optional `dossier.json`, immutable `snapshots/` and generated current views stay in that private migration directory; `references/dossier.md` defines their checks and ownership.
+- Optional `dossier.json`, immutable `snapshots/` and generated views stay in the private migration directory; `references/dossier.md` defines ownership, `references/readiness.md` the opt-in dependencies. Existing evidence may remain in the owner's designated external private directory.
 - `local/migrations.md`: the only map from a code `M-<n>` to customer and scenario.
 - `testdata/`: the customer's PO artifacts in the layout of `docs/inputs/README.md`; the profile records the input paths.
 - `local/` and `testdata/` are gitignored; nothing in them is ever copied into a committed file.

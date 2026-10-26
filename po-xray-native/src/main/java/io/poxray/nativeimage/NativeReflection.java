@@ -6,6 +6,7 @@ import io.poxray.cpi.Param;
 import io.poxray.cpi.Participant;
 import io.poxray.cpi.Step;
 import io.poxray.migration.DossierReport;
+import io.poxray.migration.DossierAssessment;
 import io.poxray.model.AttributesReport;
 import io.poxray.model.BpmComponent;
 import io.poxray.model.BpmInventoryReport;
@@ -89,6 +90,10 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
             DiscoveryReport.IcoRow.class, DiscoveryReport.ComponentRow.class,
             DossierReport.class, DossierReport.Scope.class, DossierReport.Decision.class, DossierReport.Risk.class,
             DossierReport.Dependency.class, DossierReport.DerivedDocument.class, DossierReport.Diagnostic.class,
+            DossierAssessment.class, DossierAssessment.Block.class, DossierAssessment.Question.class,
+            DossierAssessment.Assumption.class, DossierAssessment.Risk.class, DossierAssessment.BasisInput.class,
+            DossierAssessment.Basis.class, DossierAssessment.Coverage.class, DossierAssessment.Blocker.class,
+            DossierAssessment.Milestone.class,
             IFlow.class, Participant.class, Step.class, Param.class, PackageExport.class, PackageExport.Entry.class
         },
         classNames = {

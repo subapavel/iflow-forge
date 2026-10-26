@@ -69,10 +69,12 @@ One row per feature this scenario needs, its version from [page: knowledge/pipel
 
 ## Risks and assumptions
 
-Copied unchanged from the approved round's "Risks and assumptions" (`references/plan.md`, "Proposal sections", item 6): one line per `Q-<n>`, `assume <X>; verify at <event>`.
+Copy the approved round's relevant unresolved facts, accepted assumptions and risks: `Q-<n>`, owner, approval source, exact scope, permitted milestones, verification dependency, limitations and reopening triggers. Unknown remains unknown; a risk exception never claims technical evidence. [page: skills/sap-po-migration/references/readiness.md#Assumptions, bases and risks]
 
 ## Approval
 
 `plan round <r>, approved <date>`: the round this specification is cut from. The specification is not approved separately (`references/plan.md`, "Approval").
 
 When using a dossier, also record the consumed decision IDs, section IDs, revisions and SHA-256 digests in a `derived-document` event for this file. They must match the active approved scopes of that approved round. A stale or missing required specification fails the dossier check; partial section approval still cannot replace whole-plan approval. [page: skills/sap-po-migration/references/dossier.md#Approval and current state]
+
+With opt-in v2, record the specification milestone and its one ready final-plan ancestor covering every exact required scope and connection. Check effective-section inventories, relevant dependencies and current answer bases before creating the specification; missing classification never implies readiness. A changed consumed answer requires a new revision and approval, preserving historical consent. Readiness grants no tenant operation permission. [page: skills/sap-po-migration/references/readiness.md#Readiness and approval]

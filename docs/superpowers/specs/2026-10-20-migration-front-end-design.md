@@ -23,6 +23,11 @@ Changelog: 2026-10-26 MIG-23/P1 — §7 and P-8 gain an optional private dossier
 immutable revision history and derived-document dependencies. D-034 plan rounds and whole-plan approval
 remain unchanged; question-dependency gates are outside P1. See `skills/sap-po-migration/references/dossier.md`.
 
+Changelog: 2026-10-26 MIG-24/P2 — §2, G2, §7, P-4 and P-8 qualify the original global question gate
+with opt-in v2 dependencies, explicit inventories and milestone readiness. Unknowns remain unknown;
+independent design can continue, while whole-plan approval, historical consent, privacy and human-task
+stop remain. See `skills/sap-po-migration/references/readiness.md` for the exact contract.
+
 ## 1. Where this sits
 
 iflow-forge produces pipeline-based iFlows from two inputs; the spine is a **scenario specification**
@@ -51,16 +56,18 @@ Code, Codex and Gemini CLI (statement 8), remember each customer across conversa
 and grow a generic, sellable pattern catalogue (statement 10). Development continues in the cloud while
 migrations run locally; what a migration finds missing must reach the cloud as a request (statement 12).
 
+MIG-24/P2 qualifies that original sequence: opt-in scoped dependencies permit independent design while questions remain unknown, with explicit whole-plan approval still required before specification.
+
 ## 3. Goals
 
 - G1 A migrator with the skill loaded and the po-xray outputs of a customer at hand reaches an
   **approved scenario specification and migration plan** for one BPM process or ICO group without
   the agent inventing pipeline behaviour: every pipeline claim in the plan cites a page of
   `knowledge/pipeline/` or a pattern; a claim with neither reopens the question round.
-- G2 The **question round** ends only when the open list is empty; each question states why the
-  analysis could not settle it, the options with evidence, the answer and its consequence. An item
-  the migrator cannot settle is closed by an explicit assumption recorded as its answer; nothing
-  open passes into the plan.
+- G2 Each question records why it is open, options/evidence, owner, affected scope, needed milestone
+  and answer or deferral. Unknown facts stay unknown. Opt-in v2 permits independent design only with
+  explicit classification and current inventories; owner-accepted assumptions permit named design
+  work while retaining verification debt. Whole-plan final approval remains explicit.
 - G3 **Memory per customer**: the second scenario for a customer starts from the customer's tenant
   profile and scenario library; nothing of it is in the repository.
 - G4 **Learning for the product**: every migration ends with a retrospective that proposes
@@ -177,8 +184,10 @@ and its budget check to `skills/`, `patterns/` and `requests/`, run before every
 ## 7. The migration flow
 
 Each phase has an entry, an output file under `local/<customer>/scenarios/M-<n>/`, and an exit
-condition. The skill never starts a phase before the previous exit holds, and leaves the sequence
-only at two named stops: a **human task** found in phase 2 ends the migration as out of scope
+condition. The default sequence remains conservative. Opt-in v2 evaluates readiness per declared
+section/milestone, allowing independent design while preserving relevant dependencies and explicit
+whole-plan approval before specification. Missing classification or inventory never implies ready.
+Two named stops remain: a **human task** found in phase 2 ends the migration as out of scope
 (P-5) — `analysis.md` records the stop and phase 7 still runs, because the stop is itself a learning;
 phase 6 is a **placeholder** until part 4 exists — the skill writes "not available" into
 `retrospective.md` and goes on to phase 7.
@@ -200,32 +209,37 @@ phase 6 is a **placeholder** until part 4 exists — the skill writes "not avail
    question of `knowledge/pipeline/open-questions/` the scenario touches, every version-gated feature the tenant lacks or cannot judge (§10)
    (`versions/features.md` against the profile's installed versions) and every recipe in `proposal`
    status is on the **open list**.
-3. **Question round.** One question at a time (statement 7), in the order: blocking (no plan without
-   it) → version → conversion → naming. Each question is a record (`templates/question.md`): id `Q-<n>`,
-   the open-list item it settles, why the analysis could not settle it, the options with the evidence
-   for each (page cite, dump field, or "no evidence — migrator's call"), the answer, the consequence,
-   and any new open-list items it raised. The skill proposes an answer when the evidence supports one
-   and says so; the migrator decides. An item nobody can settle now is closed by an explicit
-   assumption ("assume X; verify at <event>") recorded as its answer, and the plan's risk section
-   carries the assumption. Output: `questions.md` (append-only). Exit: the open list is empty.
+3. **Question round.** One human question at a time (statement 7). Preserve blocking/version/conversion/
+   naming as topics; explicit dependencies determine what is blocked. Each `Q-<n>` records the item,
+   reason, owner, affected sections, needed milestones, expected evidence, options with evidence,
+   answer or deferral, consequence and new items. Propose only evidence-supported answers; the owner
+   decides. Waiting permits independent work; deferral retains dependencies. An explicitly accepted
+   assumption names exact proposed scope, permitted design milestones and verification milestone;
+   it never closes the unknown fact or supplies verification evidence. Risks have separate explicit
+   acceptance, scope, limitations and new-evidence/requirement-change reopening triggers. Output:
+   append-only `questions.md`. Exit: relevant dependencies are clear under the selected mode;
+   without v2 classification/current inventories no scoped readiness is granted. Preserve old rows.
 4. **Plan.** `plan.md` from `references/plan.md`: the proposal template's sections (scenario, source
    summary, target artifacts, Partner Directory entries, conversions, approval; the template's "open
-   questions" section becomes "risks and assumptions" — the assumptions recorded in phase 3, never an
-   open item) extended for BPM with: process decomposition (which pipeline scenarios, which orchestration outside the
+   questions" section becomes "risks and assumptions" — unresolved dependencies and explicitly accepted
+   exceptions remain visible) extended for BPM with: process decomposition (which pipeline scenarios, which orchestration outside the
    pipeline, in which order), the data the process keeps between steps and where it lives in the
    target, the error paths, the cut-over order and the test cases per scenario (from the ICO list, not
    invented). Every target statement cites a page or a pattern in the form
    `[page: knowledge/pipeline/<path>#<heading>]` or `[pattern: <id>]` (P-3; MIG-04 adds a Java check
    that each such cite in the templates and references resolves to an existing file and heading); a
-   statement with neither is an open question that reopens phase 3. The plan is iterated with the migrator; each
+   statement with neither opens a question blocking the affected approval. Independent drafting may
+   continue. The plan is iterated with the migrator; each
    round is a dated section, never an overwrite. Exit: the migrator writes `approved <date>` in the
    approval section.
    Optionally maintain `dossier.json` beside the plan, using `references/dossier.md`: append proposals,
    explicit section/revision approvals and scoped supersessions without editing older events or snapshots.
-   These rules govern the sidecar's detailed approval projection; they do not waive this whole-round exit.
-   Import uncertain earlier approvals as unresolved. `po-xray dossier-check` produces a read-only current
-   view and checks an explicitly supplied baseline; without one, history is not checked. It does not
-   establish approval authenticity, runtime evidence or milestone readiness, and changes no question gate.
+   These scope rules never waive whole-round approval. Import uncertain earlier approvals as unresolved.
+   `po-xray dossier-check` preserves its default P1 report and checks an explicit baseline; without one,
+   history is not checked. Opt-in v2 and `--readiness`/`--milestone` add declared dependency assessment,
+   not proof of authentic consent, runtime behavior or authority to operate a tenant. All effective
+   sections (parts UNION connection sections) require current question inventories. A final-plan milestone
+   requires complete approved parts/connections plus explicit approval bound to its definition and inputs.
 5. **Scenario specification.** `scenario-<k>.md` per pipeline scenario of the plan, `<k>` the
    scenario's number in the plan's decomposition (`templates/scenario.md`):
    the D-025 attributes, the Partner Directory entries by key, the template copies and their parameters
@@ -236,6 +250,9 @@ phase 6 is a **placeholder** until part 4 exists — the skill writes "not avail
    When a dossier is used, register the specification as a derived document consuming the exact approved
    decision/section revisions and digests. The checker reports missing or stale required dependencies;
    it does not validate the meaning of the specification's prose or approve the specification separately.
+   In v2 its milestone must be ready with one ready final-plan ancestor covering every exact required
+   scope and connection, including revision/digest; unrelated partial approvals cannot be combined.
+   Changed consumed answers stale bases and require a new revision/approval, preserving earlier consent.
 6. **Artifacts.** Part 4 (generator) consumes the `scenario-<k>.md` files and produces the importable package; part
    5 converts the modules and Java mappings per the recipes. Not designed here; the phase is a named
    placeholder so the skill's flow does not change when they arrive. Output: `artifacts/` (the
@@ -355,8 +372,10 @@ it brings. The skill never assumes the newest version; it asks.
   and `[pattern: <id>]` for plan and pattern statements; a page using them is reviewed like any
   knowledge page; D-029's limit of two external cites per section does not apply to them. (Public
   cite forms → D-030, draft.)
-- P-4 The question round is one question at a time, ordered blocking → version → conversion → naming,
-  with a record per question; an unsettled item is closed by a recorded assumption, never deferred.
+- P-4 Ask one human question at a time, prioritizing relevant dependencies, then topic/found order.
+  Deferral preserves dependencies; unknowns are never automatically closed by assumptions. Opt-in v2
+  uses explicit scoped classification, evidenced inventories and separate owner-accepted assumptions/
+  risks; independent work can proceed. Legacy rows without classification grant no scoped readiness.
 - P-5 Human tasks end the migration as out of scope with a report; no partial plan is written.
 - P-6 Learning is filed as requests and reviewed in the cloud; the local side never commits under
   `knowledge/pipeline/`, `patterns/` or `src/`.
@@ -364,9 +383,10 @@ it brings. The skill never assumes the newest version; it asks.
   commands (the agent reads a dump, never raw files).
 - P-8 The scenario specification file is the D-025 attribute set plus the proposal template's sections
   (`templates/scenario.md`); part 4 consumes exactly this file. (Expensive to reverse: public type.)
-  With the optional P1 dossier, its approval provenance also names the consumed decision IDs, section IDs,
-  revisions and digests. The sidecar is a dependency record, not a replacement generator input or a new
-  approval gate; the specification still derives from the explicitly approved whole plan round.
+  With the optional dossier, approval provenance also names consumed decision IDs, section IDs,
+  revisions and digests. It remains a dependency record alongside the generator input. V2 specification
+  readiness requires current bases/inventories and one ready final-plan ancestor covering every exact
+  required scope/connection; the specification still derives from the explicitly approved whole round.
 - P-9 A committed top-level `patterns/` with the page contract of §8.3 (problem, options with
   trade-offs and page cites, where used by migration code, open points; ≤ 1,500 checker words;
   reviewed by the kb-reviewer). (Expensive to reverse: public directory and page contract.)

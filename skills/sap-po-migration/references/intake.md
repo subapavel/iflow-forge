@@ -77,4 +77,6 @@ Before step 1 of phase 2, read `knowledge/pipeline/SKILL.md` and its loaded set 
 7. **Stop** (only when reached): the human-task report (`references/bpm.md`).
 8. **Open list**: one line per item in the format of `references/attributes.md`, "Open list entries".
 
+For opt-in v2, declare planned sections and explicit milestones, classify each question's affected sections/dependencies, then register an evidenced question inventory for every effective section, including connections. An explicit empty inventory is required where no questions were found. Legacy analyses need this classification; missing metadata grants no scoped readiness. Unknown facts stay unknown. [page: skills/sap-po-migration/references/readiness.md#Sections and dependencies] [page: skills/sap-po-migration/references/readiness.md#Inventory and answers]
+
 **Exit** (spec §7 item 2): every attribute has a value or a `?`; every `?`, every open question of `knowledge/pipeline/open-questions/` the scenario touches, every version-gated feature "absent" or "unknown" and every recipe in `proposal` status is on the open list.

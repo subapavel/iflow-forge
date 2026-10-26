@@ -21,7 +21,7 @@ import tools.jackson.databind.DeserializationFeature;
 import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.json.JsonMapper;
 
-/** Strict v1 input boundary. The original tree is retained for lossless baseline comparison. */
+/** Strict versioned input boundary. The original tree is retained for lossless comparison. */
 final class DossierReader {
     private static final JsonMapper MAPPER = JsonMapper.builder()
             .enable(StreamReadFeature.STRICT_DUPLICATE_DETECTION)
@@ -32,7 +32,11 @@ final class DossierReader {
     }
 
     record Document(JsonNode root, int formatVersion, String migrationId, String sha256,
-            List<JsonNode> events, List<Diagnostic> diagnostics) {
+            List<JsonNode> events, List<Diagnostic> diagnostics, List<ReadResult> results) {
+    }
+
+    /** One input occurrence, including rejected occurrences with repeated or missing IDs. */
+    record ReadResult(JsonNode event, Diagnostic diagnostic) {
     }
 
     static Document read(Path file) throws IOException {
@@ -49,6 +53,7 @@ final class DossierReader {
         }
         List<Diagnostic> diagnostics = new ArrayList<>();
         List<JsonNode> events = new ArrayList<>();
+        List<ReadResult> results = new ArrayList<>();
         int version = 0;
         String migrationId = null;
         try {
@@ -56,35 +61,45 @@ final class DossierReader {
             JsonNode format = root.get("formatVersion");
             require(format.isIntegralNumber() && format.canConvertToInt(), "formatVersion must be an integer");
             version = format.intValue();
-            if (version != 1) {
-                throw new InvalidInput("UNSUPPORTED_FORMAT", "Only dossier formatVersion 1 is supported");
+            if (version != 1 && version != 2) {
+                throw new InvalidInput("UNSUPPORTED_FORMAT", "Only dossier formatVersion 1 and 2 are supported");
             }
             migrationId = string(root, "migrationId");
             require(migrationId.matches("M-[1-9][0-9]*"), "migrationId must be M- followed by a positive integer");
             require(root.get("events").isArray(), "events must be an array");
         } catch (InvalidInput e) {
-            diagnostics.add(new Diagnostic("error", e.code, null, e.getMessage()));
-            return new Document(root, version, migrationId, sha256(bytes), List.of(), List.copyOf(diagnostics));
+            Diagnostic diagnostic = new Diagnostic("error", e.code, null, e.getMessage());
+            return new Document(root, version, migrationId, sha256(bytes), List.of(), List.of(diagnostic),
+                    List.of(new ReadResult(null, diagnostic)));
         }
         Set<String> ids = new HashSet<>();
         for (JsonNode event : root.get("events")) {
             String id = event.path("id").isString() ? event.path("id").stringValue() : null;
             if (id != null && !ids.add(id)) {
-                diagnostics.add(new Diagnostic("error", "DUPLICATE_EVENT_ID", id, "Event ID is not unique"));
+                Diagnostic diagnostic = new Diagnostic("error", "DUPLICATE_EVENT_ID", id, "Event ID is not unique");
+                diagnostics.add(diagnostic);
+                results.add(new ReadResult(null, diagnostic));
                 continue;
             }
             try {
-                event(event);
+                event(event, version);
                 events.add(event);
+                results.add(new ReadResult(event, null));
             } catch (InvalidInput e) {
-                diagnostics.add(new Diagnostic("error", e.code, id, e.getMessage()));
+                Diagnostic diagnostic = new Diagnostic("error", e.code, id, e.getMessage());
+                diagnostics.add(diagnostic);
+                results.add(new ReadResult(null, diagnostic));
             }
         }
-        return new Document(root, version, migrationId, sha256(bytes), List.copyOf(events), List.copyOf(diagnostics));
+        return new Document(root, version, migrationId, sha256(bytes), List.copyOf(events), List.copyOf(diagnostics), List.copyOf(results));
     }
 
-    private static void event(JsonNode event) {
+    private static void event(JsonNode event, int version) {
         String type = string(event, "type");
+        if (version == 2 && DossierReadiness.isEvent(type)) {
+            DossierReadiness.validateEvent(event);
+            return;
+        }
         List<String> extra = switch (type) {
             case "propose" -> List.of("text", "scope");
             case "approve" -> List.of("decision", "scope");
@@ -114,13 +129,13 @@ final class DossierReader {
         }
     }
 
-    private static void fields(JsonNode node, Set<String> names) {
+    static void fields(JsonNode node, Set<String> names) {
         require(node.isObject(), "Expected a JSON object");
         require(node.properties().stream().allMatch(entry -> names.contains(entry.getKey()))
                 && names.stream().allMatch(node::has), "Object has unknown or missing fields");
     }
 
-    private static String string(JsonNode node, String field) {
+    static String string(JsonNode node, String field) {
         JsonNode value = node.get(field);
         require(value != null && value.isString() && !value.stringValue().isBlank(), field + " must be a nonblank string");
         return value.stringValue();
@@ -164,11 +179,11 @@ final class DossierReader {
         require(array.isArray() && !array.isEmpty(), name + " must be a nonempty array");
     }
 
-    private static void digest(String value) {
+    static void digest(String value) {
         require(value.matches("[0-9a-fA-F]{64}"), "sha256 must contain 64 hexadecimal characters");
     }
 
-    private static void localPath(String value) {
+    static void localPath(String value) {
         require(!value.matches("[a-zA-Z][a-zA-Z0-9+.-]*:.*") || value.matches("[a-zA-Z]:[\\\\/].*"),
                 "path must be a local file path, not a URI");
         try {
@@ -178,7 +193,7 @@ final class DossierReader {
         }
     }
 
-    private static void timestamp(String value) {
+    static void timestamp(String value) {
         if (value.equals("unknown")) {
             return;
         }
@@ -207,9 +222,9 @@ final class DossierReader {
         }
     }
 
-    private static final class InvalidInput extends RuntimeException {
+    static final class InvalidInput extends RuntimeException {
         private static final long serialVersionUID = 1L;
-        private final String code;
+        final String code;
 
         InvalidInput(String code, String message) {
             super(message);

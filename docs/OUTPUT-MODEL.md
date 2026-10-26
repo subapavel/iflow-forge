@@ -638,14 +638,17 @@ set), `## Components` table `| Component | Roles |`, `## Issues` with `none` or 
 
 ### `po-xray dossier-check <dossier.json> [--baseline <previous.json>] [--json]` → `DossierReport`
 
-MIG-23/P1, `io.poxray.migration.DossierValidator`: a read-only projection of the optional private migration
-ledger. The input v1 schema and workflow are in
+MIG-23/P1, extended compatibly by MIG-24/P2: `io.poxray.migration.DossierValidator` provides a read-only
+projection of the optional private migration ledger. The input v1 schema and workflow are in
 [`skills/sap-po-migration/references/dossier.md`](../skills/sap-po-migration/references/dossier.md).
+Opt-in v2 fields and readiness rules are in
+[`references/readiness.md`](../skills/sap-po-migration/references/readiness.md). Without readiness options,
+the CLI and existing Java check methods keep the following P1 report shape, while validating v2 events too.
 It is separate from `ScaInventory`; the omission rule in "Principles" above does not apply to this report.
 
 | Field | Type and meaning |
 |---|---|
-| `formatVersion` | Integer input format version, normally `1`; malformed input may report `0`. |
+| `formatVersion` | Integer input format version, `1` or `2`; malformed input may report `0`. |
 | `migrationId` | Input `M-<n>` identity; may be null for invalid root input. |
 | `ledgerSha256` | SHA-256 of the raw current ledger bytes. |
 | `valid` | Boolean: no error diagnostics; warnings may remain. |
@@ -676,12 +679,14 @@ references for applied approvals. Source locators are not opened or authenticate
 
 Derived status is `missing` when the path is not a regular file; otherwise `current` when every declared
 dependency matches an active approved scope's decision, section, revision and digest, or `stale` when any
-does not. Missing/stale required documents produce errors; optional ones produce warnings. No prose
+does not. In v2 a stale consumed answer basis also makes the document stale. Missing/stale required
+documents produce errors; optional ones produce warnings. No prose
 semantics are checked. Every ever-approved section snapshot is checked for existence and raw-byte digest,
 including superseded scopes; a changed snapshot invalidates the report even if a derived dependency matches.
 
-The caller explicitly selects the baseline; it must share version/identity and contain an event array that
-is an unchanged structural prefix of the current ledger. Object key order/whitespace do not matter; array
+The caller explicitly selects the baseline; it must share identity and contain an event array that
+is an unchanged structural prefix of the current ledger. Versions must match, except v1 baseline→v2 current
+upgrade, which emits `HISTORY_FORMAT_UPGRADED`. Downgrades and other changes fail. Object key order/whitespace do not matter; array
 order/values do. `verified` means that comparison passed, not that the design or approvals are authentic.
 Without a baseline, `not-checked` and `HISTORY_NOT_CHECKED` are returned; the dossier can still be valid.
 Relative evidence paths resolve against the current dossier directory regardless of baseline location.
@@ -689,17 +694,111 @@ Relative evidence paths resolve against the current dossier directory regardless
 Diagnostic severity is `error` or `warning`. Codes: `INVALID_DOCUMENT`, `UNSUPPORTED_FORMAT`,
 `DUPLICATE_EVENT_ID`, `INVALID_REFERENCE`, `INVALID_TRANSITION`, `INVALID_SCOPE`, `APPROVAL_CONFLICT`,
 `SUPERSESSION_CYCLE`, `SNAPSHOT_MISSING`, `SNAPSHOT_CHANGED`, `DERIVED_MISSING`, `DERIVED_STALE`,
-`HISTORY_NOT_CHECKED`, `HISTORY_CHANGED`, `INVALID_BASELINE`. Messages exclude snapshot payloads.
+`HISTORY_NOT_CHECKED`, `HISTORY_CHANGED`, `INVALID_BASELINE`; v2 adds warnings `HISTORY_FORMAT_UPGRADED`,
+`ANSWER_BASIS_CHANGED` and errors `MILESTONE_CYCLE`, `LEGACY_IMPORT_INVALID`. Messages exclude snapshot payloads.
 Unreadable or malformed main JSON, duplicate keys and trailing tokens fail before a report is emitted.
 
 Default stdout is Markdown: `# Dossier current design`, ledger digest, history status, `## Decisions`,
 `## Risks`, `## Derived documents`, `## Next action`, `## Diagnostics`. Invalid reports explicitly mark the
 view as non-authoritative. Cells escape supplied text. `--json` emits the report; summary/errors use stderr.
 Exit `0` means valid (possibly with warnings), `1` means invalid or input/parse failure, without a stack trace.
-No input is written. Neither output proves question closure, milestone readiness, runtime behaviour or
-approval authenticity; exact-scoped approval does not waive the existing whole-plan phase gate.
+No input is written. This default report exposes no readiness result; validity does not establish question
+closure, runtime behaviour or authentic consent. Exact-scoped approval never replaces whole-plan approval.
 
 Public Java entry points are static `DossierValidator.check(Path)` and `check(Path, Path baseline)`, both
 returning `DossierReport` and declaring `IOException`, plus `markdown(DossierReport)` returning `String`.
 A null baseline means no history comparison. `DossierReader` is package-private. Native reflection includes
 `DossierReport` and all six nested records.
+
+### Dossier readiness assessment
+
+MIG-24/P2 adds `--readiness` and `--milestone <id>` to `dossier-check`; the selector implies readiness.
+With either option, `--json` emits `DossierAssessment`; otherwise stdout is assessment Markdown separating
+question status, exceptions, work/completeness/approval/readiness and blockers, with escaped supplied text,
+ledger digest and history status. Summary/selection diagnostics use stderr without a stack trace.
+Without a selector, exit `0` means `dossier.valid`, even when milestones are blocked; with a selector,
+exit `0` requires validity and that milestone's `ready=true`. Blocked, unknown or legacy-v1 selections exit `1`.
+No input is modified, upgraded or selected automatically. Output remains private.
+
+Public static methods on `DossierValidator`:
+
+```java
+DossierAssessment assess(Path file) throws IOException;
+DossierAssessment assess(Path file, Path baseline) throws IOException;
+String markdown(DossierAssessment assessment);
+```
+
+A null baseline omits comparison. Existing `check` methods and `markdown(DossierReport)` remain unchanged.
+The wrapper and its nine nested public records have these exact component names, types and order:
+
+```java
+DossierAssessment(DossierReport dossier, String status, List<Question> questions,
+    List<Assumption> assumptions, List<Risk> risks, List<Basis> scopeBases,
+    List<Coverage> coverages, List<Milestone> milestones)
+Block(String sectionId, String neededByMilestoneId)
+Question(String id, String text, String topic, String owner, String expectedEvidence,
+    List<String> sections, String classification, String classificationSource,
+    List<Block> dependencies, String status, String answerEventId, String answer,
+    String evidenceSource, String deferralReason, String reviewAt)
+Assumption(String id, String questionId, String text, String owner, String approvalSource,
+    List<DossierReport.Dependency> scope, List<String> milestones, String verifyAtMilestoneId)
+Risk(String id, String detailEventId, String owner, String approvalSource,
+    List<DossierReport.Dependency> scope, String limitations, List<String> triggers,
+    List<String> milestones, List<String> questions, String status, String reopenEventId)
+BasisInput(String questionId, String resolutionEventId)
+Basis(String id, DossierReport.Dependency scope, List<BasisInput> answers, String status,
+    String legacyApprovalEventId, String historicalEvidenceSource)
+Coverage(String sectionId, String eventId, List<String> questions, String owner,
+    String evidenceSource, String status)
+Blocker(String code, String sectionId, String questionId, String message)
+Milestone(String id, String definitionEventId, String kind, List<String> sections,
+    List<DossierReport.Dependency> requiredScopes, List<DossierReport.Dependency> connections,
+    String connectionRationale, List<String> requires, String status, boolean canWork,
+    boolean complete, boolean approved, boolean ready, List<Blocker> blockers,
+    List<String> exceptions, List<String> approvalInputs, String approvalEventId)
+```
+
+All lists are deeply immutable snapshots. The new wrapper/records serialize empty arrays and nullable
+fields explicitly. The nested `dossier` retains its existing JSON contract, including omission of an
+unassigned diagnostic `eventId`. `classificationReason` remains in input history; it is not a Question
+record component. Native reflection registers the wrapper and all nine records alongside the six P1 records.
+
+| Record | Status and scope |
+|---|---|
+| assessment | `assessed` for valid v2, `invalid` for invalid input, `not-assessed` for v1; v1 has empty new lists. |
+| Question | `open`, `deferred`, `answered`; classification `scoped`, `nonblocking`, `unclassified` is independent of topic. |
+| Risk | `accepted`, `reopened`; only detailed risks appear here, bare P1 risks remain in `dossier.risks`. |
+| Basis | `current`, `stale`; exact scope and current resolutions determine usability. |
+| Coverage | `current`, `stale`; latest valid registration per section, preserving first-introduction order and the applicable question subset. |
+| Milestone | `ready`, `blocked`, `not-assessed`; missing classification or current inventory prevents assessment. |
+
+`sections` preserves declared parts; `connections` preserves the separate exact dependency list. Their union
+is the effective section set for all question, inventory, exception and basis membership. Other lists retain
+input/introduction order. Milestone `requiredScopes` is the declared scope list. `approvalInputs` is a
+deterministic first-encounter deduplicated set of current definitions through the prerequisite graph,
+consumed scope approvals/bases, current coverage IDs, applicable latest classifications, current answers
+or used exceptions, and current prerequisite milestone approval IDs where present. Approval input array
+order is irrelevant; duplicates or missing/extra inputs fail.
+
+`canWork` requires validity, current inventories, clear or explicitly excused dependencies and ready
+prerequisites. Design can work before content approval/basis; other kinds also require complete approved
+content. `complete` additionally requires active approved exact scopes/connections, verified snapshots and
+current answer bases. Unpinned design is incomplete. `approved` binds the current definition and exact
+inputs; its latest applied `approvalEventId` remains visible when stale. Approval cannot make incomplete
+content complete. `ready` is canWork for design, complete for verification, complete+approved for final-plan,
+and complete plus one ready final-plan ancestor for specification/implementation/deployment. That ancestor
+must cover every exact required decision/section/revision/digest, including connections; neither a graph
+edge alone nor combined unrelated partial plans suffices. Invalid assessments cannot affirm any boolean.
+
+Readiness blockers do not themselves add error diagnostics: `QUESTION_OPEN`, `UNCLASSIFIED_QUESTION`,
+`QUESTION_COVERAGE_MISSING`, `QUESTION_COVERAGE_STALE`, `SCOPE_NOT_APPROVED`, `STALE_BASIS`,
+`PREREQUISITE_NOT_READY`, `CONNECTION_NOT_APPROVED`, `FINAL_APPROVAL_REQUIRED`, `FINAL_PLAN_REQUIRED`,
+`INVALID_DOSSIER`. Stale bases also produce warning `ANSWER_BASIS_CHANGED`; required stale derived documents
+retain P1 error behavior. An open/deferred question alone does not invalidate the dossier.
+
+The checker evaluates declared dependencies and evidence integrity. It does not prove complete wiring,
+approval-source authenticity, runtime behavior or correctness of prose. Assumptions preserve unknown facts
+and verification debt. An explicit matching risk detail can waive that debt only at its exact named
+milestone/scope, visibly; it neither transfers downstream nor becomes technical evidence. Readiness grants
+no authorization to deploy or operate a tenant. See the readiness reference for immutable answer bases,
+the evidence-bound legacy import exception and risk reopening.

@@ -13,6 +13,7 @@ Task detail (files, interfaces, steps, tests) lives in the plan:
 | Id | Title | Plan | Depends on | Kind | Status | Done when | Evidence |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | MIG-23 | P1: opt-in dossier history, current design projection, scoped approvals and read-only validator/CLI | docs/superpowers/plans/2026-10-26-migration-process-improvements.md P1; docs/superpowers/plans/2026-10-26-mig-23-p1-packet.md | owner approval 2026-10-26 | code+docs | done | synthetic behavioral tests, root verify, CLI smoke, skill checks and independent review PASS; P2 gates unchanged | review: PASS code r1/docs r2; independent verify371/0/0/26; docs16/0/0/0; CLI8 cases; PROGRESS MIG-23 P1 acceptance (hash in next entry) |
+| MIG-24 | P2: scoped question dependencies, explicit assumptions and risks, milestone readiness | migration-process-improvements.md P2; D-048/D-049; mig-24-p2-packet.md | MIG-23 | code+docs | done | meaningful synthetic dependency/readiness tests, legacy compatibility, independent review and reactor verify | review: PASS code r2/docs r1; independent root420/0/0/26; fresh CLI10/10;49 new tests; PROGRESS MIG-24 P2 acceptance |
 
 ## Phase KB — part 1, pipeline knowledge base (spec: `docs/superpowers/specs/2026-10-19-pipeline-knowledge-base-design.md`)
 

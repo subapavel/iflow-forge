@@ -31,21 +31,36 @@ public final class DossierValidator {
     }
 
     public static DossierReport check(Path dossier, Path baseline) throws IOException {
+        return assess(dossier, baseline).dossier();
+    }
+
+    public static DossierAssessment assess(Path dossier) throws IOException {
+        return assess(dossier, null);
+    }
+
+    public static DossierAssessment assess(Path dossier, Path baseline) throws IOException {
         Document document = DossierReader.read(dossier);
         Projection projection = new Projection();
-        projection.diagnostics.addAll(document.diagnostics());
-        for (JsonNode event : document.events()) {
-            projection.apply(event);
+        Path directory = dossier.toAbsolutePath().getParent();
+        DossierReadiness readiness = new DossierReadiness(document, directory, projection);
+        for (DossierReader.ReadResult result : document.results()) {
+            // A later malformed occurrence invalidates the dossier, not earlier applied history.
+            if (result.diagnostic() != null) {
+                projection.diagnostics.add(result.diagnostic());
+            } else {
+                readiness.apply(result.event());
+            }
         }
         String history = history(document, baseline, projection.diagnostics);
         projection.checkConflicts();
-        Path directory = dossier.toAbsolutePath().getParent();
         projection.checkSnapshots(directory);
-        List<DerivedDocument> derived = projection.derivedDocuments(directory);
-        return new DossierReport(document.formatVersion(), document.migrationId(), document.sha256(),
+        readiness.checkBases();
+        List<DerivedDocument> derived = projection.derivedDocuments(directory, readiness);
+        DossierReport report = new DossierReport(document.formatVersion(), document.migrationId(), document.sha256(),
                 projection.diagnostics.stream().noneMatch(d -> d.severity().equals("error")), history,
                 projection.decisions.values().stream().map(DecisionState::report).toList(), projection.risks,
                 derived, projection.nextAction, projection.diagnostics);
+        return readiness.report(report);
     }
 
     private static String history(Document current, Path baseline, List<Diagnostic> diagnostics) {
@@ -61,7 +76,8 @@ public final class DossierValidator {
             diagnostics.add(new Diagnostic("error", "INVALID_BASELINE", null, "Baseline cannot be read as dossier JSON"));
             return "invalid-baseline";
         }
-        if (!previous.diagnostics().isEmpty() || previous.formatVersion() != current.formatVersion()
+        boolean upgrade = previous.formatVersion() == 1 && current.formatVersion() == 2;
+        if (!previous.diagnostics().isEmpty() || (!upgrade && previous.formatVersion() != current.formatVersion())
                 || !previous.migrationId().equals(current.migrationId())) {
             diagnostics.add(new Diagnostic("error", "INVALID_BASELINE", null, "Baseline schema or identity is invalid"));
             return "invalid-baseline";
@@ -77,16 +93,20 @@ public final class DossierValidator {
                     "Baseline events are not an unchanged prefix of the current ledger"));
             return "changed";
         }
+        if (upgrade) {
+            diagnostics.add(new Diagnostic("warning", "HISTORY_FORMAT_UPGRADED", null,
+                    "Unchanged version 1 history explicitly upgraded to version 2"));
+        }
         return "verified";
     }
 
-    private static final class Projection {
+    static final class Projection {
         private final Map<String, DecisionState> decisions = new LinkedHashMap<>();
         private final Map<Revision, Scope> revisions = new LinkedHashMap<>();
         private final Map<String, Set<String>> replacements = new LinkedHashMap<>();
         private final Map<String, JsonNode> documents = new LinkedHashMap<>();
         private final List<Risk> risks = new ArrayList<>();
-        private final List<Diagnostic> diagnostics = new ArrayList<>();
+        final List<Diagnostic> diagnostics = new ArrayList<>();
         private String nextAction;
 
         void apply(JsonNode event) {
@@ -254,12 +274,12 @@ public final class DossierValidator {
             }
         }
 
-        List<DerivedDocument> derivedDocuments(Path directory) {
+        List<DerivedDocument> derivedDocuments(Path directory, DossierReadiness readiness) {
             List<DerivedDocument> result = new ArrayList<>();
             for (JsonNode event : documents.values()) {
                 List<Dependency> consumes = dependencies(event);
                 String status = !Files.isRegularFile(directory.resolve(text(event, "path"))) ? "missing"
-                        : consumes.stream().allMatch(this::isCurrent) ? "current" : "stale";
+                        : consumes.stream().allMatch(d -> isCurrent(d) && readiness.basisCurrent(d)) ? "current" : "stale";
                 boolean required = event.get("required").booleanValue();
                 if (!status.equals("current")) {
                     diagnostics.add(new Diagnostic(required ? "error" : "warning",
@@ -271,12 +291,26 @@ public final class DossierValidator {
             return result;
         }
 
-        private boolean isCurrent(Dependency dependency) {
+        boolean isCurrent(Dependency dependency) {
             DecisionState decision = decisions.get(dependency.decisionId());
             return decision != null && decision.active.contains(dependency.sectionId()) && decision.proposed.stream()
                     .anyMatch(scope -> scope.sectionId().equals(dependency.sectionId())
                             && scope.revision().equals(dependency.revision()) && scope.sha256().equalsIgnoreCase(dependency.sha256()));
         }
+
+        Scope proposed(Dependency dependency) {
+            DecisionState decision = decisions.get(dependency.decisionId());
+            return decision == null ? null : decision.proposed.stream().filter(scope ->
+                    scope.sectionId().equals(dependency.sectionId()) && scope.revision().equals(dependency.revision())
+                            && scope.sha256().equalsIgnoreCase(dependency.sha256())).findFirst().orElse(null);
+        }
+
+        String approval(Dependency dependency) {
+            DecisionState decision = decisions.get(dependency.decisionId());
+            return proposed(dependency) == null ? null : decision.approved.get(dependency.sectionId());
+        }
+
+        Risk risk(String id) { return risks.stream().filter(r -> r.id().equals(id)).findFirst().orElse(null); }
 
         private void error(String code, String id, String message) {
             diagnostics.add(new Diagnostic("error", code, id, message));
@@ -366,6 +400,62 @@ public final class DossierValidator {
             row(md, diagnostic.severity(), diagnostic.code(), diagnostic.eventId(), diagnostic.message());
         }
         return md.toString();
+    }
+
+    public static String markdown(DossierAssessment assessment) {
+        StringBuilder md = new StringBuilder("# Dossier readiness — ").append(cell(assessment.dossier().migrationId()))
+                .append("\n\nAssessment: ").append(cell(assessment.status())).append(".\n\n")
+                .append("Read-only assessment of declared dependencies and evidence integrity. ")
+                .append("It does not verify prose semantics, historical source authenticity or runtime behaviour, ")
+                .append("and does not authorize deployment or tenant operations.\n")
+                .append("\n## Questions\n\n| Question | Status | Text | Classification | Sections | Answer | Evidence | Deferral | Review at |\n")
+                .append("| --- | --- | --- | --- | --- | --- | --- | --- | --- |\n");
+        for (DossierAssessment.Question q : assessment.questions()) {
+            row(md, q.id(), q.status(), q.text(), q.classification(), String.join(", ", q.sections()), q.answer(),
+                    q.evidenceSource(), q.deferralReason(), q.reviewAt());
+        }
+        md.append("\n| Question | Owner | Expected evidence | Classification source | Needed by | Answer event |\n| --- | --- | --- | --- | --- | --- |\n");
+        for (DossierAssessment.Question q : assessment.questions()) row(md, q.id(), q.owner(), q.expectedEvidence(), q.classificationSource(),
+                q.dependencies().stream().map(b -> b.sectionId() + ": " + b.neededByMilestoneId()).collect(Collectors.joining("; ")), q.answerEventId());
+        md.append("\n## Exceptions\n\nAssumptions and accepted risks do not answer factual questions. Their scope and milestone limits remain explicit.\n")
+                .append("\n| Exception | Type/status | Question | Scope | Milestones | Verification or limitations |\n| --- | --- | --- | --- | --- | --- |\n");
+        for (DossierAssessment.Assumption a : assessment.assumptions()) {
+            row(md, a.id(), "assumption", a.questionId(), dependencyText(a.scope()), String.join(", ", a.milestones()), a.verifyAtMilestoneId());
+        }
+        for (DossierAssessment.Risk r : assessment.risks()) {
+            row(md, r.detailEventId(), r.status(), String.join(", ", r.questions()), dependencyText(r.scope()),
+                    String.join(", ", r.milestones()), r.limitations());
+        }
+        md.append("\n| Assumption | Text | Owner | Approval source |\n| --- | --- | --- | --- |\n");
+        for (DossierAssessment.Assumption a : assessment.assumptions()) row(md, a.id(), a.text(), a.owner(), a.approvalSource());
+        md.append("\n| Risk | Detail event | Owner | Approval source | Permitted triggers | Reopen event |\n| --- | --- | --- | --- | --- | --- |\n");
+        for (DossierAssessment.Risk r : assessment.risks()) row(md, r.id(), r.detailEventId(), r.owner(), r.approvalSource(), String.join(", ", r.triggers()), r.reopenEventId());
+        md.append("\n## Question coverage\n\n| Section | Inventory | Status | Questions | Owner | Evidence |\n| --- | --- | --- | --- | --- | --- |\n");
+        for (DossierAssessment.Coverage c : assessment.coverages()) row(md, c.sectionId(), c.eventId(), c.status(), String.join(", ", c.questions()), c.owner(), c.evidenceSource());
+        md.append("\n## Scope bases\n\n| Basis | Scope | Status | Answers | Legacy approval | Historical evidence |\n| --- | --- | --- | --- | --- | --- |\n");
+        for (DossierAssessment.Basis b : assessment.scopeBases()) row(md, b.id(), dependencyText(List.of(b.scope())), b.status(),
+                b.answers().stream().map(a -> a.questionId() + ": " + a.resolutionEventId()).collect(Collectors.joining(", ")),
+                b.legacyApprovalEventId(), b.historicalEvidenceSource());
+        md.append("\n## Milestones\n\n| Milestone | Kind | Status | Can work | Complete | Approved | Ready | Approval | Exceptions | Inputs |\n")
+                .append("| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n");
+        for (DossierAssessment.Milestone m : assessment.milestones()) row(md, m.id(), m.kind(), m.status(), Boolean.toString(m.canWork()),
+                Boolean.toString(m.complete()), Boolean.toString(m.approved()), Boolean.toString(m.ready()), m.approvalEventId(),
+                String.join(", ", m.exceptions()), String.join(", ", m.approvalInputs()));
+        md.append("\n| Milestone | Definition | Declared parts | Required scopes | Connections | Connection rationale | Prerequisites |\n")
+                .append("| --- | --- | --- | --- | --- | --- | --- |\n");
+        for (DossierAssessment.Milestone m : assessment.milestones()) row(md, m.id(), m.definitionEventId(), String.join(", ", m.sections()),
+                dependencyText(m.requiredScopes()), dependencyText(m.connections()), m.connectionRationale(), String.join(", ", m.requires()));
+        md.append("\n## Readiness blockers\n\n| Milestone | Code | Section | Question | Message |\n| --- | --- | --- | --- | --- |\n");
+        for (DossierAssessment.Milestone m : assessment.milestones()) for (DossierAssessment.Blocker b : m.blockers()) row(md, m.id(), b.code(), b.sectionId(), b.questionId(), b.message());
+        // Preserve the P1 evidence/history rendering while removing its deliberately P1-only disclaimer.
+        md.append('\n').append(markdown(assessment.dossier()).replace(
+                "Questions, milestone readiness, runtime evidence and authenticity of approval sources are not checked. ", ""));
+        return md.toString();
+    }
+
+    private static String dependencyText(List<Dependency> scopes) {
+        return scopes.stream().map(d -> d.decisionId() + ": " + d.sectionId() + " @ " + d.revision() + " [" + d.sha256() + "]")
+                .collect(Collectors.joining("; "));
     }
 
     private static String scopeText(List<Scope> scopes) {

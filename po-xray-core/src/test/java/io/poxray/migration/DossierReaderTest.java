@@ -100,7 +100,7 @@ class DossierReaderTest {
         assertThat(decision(duplicate, "D1").activeScopes()).isEmpty();
 
         DossierReport unsupported = DossierValidator.check(write(dir.resolve("dossier.json"),
-                ledger().replace("\"formatVersion\":1", "\"formatVersion\":2")));
+                ledger().replace("\"formatVersion\":1", "\"formatVersion\":999")));
         error(unsupported, "UNSUPPORTED_FORMAT");
     }
 

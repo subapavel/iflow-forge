@@ -1,12 +1,15 @@
 # Migrační proces: audit a návrh změn
 
-Datum: 2026-10-26. Stav: **P1 IMPLEMENTOVÁNO A OVĚŘENO; P2–P7 pouze plán**.
+Datum: 2026-10-26. Stav: **P1–P2 IMPLEMENTOVÁNO A OVĚŘENO; P3–P7 schváleno k postupné realizaci**.
 Schválení vlastníka 2026-10-26: „Schvaluji“ v odpovědi na návrh a zahájení pouze P1.
 Historie: dokument byl předložen jako návrh ke schválení; schválení není důkaz implementace.
 Code review P1: PASS; dokumentační review: PASS po opravě popisu JSON diagnostiky.
 Nezávislý reactor verify: 371 testů, 0 chyb, 26 původních skips; po poslední
 dokumentační opravě 16 cílených kontrol PASS. Evidence: PROGRESS, MIG-23 P1 acceptance.
-P2–P7 zůstávají pouze plánem, bez povolení k realizaci.
+Navazující pokyn vlastníka D-048 povoluje pokračovat P2–P7 až do stop;
+budoucí části zůstávají neimplementované, dokud nemají vlastní důkazy a review.
+P2/MIG-24: code review r2 a docs review PASS; nezávislý reactor 420/0/0/26,
+49 nových testů a 10/10 kontrol čerstvého CLI. Evidence: PROGRESS, MIG-24 P2 acceptance.
 Tento dokument sám nemění současná pravidla ani neznamená schválení zákaznického návrhu.
 Navazuje na [fázový plán](../plans/2026-10-26-migration-process-improvements.md).
 

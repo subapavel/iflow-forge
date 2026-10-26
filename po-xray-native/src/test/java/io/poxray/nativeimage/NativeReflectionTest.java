@@ -3,6 +3,7 @@ package io.poxray.nativeimage;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import io.poxray.migration.DossierReport;
+import io.poxray.migration.DossierAssessment;
 import io.poxray.model.ScaInventory;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import java.io.IOException;
@@ -45,6 +46,19 @@ class NativeReflectionTest {
                 DossierReport.Decision.class.getName(), DossierReport.Risk.class.getName(),
                 DossierReport.Dependency.class.getName(), DossierReport.DerivedDocument.class.getName(),
                 DossierReport.Diagnostic.class.getName());
+    }
+
+    @Test
+    void dossierAssessmentAndAllNineNestedRecordsAreRegistered() {
+        RegisterForReflection reg = NativeReflection.class.getAnnotation(RegisterForReflection.class);
+        Set<String> registered = Stream.concat(Arrays.stream(reg.targets()).map(Class::getName),
+                Arrays.stream(reg.classNames())).collect(Collectors.toSet());
+
+        assertThat(registered).contains(DossierAssessment.class.getName(), DossierAssessment.Block.class.getName(),
+                DossierAssessment.Question.class.getName(), DossierAssessment.Assumption.class.getName(),
+                DossierAssessment.Risk.class.getName(), DossierAssessment.BasisInput.class.getName(),
+                DossierAssessment.Basis.class.getName(), DossierAssessment.Coverage.class.getName(),
+                DossierAssessment.Blocker.class.getName(), DossierAssessment.Milestone.class.getName());
     }
 
     /** Class names under io/poxray/model in the core classes (directory or jar). */

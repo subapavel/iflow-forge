@@ -21,6 +21,8 @@ Each step goes into one of four classes (spec §7 item 2): **1:1 pipeline scenar
 
 The node kinds are those the reader emits [page: docs/OUTPUT-MODEL.md#Node]. Every rule below is `proposal — confirm on first migration`: no migration has confirmed it yet, so the status stays visible in each row, and the classification of each process is one open-list item of type blocking ("confirm the step classification").
 
+Here blocking is a topic. In opt-in v2, map the question to its affected scenario/orchestration sections and required milestones; inventory connection sections too. Independent design may continue while a dependency waits. Unknown classification never becomes a confirmed fact through an assumption. The human-task stop below still ends the migration. [page: skills/sap-po-migration/references/readiness.md#Sections and dependencies]
+
 | kind | rule |
 |---|---|
 | `automatedActivity` | classify as 1:1 pipeline scenario, the ICO of the ICO dump whose interface is the activity's service interface (name and namespace); unless no ICO carries it: then an open-list item "no ICO for this call" |

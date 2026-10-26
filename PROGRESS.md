@@ -532,3 +532,88 @@ Limits: native executable NOT_RUN (registry tested); 24 skips for absent private
 Preservation: prior AGENTS/CLAUDE/WORKFLOW/CODEX-WORKFLOW hashes unchanged; existing private pilot evidence untouched. No tenant operation, deployment or push.
 Decision: D-047; P1 only. P2–P7 remain planned, not authorized for execution. No whole customer migration plan or runtime result is claimed.
 Next: owner may authorize P2 separately; MIG-21 ready and MIG-22 pending unchanged. Scoped local commit only; unrelated prior work stays outside it.
+
+## Migration-process continuation / MIG-24 preparation · 2026-10-26 · uncommitted
+Owner: continue remaining P2–P7 until stop; D-048 extends authorization, preserves original exclusions and role separation.
+Previous task: MIG-23/P1 committed461ae13; code/docs/CLI checks and independent review are recorded above, not rerun or claimed for P2.
+Task: scoped questions, assumptions, risks and milestone readiness; P2 packet in preparation. No P2 implementation/test result yet.
+Baseline: P1 final independent371/0/0/26 applies to unchanged code at461ae13; prior local governance/pilot edits remain outside scoped commits.
+Next: exact versioned input/API and acceptance, test-author red, implementation, docs, independent verification/review; proceed through remaining plan.
+
+P2 design: D-049, opt-in v2 and separate DossierAssessment; explicit prerequisite graph, answer-bound revisions and whole-plan approval inputs.
+Preflight dependencies: P1→P2 preserves existing record/JSON and adds v2; P2→P6 keeps provenance locators distinct from runtime evidence; P3→P4→P5 consumes source reports before comparison; P1–P6→P7 reads originals without rewriting. No parser dependency is required for P2.
+Packet: docs/superpowers/plans/2026-10-26-mig-24-p2-packet.md. Known deliberate compatibility update: the old unsupported-version test moves its sentinel2 to999; v1 remains supported.
+Preflight: r1 FAIL (final-plan exact scope, legacy consent import, explicit inventory), corrected; r2 FAIL (late connection-only coverage edge). Packet rewritten as revision3 around one effective-section union for all membership/readiness rules; no code existed during these reviews.
+
+## MIG-24 P2 test approval · 2026-10-26 · uncommitted
+Context compacted; actual checkout/status and last3 commits re-read; HEAD461ae13, unrelated local work preserved.
+Review: rewritten packet revision3 preflight PASS; no production code existed during preflight.
+Test first: architect read all new readiness18, reader16, CLI5 tests and additive native1; 40 approved, no production stub.
+Compatibility: approved P1 unsupported-version fixture2→999 only; original assertion and native tests retained.
+Checks: EXECUTED_FAIL independent core-reactor exit1 at testCompile,87 errors on missing DossierAssessment/assess; no tests executed.
+Evidence: target/mig-p2-red-verifier.log tail read by architect; target/mig-p2-red-checks-verifier.log confirms5/5 hashes and allowed diff.
+Author: EXECUTED_FAIL core red; ENVIRONMENT_BLOCKED standalone CLI due stale installed artifacts, not acceptance red; use reactor with-am.
+Context7: author lookup recorded in target/mig-p2-context7-tests.log; production implementer must perform own API lookup.
+Next: bounded implementation on revision3; independent checks, separate documentation author and review before commit, then continue P3–P7.
+
+## MIG-24 P2 implementation handback · 2026-10-26 · uncommitted
+Changed: strict v2 projection, immutable assessment, milestone graph/readiness, CLI flags/Markdown and native registry; P1 report shape retained.
+Test first: original40 approved tests unchanged; architect read/approved4 additional DossierReadinessBoundaryTest regressions.
+Checks: author VERIFIED_PASS focused94/0/0/0 (core76, CLI14, native4); architect read target/mig-p2-implementation-focused-final.log tail.
+Checks: EXECUTED_FAIL additional red3/1 then4/2 for uppercase-digest stale-basis detection and exact verification-risk waiver; log tails read.
+Evidence: target/mig-p2-boundary-red.log and mig-p2-boundary-red-r2.log; corrected code included in focused94 green.
+Ruling: only an explicitly matching accepted risk may excuse assumption-created verification debt at the named scope/milestone; fact remains unknown, reopening blocks again.
+Context7: direct public MCP resolve/query succeeded; exact Jackson3/Aesh JAR APIs inspected; target/mig-p2-context7-implementation.log.
+Scope: approved5 test hashes intact; extra4 tests meaningful; no author docs/ledger/POM/private changes; writer released.
+Next: documentation author; independent reactor/packaged CLI and code/docs review. P2 not yet accepted or committed.
+
+## MIG-24 P2 independent focused checks and documentation · 2026-10-26 · uncommitted
+Checks: verifier VERIFIED_PASS package exit0,94/0/0/0 (core76, CLI14, native4); target/mig-p2-focused-verifier.log and focused-checks-verifier.log tails read.
+Checks: VERIFIED_PASS8/8 actual packaged CLI cases, correct selected/blocked/unknown/legacy exits and unchanged input bytes; target/mig-p2-smoke-verifier.log tail read.
+Compatibility: original5 test hashes match; DossierReport unchanged from461ae13; no POM/dependency changes; scoped whitespace clean.
+Docs: canonical migration skill references/templates/routes, OUTPUT-MODEL and original spec updated; v2 opt-in and unknown/exception distinctions explicit.
+Checks: author static VERIFIED_PASS page budget max1419,164 concrete citations/0 errors, JSON example matches CLI fixture; logs target/mig-p2-doc-*.
+Preservation: frontmatter/v1template hashes unchanged; CODEX-WORKFLOW and skill pointers untouched; no private evidence modified.
+Review: independent code round1 running; documentation review pending. Potential chronological approval-history edge is under review, not accepted as fixed.
+Full reactor/knowledge: NOT_RUN yet on final P2 docs; formal forbidden-values file absent, no full privacy-coverage claim.
+Next: finish reviews and any bounded fixes, independent final reactor, scoped commit, then P3 metadata/behavior work.
+
+## MIG-24 P2 code review round 1 · 2026-10-26 · uncommitted
+Review: FAIL — whole-file parser errors collected before replay incorrectly suppress an earlier valid milestone approval.
+Evidence: reviewer DossierValidator:44 / DossierReadiness:325; malformed later section-declare makes approvalEventId null; source inspection, runtime regression pending.
+Required result: retain earlier applied approval ID, invalidate all final readiness flags; errors before approval still prevent it. Duplicate event IDs require positional care.
+Acceptance: packet correction adds before/after/duplicate chronology and isolated known-question malformed evidence/reviewAt tests; no approved assertions weakened.
+Nonblocking review: all44 new tests meaningful; other reviewed scope/basis/readiness/JSON/native boundaries had no blocker; isolated shape cases strengthen previously masked negatives.
+Ruling: new revision means full Dependency identity; a genuinely new proposal/basis/approval may retain unchanged content, never transfer old consent silently.
+Next: same implementer writes observed red and bounded correction; same reviewer round2; docs review continues independently.
+
+## MIG-24 P2 review correction · 2026-10-26 · uncommitted
+Test first: architect read all5 DossierReadinessChronologyTest cases and invalid-flags helper; observed red5/2/0/0 in target/mig-p2-review-fix-red.log.
+Changed: reader retains per-occurrence parse results; validator replays diagnostics in event order. Existing invalid-prefix approval guard retained.
+Checks: author VERIFIED_PASS focused99/0/0/0 (core81, CLI14, native4); architect read target/mig-p2-review-fix-focused.log tail.
+Preservation: original5 approved hashes unchanged; boundary4 untouched;7-file manifest target/mig-p2-review-fix-hashes.log. New P2 tests total49.
+Docs review: PASS independently across13 changed/new files; public contract, citations, unknowns, exceptions and human-task stop consistent.
+Nonblocking docs wording: exact Dependency tuple is defined; packet clarifies new proposals may reuse unchanged content only with their own basis/approval.
+Next: same code reviewer round2 and independent final root verify/packaged smoke; no P2 completion claim until these pass.
+
+## MIG-24 P2 final reviews · 2026-10-26 · uncommitted
+Code review: PASS round2; ordered per-occurrence diagnostics close the history bug without removing prefix/root/history/snapshot checks.
+Docs review: PASS; no blocking discrepancies. Additional chronology5 assertions independently reviewed; all49 new tests meaningful.
+Checks: verifier static VERIFIED_PASS7/7 test hashes, unchanged v1/frontmatter,4 governance hashes and4 pointer files; DossierReport unchanged, POM changes0.
+Checks: scoped whitespace clean; targeted427 added lines plus10 new files privacy scan0 hits; target/mig-p2-static-final-verifier.log tail read.
+Limits: targeted scan is not full forbidden-values coverage; configured forbidden-values file absent. Full reactor/fresh packaged smoke still running.
+Next: observe final outputs, accept/commit P2 only if green; proceed to P3a. Draft metadata packet under target/mig-p3a-packet-draft.md is in read-only preflight.
+
+## MIG-24 P2 acceptance · 2026-10-26 · (hash in the next entry)
+Delivered: opt-in v2 scoped questions, explicit assumptions/risks, inventories, answer-bound revisions, milestone graph and exact whole-plan approval; P1 output/consent retained.
+Tests:49 new synthetic tests read/approved; observed initial API red, boundary red4/2 and chronology red5/2; corrected focused99/0/0/0.
+Checks: independent VERIFIED_PASS root verify exit0,420/0/0/26; core297/0/0/22, native4/0/0/0, CLI39/0/0/1, MCP8/0/0/1, knowledge72/0/0/2.
+Evidence: target/mig-p2-verify-final-verifier.log; actual counts/skips and final tail read by architect. No kb.skip.
+Checks: VERIFIED_PASS fresh packaged CLI10/10, actual expected selection exits and JSON/Markdown; all3 input hashes unchanged; target/mig-p2-smoke-final-verifier.log.
+Checks: VERIFIED_PASS Budget2/Cites1/SkillMirror13 in root run;7/7 approved test hashes, v1/frontmatter,4 governance hashes/4 pointers, P1 report and POMs preserved.
+Checks: VERIFIED_PASS scoped whitespace and targeted privacy427 added lines+10 new files,0 hits; target/mig-p2-static-final-verifier.log.
+Review: code r1 FAIL chronology, fixed with observed red then r2 PASS; docs r1 PASS. No blocking findings remain.
+Limits:24 absent-private-input skips and2 unset kb.forbidden skips verified from XML; full forbidden-values coverage and native executable NOT_RUN; registry tested.
+Preservation: original private evidence and unrelated pending governance/pilot work untouched; no tenant operation/deployment/push/customer-contract change.
+Decisions: D-048 authorization and D-049 v2 contract; revision identity and exact accepted-risk verification waiver clarified in packet.
+Next: scoped local P2 commit, then P3a metadata packet preflight corrections; P3–P7 continue under owner authorization until stop.

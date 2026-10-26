@@ -1,10 +1,10 @@
 # Migration dossier
 
-Optional sidecar for exact approval scope and an append-only decision history (MIG-23/P1). It supplements the dated plan rounds; it does not replace their whole-round approval or the empty-open-list gate. Partial approval never starts phase 5. [page: skills/sap-po-migration/references/plan.md#Approval]
+Optional sidecar for exact approval scope and append-only history (MIG-23/P1). It supplements dated plan rounds and preserves explicit whole-plan approval. Opt-in v2 adds scoped questions and milestone readiness; partial approval never starts phase 5. [page: skills/sap-po-migration/references/plan.md#Approval] [page: skills/sap-po-migration/references/readiness.md#Readiness and approval]
 
 ## Files and ownership
 
-Copy `templates/dossier.json` into the migration's private directory as `dossier.json`. Keep immutable section snapshots and explicitly chosen prior ledger copies under `snapshots/`; keep generated views there too. Use gitignored `local/` or the owner's designated external private directory. Only synthetic templates and neutral `M-<n>` codes belong in tracked files. Reports contain supplied text and paths: treat them as private.
+Copy `templates/dossier.json` (v1 history) or explicitly opt into `templates/dossier-v2.json` (readiness) in the migration's private directory. Both templates start empty. Keep immutable snapshots, explicitly chosen prior ledgers and generated views private, under gitignored `local/` or the owner's existing external directory. Tracked files contain only synthetic examples and neutral `M-<n>` codes. Reports contain supplied text/paths and remain private.
 
 The coordinator owns decisions, ledger updates, the next question and next action. Specialist authors still produce technical content and formal migration outputs; source, tests and knowledge pages retain their assigned owners. Exactly one writer operates at a time. [page: AGENTS.md#Roles]
 
@@ -51,13 +51,13 @@ po-xray dossier-check dossier.json --baseline snapshots/dossier-r1.json --json
 
 The command reads inputs without modifying them. Markdown is the default stdout; `--json` emits `DossierReport`. Summary/errors go to stderr. Exit `0` means valid, including warnings; `1` means invalid or an input/parse error, without a stack trace. Save output only to a separate private file. Snapshot creation and baseline selection remain the coordinator's responsibility; the checker never picks the newest file.
 
-The baseline must have the same version/identity and its entire event array must be an unchanged structural prefix of the current ledger. Identical histories pass. Object key order and whitespace do not matter; array order and values do. Baseline location does not redirect relative snapshot lookup: all evidence resolves from the current dossier.
+The baseline must share identity and its entire event array must be an unchanged structural prefix. Versions must match, except explicit v1 baseline→v2 current upgrade, which emits `HISTORY_FORMAT_UPGRADED`; downgrade fails. Identical histories pass. Object key order/whitespace do not matter; array order/values do. All evidence resolves from the current dossier, regardless of baseline location. The checker never upgrades a file itself.
 
 `historyStatus` is `verified`, `changed`, `invalid-baseline`, or `not-checked`. Omitting `--baseline` produces `HISTORY_NOT_CHECKED`; a valid report then has no verified history. `verified` proves only prefix preservation against that chosen baseline, not correctness or authenticity of earlier approvals.
 
 ## Report and diagnostics
 
-`valid` means no error diagnostics. An invalid projection is explicitly non-authoritative. The report includes the raw ledger digest, decisions with proposed/active scopes and approval event IDs, separate risks, derived documents, next action, and diagnostics. Lists preserve introduction/input order; empty lists remain `[]` in JSON. A report does not check questions, milestone readiness, runtime evidence or approval-source authenticity. P1 adds no question-dependency gate or new citation form. [page: skills/sap-po-migration/references/questions.md#Exit]
+`valid` means no error diagnostics, not readiness. An invalid projection is non-authoritative. Default output remains `DossierReport`: digest, decisions/scopes/approvals, separate risks, derived documents, next action and diagnostics, with existing JSON shape/order. Its check validates v2 event semantics too, but exposes no readiness fields. `--readiness` or `--milestone <id>` emits the separate assessment; neither proves runtime evidence or authentic consent. [page: skills/sap-po-migration/references/readiness.md#Checking and limitations]
 
 Diagnostics have `severity` (`error`/`warning`), `code`, and `message`. JSON includes `eventId` as a string when assigned; otherwise that field is omitted (the Java value is null):
 
@@ -69,5 +69,7 @@ Diagnostics have `severity` (`error`/`warning`), `code`, and `message`. JSON inc
 | `SNAPSHOT_MISSING`, `SNAPSHOT_CHANGED` | Approved evidence unavailable or changed. |
 | `DERIVED_MISSING`, `DERIVED_STALE` | Derived file absent or dependencies outdated. |
 | `HISTORY_NOT_CHECKED`, `HISTORY_CHANGED`, `INVALID_BASELINE` | Baseline absent, prefix changed, or unusable baseline. |
+| `HISTORY_FORMAT_UPGRADED`, `ANSWER_BASIS_CHANGED` | Warnings: preserved v1→v2 prefix; consumed resolution changed. |
+| `MILESTONE_CYCLE`, `LEGACY_IMPORT_INVALID` | Invalid prerequisite graph or historical basis import evidence. |
 
 Malformed/unreadable main JSON, duplicate JSON keys and trailing JSON tokens fail before a report is produced. Diagnostics do not reproduce snapshot payloads.
