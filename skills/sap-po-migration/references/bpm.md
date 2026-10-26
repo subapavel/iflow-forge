@@ -25,7 +25,7 @@ Inspect initial-value mappings and structural assignments, including disabled ro
 
 Parsing normalizes/drops facts; keep source provenance. Declarations establish no runtime execution, loop behavior or fault interception. Keep unsupported conclusions unresolved. [page: docs/OUTPUT-MODEL.md#BPM source selection]
 
-Java helpers `BpmPathAnalysis.of(inventories, labels)` and `BpmDataAnalysis.of(inventories, labels)` produce structural paths and contextual data candidates; both offer `markdown(report)`. Conditions never prune paths/candidates. Empty candidates do not prove absent data. Scope/domain gaps, same-step ordering, boundary timing and missing embedded exits remain explicit uncertainty; candidates do not establish runtime availability. No CLI/MCP command is added: `json`/`export` provide source evidence. [page: docs/OUTPUT-MODEL.md#BPM structural paths] [page: docs/OUTPUT-MODEL.md#BPM contextual data candidates]
+Java helpers `BpmPathAnalysis`, `BpmDataAnalysis` and `BpmFaultAnalysis` expose `of(inventories, labels)` and `markdown(report)` for structural paths, contextual data candidates and source event/fault declarations. Conditions never prune paths/candidates. Empty candidates do not prove absent data. Scope/domain gaps, same-step ordering, boundary timing and missing embedded exits remain explicit uncertainty; candidates do not establish runtime availability. Fault declarations do not select handlers or prove interception. No CLI/MCP command is added: `json`/`export` provide source evidence. [page: docs/OUTPUT-MODEL.md#BPM structural paths] [page: docs/OUTPUT-MODEL.md#BPM contextual data candidates] [page: docs/OUTPUT-MODEL.md#BPM source event and fault declarations]
 
 ## Step classification
 

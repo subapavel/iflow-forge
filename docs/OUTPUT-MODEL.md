@@ -209,7 +209,7 @@ fields are evidence gaps. This report does not change `ScaInventory` or its shar
 
 This slice adds no CLI or MCP command. Existing `po-xray json` and `po-xray export` still provide the
 source evidence described above; they do not emit this separate path report. The separate data helper
-below embeds the path report; integration/fault composition remains pending.
+below embeds the path report; configured integration and composite delivery remain pending.
 
 The report uses `formatVersion=1`, `analysisVersion="bpm-paths-v1"`. All collections are deeply
 immutable snapshots. The new BpmPathReport records serialize null fields and empty collections
@@ -361,7 +361,7 @@ list sizes; empty input is valid. It performs no file IO, clock reads or input m
 This is a separate report of **declared source candidates and structural provenance**, not runtime
 values, successful calls, execution, overwrites or definite availability. It does not change the
 inventory schema or add a CLI/MCP entry point. Existing `json`/`export` outputs provide source
-evidence, not this report. P3c integration/fault composition remains pending.
+evidence, not this report. Configured integration and composite delivery remain pending.
 
 [BpmDataReport](../po-xray-core/src/main/java/io/poxray/model/BpmDataReport.java) uses
 `formatVersion=1`, `analysisVersion="bpm-data-v1"`. New records have deeply immutable collection
@@ -546,6 +546,173 @@ read bindings and candidate sets, step before/after states and diagnostics, with
 All parsed-source loss/selection limits still apply. Neither source declarations nor these finite
 candidate sets establish successful calls, final values, exact intra-step ordering, loop execution,
 fault interception, runtime feasibility or definite data availability.
+
+### BPM source event and fault declarations
+
+The pure core helper
+[BpmFaultAnalysis](../po-xray-core/src/main/java/io/poxray/bpm/BpmFaultAnalysis.java) exposes
+`public static BpmFaultReport of(List<ScaInventory> inventories, List<String> labels)` and
+`public static String markdown(BpmFaultReport report)`. It validates the same input contract as
+BpmPathAnalysis: non-null lists of equal size, with no null inventory or label; violations throw
+`IllegalArgumentException`. Empty input is valid. It computes the path report once for process
+addressing and scope admission, without embedding that report. It performs no IO, clock reads or
+input mutation. `markdown(null)` also throws `IllegalArgumentException`.
+
+This slice exposes source declarations, not handler selection or observed fault handling. No new
+CLI/MCP entry exists: existing `json`/`export` provide source evidence, not this separate report.
+Configured integration and composite BehaviorReport delivery remain pending.
+
+[BpmFaultReport](../po-xray-core/src/main/java/io/poxray/model/BpmFaultReport.java) has
+`formatVersion=1`, `analysisVersion="bpm-faults-v1"`. New records serialize null fields and empty
+collections explicitly. Collection snapshots are deeply immutable, preserve null entries and
+encounter order, and reject null collection arguments; analysis supplies non-null lists. Reused
+`Issue`/`Issue.Location` keep their existing omission behavior. Fields below are in record/JSON order.
+Input, ProcessKey, Flag, Fact and Condition reuse BpmPathReport types; Element, Link, Endpoint and
+Locator reuse BpmSourceEvidence types.
+
+| Record | Fields and meaning |
+|---|---|
+| `BpmFaultReport` | `formatVersion`, `analysisVersion`; `inputs`: original Input rows; `processes`: ProcessFaults rows; `unattributed`: component-qualified retained evidence; `issues`: source issues, then path issues, then fault diagnostics. |
+| `ProcessFaults` | `key`: ProcessKey; `dc`, `id`, `name`, `source`: provenance; `coverage`: `complete`, `incomplete` or `unavailable`; `declarations`: contextual rows; `reasons`: coverage tokens. |
+| `Declaration` | `ordinal`: row within the process; `role`: source context below; `owner`, `event`, `definition`: original Endpoints or explicit null; `scopes`: per-owner Scope rows; `definitions`: included candidate Definition rows; `builtin`: permitted catalogue fallback or null; `conditions`: retained Conditions; `evidence`: full contextual Evidence; `state`: `declared`, `non-error`, `catalogue` or `unknown`; `reasons`. |
+| `Scope` | `owner`: candidate owner Locator; `state`: `active`, `inactive` or `unknown`; `origin`: `explicit-membership`, `attachment-derived`, `mixed` or `unknown`; `path`: immediate enclosing scope through ancestors to pool, inner first; `basis`: original Facts; `reasons`. |
+| `Definition` | `source`: actual candidate Element; `kind`: `error`, `message` or `unknown`; `critical`, `technical`: raw-presence Flags from `isCritical`/`isTechnical`; `faults`: FaultReference rows; `evidence`; `reasons`. |
+| `FaultReference` | `ordinal`: row within its Definition; `link`: original ErrorEventDefinitionHasWSDLFault Link; `state`: `included`, `identity-only`, `missing`, `ambiguous`, `wrong-kind` or `unknown`; `evidence`; `reasons`. |
+| `Builtin` | `id`, `kind`, `name`: catalogue identity/metadata; `critical`, `technical`: catalogue booleans; `parameter`: Parameter or null; `file`, `sourceDc`, `resource`: catalogue provenance. |
+| `Parameter` | `name`, `namespace`, `type`: catalogue parameter metadata, not an inferred source schema. |
+| `Evidence` | `path`: contextual Fact walk; `elements`, `links`: full retained raw payloads, once per occurrence Locator in source order. |
+| `Unattributed` | `input`, `component`: original list ordinals; `dc`; `kind`: retained context role; `evidence`: actual source occurrences; `reasons`. No process key is invented. |
+
+Input/component/process ordinals are one-based original-list positions, including gaps for skipped
+null internal component/process entries. Qualify source Locators by ProcessKey, or input/component
+for Unattributed; element/link Fact kinds have independent ordinal spaces. Names and bare IDs do
+not join contexts. Declarations follow primary source-link order, with boundary attachments expanded
+by matching trigger-link order; local orphan elements and remaining links follow afterward. Definition
+candidates and raw payload lists follow source element order. Declaration ordinals start at one per
+process, fault-reference ordinals at one per Definition. Shared definitions under different owners
+and repeated source links remain separate contexts. Repeated analysis is deterministic.
+
+### BPM fault attribution and declaration states
+
+[BpmFaultContext](../po-xray-core/src/main/java/io/poxray/bpm/BpmFaultContext.java) admits the same
+format-1/`bpm-source-v1` evidence and exact process-source match as path analysis. Unavailable or
+unsupported evidence, or an unresolvable process source, gives unavailable coverage without invented
+declarations. An incomplete path graph also makes fault coverage incomplete.
+
+Validated scope membership establishes positive process attribution, including inactive-pool
+contexts with explicit reasons. It does not establish active handling. Ambiguous owners touching
+several processes retain uncertain contexts in each. Positive ownership overrides physical location;
+a partition belonging to exactly one interpreted process can retain otherwise unattributed local
+facts as unknown, not as proved ownership. Shared/uninterpreted metadata remains in Unattributed
+with `BPM_FAULT_UNATTRIBUTED_SOURCE`; malformed/unattributed ownership adds component-wide incomplete
+uncertainty. A merely unreferenced external definition is retained as `unassigned-definition` and
+does not by itself make a proved local declaration incomplete.
+
+Scope rows stay separate for each candidate owner occurrence. Unknown ancestry has an empty path
+and reasons, while raw candidate memberships remain in basis/Evidence. Basis retains relevant
+ScopeContainsScopeObjects and CollaborationContainsPools links, ancestor Elements and boundary
+attachment links needed for derivation. Origin describes that explicit/derived basis. Declaration
+evidence contains its full raw payload because the path report is not embedded. Boundary-trigger
+scopes describe the activity owner; no boundary scope is invented. No owner yields empty scopes
+and `unknown-owner`; multiple candidates are never concatenated into one apparent scope path.
+
+[BpmFaultDeclarations](../po-xray-core/src/main/java/io/poxray/bpm/BpmFaultDeclarations.java) interprets
+the following source grammar; the association names here have the `Galaxy.Workflow.` prefix:
+
+| Source chain | Role and endpoints |
+|---|---|
+| ActivityContainsEventDefinitions: `f=definition,s=activity` | `activity-definition`; owner is the activity, event is null. |
+| ActivityHasBoundaryEvent: `f=boundary,s=activity`, then CatchEventHasTrigger: `f=definition,s=boundary` | `boundary-trigger`; owner is the activity and event is the boundary. |
+| CatchEventHasTrigger on StartEvent | `start-trigger`; owner is the start event, event is null. Other catch owners use `unsupported-catch-trigger` with unknown state. |
+| ThrowEventHasResult: `f=definition,s=EndEvent` | `end-result`; owner is the end event, event is null. An error end establishes no reply or handler. |
+
+Supported activity owner kinds are AutomatedActivity, MappingActivity, NotificationActivity and
+EmbeddedScope. This validates declaration shape only. Declared chains require unique correctly
+typed endpoints and valid owner ancestry; boundary chains also require a unique BoundaryEvent
+attachment. Each start/boundary catch/end allows one declaration link; multiple links stay separate
+unknown rows. An activity may declare several distinct definitions. Identical duplicate ownership
+links remain visible with `duplicate-declaration`.
+
+Missing, ambiguous, wrong-kind or conflicting ownership/attachment/definition facts remain unknown
+even when a candidate is a known message or catalogue trigger. A boundary attachment without a
+usable trigger retains a row with null definition and `missing-trigger`; an unattached boundary
+trigger is unsupported with `orphan-boundary-trigger`. Every included definition candidate retains
+its own Definition row and flags; there is no representative value across ambiguous candidates.
+Only exact source ErrorEventDefinition and MessageEventDefinition kinds are interpreted as error
+and message. Timer-looking and other source kinds stay unknown. Otherwise valid error chains are
+`declared`, valid message chains are `non-error`; neither state proves runtime handling.
+
+Critical/technical Flags preserve actual exported attribute presence and exact raw text. Only exact
+`true`/`false` tokens have those interpretations; missing/invalid values remain unknown. Missing
+flags are not false and do not alone mean a source association is missing.
+
+Builtin fallback requires a definition Endpoint with `resolution=missing`, zero source candidates
+and an exact trigger ID in the shipped BuiltinFunctionCatalog. Any source candidate, including an
+excluded or ambiguous one, prevents fallback; names and projected Node fields are not authority.
+The original missing endpoint and source diagnostics remain. Builtin flags/kind, including a
+catalogue timer kind, are catalogue facts, not exported attribute presence or interpreted source
+kind. `resource`, `file` and `sourceDc` retain provenance. Only an otherwise valid chain has state
+`catalogue`; malformed chains remain unknown while preserving catalogue metadata. Substitution
+adds `catalogue-source-substitution` and makes coverage incomplete.
+
+### BPM fault payload and unconsumed evidence
+
+ErrorEventDefinitionHasWSDLFault uses `f=fault,s=definition`. A unique included WSDL2.Fault candidate
+has state `included`; a unique excluded WSDL2.Fault candidate is `identity-only`, preserving its
+identity without a complete payload contract. Missing, ambiguous and wrong-kind candidates remain
+distinct, with all original endpoint evidence. No association means none declared in retained
+evidence, not that the activity cannot fail or its WSDL has no faults.
+
+Available direct `WSDL2.ReferenceToElement` links (`f=fault,s=XSD element`) and their selected
+payloads are retained without recursive WSDL/XSD traversal, schema resolution or an inferred QName.
+EventDefinitionHasParameter links and direct included parameter payloads are retained likewise.
+Excluded payloads and malformed direct references remain gaps; identity-only evidence is not missing.
+
+[BpmFaultEvidence](../po-xray-core/src/main/java/io/poxray/bpm/BpmFaultEvidence.java) creates a Condition
+for each CatchEventContainsExpression link (`f=event,s=expression`) in attributable declaration
+contexts. Unattributed links retain raw Evidence without Condition records. Unique valid expression
+associations are `not-evaluated`; missing/ambiguous/wrong-kind associations are `unknown`. Text is
+the raw `stringExpression` attribute, otherwise its same-named text. Empty conditions means none
+declared, not true. Even literal false is not evaluated or used for pruning.
+
+Declaration Evidence retains condition links, expression and reachable syntax payloads so the
+Condition Fact locators are recoverable without the original inventory. The walk follows declared
+child directions through expression steps, references, literal types, invocation identities and
+parameter mappings, mapping parts/QNames/expressions, and condition branches. It stops at
+QName/type/feature/function-interface payloads; it does not read function bodies or external
+resources. Cycles terminate by occurrence without the legacy depth-64 cutoff. Unknown incident
+rule/mapping links remain raw evidence with unsupported-relation uncertainty and no invented
+traversal direction. Missing/excluded payloads stay explicit, and independent branches remain.
+
+Unconsumed facts remain visible after normal chains:
+
+- Local orphan event-definition Elements yield `orphan-definition` rows with null owner/event/
+  definition Endpoints, unknown state, and the actual Element in definitions and Evidence.path.
+  Duplicate IDs remain separate occurrences. The Workflow `EventDefinition` suffix is only a
+  retention filter; it does not establish kind. External unowned definitions remain Unattributed.
+- Unconsumed catch-expression links yield unknown `catch-condition-only` rows with their original
+  owner endpoint, null event/definition and `condition-without-declaration`.
+- Unconsumed fault/parameter links yield unknown `orphan-fault-reference` or
+  `orphan-parameter-reference` rows when attributable to one process. Owner/event are null;
+  definition is the original second endpoint, with candidate payloads even when wrong-kind.
+- Unknown Workflow links incident on a retained definition enter every corresponding contextual
+  Definition/Declaration evidence with `unsupported-workflow-relation`, unknown state and incomplete
+  coverage. Without a contextual row they become `orphan-metadata` with null endpoints, or
+  Unattributed when no process can be selected. Original links are never repaired by name.
+
+Shared/ambiguous/uninterpreted unconsumed metadata keeps qualified Unattributed evidence and
+component-wide uncertainty. Fault diagnostics use `BPM_FAULT_UNCERTAIN` or
+`BPM_FAULT_UNATTRIBUTED_SOURCE`; source/path issues are preserved. Coverage `complete` means the
+supported attributable retained extraction has no graph/ownership/payload gaps; `incomplete`
+preserves known rows with reasons. Missing flag interpretations, absent optional fault links and
+fully retained unevaluated conditions are explicit semantic limits, not invented missing associations.
+
+Markdown summarizes input provenance, declaration roles/endpoints/states, per-owner scopes, raw
+flags, fault-reference status, catalogue substitution, conditions, unattributed contexts and
+diagnostics; cells are escaped. Full raw evidence remains in the report. All source-selection and
+parser-loss limits apply. Neither complete extraction, matching IDs/payloads, lexical scopes nor
+boundary arcs establish handler priority, interruption, propagation, retries, transactions, loop
+instance, termination, synchronous response, acknowledgement or observed rejection.
 
 ### Process
 

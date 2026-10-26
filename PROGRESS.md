@@ -831,3 +831,62 @@ Docs: bpm1456 words,6 source links, Budget2/Cites1/SkillMirror13 pass; scoped wh
 Limits:24 absent private-input cases and2 unset kb.forbidden skips; native executable/full forbidden-values NOT_RUN with reasons in final-summary. No new CLI command in this slice.
 Scope D-053: complete remaining P3 source faults and configured integration/CLI/MCP, then stop; P4–P7 unimplemented. No tenant operation, private pilot edit or push.
 Next: selective local commit, excluding unrelated governance/pilot changes and both MIG-28 drafts. MIG-28 revision2 preflight PASS; its tests wait for the accepted base.
+
+## MIG-27 commit / MIG-28 preparation · 2026-10-26
+MIG-27 committed 0c5c6a0b422caa87b6c22c969d33cc5efe2614db:22 files,3324 insertions23 deletions; no push.
+Checks: independent precommit VERIFIED_PASS22/22 paths,19/19 worktree blobs,3/3 selective ledger copies,9 approved hashes and10 verified snapshots; evidence tail read.
+Preserved: unrelated CODEX-01/MIG-07/D-046/governance edits remain local; both MIG-28 drafts were excluded.
+MIG-28 selected under D-053: source-declared activity/boundary/start/end fault contexts and raw payload/uncertainty, before configured integration and CLI/MCP composition.
+Preflight r1 FAIL on5 contract gaps; revision2 closes source kinds,state precedence,unconsumed metadata,per-owner scopes and orphan representation; same reviewer r2 PASS.
+Next: separate test-author writes source/report/native regressions and observes red; architect approval and independent red precede implementation. Baseline533/0/0/26 belongs to MIG-27, not this new feature.
+
+## MIG-28 test approval · 2026-10-26 · uncommitted
+Context compacted; re-read Codex override/HANDOFF, actual status and last3 commits; base0c5c6a0 preserved.
+Architect read full24 analysis tests,5 report tests, helper and additive native test; approved30 new tests, four frozen hashes in target/mig-p3c-faults-test-author-hashes.log.
+Author EXECUTED_FAIL missing BpmFaultAnalysis/BpmFaultReport compiler diagnostics; red log tail read. Numeric exit unavailable from truncated completion; not invented.
+Nine prior core/helper hashes unchanged; native14 additions0 deletions. Runtime fixture/native acceptance NOT_RUN until implementation.
+Next: independent compile-red with numeric exit, then bounded implementation. Scope remains finish P3 then stop.
+Checks: independent EXECUTED_FAIL compile-red exit1,100 missing introduced API diagnostics,0 runtime tests; red summary/tail read. Frozen4/4 and prior9/9 hashes match; production/POM unchanged.
+Automatic review initially misclassified P3c1 as outsideP3; original approvedP3 scope evidence resolved it and the identical normal request was accepted. No bypass or unresolved approval blocker.
+Bounded MIG-28 implementation now authorized. MIG-29 composite offline report draft is independent preflight preparation only; no tests/code yet.
+
+## MIG-28 implementation handback · 2026-10-26 · uncommitted
+Writer released: five new core helper/model files and additive5-line native registration only; no parser/graph/data/test/POM changes.
+Checks: author VERIFIED_PASS37/0/0/0 focused (core29/native8) and169/0/0/0 combined (core161/native8),exit0; log tails/counts read.
+Frozen4/prior9 hashes13/13 unchanged. Context7 Java25/Jackson/Quarkus evidence summary read; no prerequisite failure or expectation change.
+Next: independent code review, bounded docs, then independent root verify. Fullroot/native executable NOT_RUN; no acceptance claim yet.
+MIG-29 draft r1 preflight found4 contract gaps; revision2 closes call grammar/precedence, receiver extractor projection, route placeholders and channel availability/aggregate states. Final file preflight pending; no tests/code authorized.
+Docs writer released: OUTPUT-MODEL and canonicalbpm only,169 additions3 deletions; observed whitespace/source-links/headings/privacy exit0, bpm1476/1500 and sensitive added-line matches0. Independent review pending.
+MIG-29 revision2 saved, including null-map-key rejection instead of inventing JSON keys; source projection null values/list holes remain preserved. This is preparation only, excluded from MIG-28 commit.
+
+## MIG-28 review round1 · 2026-10-26 · uncommitted
+Code review FAIL: condition relation parent/child kinds unchecked; malformed boundary attachment suppresses independent start-trigger; conflicting boundary membership inside one process remains declared; shared condition-only metadata bypasses Unattributed rule.
+All30 tests were meaningful and13 hashes matched; these additional combinations were absent. Findings are static counterexamples, not yet observed failures.
+Packet adds bounded grammar and six separate completeness regressions before source correction. Original30 tests/helper hashes stay frozen; independent red and same reviewer r2 required.
+MIG-29 final saved revision2 design preflight PASS, four r1 blockers closed; tests still wait for accepted MIG-28 commit. Owner scope remains completeP3thenstop.
+
+## MIG-28 regression approval · 2026-10-26 · uncommitted
+Architect read full BpmFaultCompletenessTest and helpers; approved six real-source regressions, SHA5684C21AFE9F7913A9C4E6B80E0BA777CBAC61DA607CB47E7A6A6F1208303C71.
+Author EXECUTED_FAIL6/6/0/0,exit1; counts and failing sections read: three false-complete grammar cases, missingstartcontext, falselydeclared boundaryscope, missingunattributed condition. No parser failures.
+Writer released;13 originaltest/helper and6 production hashes unchanged. Independent assertion-red confirmation precedes correction of Evidence/Declarations only.
+Documentation wording r1 PASS,1476words; final scoped-diff/source consistency review remains after correction. Fullroot acceptance still NOT_RUN.
+Checks: independent EXECUTED_FAIL6/6/0/0,exit1,1.127s suite; verifier summary/failure excerpts and logtail read. New+prior14 hashes and sixproduction snapshots match before/after.
+Same implementer now authorized to correct only BpmFaultEvidence/BpmFaultDeclarations; immutable approved regressions remain acceptance.
+
+## MIG-28 correction handback · 2026-10-26 · uncommitted
+Writer released: only Evidence/Declarations changed; four otherproduction snapshots retained,14 approvedtest/helper hashes unchanged.
+Checks: author VERIFIED_PASS6/0/0/0 regressions and175/0/0/0 combined(core167/native8),exit0; finaltails/counts andpreservation read.
+All four review defects corrected without changing expectations; same code reviewer r2 and finaldocs scoped-diff/sourceconsistency review now pending, then independentroot verification.
+Final docs consistency review found one wording blocker: attributable catch-condition links become Condition rows, while Unattributed has raw evidence only. Same author receives this single-sentence correction; no source/model expansion.
+Code review r2 PASS: all four findings closed, six regressions meaningful,14 approvedhashes andfour untouchedproduction independently retained.
+Docs author released narrowparagraph correction; observed whitespaceexit0 andprivacy0matches. Same reviewerfinalcheck andindependentroot nowpending; source/docs frozen.
+
+## MIG-28 source fault acceptance · 2026-10-26 · ready to commit
+Changed: occurrence-qualified source activity/boundary/start/end declarations, per-owner scope evidence, raw conditions/fault payload, catalogue gaps, immutable report/Markdown and native registry.
+Test first:30 initialtests plus6 independently confirmed assertion-red completeness regressions;36newtests. Code reviewr2 PASS; finaldocs PASS afteroneprecisioncorrection.
+Checks: independentroot VERIFIED_PASS569/0/0/26,exit0,02:18; target/mig-p3c-faults-verify-final-verifier.log tail/counts/summary read.
+Modules:core440/0/0/22,native8/0/0/0,CLI41/0/0/1,MCP8/0/0/1,KB72/0/0/2. New36allpass, no newskips orweakenedchecks.
+Preservation:14approvedhashes,8source/docssnapshots,4governancehashes unchangedbefore/after. Parser/graph/data/POM/oldcoretests/CLI/MCP preserved; nativeadditiveonly.
+Docs:Budget2/Cites1/SkillMirror13 pass; bpm1476/1500words;5sourcelinksresolve/headingspreserved; whitespaceclean,0sensitiveprivacyhits (3publicSAPURLs excluded).
+Limits:24absentprivate-fixture and2unsetkb.forbidden skips remainunverified; nativeexecutable/fullforbiddenvalues NOT_RUN withenvironmentreasons. No runtime orwholeP3completion claim.
+Next: selective localcommit19ownedpaths excludinggovernance/pilot/MIG29drafts, thenfinalP3configuredICO/CLI/MCP delivery perapprovedMIG29revision2. StopafterP3;noP4–P7/tenant/push.
