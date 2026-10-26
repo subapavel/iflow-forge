@@ -13,6 +13,11 @@ P2/MIG-24: code review r2 a docs review PASS; nezávislý reactor 420/0/0/26,
 Tento dokument sám nemění současná pravidla ani neznamená schválení zákaznického návrhu.
 Navazuje na [fázový plán](../plans/2026-10-26-migration-process-improvements.md).
 
+Implementační změna 2026-10-26, MIG-26: [F-14](../../findings/F-14.md) rozšiřuje
+packet o dvě úzké null kontroly ve stávajícím readeru, aby schválené syntetické
+exporty došly k analýze chybějících vazeb a neznámých typů. Interpretační rozsah
+a testovací očekávání se nemění; tato poznámka sama nedokládá dokončenou opravu.
+
 ## 1. Stručný závěr
 
 Největší systémové mezery jsou globální uzavírání otázek před plánem, chybějící

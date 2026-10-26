@@ -25,6 +25,8 @@ Inspect initial-value mappings and structural assignments, including disabled ro
 
 This evidence retains parser normalization/loss; keep source provenance. It proves no current runtime behavior, reachability, name-to-ID binding, loop execution, fault interception or producer analysis. Keep those conclusions unresolved unless separately evidenced. [page: docs/OUTPUT-MODEL.md#BPM source selection]
 
+The Java helper `BpmPathAnalysis.of(inventories, labels)` produces `BpmPathReport`; `markdown(report)` renders it. Coverage concerns retained structural evidence. A connected witness may include a literal-false condition; graph gaps make negative conclusions unknown. This slice adds no CLI/MCP command, runtime feasibility or data-producer analysis. See the graph contract and limits. [page: docs/OUTPUT-MODEL.md#BPM structural paths]
+
 ## Step classification
 
 Each step goes into one of four classes (spec §7 item 2): **1:1 pipeline scenario**, **orchestration outside the pipeline**, **conversion**, or **human task → stop**. Write one row per node into `analysis.md`: node id and name, kind, class, the reason (the field that decided), and the rule's status.

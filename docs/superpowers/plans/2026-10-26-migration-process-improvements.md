@@ -10,8 +10,10 @@ P1 je implementováno a ověřeno jako MIG-23: code/doc review PASS, nezávislý
 reactor verify 371/0/0/26 a 16 cílených kontrol po dokumentační opravě PASS.
 P1 commit: `461ae13`. P2 je dokončeno jako MIG-24: code review r2 a docs review PASS,
 nezávislý reactor 420/0/0/26, 49 nových testů a 10/10 kontrol čerstvého CLI balíčku.
-P3 je další část; P3–P7 mají povolení k realizaci, ale dosud nejsou implementované
-ani ověřené. Přesná evidence je v PROGRESS, MIG-24 P2 acceptance.
+P3a/MIG-25 je dokončeno jako `c8b4f86`: code/docs review PASS, reactor440/0/0/26
+a čerstvé CLI3/3. MIG-26 dokončilo strukturální cesty: code r2/docs PASS,
+nezávislý reactor483/0/0/26 a43 nových testů. P3 pokračuje datovými producenty;
+zbývající P3–P7 ještě nejsou implementované ani ověřené. Přesná evidence je v PROGRESS.
 Historie: původně předloženo ke schválení; odpověď vlastníka „Schvaluji“ navazuje
 na otázku o schválení návrhu a zahájení pouze P1.
 
@@ -137,6 +139,12 @@ vyžádají klasifikaci a report omezí připravenost. Staré odpovědi ani rizi
 stop a oprávnění provádět tenantové operace. Verifikace/review jako P1.
 
 ## P3 — Doložené zdrojové cesty
+
+**Implementační nález F-14 (MIG-26):** Schválené syntetické exporty odhalily dvě
+starší NPE ještě před analýzou cest. Packet výslovně povoluje úzkou opravu
+`MoinIndex.first` při null cíli a `ExpressionReader.literal` při neznámém typu.
+Zdrojové vazby a nejistota zůstanou zachované; očekávání testů se nemění.
+Podrobnosti a pozorované chyby: [F-14](../../findings/F-14.md).
 
 **Přínos:** Odlišit zapojení od přítomnosti a oddělit chybové cesty před procesem
 od fault scope procesu. Získat podklady pro kontrakty a porovnání.

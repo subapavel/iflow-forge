@@ -267,7 +267,7 @@ final class ExpressionReader {
     private String literal(MoinElement literal) {
         String value = literal.attr("value") == null ? "" : literal.attr("value");
         String type = ctx.index.first(Galaxy.LITERAL_TYPE, literal.id()).map(catalog::typeName).orElse(null);
-        return QUOTED_TYPES.contains(type) ? "\"" + value + "\"" : value;
+        return type != null && QUOTED_TYPES.contains(type) ? "\"" + value + "\"" : value;
     }
 
     private static StringBuilder flush(StringBuilder chain, Render r) {

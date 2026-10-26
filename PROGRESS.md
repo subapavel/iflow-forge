@@ -674,3 +674,86 @@ Limits: actual skipped reasons confirm24 absent private inputs and2 unset kb.for
 Initial sandbox root EXECUTED_FAIL14 local-loopback errors; identical approved escalation retry passed. Logs preserve both outcomes.
 Decisions: D-050; no runtime, producer or whole-P3 completion claim. No private pilot evidence read/modified; no push.
 Next: scoped local commit, then MIG-26 structural path packet revision2 preflight and separate red tests; P3–P7 continue until owner stop.
+
+## MIG-25 commit / MIG-26 preparation · 2026-10-26
+MIG-25 committedc8b4f86821063b80aef936d3063e154385314286:22 files,1486 insertions23 deletions; no push.
+Checks: independent precommit VERIFIED_PASS22/22 paths,4/4 test hashes,19/19 worktree and3/3 staged-ledger copies,privacy0; target/mig-p3a-precommit-verifier.log tail read.
+Preservation: unrelated CODEX-01/MIG-07/D-046/governance edits remain unstaged; MIG-26 draft excluded from MIG-25 commit.
+MIG-26 selected under D-048/D-051: structural graph/condition/loop declarations first, candidate data producers next, integration boundaries and composite views after.
+Preflight: r1 FAIL unsupported control relations, loop selection/attribution and boundary validation; revision2 defines exact conservative handling and adversarial cases.
+Preflight: r2 PASS, public record/interface contract and source-cycle exception accepted; basec8b4f86 filled before test-author dispatch.
+Packet: docs/superpowers/plans/2026-10-26-mig-26-p3b-paths-packet.md; no MIG-26 tests/code or runtime acceptance claimed yet.
+Next: separate test-author with Context7 and observed red, architect reads/approves tests, bounded implementation, independent verification/review.
+
+## MIG-26 test approval · 2026-10-26 · uncommitted
+Test first: architect read both full new files/helpers and additive native diff; approved37 tests (31 graph,5 report,1 native).
+Checks: author EXECUTED_FAIL exit1/100 missing BpmPath API compile errors,0 executed tests; target/mig-p3b-paths-red.log tail/counts read.
+Fixtures: literal MOIN/SCA extraction; scope-cycle case alone augments captured evidence to avoid unguarded legacy reader recursion; five-second cycle guards.
+Scope: existing native assertions and SyntheticBpmSca unchanged; no production/POM edits. Exact3 hashes in packet and target/mig-p3b-paths-test-hashes.log.
+Context7: direct tools available for author resolve/query; Java official match unavailable, exact JDK fallback recorded; target/mig-p3b-paths-context7-*.log.
+Next: independent compile-red/scope evidence, then bounded implementation; final root verification/review pending.
+Checks: independent EXECUTED_FAIL exit1/100 missing API errors/0 tests; log counts and summary read under target/mig-p3b-paths-red-verifier*.
+Scope:3/3 hashes match; production/POM/fixture-helper diff empty; native assertions unchanged. Bounded implementation authorized.
+
+## MIG-26 prerequisite reader repair · 2026-10-26 · uncommitted
+Deviation: F-14. Writer released partial graph/report implementation;37 approved tests remain unchanged.
+Checks: author EXECUTED_FAIL36/0/2/0; two approved cases stop before analysis at Optional.of(null) and quoted-type Set.contains(null).
+Evidence: target/mig-p3b-paths-implementer-focused-r2.log traces/counts read; unchanged MoinIndex.first and ExpressionReader.literal inspected.
+Checks: author reports legacy/native41/0/0/0 on identical escalated retry; quiet log contains warnings only, so independent count evidence remains pending.
+Decision: narrow packet amendment permits exactly the two null guards, each verified against its existing observed-red test, then full focused acceptance/legacy checks.
+Preserve raw endpoint lists, first-match order, unknown typing and all approved expectations. No broad parser refactor or fixture bypass.
+Next: resume same implementer under F-14; independent root verification and code/docs review still pending.
+
+## MIG-26 focused implementation acceptance · 2026-10-26 · uncommitted
+Writer released graph/report/native implementation and exactly two F-14 guards;37 approved tests and3 hashes unchanged.
+Checks: author VERIFIED_PASS F-14 endpoint1/0/0/0 then literal1/0/0/0; both log tails with actual counts/exit read.
+Checks: author final focused VERIFIED_PASS83/0/0/0,exit0; target/mig-p3b-paths-implementer-final-focused-r2.log tail read.
+Scope: MoinIndex.first only Optional.ofNullable; ExpressionReader.literal only null guard. No second()/other parser changes; original source fields preserved.
+Self-review follow-up: separate test-author will add three public-contract integrity cases for external boundary membership, malformed loop/control links and pool-as-member ancestry.
+These are post-implementation regression checks, not falsely reported as initial red-first tests. Initial37 acceptance remains red-first.
+Next: architect reads added tests; independent code/docs review and full reactor verification remain required before commit.
+
+## MIG-26 integrity approval / review handoff · 2026-10-26 · uncommitted
+Architect read the full independent BpmPathIntegrityTest and approved3 synthetic cases, including all helper assertions.
+Checks: author VERIFIED_PASS3/0/0/0,exit0; target/mig-p3b-paths-integrity.log tail read. These were post-implementation checks, no red-first claim.
+Scope: only one new test file; original3 approved hashes unchanged. New integrity SHA857BB5E64A3D4B28A12E27CD66807A4F21F7A97963B23207AF43BF9A99CA544A.
+Total new tests40:37 initial red-first plus3 independent integrity checks. Full root expected480 tests if no further changes, not yet run.
+Next: bounded documentation author and independent code review using target/mig-p3b-paths-code.diff, then final independent root verification.
+
+## MIG-26 review round1 · 2026-10-26 · uncommitted
+Review: code FAIL — malformed pool relation with wrong-kind owner is ignored; unlinked Pool/Collaboration scope members are discarded, allowing false complete/disconnected results.
+Evidence: independent static review at BpmPathGraph selectRootAndMembers/checkRelations and NON_NODES/collectMemberships; counterexamples not yet executed.
+Next: separate test-author adds3 synthetic observed-red regressions, architect reads them, same implementer corrects graph, same reviewer returns round2 verdict.
+Docs writer released: OUTPUT-MODEL plus canonical bpm reference only; bpm1473/1500, bounded checks pass; independent docs review next.
+Full root verification has not started; no repeated build before correcting the known review findings.
+
+## MIG-26 completeness regression approval · 2026-10-26 · uncommitted
+Context compacted; re-read Codex override/HANDOFF, actual status and last3 commits; base remains c8b4f86.
+Architect read complete new test file/helpers; approved3 regressions with public source evidence, unknown connectivity and retained unknown member identity.
+Checks: author EXECUTED_FAIL3/3/0/0,exit1; target/mig-p3b-paths-completeness-red.log counts/tail read; each failed expected incomplete versus actual complete.
+SHA cb12ee7750822c89006947c1b82c2801d01d16b2af4303e84160e191e070a079; prior4 hashes unchanged. Total new tests43.
+Next: independent red confirmation, same implementer bounded correction, same reviewer round2; final root still pending.
+Checks: independent EXECUTED_FAIL3/3/0/0,exit1; same three coverage assertions; verifier log counts and summary read.
+Preservation:5/5 approved hashes and7/7 production snapshots unchanged during independent red. Bounded graph correction authorized.
+
+## MIG-26 review correction · 2026-10-26 · uncommitted
+Writer released; correction changes only BpmPathGraph. Attributable malformed pool declarations create gaps; Pool/Collaboration members retain unknown rows and identity.
+Checks: author VERIFIED_PASS3/0/0/0 completeness regressions and89/0/0/0 combined focused (core83/native6),exit0; correction log tails/counts read.
+Preservation:5 approved test hashes unchanged;6 other production hashes unchanged. Known local-loopback fixtures used escalation without skips/config changes.
+Review: documentation r1 PASS, bpm1473 words; nonblocking explicit-null wording will be clarified for new records only, preserving shared Issue behavior.
+Next: same code reviewer round2; narrow documentation clarification, then independent full reactor verification. Root verify NOT_RUN so far.
+Review: code r2 PASS; both blockers closed,5 approved hashes match, original3 regressions detect their defects and positive membership witnesses remain.
+Docs precision author released: only new-report serialization sentence clarified; whitespace/source links/privacy pass. Final independent root and precision review dispatched.
+Review: final documentation precision PASS; no remaining documentation blockers. Author links/privacy/text evidence read; no shared Issue serialization change.
+
+## MIG-26 P3b paths acceptance · 2026-10-26 · ready to commit
+Changed: occurrence-based structural graph, conditions, declared loops, immutable report/Markdown, native registry and docs; exact two F-14 null guards.
+Test first:37 initial acceptance tests;3 post-implementation integrity checks;3 independently confirmed red review regressions. Total43 new tests;5 approved hashes retained.
+Checks: independent root VERIFIED_PASS483/0/0/26,exit0,05:31; target/mig-p3b-paths-verify-final-verifier.log tail and final-counts/summary logs read.
+Modules: core356/0/0/22,native6/0/0/0,CLI41/0/0/1,MCP8/0/0/1,KB72/0/0/2. No kb.skip or new skips.
+Review: code r1 FAIL on two completeness gaps, separate red3/3/0/0, correction green3/0/0/0 and focused89/0/0/0, code r2 PASS. Documentation PASS including final precision.
+Preservation: test hashes5/5,governance4/4,production/docs9/9 unchanged during verification; POM,fixture helper,skill pointers/frontmatter and P1/P2 contracts unchanged.
+Docs: Budget2/Cites1/SkillMirror13 pass; bpm1473 words;4 source links resolve. Scoped whitespace clean; restricted added-line privacy0 hits.
+Limits: actual XML skips24 absent private-input cases and2 unset kb.forbidden. Native executable/full forbidden-values NOT_RUN, reasons recorded in final-summary.log.
+No new CLI/MCP command in this slice; existing CLI41 tests pass. No runtime/whole-P3 completion claim, private pilot modification or push.
+Next: selective local commit; MIG-27 data-producer draft preflight running, then separate red tests/implementation under continuous owner authorization.

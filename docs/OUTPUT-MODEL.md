@@ -195,6 +195,159 @@ when `expr` is absent, and retain disabled rows. Absent `expr` is labelled struc
 with null text is labelled unavailable. A blank expression does not mean deletion. Missing `enabled`
 in the legacy projection does not establish execution. Supplied cell text is escaped for Markdown.
 
+### BPM structural paths
+
+The core Java helper
+[BpmPathAnalysis](../po-xray-core/src/main/java/io/poxray/bpm/BpmPathAnalysis.java) exposes
+`public static BpmPathReport of(List<ScaInventory> inventories, List<String> labels)` and
+`public static String markdown(BpmPathReport report)`.
+It builds a separate [BpmPathReport](../po-xray-core/src/main/java/io/poxray/model/BpmPathReport.java)
+from retained source occurrences, without file IO, timestamps or input mutation. Supply one non-null
+label per non-null inventory; null arguments/elements or differing list sizes throw
+`IllegalArgumentException`. Empty input returns explicit empty collections. Missing optional legacy
+fields are evidence gaps. This report does not change `ScaInventory` or its shared schema version.
+
+This slice adds no CLI or MCP command. Existing `po-xray json` and `po-xray export` still provide the
+source evidence described above; they do not emit this separate path report. Later data-producer and
+integration analysis/composition remain separate work.
+
+The report uses `formatVersion=1`, `analysisVersion="bpm-paths-v1"`. All collections are deeply
+immutable snapshots. The new BpmPathReport records serialize null fields and empty collections
+explicitly; reused `Issue` and `Issue.Location` records retain their existing null omission. Fields
+below are listed in record/JSON order. `Locator` retains the BpmSourceEvidence archive/partition/ordinal shape.
+
+| Record | Fields and meaning |
+|---|---|
+| `BpmPathReport` | `formatVersion`, `analysisVersion`; `inputs`: Input rows; `processes`: ProcessPaths rows; `issues`: analysis Issue rows with `BPM_PATH_*` codes. |
+| `Input` | `ordinal`: input position; `label`: supplied label; `sha256`: inventory source digest, or null when unavailable. |
+| `ProcessKey` | `input`, `component`, `process`: positions in the input, BPM-component and process lists. |
+| `Fact` | `kind`: `element` or `link`; `location`: source Locator. These two occurrence lists have separate ordinal spaces. |
+| `Flag` | `present`: whether the attribute key exists; `value`: exact raw string or null; `interpretation`: `true`, `false` or `unknown`. |
+| `Endpoint` | `id`: normalized source ID, including null/blank; `resolution`: source `unique`, `missing` or `ambiguous`; `candidates`: all source candidate Locators. |
+| `Condition` | `state`: condition classification below; `text`: preserved editor text, literal fallback or null; `evidence`: Facts; `reasons`: uncertainty tokens. |
+| `Step` | `ordinal`: row number; `location`: source element Locator or null for unavailable legacy evidence; `id`, `kind`, `name`: node identity/classification; `scopes`: declared scope Locators (or a valid inherited boundary scope); `connectivity`: `connected`, `disconnected` or `unknown`; `witness`: Arc ordinals; `terminate`: Flag; `reasons`: explanatory tokens. |
+| `Arc` | `ordinal`: row number; `kind`: `sequence`, `boundary-attachment` or `embedded-entry`; `location`, `id`: source connector occurrence/ID, both null for derived arcs; `sources`, `targets`: Endpoint declaration lists; `resolution`: `resolved`, `missing`, `ambiguous` or `invalid`; `condition`: Condition; `isDefault`: Flag; `evidence`: Facts; `reasons`: explanatory tokens. |
+| `Loop` | `location`, `id`: declaration occurrence/ID; `hosts`: all candidate host Locators; `mode`: `sequential`, `parallel` or `unknown`; `sequential`: Flag; `flowCondition`: raw attribute value; `completion`: `all` or `unknown`; `evidence`: Facts; `reasons`: explanatory tokens. |
+| `ProcessPaths` | `key`: ProcessKey; `dc`, `id`, `name`, `source`: process provenance; `coverage`: `complete`, `incomplete` or `unavailable`; `reasons`: coverage tokens; `steps`, `arcs`, `loops`: the corresponding rows. |
+
+All ordinals are one-based. Qualify every Locator by its ProcessKey and its element/link kind;
+MOF IDs alone cannot connect occurrences across inputs or components. Input/component/process list
+order is retained. Steps, original sequence arcs and loops follow source element encounter order;
+boundary arcs follow source link order, then embedded-entry arcs follow host/start encounter order.
+Step and Arc ordinals address rows within one ProcessPaths, and each witness is a list of those Arc
+ordinals. Repeated analysis of the same inputs and labels is deterministic.
+
+### BPM path coverage and witnesses
+
+[BpmPathGraph](../po-xray-core/src/main/java/io/poxray/bpm/BpmPathGraph.java) reconstructs the supported
+graph. Analysis admits source evidence only at format `1`/selection `bpm-source-v1`, matching
+`Process.source` exactly to `archive + "!/" + partition`. It requires a unique matching Collaboration and resolves pool/scope
+relations by occurrence. Exactly one linked pool must explicitly declare `active="true"`, and all
+others must explicitly declare `"false"`. Duplicate links, ambiguity, missing/invalid flags or an
+invalid root do not invoke the legacy first-pool fallback.
+
+The supported structural relations have the `Galaxy.Workflow.` prefix:
+`CollaborationContainsPools`, `ScopeContainsScopeObjects`, `SourceOfIncomingConnectors`,
+`TargetOfOutgoingConnectors` and `ActivityHasBoundaryEvent`. Recognized metadata is kept separate.
+Other relations touching a current control node, connector or scope produce
+`BPM_PATH_UNSUPPORTED_CONTROL_RELATION` and incomplete coverage. Unrelated mapping/type diagnostics
+alone do not create graph gaps.
+
+Coverage describes only this supported graph within retained parsed evidence:
+
+- `complete`: no detected structural gap in that graph; not a claim about the whole archive or runtime.
+- `incomplete`: a root, membership, node-kind, endpoint, scope or supported-relation gap prevents
+  process-wide negative conclusions. This includes missing/ambiguous/multiple/cyclic memberships,
+  unscoped known control objects, a Pool declared as a scope member, unknown scope-member kinds,
+  unsupported cross-scope sequence edges, no valid root StartEvent, or an embedded scope without a
+  uniquely scoped StartEvent. Unknown nodes remain rows, and membership cycles terminate.
+- `unavailable`: absent/unsupported source evidence or an unresolvable process source. Legacy node
+  rows retain their order with null locators, unknown connectivity and reasons; no source arcs are invented.
+
+Candidate source partitions without an interpreted Process produce
+`BPM_PATH_UNINTERPRETED_PARTITION`; an empty process list is not silent proof of coverage. Missing
+components/process entries have `BPM_PATH_COMPONENT_UNAVAILABLE`/`BPM_PATH_PROCESS_UNAVAILABLE`
+warnings. Graph gaps use `BPM_PATH_GRAPH_INCOMPLETE`; link diagnostics retain occurrence, raw
+endpoint IDs and candidates. Missing condition or loop metadata alone does not invalidate structural
+coverage: it has its own unknown state.
+
+Sequence arcs preserve each original SequenceConnector/ConditionalSequenceConnector occurrence,
+including joins contracted by the legacy process projection. Source and target relations both use
+`f=node,s=connector`. Every associated node endpoint declaration remains in `sources`/`targets`, with link
+Facts; an empty list means a missing association. An arc resolves only with one unique declaration
+on each side, correct endpoint kinds and a shared valid scope. Duplicate declarations remain
+ambiguous; null/blank IDs, missing endpoints and all candidates remain visible.
+
+Derived `boundary-attachment` arcs run owner → boundary, while the source
+`ActivityHasBoundaryEvent` relation has `f=boundary,s=owner`. Each source link produces an arc.
+Traversal requires one unique attachment to the exact BoundaryEvent kind, a uniquely scoped owner
+of kind automatedActivity, mappingActivity, notificationActivity or embeddedSubprocess, and matching
+scope. A boundary lacking membership may inherit that owner's scope with `boundary-scope-from-owner`;
+conflicting or multiple memberships, including declarations in other partitions, remain invalid.
+Duplicate links or multiple owners remain ambiguous. Derived `embedded-entry` arcs run host → child
+StartEvent through valid memberships. Invalid derived relations remain arcs/issues with reasons.
+Neither derivation proves fault selection or execution. No child-end → parent-successor arc is synthesized.
+
+Traversal starts only at StartEvents uniquely scoped to the validated active root and follows only
+resolved arcs with a finite visited set. Nested starts are not independent roots. Conditions never
+prune connectivity: a `constant-false` arc can still supply a structural witness. A root start has an
+empty witness and `root-start` reason; other connected rows have an actual Arc-ordinal path, choosing
+the first witness in stable arc order. A valid positive witness survives an unrelated graph gap.
+Without a witness, connectivity is `disconnected` only in a complete graph; otherwise it is `unknown`.
+Nodes in passive pools are unknown with `inactive-pool`, not asserted unreachable in their own process.
+Connected does not mean executed, condition-feasible, guaranteed or runtime-reachable.
+
+### BPM path conditions and loop declarations
+
+[BpmPathConditions](../po-xray-core/src/main/java/io/poxray/bpm/BpmPathConditions.java) preserves
+attribute presence and exact strings. Only exact `"true"`/`"false"` give those Flag interpretations;
+missing is `present=false,value=null,interpretation="unknown"`. `isDefault`, `terminate` and
+`sequential` are source declarations, not branch priority, executed termination or loop execution.
+
+`Condition.state` distinguishes `missing`, `unresolved`, `ambiguous`, `unknown`, `constant-true`,
+`constant-false` and `unconditional`. A SequenceConnector is unconditional only without a condition
+association; unexpected condition links make it unknown. Conditional connectors retain all
+`ConditionalSequenceConnectorContainsExpression` links (`f=expression,s=connector`). An absent association
+gives `missing`, unresolved endpoints give `unresolved`, and multiple associations/candidates give `ambiguous`.
+Derived arcs have unknown conditions with their structural-relation reason.
+
+Constant recognition requires one uniquely resolved `Galaxy.Rule.Expression`, one `ExpressionHasSteps`
+link to a unique `Galaxy.Rule.Literal`, and one `LiteralHasSimpleDataType` link (`f=type,s=literal`).
+The type ID must be recognized as `xsd:boolean` by the shipped BuiltinFunctionCatalog, with **no local
+source candidate**. This is a deliberate catalog-reference exception: the retained source endpoint
+may be missing while the catalog supplies the Boolean type; the type-link Fact remains evidence.
+Any local/conflicting type candidate stays unknown; arbitrary XSD declarations are not inferred.
+The literal value must be exact `true` or `false`. Missing/blank editor `stringExpression` permits
+tree-only recognition; nonblank text must strip to the same literal. Original editor text, including
+blank/padded text, is preserved, with the literal value used only when editor text is absent.
+A reference named false, untyped literal, complex/multiple steps or editor/tree disagreement cannot
+become a constant from rendered text alone. This is not an expression evaluator.
+
+Loop rows retain every `Galaxy.Workflow.MultiInstanceLoopCharacteristics` occurrence in the process
+partition and every such occurrence referenced by an attributable attachment, once per occurrence
+per process. The exact source spelling is `Galaxy.Workflow.EmbeddedScopeContainsLoopCharcateristics`,
+with `f=loop,s=host`. A row groups all attachment Facts and keeps every candidate host without choosing
+a winner. Related expression, current-item and completed-iterations association Facts remain evidence.
+An unattached declaration has empty hosts, unknown mode/completion and `unattached-loop`.
+
+A valid attachment has one unique loop, one unique EmbeddedScope host belonging to the process and
+exactly one attachment for both declaration and host. With that attachment, explicit sequential
+true/false declares sequential/parallel mode, otherwise unknown; exact `flowCondition="all"` declares
+completion `all`, otherwise unknown. The raw values remain visible independently of interpretation.
+Duplicate attachments, multiple declarations on a host, missing/ambiguous endpoints or unsupported
+kinds keep mode/completion unknown and emit `BPM_PATH_LOOP_UNRESOLVED`, `BPM_PATH_LOOP_AMBIGUOUS` or
+`BPM_PATH_LOOP_UNSUPPORTED` as applicable. Dangling/unsupported attachments can produce diagnostics
+even when no Loop row exists, so empty loops alone do not prove absence. A cross-process declaration
+can appear under each attributable ProcessKey with its original Locator.
+
+Markdown displays inputs/digests, process coverage/reasons, scopes, structural statuses, witnesses
+with Arc kinds, source/derived arcs, condition/default distinctions, raw flag presence, loop
+declarations and diagnostics. Cells are escaped. All source-evidence normalization/loss limits still
+apply. The report establishes no fault priority/interception, iteration count, join timing,
+successful completion, target name binding, data-producer availability or runtime feasibility.
+Embedded exits are omitted: child effects at parent successors remain unknown unless separately
+justified completion evidence is supplied to later analysis.
+
 ### Process
 
 One process = one `src/bpmn/*.bpmn` partition (Collaboration → Pool).

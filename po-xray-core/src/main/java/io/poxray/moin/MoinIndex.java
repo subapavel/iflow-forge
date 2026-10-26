@@ -62,7 +62,7 @@ public final class MoinIndex {
 
     public Optional<String> first(String association, String second) {
         List<String> l = firsts(association, second);
-        return l.isEmpty() ? Optional.empty() : Optional.of(l.getFirst());
+        return l.isEmpty() ? Optional.empty() : Optional.ofNullable(l.getFirst());
     }
 
     public Optional<String> second(String association, String first) {
