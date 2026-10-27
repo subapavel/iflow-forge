@@ -4,14 +4,18 @@
 > s rolemi a omezeními `docs/CODEX-WORKFLOW.md`. Realizace je omezena na výslovně
 > schválené části. Detailní task packety vznikají pouze pro ně.
 
-Aktuální pokyn vlastníka 2026-10-27: dokončit pouze P4, vytvořit ověřené lokální
+Aktuální navazující pokyn vlastníka 2026-10-27: „pokračuj dále dokud nenapíšu STOP“.
+Po přijetí P4 pokračovat schváleným plánem P5 → P6 → P7; ostatní výluky platí.
+P5–P7 zatím nejsou dokončené ani ověřené. Žádný push, deployment ani tenantové operace.
+
+Předchozí pokyn vlastníka 2026-10-27: dokončit pouze P4, vytvořit ověřené lokální
 commity a skončit. P5–P7, push, deployment a tenantové operace nejsou povoleny.
 P4 je rozděleno na MIG-30 (zdrojová identita/resource), MIG-31 (katalog)
 a MIG-32 (skill návaznosti). MIG-30 dokončeno: code review PASS, nezávislý
 reactor635/0/0/26 a12 nových testů. MIG-31 katalog dokončen: code review PASS,
 nezávislý reactor659/0/0/26 a24 nových testů. MIG-32 dokončilo skill návaznosti:
 nezávislé dokumentační review PASS; finální reactor659/0/0/26, Budget2/Cites1/Mirror13 PASS.
-**P4 je dokončeno (2026-10-27); po lokálním dokumentačním commitu STOP. P5–P7 nezahájeny.**
+**P4 dokončeno (2026-10-27), dokumentační commit `7a09a15`; předchozí STOP splněn.**
 Celkem36nových syntetických testů;26původních skips a native executable zůstávají neověřené.
 Lokální code commity: `8f834dc` (MIG-30), `1053910` (MIG-31). Žádný push ani tenantové operace.
 
@@ -225,6 +229,10 @@ verify a případné KB citace/budget/fact check.
 univerzální povinnost sdílených mappingů. Katalog zaznamenává volbu a důkaz.
 
 ## P5 — Srovnávací matice implementací
+
+MIG-33 core dokončeno: explicitní alignment, osm facetů, unmatched kroky a kontext;
+code reviewr2 PASS, nezávislý reactor677/0/0/26,18nových testů včetně2review regresí.
+MIG-34 CLI/MCP a skill návaznosti zatím pending; samotné core neuzavírá P5.
 
 **Přínos:** Rozdíly jsou vidět po krocích, ne jen čtením několika dlouhých reportů.
 

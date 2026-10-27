@@ -28,6 +28,18 @@ import org.junit.jupiter.api.Test;
 class NativeReflectionTest {
 
     @Test
+    void behaviorComparisonInputAndReportRecordsAreRegistered() {
+        RegisterForReflection reg = NativeReflection.class.getAnnotation(RegisterForReflection.class);
+        Set<String> registered = Stream.concat(Arrays.stream(reg.targets()).map(Class::getName),
+                Arrays.stream(reg.classNames())).collect(Collectors.toSet());
+        for (String name : java.util.List.of("BehaviorComparisonInput", "BehaviorComparisonInput$Implementation",
+                "BehaviorComparisonInput$StepRef", "BehaviorComparisonInput$Alignment", "BehaviorComparisonInput$Evidence",
+                "BehaviorComparisonReport", "BehaviorComparisonReport$Row", "BehaviorComparisonReport$Cell",
+                "BehaviorComparisonReport$Facet", "BehaviorComparisonReport$Context"))
+            org.junit.jupiter.api.Assertions.assertTrue(registered.contains("io.poxray.model." + name), name);
+    }
+
+    @Test
     void contractCatalogInputAndReportRecordsAreRegistered() {
         RegisterForReflection reg = NativeReflection.class.getAnnotation(RegisterForReflection.class);
         Set<String> registered = Stream.concat(Arrays.stream(reg.targets()).map(Class::getName),

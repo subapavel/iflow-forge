@@ -1057,3 +1057,67 @@ Source/tests/POM unchanged against1053910. Prior code reviews PASS; P3 remains s
 Limits:24absent private fixtures+2unsetkb.forbidden skips unverified; native executable/fullforbidden NOT_RUN. No import/deploy/tenant operations.
 Original CODEX-01/MIG-07/D-046/governance preserved unstaged; selective final staging only. No push or unrelated campaign.
 STOP after verified local documentation commit. No next implementation authorized in this session.
+
+## P5–P7 continuation · 2026-10-27 · uncommitted
+Owner: continue further until STOP; resumes approved plan after accepted P4. P5→P6→P7 authorized, no unrelated backlog campaign or remote/tenant operations.
+Observed main HEAD7a09a15658b663371a4f63a7764b0eb1a0942970; prior three P4 commits present, original governance/pilot changes remain.
+Initial diff saved target/mig-p5-initial-uncommitted.patch; shared ledger baselines target/mig-p5a-initial-*.md.
+Selected MIG-33 comparison core then MIG-34 offline entrypoints/skill. Role/model inherited, actual model unknown; one writer/max2subagents.
+Checks: NOT_RUN for P5; historical P4 root659/0/0/26 is not new comparison evidence.
+Next: bounded P5 packet based on read-only scout, separate red tests, independent review/verify and local commits.
+
+## MIG-33 preflight revision2 · 2026-10-27 · uncommitted
+Independentpreflight FAIL identified6packet ambiguities before tests: per-facet ancestry, ambiguous occurrences, JSONbinding boundary, ICO resolution gate, versions and mixed completeness.
+Revision2 fixes all6 without source/API scope expansion; ProcessWiring remains embedded candidate evidence, unsupported facets stay contextual.
+No tests/implementation yet. Recheck required before author dispatch.
+Recheck revision2 PASS; exact publicAPI/association rules accepted for tests. Separate test-author now authorized; source implementation remains NOT_RUN.
+
+## MIG-33 test approval · 2026-10-27 · uncommitted
+Architect read all5files and final fault-scope/same-name/renamed-only deltas;16tests approved (15core+1native), hashes in packet/targetmanifest.
+Author EXECUTED_FAIL corecompile-red exit1 missing comparison types, target/mig-p5a-red.log tailread; no core runtime counts.
+Author EXECUTED_FAIL native directprobe missing BehaviorComparisonInput registration, target/mig-p5a-native-probe.log assertionread.
+Fixture prerequisite VERIFIED_PASS3variants x5steps plus renamed-only same arcs/loops/scopes, exit0; target/mig-p5a-fixture-probe.log read.
+Next: independentred then boundedimplementation; no source changes yet. P3/P4 preserved.
+Checks: independent EXECUTED_FAIL corecompile-red exit1 and fresh nativeprobe assertion-red exit1; target/mig-p5a-independent-red-summary.log read.5frozenhashes retained, source unchanged7a09a15.
+Same bounded semantics authorized for implementation; MIG-34 offline delivery/docs draft prepared. No runtime comparison verification yet.
+
+## MIG-33 implementation freeze · 2026-10-27 · uncommitted
+context compacted; HANDOFF, git status and log3 reread before edits, HEAD7a09a15 preserved.
+Author focused EXECUTED_FAIL15/3/0/0: call reason propagation and empty-list/null JSON roundtrip; no frozen test changes.
+Comparison-local serializer approved within Input model; existing P3/P4 models and shared Json semantics unchanged.
+Author final focused VERIFIED_PASS core15/0/0/0 plus native12/0/0/0, exit0 BUILD SUCCESS; target/mig-p5a-implement-final-focused.log tailread.
+All5 approved test hashes retained;5source files frozen, target/mig-p5a-implement-source-hashes.log.
+Independent reactor/review pending; native executable NOT_RUN. MIG-34 preflight PASS; no delivery code yet.
+
+## MIG-33 verification authorization · 2026-10-27 · uncommitted
+ENVIRONMENT_BLOCKED independent reactor before execution: automatic approval saw original P4-only scope, rejected later continuation context.
+Observed target/mig-p5a-independent-verify-summary.log: Maven NOT_RUN, no exit/counts;5test+5source hashes match; no workaround attempted.
+Owner explicitly reconfirmed P5–P7, local verification and local commits after the refusal; push/deploy/tenant operations remain excluded.
+Verifier resuming through normal approval with this new direct authorization. Code review still in progress; no acceptance claim.
+
+## MIG-33 review r1 · 2026-10-27 · uncommitted
+Independent code review FAIL: malformed supplemental evidence wrongly invalidates otherwise qualified alignment;
+source-only catalogs without step claims wrongly receive contract ancestry mismatch diagnostics.
+Both corrections preserve existing packet meanings; additive regression acceptance recorded in MIG-33 packet.
+Reviewer confirms existing16tests meaningful; new edge cases need separate observed-red tests before fixes.
+Initial independent reactor running under newly approved owner authorization; its result will not accept unfixed review findings.
+Initial independent reactor VERIFIED_PASS675/0/0/26 exit0,02:06; target/mig-p5a-independent-reauthorized-summary.log and reactor tail read;10hashes retained.
+Architect read both added regression methods: candidate/confirmed mixed evidence and both source-only/unbound catalog cases approved.
+Author regression EXECUTED_FAIL2/2/0/0 exit1, target/mig-p5a-r1-regression-red.log tail read; exact review defects observed.
+Frozen regression hashes target/mig-p5a-r1-regression-hashes.txt; remaining3testfiles unchanged. Independent red before fixes.
+Independent regression EXECUTED_FAIL2/2/0/0 exit1; target/mig-p5a-r1-independent-red-summary.log/tail read,5test+5source hashes unchanged. Bounded fixes authorized.
+
+## MIG-33 correction freeze · 2026-10-27 · uncommitted
+Only comparison alignment/facet helpers changed for both review findings;5approved regression hashes retained.
+Author focused VERIFIED_PASS core17/0/0/0 plus native12/0/0/0 exit0 BUILD SUCCESS; target/mig-p5a-r1-implement-focused.log tail read.
+Source frozen in target/mig-p5a-r1-implement-source-hashes.log; independent final reactor and reviewr2 pending.
+
+## MIG-33 acceptance · 2026-10-27 · ready to commit
+Delivered: explicit evidenced alignment, eight source facets, unmatched occurrences, implementation context, offline JSON/Markdown and native registration.
+Independent code reviewr2 PASS; bothr1 defects fixed after separate approved independentlyred regressions; no source semantic expansion.
+Final independent VERIFIED_PASS677/0/0/26 exit0 BUILD SUCCESS,01:51; target/mig-p5a-final-independent-summary.log and reactor tail read.
+Modules:core534/0/0/22,native12/0/0/0,CLI47/0/0/1,MCP12/0/0/1,knowledge72/0/0/2;18newtests pass.
+All5approved test+5production hashes stable; scope/whitespace/privacy pass. P3/P4/shared Json semantics preserved.
+Limits:24missing-private+2unsetkb.forbidden skips unverified; native executable/fullforbidden NOT_RUN; no delivery/ack/equivalence proof.
+Original CODEX-01/MIG-07/D-046/governance preserved; exact paths and selective ledgers only. No push/deploy/tenant operation.
+Next MIG-34 offline entrypoints and workflow reference; P5 still incomplete. Owner explicitly permits P5–P7 local work until STOP.

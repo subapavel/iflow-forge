@@ -12,6 +12,8 @@ import io.poxray.model.BpmComponent;
 import io.poxray.model.BpmDataReport;
 import io.poxray.model.BpmFaultReport;
 import io.poxray.model.BehaviorReport;
+import io.poxray.model.BehaviorComparisonInput;
+import io.poxray.model.BehaviorComparisonReport;
 import io.poxray.model.BehaviorSnapshots;
 import io.poxray.model.BpmInventoryReport;
 import io.poxray.model.BpmPathReport;
@@ -49,6 +51,11 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
  */
 @RegisterForReflection(
         targets = {
+            BehaviorComparisonInput.class, BehaviorComparisonInput.Implementation.class,
+            BehaviorComparisonInput.SnapshotSerializer.class,
+            BehaviorComparisonInput.StepRef.class, BehaviorComparisonInput.Alignment.class, BehaviorComparisonInput.Evidence.class,
+            BehaviorComparisonReport.class, BehaviorComparisonReport.Row.class, BehaviorComparisonReport.Cell.class,
+            BehaviorComparisonReport.Facet.class, BehaviorComparisonReport.Context.class,
             ContractCatalogInput.class, ContractCatalogInput.Evidence.class, ContractCatalogInput.StepRef.class,
             ContractCatalogInput.ArtifactClaim.class, ContractCatalogInput.PortClaim.class,
             ContractCatalogInput.ValueClaim.class, ContractCatalogInput.ContractClaim.class,
