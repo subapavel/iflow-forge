@@ -16,6 +16,8 @@ import io.poxray.model.BehaviorSnapshots;
 import io.poxray.model.BpmInventoryReport;
 import io.poxray.model.BpmPathReport;
 import io.poxray.model.BpmSourceEvidence;
+import io.poxray.model.ContractCatalogInput;
+import io.poxray.model.ContractCatalogReport;
 import io.poxray.model.BuiltinFunction;
 import io.poxray.model.DataType;
 import io.poxray.model.DcRef;
@@ -47,6 +49,11 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
  */
 @RegisterForReflection(
         targets = {
+            ContractCatalogInput.class, ContractCatalogInput.Evidence.class, ContractCatalogInput.StepRef.class,
+            ContractCatalogInput.ArtifactClaim.class, ContractCatalogInput.PortClaim.class,
+            ContractCatalogInput.ValueClaim.class, ContractCatalogInput.ContractClaim.class,
+            ContractCatalogInput.ResourceBinding.class, ContractCatalogReport.class,
+            ContractCatalogReport.Artifact.class, ContractCatalogReport.Contract.class, ContractCatalogReport.Dependency.class,
             ScaInventory.class, ScaInventory.Generator.class, ScaInventory.ScaSource.class,
             ScaInventory.SoftwareComponent.class,
             DevelopmentComponent.class, DevelopmentComponent.Archives.class, DcRef.class,

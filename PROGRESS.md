@@ -992,3 +992,44 @@ All12 new tests pass; core494/0/0/22,native10/0/0/0,CLI47/0/0/1,MCP12/0/0/1,know
 Independent code review PASS; approved4/4 hashes retained; scope/whitespace/privacy checks pass.
 Limits:24 absent private-input and2 unsetkb.forbidden skips; native executable/full forbidden-values NOT_RUN.
 P4a accepted; next MIG-31 catalog, then MIG-32 docs and stop. No P5–P7, tenant, deployment or push.
+
+## MIG-31 preparation · 2026-10-27 · uncommitted
+MIG-30 committed8f834dc after independentprecommit PASS13paths/8verifiedblobs/4frozenhashes; initial governance/pilot remain unstaged.
+MIG-31 revision2 design preflight PASS after explicit identity, reference, claim-retention and URI candidate rules.
+Source artifact identity and XML declaration identity remain distinct; supplied choices are attributed claims, not approval or runtime proof.
+Test-author authorized within packet; implementation NOT_RUN until approved independent red. P4 only.
+
+## MIG-31 test approval · 2026-10-27 · uncommitted
+Architect read all5 files and final fixture/WSDL/identity deltas;20 tests approved (19core+1native), hashes target/mig-p4b-test-hashes.log.
+Author EXECUTED_FAIL compile-red exit1 for introduced catalog types; no runtime tests; target/mig-p4b-red.log tail read.
+Prerequisite harness VERIFIED_PASS exit0: P3 one step/object,four declarations,two mappings; mapping fixture one library,two mappings with local functions/library refs.
+Evidence: target/mig-p4b-fixture-prerequisites.log read. Earlier JShell registry denial ENVIRONMENT_BLOCKED; direct Java alternative passed.
+Zero-based original indices confirmed; source fixtures avoid duplicate reader expansion, not catalog deduplication. No P3 semantics changes.
+Next: independent red, then bounded implementation. Source untouched; no P4 completion claim.
+Checks: independent EXECUTED_FAIL compile-red exit1 beforeSurefire; target/mig-p4b-independent-red.log/summary read.5approved hashes match, production unchanged against8f834dc.
+Bounded MIG-31 implementation authorized. MIG-32 documentation packet prepared; no author edits yet.
+
+## MIG-31 ID allocation clarification · 2026-10-27 · uncommitted
+Early independent review found raw IDs can collide with generated duplicate/blank IDs. Packet clarified reserved-base/occurrence allocation; reviewer agreed.
+Implementer paused and released writer before claims/ID helper implementation; existing partial source retained, no Maven result yet.
+Separate test-author regression covers all3ID domains and original reference resolution; original5files frozen. No scope/P3 semantic change.
+Architect read collision test entirely;4 tests approved, hash1FAB95C2DE020CB8D99023F50C5407931277340B0D6A6E3CEAEEDD7210478BF7. Original5hashes unchanged.
+Author EXECUTED_FAIL compile-red exit1 on unfinished introduced helpers, target/mig-p4b-id-red.log tail read; no runtime assertion claim.
+Native DT declaration ownership clarified as direct DT, not synthesized extra resource artifacts; independent red then resume same implementer.
+Checks: independent EXECUTED_FAIL incrementalcompile-red exit1, target/mig-p4b-id-independent-red.log/summary read;6frozenhashes match. No runtime assertion-red claimed.
+Same implementer resumed with24approved tests and collision/direct-DT clarification.
+
+## MIG-31 implementation handback in progress · 2026-10-27 · uncommitted
+Source frozen/writer released:6new catalog classes plus native registration. Root verify running; authorfocused VERIFIED_PASS23/0/0/0, logtailread.
+All6 approved test hashes retained; sourcehash manifest target/mig-p4b-implement-hashes.log. Independent code review dispatched.
+No parser/P3/JSON/POM changes; source vs supplied claims and structural timing retained. Fullroot/native acceptance pending.
+Author root VERIFIED_PASS659/0/0/26 exit0,01:50; target/mig-p4b-implement-summary.log/root tail read.24new tests pass including native registration.
+Independent root and code review now running; acceptance pending. Baseline26skips unchanged; native executable NOT_RUN.
+
+## MIG-31 acceptance · 2026-10-27 · ready to commit
+Independent code review PASS, all24 tests sensitive; independent root VERIFIED_PASS659/0/0/26 exit0,01:37; summary/root tail read.
+Evidence target/mig-p4b-independent-verify.log; core517/0/0/22,native11/0/0/0,CLI47/0/0/1,MCP12/0/0/1,knowledge72/0/0/2.
+All24new tests pass;6frozen hashes/7production snapshots match; no parser/P3/POM changes, whitespace/privacy/scope pass.
+Catalog retains source identities/XML declarations, attributed artifact choices/owners/ports/default/API producers, unresolved imports and structural P3 before/after.
+Public input/report helpers draft at hand-over; no CLI/MCP/import/deploy/runtime proof.24private+2unsetkb.forbidden skips and native executable remain unverified.
+Next: selective local MIG-31 commit, then MIG-32 skill docs and final P4 closure. No P5–P7 or push.

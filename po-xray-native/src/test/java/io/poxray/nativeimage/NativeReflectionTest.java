@@ -28,6 +28,18 @@ import org.junit.jupiter.api.Test;
 class NativeReflectionTest {
 
     @Test
+    void contractCatalogInputAndReportRecordsAreRegistered() {
+        RegisterForReflection reg = NativeReflection.class.getAnnotation(RegisterForReflection.class);
+        Set<String> registered = Stream.concat(Arrays.stream(reg.targets()).map(Class::getName),
+                Arrays.stream(reg.classNames())).collect(Collectors.toSet());
+        for (String name : java.util.List.of("ContractCatalogInput", "ContractCatalogInput$Evidence", "ContractCatalogInput$StepRef",
+                "ContractCatalogInput$ArtifactClaim", "ContractCatalogInput$PortClaim", "ContractCatalogInput$ValueClaim",
+                "ContractCatalogInput$ContractClaim", "ContractCatalogInput$ResourceBinding", "ContractCatalogReport",
+                "ContractCatalogReport$Artifact", "ContractCatalogReport$Contract", "ContractCatalogReport$Dependency"))
+            org.junit.jupiter.api.Assertions.assertTrue(registered.contains("io.poxray.model." + name), name);
+    }
+
+    @Test
     void allModelClassesAreRegistered() throws IOException, URISyntaxException {
         RegisterForReflection reg = NativeReflection.class.getAnnotation(RegisterForReflection.class);
         Set<String> registered = Arrays.stream(reg.targets()).map(Class::getName).collect(Collectors.toSet());

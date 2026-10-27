@@ -8,7 +8,8 @@ Aktuální pokyn vlastníka 2026-10-27: dokončit pouze P4, vytvořit ověřené
 commity a skončit. P5–P7, push, deployment a tenantové operace nejsou povoleny.
 P4 je rozděleno na MIG-30 (zdrojová identita/resource), MIG-31 (katalog)
 a MIG-32 (skill návaznosti). MIG-30 dokončeno: code review PASS, nezávislý
-reactor635/0/0/26 a12 nových testů. Katalog a skill návaznosti zatím nejsou dokončené.
+reactor635/0/0/26 a12 nových testů. MIG-31 katalog dokončen: code review PASS,
+nezávislý reactor659/0/0/26 a24 nových testů. Skill návaznosti MIG-32 ještě nejsou dokončené.
 
 **Historický stav:** Návrh schválen vlastníkem 2026-10-26; po dokončení P1 vlastník povolil
 průběžnou realizaci zbývajících P2–P7, dokud neřekne stop (D-048).
