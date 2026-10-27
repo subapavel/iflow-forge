@@ -305,7 +305,9 @@ obnova stavu, nová živá PoC bez vlastního oprávnění, hromadný přepis KB
 
 **Stav 2026-10-27:** MIG-39 (P7b) dokončeno — override přejmenován na `docs/LOCAL-WORKFLOW.md`,
 agentově neutrální (D-057), review r2 PASS. MIG-38 (P7a, soukromý audit M-1 a replay) má
-packet `2026-10-27-mig-38-p7a-packet.md` po preflightu r3b PASS; replay probíhá. P7 není dokončeno.
+packet `2026-10-27-mig-38-p7a-packet.md`; replay dokončen 2026-10-27: případy 0, 1, 2, 6a, 7, 8 PASS,
+3, 4, 5, 6b NOT_RUN (v M-1 chybí SCA/inventory, katalog nemá CLI); review R PASS; nálezy F-15, F-16.
+**P7 dokončeno 2026-10-27** s uvedenými omezeními (žádná provozní data, žádný baseline režie).
 
 **Přínos:** Ověřit změny spolu na skutečném dossieru, zachovat důkazy a získat
 pozorování o režii místo nepodložených odhadů.

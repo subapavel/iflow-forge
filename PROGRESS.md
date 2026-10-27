@@ -1286,3 +1286,15 @@ throughout; entry notes in AGENTS.md/CLAUDE.md/docs/WORKFLOW.md; path references
 Architect: D-057 (scope widens to local, owner-led sessions of any agent; no rule text added/removed/changed), BACKLOG, plan status.
 Docs review r1 FAIL1 (path swap falsified three dated observations → old name kept with pointer), r2 PASS. Links resolve; ≤100 cols.
 PROGRESS/DECISIONS/CODEX-01 row keep the old name as history. Maven NOT_RUN: governance docs only, no skill/KB page changed. No push.
+
+## MIG-38 acceptance · 2026-10-27 · committed locally
+Task: P7a — private audit view of pilot M-1 under local/<customer>/ (gitignored) and replay of the plan §P7 cases. Deviation: F-15, F-16.
+Packet preflight r1 FAIL13, r2 FAIL5 → architect revision3; r3 FAIL5 fixed in place; r3b PASS. Test first: none — pilot, no code changed.
+Writer W imported M-1 into a v3 dossier: 169 records, 108 mapped, 61 unresolved; approvals 18 explicit, 37 unresolved, 4 wordings not imported.
+Reviewer R (≠ W, ≠ evidence reviewer E): import r1 FAIL4 (superseded approvals shown current, partial deferral) → r2 PASS; replay table r1 FAIL2 → r2 PASS.
+Replay (runner jar after 66769ae, verifier logs): case 0 valid, 60/60 snapshot digests; 1 deferred question blocks only M-b (QUESTION_OPEN);
+2 superseded + partially-approved, SCOPE_NOT_APPROVED only; 6a evidence use supported, cache/idempotence question stays QUESTION_OPEN, no deployed version;
+7 originals unchanged (462 hashes + repo status identical); 8 architect question append, history verified. All PASS.
+NOT_RUN: 3, 4, 5, 6b — no SCA/inventory in M-1, no catalog CLI; covering synthetic tests are not pilot evidence. Cases 1, 2, 6a use synthetic dossiers.
+Limits: no runtime/tenant data, no request executed, no overhead baseline (execution ~40 min, owner questions 0; no speedup claim).
+F-15: v3 cannot hold partial supersession/deferral and question sub-states; F-16: reviewer agent cannot hash. Maven NOT_RUN: no code. P7 complete. No push.
