@@ -8,7 +8,7 @@ Copy `templates/dossier.json` (v1 history) or explicitly opt into `templates/dos
 
 The coordinator owns decisions, ledger updates, the next question and next action. Specialist authors still produce technical content and formal migration outputs; source, tests and knowledge pages retain their assigned owners. Exactly one writer operates at a time. [page: AGENTS.md#Roles]
 
-For an imported legacy decision, record its evidence locator and known date, propose its exact scope, then append `approval-unresolved` if explicit approval cannot be established. Use `unknown` for an unknown date. Never infer approval from an old analysis, recommendation or accepted risk. The owner still decides. [page: skills/sap-po-migration/references/questions.md#Proposed answers and evidence]
+Import legacy decisions as `references/legacy-import.md` describes. [page: skills/sap-po-migration/references/legacy-import.md#Conservative pass]
 
 ## Input v1
 

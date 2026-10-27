@@ -18,6 +18,7 @@ The migration front end: from a customer's PO artifacts to an approved migration
 | to inventory contracts, XML imports, mapping placement and data producers | `references/contracts.md`, `templates/contracts.md` |
 | to compare implementation behavior with explicit step alignments | `references/comparison.md` (private analysis/plan evidence) |
 | to track exact approval revisions and project current decisions | optional `references/dossier.md`, `templates/dossier.json` |
+| to import an existing pilot into a dossier | `references/legacy-import.md` |
 | to continue independent work while questions wait, or check a milestone | opt-in `references/readiness.md`, `templates/dossier-v2.json` |
 | to package, review and cite local evidence, or plan a PoC | `references/evidence.md`, `templates/experiment.md` |
 | to write the scenario specification per pipeline scenario | phase 5, `templates/scenario.md` |

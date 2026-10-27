@@ -1298,3 +1298,14 @@ Replay (runner jar after 66769ae, verifier logs): case 0 valid, 60/60 snapshot d
 NOT_RUN: 3, 4, 5, 6b — no SCA/inventory in M-1, no catalog CLI; covering synthetic tests are not pilot evidence. Cases 1, 2, 6a use synthetic dossiers.
 Limits: no runtime/tenant data, no request executed, no overhead baseline (execution ~40 min, owner questions 0; no speedup claim).
 F-15: v3 cannot hold partial supersession/deferral and question sub-states; F-16: reviewer agent cannot hash. Maven NOT_RUN: no code. P7 complete. No push.
+
+## MIG-40 acceptance · 2026-10-27 · committed locally
+Task: F-15 follow-up — legacy import rules in the migration skill; owner decision D-058 (dossier v3 unchanged, no new event/state/field).
+Context compacted earlier in this session; state re-read from HANDOFF, git status and git log -3 before the packet.
+Packet preflight r1 FAIL8, r2 FAIL4 → architect revision3; r3 PASS, five notes absorbed. Test first: none — docs only (skill text).
+Writer (general-purpose, single): new references/legacy-import.md (795 words; conservative pass, narrow excerpts, split questions,
+owner confirmation, outside the dossier); dossier.md line 11 → pointer with every clause moved (1169 words); SKILL.md routing row (1370).
+VERIFIED_PASS knowledge 72/0/0/2 (target/mig-40/knowledge.log, exit 0); VERIFIED_PASS reactor 729/0/0/26 (target/mig-40/verify.log, exit 0);
+verify.log ends with an "UncheckedIOException: Cannot write …provenance.json" line at exit 0 — origin not traced. Status vs baseline: allowed paths only.
+Review r1 PASS (target/mig-40/review-r1.md). Note for MIG-41: two explicit approvals of a decision and its successor conflict until supersede.
+Limits: the 26 skips are not verified coverage; native executable not verified; rules not yet exercised on a pilot (MIG-41). No push.
