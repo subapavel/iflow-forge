@@ -1149,6 +1149,191 @@ Facts verified on xipod (PO 7.50 SP28):
   not find ICO receivers (they are in the ICO content) → components and ICOs are listed and filtered locally.
 - The JDK HTTP client must use HTTP/1.1: the h2c upgrade request is answered with 403 by SAP AS Java.
 
+### Contract source identities and XML resources
+
+MIG-30 adds fields to `IntegrationInventory` without changing schema version `0.1`.
+`ObjRef(type, name, namespace, swc, swcGuid, oid, program, key)` appends `List<String> key`,
+the full ordered ESR reference key. Existing six/seven-argument constructors remain; absent/null keys
+normalize to immutable empty lists. Record equality now includes the key. ESR identity and XML QName
+are separate: an ESR namespace or inner external-message key does not prove an XML namespace/name.
+
+`ExternalDefinition(id, messages, description, content, messageReferences, resources)` retains the
+existing message names/order and adds serialized source content, full inner `ObjRef` references and
+`ContractResource` entries. Its old three-argument constructor supplies null content and empty new
+lists; absent/null new lists normalize empty. Direct definition OID identity and operation/mapping
+endpoint keys are retained. These nested records have the following component order:
+
+| Record | Components |
+|---|---|
+| `XmlName` | `String namespace, String localName` |
+| `ContractDeclaration` | `String kind, XmlName name, String locator` |
+| `ContractDependency` | `String kind, String namespace, String location, String locator` |
+| `ContractResource` | `String sourcePath, String locator, String kind, String content, List<ContractDeclaration> declarations, List<ContractDependency> dependencies` |
+
+Resource lists are immutable snapshots, null normalized empty. The public Java helper
+[`ContractResources.read(String sourcePath, String xml)`](../po-xray-core/src/main/java/io/poxray/integration/ContractResources.java)
+returns `List<ContractResource>`. Null/blank XML yields an empty list; malformed XML throws
+`IllegalArgumentException` with cause. DTD/external entity access is disabled. No filesystem/network
+resource retrieval or schema compilation occurs.
+
+The reader walks actual namespace-qualified XML elements in document order: XSD `schema` in
+`http://www.w3.org/2001/XMLSchema` and WSDL 1.1 `definitions` in `http://schemas.xmlsoap.org/wsdl/`.
+Kinds are `xsd`/`wsdl`; nested schemas are separate resources. Locators are indexed element paths;
+serialized subtrees preserve in-scope namespaces, including prefixes used only in QName values.
+XSD declarations are immediate named `element`, `attribute`, `complexType`, `simpleType`, `group`,
+`attributeGroup`; WSDL declarations are immediate named `message`, `portType`, `binding`, `service`.
+QNames use the declaring resource's `targetNamespace`, or empty namespace when absent. Foreign namespace
+lookalikes and local nested element declarations are not top-level declarations.
+
+Immediate XSD `import`/`include`/`redefine` retain namespace/schemaLocation; WSDL `import` retains
+namespace/location. Missing attributes remain null; duplicates and order remain. No import is resolved
+by this parser. `sourcePath` is caller-supplied provenance. IntegrationReader uses null for retained
+ExternalDefinition content: it does not invent archive filenames, decode arbitrary resource wrappers
+or bind external messages to QNames. External XSDs never synthesize native MT/DT records; native
+MessageType-to-DataType behavior remains unchanged.
+
+### Contract catalog API
+
+MIG-31 adds Java helpers only, with no contract CLI or MCP command:
+
+- `ContractCatalog.of(IntegrationInventory inventory, BpmDataReport data, ContractCatalogInput supplied)`
+  returns `ContractCatalogReport`.
+- `ContractCatalog.markdown(ContractCatalogReport report)` returns `String`.
+
+All three `of` inputs may be null; missing coverage becomes an issue, not a completeness assertion.
+There is no arbitrary document parser. Callers provide retained inventory/P3 records and explicit claims.
+The public model types are in `io.poxray.model`; the helper is in `io.poxray.migration`.
+[Implementation](../po-xray-core/src/main/java/io/poxray/migration/ContractCatalog.java).
+
+`ContractCatalogInput(List<ArtifactClaim> artifacts, List<ContractClaim> contracts,
+List<ResourceBinding> resources)` contains these nested records, in component order:
+
+| Record | Components |
+|---|---|
+| `Evidence` | `String kind, String source, String locator, String status` |
+| `StepRef` | `BpmPathReport.ProcessKey process, int step` |
+| `ArtifactClaim` | `String id, String kind, String owner, List<Evidence> evidence` |
+| `PortClaim` | `String role, String participant, String operation, StepRef step, List<Evidence> evidence` |
+| `ValueClaim` | `String path, String role, StepRef producer, List<StepRef> consumers, String defaultValue, List<Evidence> evidence` |
+| `ContractClaim` | `String id, String artifact, String disposition, IntegrationInventory.ObjRef esr, IntegrationInventory.XmlName xmlName, List<PortClaim> ports, List<ValueClaim> values, List<Evidence> evidence` |
+| `ResourceBinding` | `String id, String ownerArtifact, IntegrationInventory.ContractResource resource, List<Evidence> evidence` |
+
+`ContractCatalogReport(int formatVersion, String analysisVersion, List<Artifact> artifacts,
+List<Contract> contracts, List<Dependency> dependencies, BpmDataReport data, List<Issue> issues)`
+uses format `1`, analysis version `contract-catalog-v1`. Its nested records are:
+
+| Record | Components |
+|---|---|
+| `Artifact` | `String id, String kind, IntegrationInventory.ObjRef esr, String owner, String basis, List<ContractCatalogInput.Evidence> evidence` |
+| `Contract` | `String id, String artifact, String disposition, IntegrationInventory.ObjRef esr, IntegrationInventory.XmlName xmlName, List<ContractCatalogInput.PortClaim> ports, List<ContractCatalogInput.ValueClaim> values, List<ContractCatalogInput.Evidence> evidence` |
+| `Dependency` | `String artifact, String kind, IntegrationInventory.ObjRef esr, String location, String namespace, List<String> candidates, String state, List<ContractCatalogInput.Evidence> evidence` |
+
+Input/report lists normalize null to empty and snapshot defensively. The retained P3 report is already
+deeply immutable. New catalog records serialize empty lists and null unknown scalars explicitly;
+embedded inventory records retain their own serialization rules. Input ordering is deterministic and
+inputs are not mutated. Existing inventory/P3 issues are retained; catalog warnings use code
+`contract-catalog-unknown`, indexed locators and source `contract-catalog`.
+
+### Contract catalog IDs
+
+Source artifact IDs use `source:<kind>:<original-category-index>` with zero-based indices; names do not
+deduplicate objects. Source kinds are `native-message-type`, `native-data-type`, `external-definition`,
+`esr-message-mapping`, `esr-function-library`. Contained XML resources append `:resource:<index>` and
+have kind `xml-resource`; contained functions append `:function:<index>` and have kind `mapping-function`.
+Their owners are enclosing artifact IDs; other source owners remain null. Source artifacts have
+`basis=source` and evidence `kind=export, source=inventory, status=observed` with indexed inventory
+locators. Here observed means retained input evidence, not observed runtime behavior.
+
+Native MT contracts append `:contract`; DT/resource declarations append `:declaration:<index>`.
+Native DT declarations belong directly to the DT, flattened in resource/declaration order, without
+inventing an extra resource artifact. External messages append `:message:<index>`; legacy name-only
+contracts append `:legacy-message:<index>`. Source dispositions remain `unknown`. Native MT QName
+uses nonblank `xmlNamespace` and the declared name; absent namespace leaves it unknown. DT/resource
+QNames require explicit declarations. External-message QNames remain unknown, including when a resource
+has a unique root. Declaration contracts and external-message contracts are separate.
+
+Supplied artifact/contract/resource domains use `claim:`, `claim-contract:` and `supplied-resource:`.
+Unique nonblank raw IDs follow the prefix unchanged. Duplicate IDs append the original list index to
+every occurrence; blank IDs use that index alone. All prescribed bases are reserved before allocation;
+colliding bases append `:occurrence:<original-index>` repeatedly until distinct from all reserved and
+assigned IDs. Diagnostics retain original IDs. References use exact raw supplied artifact IDs or full
+source artifact IDs, never parsed output suffixes; raw duplicates stay ambiguous. IDs are occurrence
+identifiers for a particular ordered input: pin the catalog revision and source digest when consuming them.
+
+### Contract catalog matching and dependencies
+
+Matching first seeks nonblank exact OID within type; when none match, it tries the full ordered key
+and compatible SWC context. Without keys, exact case-sensitive type/name/namespace and available SWC
+context produce candidates. Matching nonblank GUIDs take precedence over SWC captions; otherwise known
+captions must not conflict. Full-key identity is exact only with matching nonblank GUIDs or captions.
+The results are `resolved` for one exact identity, `candidate` for one incomplete identity, `ambiguous`
+for several, `missing` for none, `unknown` for a null reference. No first match is selected.
+
+Dependencies retain artifact IDs, not declaration IDs: MT-to-DT, DT uses, message-mapping endpoints
+and function-library references. Multiple DT declarations do not multiply artifact identity.
+Service request/response/fault uses retain participant (service-interface reference), operation and null
+step. Mapping endpoints use `mapping-input`/`mapping-output`. External-message matching uses the inner
+reference and attaches ports to message contract candidates; dependencies target the containing
+definition. Unresolved or ambiguous uses remain diagnostic. A DT artifact can resolve without a specific
+declaration binding; the helper does not attach its port to every declaration. Absent response references
+do not invent missing response ports.
+
+Each resource dependency retains original kind, namespace/location, evidence and candidates. URI matching
+lexically resolves location against sourcePath and normalizes paths; it does not fetch anything, decode
+percent escapes, case-fold or reinterpret OS paths. Compare with normalized provided resource paths.
+One matching path is only `candidate`; several are `ambiguous`; none are `missing`. Missing sourcePath
+or location, including namespace-only imports, stays `unknown`; malformed/opaque URI values are diagnosed.
+Nested schemas sharing a path deliberately remain multiple candidates. Namespace agreement alone cannot
+resolve an import. Native DT dependencies attach directly to their DT, with declaration/resource locators.
+
+Independent dependency edges expose transitive missing leaves and finite cycles. Even all-candidate
+edges prove neither schema compatibility nor import completeness; there is no import-complete flag.
+
+### Contract catalog supplied claims
+
+Supplied artifacts have `basis=supplied`; accepted kinds are `shared-message-mapping`, `iflow-mapping`,
+`script-collection`, `local-script`, `mapping-function`, `external-definition`, `xml-resource`,
+`native-message-type`, `native-data-type`. An artifact-declaration or design-decision evidence item
+with nonblank source, locator and status supports classification. Unsupported kinds or absent support
+become `unknown`, retaining original claim and evidence in diagnostics. Transport-only evidence,
+including ProcessDirect, cannot classify shared mapping placement. The helper validates evidence shape,
+not source authenticity, truth or approval.
+
+`ArtifactClaim.owner` is descriptive text, retained verbatim. `ResourceBinding.ownerArtifact` and
+`ContractClaim.artifact` reference artifacts; unresolved/ambiguous owners become null with diagnostics
+preserving original text. Resource/contract occurrences remain in the report.
+
+Disposition accepts `preserved-external`, `proposed-internal`, `unknown`; non-unknown dispositions need
+supporting evidence. Supplied XML names need that evidence, nonblank localName and non-null namespace
+(empty namespace is allowed). Invalid claims become unknown/null with indexed original-claim diagnostics.
+Supplied contracts never overwrite source contracts or external-message QName unknowns. An existing
+catalog/proposal may be attributed as supplied evidence but cannot confer approval.
+
+Port roles are `request`, `response`, `fault`, `mapping-input`, `mapping-output`, `producer`, `consumer`.
+Value roles are `input`, `default`, `api-response`. Unsupported roles and missing evidence are diagnosed
+without dropping the original ports/values. Port/value evidence requires nonblank kind/source/locator/status.
+StepRefs validate exact ProcessKey and step ordinal against the retained data, without name fallback;
+invalid references remain visible. Null port steps can represent non-step-specific interface uses.
+
+### Contract catalog data and limits
+
+Value claims retain explicit producers, consumers and exact default text. A missing producer for
+`default` or `api-response` is diagnosed. An API response never becomes a required input merely by
+appearing in a schema or catalog. Claimed defaults and producers remain attributed claims, not execution
+proof or automatic requirement propagation.
+
+`data` preserves the full P3 report unchanged: declarations, initial/structural mappings, read domains,
+before/after origin candidates, scope and unknown reasons. Before/after describes structural analysis,
+not actual runtime availability, ordering within a step or guaranteed production on every path.
+The catalog does not repair P3 unknowns or infer external calls/side effects.
+
+Markdown renders artifacts, contracts, dependencies, supplied attribution and diagnostics, followed by
+per-process/step before/after candidates, declaration/mapping identities and reasons. Source/supplied
+cells escape pipes and newlines; unsupported fields remain visible. Synthetic tests cover identity,
+claim validation, candidate imports, collision-safe IDs, data preservation and JSON/Markdown behavior;
+they establish no customer deployment or importability. There is no schema compilation, import execution,
+runtime proof, generator or approval engine. Native reflection registration is not native-executable proof.
+
 ## Migration helpers
 
 Read-only migration helpers turn po-xray outputs into decision inputs. The attributes and BPM inventory CLI

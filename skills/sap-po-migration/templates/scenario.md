@@ -43,6 +43,17 @@ By reference to `analysis.md`: what this scenario comes from, nothing beyond wha
 
 One row per parameter of each template copy in the plan's "Target artifacts" (the rows of [page: knowledge/pipeline/scenario-contribution.md#What a scenario contributes] it took). The template by its SAP id [page: knowledge/pipeline/naming.md#SAP's own naming]; the copy's id by the profile's "Naming conventions" [page: knowledge/pipeline/scenario-contribution.md#Naming]. An adapter setting without an externalized parameter (a sender SOAP address, a File receiver directory, a Step08 ProcessDirect call the template does not carry) is a row with `adapter "<name>" <setting>` in the parameter column and `—` as placeholder (D-039); a parameter the scenario does not use has `not set` and its reason as placeholder and counts as resolved (D-041). Exit: every placeholder resolves against the profile (spec §7 item 5); one that does not resolve means the phase does not exit (SKILL.md, "Phases"); a change after approval is a new plan round (`references/plan.md`, "Approval").
 
+## Contract bindings
+
+| Catalog revision | Artifact / contract IDs | Approved plan round / section | Choice / owner | Evidence |
+|---|---|---|---|---|
+| `<private contracts.md revision>` | `<exact IDs>` | `<round r, section, approved date>` | `<approved placement/disposition>` | `<source/decision locator>` |
+
+Pin the approved contracts used by target artifacts, conversions and process data, including
+request/response/fault roles, producer/consumer/default evidence and unresolved limitations from that
+round. Follow [the contract reference](../references/contracts.md). No QName binding, artifact class,
+input requirement or other choice is introduced in phase 5; a changed basis returns to a new plan round.
+
 ## Partner directory entries
 
 | key | value type | value |

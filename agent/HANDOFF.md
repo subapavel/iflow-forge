@@ -1,15 +1,17 @@
 # Handoff
 
-state: ACTIVE — finish P4 only, local commits and stop; no P5–P7 or push.
-checkout: main HEAD8f834dcc216b81d54295ea5abb279bdafc9fa48b; MIG-30 committed and accepted.
-MIG-30: independent635/0/0/26, code review PASS;12newtests pass; external message QName remains unknown.
-MIG-31: accepted; independent659/0/0/26 exit0,01:37; code review PASS;24newtests pass.
-tests:24approved (23core+1native),6frozenhashes in mig-31-p4b-packet.md and target/mig-p4b-implement-hashes.log.
-clarification: collision-safe supplied IDs and direct native-DT declaration ownership; no P3 semantic changes.
-next: selective MIG-31 commit; MIG-32 documentation then final P4 acceptance and stop.
-MIG-32: packet design PASS, no document edits yet; only canonical skill/output docs, no KB facts.
-limits:24private-input+2unsetkb.forbidden skips remain unverified; native executable NOT_RUN.
-preserve: unrelated CODEX-01/MIG-07/D-046/governance; initial patch target/mig-p4-initial-uncommitted.patch.
-staging: selective shared ledgers only; per-task baseline snapshots target/mig-p4b-initial-*.md.
-privacy: no private evidence/tenant changes/deployment/MIG-21/MIG-22 campaign.
-prior: P3 accepted c840a66; exact evidence in PROGRESS and target logs.
+state: STOPPED — P4 accepted; this MIG-32 documentation commit completes owner2026-10-27 authorization. Do not start P5–P7.
+checkout: main; local-only commits8f834dc(MIG-30),1053910(MIG-31),thisMIG-32commit. No push.
+delivered: full ESR keys/external XML resources; attributed contract/artifact catalog; skill reference/template and phase bindings.
+APIs: ContractResources.read, ContractCatalog.of/markdown; no new contract CLI/MCP, import or deployment.
+reviews: independent MIG-30/MIG-31 code PASS and MIG-32 documentation/retrieval PASS;36new synthetic tests pass.
+checks: finalroot VERIFIED_PASS659/0/0/26 exit0,01:42; target/mig-p4c-independent-verify.log and summary.
+modules: core517/0/0/22,native11/0/0/0,CLI47/0/0/1,MCP12/0/0/1,knowledge72/0/0/2.
+skill: Budget2/Cites1/Mirror13 pass;47Markdownlinks+127concrete citations resolve;4syntax placeholders excluded.
+docs:9hashes retained; reference1056/template584/intake1477/attributes1444/BPM1485 words; checks pass.
+limits:24missing-private+2unsetkb.forbidden skips unverified; native executable/fullforbidden NOT_RUN.
+semantics: XML QName separate from ESR; claims are not approval; imports/P3 data are candidates, not runtime/import completeness.
+preservation: original CODEX-01/MIG-07/D-046/governance unstaged; source/tests/POM unchanged since1053910 during finaldocs checks.
+packets: docs/superpowers/plans/2026-10-27-mig-{30-p4a,31-p4b,32-p4c}-packet.md; full evidence in PROGRESS and target logs.
+next: none under this authorization. Resume further work only on a new owner instruction.
+backlog: MIG-21/MIG-22 and private MIG-07 pilot preserved; no tenant/private evidence changes, deployment or cloud campaign.

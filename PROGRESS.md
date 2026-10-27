@@ -1033,3 +1033,27 @@ All24new tests pass;6frozen hashes/7production snapshots match; no parser/P3/POM
 Catalog retains source identities/XML declarations, attributed artifact choices/owners/ports/default/API producers, unresolved imports and structural P3 before/after.
 Public input/report helpers draft at hand-over; no CLI/MCP/import/deploy/runtime proof.24private+2unsetkb.forbidden skips and native executable remain unverified.
 Next: selective local MIG-31 commit, then MIG-32 skill docs and final P4 closure. No P5–P7 or push.
+
+## MIG-32 preparation · 2026-10-27 · uncommitted
+MIG-31 committed1053910 after independentprecommit PASS18paths/13blobs/6frozenhashes. P4 code accepted; documentation remains.
+MIG-32 packet preflight PASS. Baseline retrieval gaps observed: absent contract reference/template and no explicit placement/API-output/import workflow.
+Author now permitted only canonical skill/output docs perpacket, with unchanged frontmatter/pointers/phasegates. No new KB claims or source edits.
+Next: documentation author, independent checks/review, final P4 localcommit and STOP.
+
+## MIG-32 author handback · 2026-10-27 · uncommitted
+Writer released9allowed docs: new contract reference/template, canonical routing/intake/attributes/BPM/plan/scenario and OUTPUT-MODEL.
+Author VERIFIED_PASS scoped whitespace and all8skill page budgets; logs target/mig-p4c-author-counts.log/whitespace read;9hash manifest saved.
+Budgets reference1056/template584/intake1477/attributes1444/BPM1485 of1500. Frontmatter/pointers/phasegates/source/tests preserved.
+Next: independent docs retrieval/API review, skill checks and final rootverify; completion not yet claimed.
+
+## MIG-32 / P4 final acceptance · 2026-10-27 · ready to commit
+Delivered: external source identities/XML resources, evidence-based contract catalog and private contract workflow/reference/template;36new synthetic tests across MIG-30/MIG-31.
+Commits:8f834dc MIG-30,1053910 MIG-31; this documentation commit completes P4. P5–P7 were not started.
+Independent documentation review PASS; routing replay covers catalog/template, placement, API/default timing, imports and approval boundaries.
+Final root VERIFIED_PASS659/0/0/26 exit0,01:42; target/mig-p4c-independent-verify.log and summary/tail read.
+Skill checks: BudgetTest2,CitesTest1,SkillMirrorTest13 pass;47Markdownlinks+127concrete citations resolve;4syntax placeholders excluded explicitly.
+Docs:9hashes retained; reference1056/template584/intake1477/attributes1444/BPM1485 words; headings/frontmatter/whitespace/privacy pass.
+Source/tests/POM unchanged against1053910. Prior code reviews PASS; P3 remains structural candidates, no runtime delivery/ack/transaction claims.
+Limits:24absent private fixtures+2unsetkb.forbidden skips unverified; native executable/fullforbidden NOT_RUN. No import/deploy/tenant operations.
+Original CODEX-01/MIG-07/D-046/governance preserved unstaged; selective final staging only. No push or unrelated campaign.
+STOP after verified local documentation commit. No next implementation authorized in this session.

@@ -31,6 +31,7 @@ Check every row of spec §5 at the profile's input paths and write the table int
 | ICOs row, when the pre-process is an iFlow | its dump | `po-xray iflow <path>` (artifact folder, zip or package export) |
 | Existing point-to-point iFlows | their dumps | `po-xray iflow <path>`; not needed until part 3 exists, or when the target has none |
 | Tenant profile | `local/<customer>/profile.md` | the previous section |
+| Contract evidence | inventory, XML resources, supplied catalog/proposal | [contracts](contracts.md); record gaps, no contract CLI |
 | Scenario library | `local/<customer>/scenarios/` | nothing to fill: an empty library is "not needed, because first migration of this customer" |
 | Pipeline knowledge | `knowledge/pipeline/SKILL.md` | part of the repository; read at the start of phase 2 |
 | Version gate | `knowledge/pipeline/versions/features.md` | part of the repository |
@@ -74,7 +75,7 @@ Before step 1 of phase 2, read `knowledge/pipeline/SKILL.md` and its loaded set 
 
 1. **Source**: the process or ICO group as the source describes it: name, components, interfaces, the ICO before the process; no assessment.
 2. **Attributes**: per ICO the 11 rows of the attributes report with value and source (`references/attributes.md`).
-3. **Modules and mappings**: per module and mapping program the recipe and its status (`references/attributes.md`).
+3. **Modules and mappings**: recipes/status (`references/attributes.md`); link private `contracts.md` revision for identities, producers and dependencies ([contracts](contracts.md)).
 4. **Step inventory and classification** (BPM): the report's tables and one row per step (`references/bpm.md`).
 5. **EJB roles** (BPM): beans by role and their consequence (`references/bpm.md`).
 6. **Version-gated features**: feature, package, since, tenant version (`references/attributes.md`).

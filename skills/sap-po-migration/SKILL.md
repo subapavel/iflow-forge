@@ -15,6 +15,7 @@ The migration front end: from a customer's PO artifacts to an approved migration
 | to analyse the dumps and build the open list | phase 2, `references/intake.md`, `references/attributes.md`, `references/bpm.md` |
 | to settle the open list with the migrator | phase 3, `references/questions.md` |
 | to write and iterate the migration plan | phase 4, `references/plan.md` |
+| to inventory contracts, XML imports, mapping placement and data producers | `references/contracts.md`, `templates/contracts.md` |
 | to track exact approval revisions and project current decisions | optional `references/dossier.md`, `templates/dossier.json` |
 | to continue independent work while questions wait, or check a milestone | opt-in `references/readiness.md`, `templates/dossier-v2.json` |
 | to write the scenario specification per pipeline scenario | phase 5, `templates/scenario.md` |
@@ -49,11 +50,11 @@ Two named stops still apply:
 | Phase | Reference |
 |---|---|
 | 1 Intake | `references/intake.md`, `templates/profile.md` |
-| 2 Analysis | `references/intake.md`, `references/attributes.md`, `references/bpm.md` |
+| 2 Analysis | `references/intake.md`, `references/attributes.md`, `references/bpm.md`, `references/contracts.md` |
 | 3 Question round | `references/questions.md`, `templates/question.md` |
-| 4 Plan | `references/plan.md` |
+| 4 Plan | `references/plan.md`, `references/contracts.md` |
 | Optional dossier alongside phases 3–5 | `references/dossier.md`; v1 history or opt-in v2 `references/readiness.md`; whole-plan approval remains |
-| 5 Scenario specification | `templates/scenario.md` |
+| 5 Scenario specification | `templates/scenario.md`, `references/contracts.md` (approved catalog bindings) |
 | 6 Artifacts | none yet (placeholder) |
 | 7 Retrospective | `references/retrospective.md`, `references/requests.md`, `templates/request.md` |
 
@@ -61,6 +62,7 @@ Two named stops still apply:
 
 - `local/<customer>/profile.md`: the tenant profile, read at intake, amended by the question round and the retrospective, never committed (`templates/profile.md`).
 - `local/<customer>/scenarios/M-<n>/`: the phase outputs of one migration, the scenario library searched at intake.
+- `contracts.md` beside those outputs: private revisioned contract evidence (`templates/contracts.md`), supporting analysis, plan and specification; no separate approval.
 - Optional `dossier.json`, immutable `snapshots/` and generated views stay in the private migration directory; `references/dossier.md` defines ownership, `references/readiness.md` the opt-in dependencies. Existing evidence may remain in the owner's designated external private directory.
 - `local/migrations.md`: the only map from a code `M-<n>` to customer and scenario.
 - `testdata/`: the customer's PO artifacts in the layout of `docs/inputs/README.md`; the profile records the input paths.

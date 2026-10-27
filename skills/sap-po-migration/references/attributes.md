@@ -34,6 +34,8 @@ A rule the page omits: check as step 3 says.
 
 ## Modules and mappings by recipe
 
+Keep artifact/contract identities and classification evidence in private `contracts.md` ([contract inventory](contracts.md)); ProcessDirect alone does not establish shared mapping placement. This supplements the recipe rows below.
+
 1. **Modules.** The report's `### Modules` lists every non-adapter module with its side, channel, position and raw name; adapter beans are excluded [page: docs/OUTPUT-MODEL.md#Migration helpers]. For each, find its row in [page: knowledge/pipeline/conversion/README.md#Standard adapter modules]; a custom module has none; its placement follows [page: knowledge/pipeline/conversion/README.md#Rules].
 2. **Mappings.** The report lists no mapping programs: take them from the ICO dump (operation mappings, imported archives; fields: step 6 of [page: knowledge/pipeline/migration/po-ico-to-pipeline.md#Steps]) and find each in [page: knowledge/pipeline/conversion/README.md#Mapping programs].
 3. Write into `analysis.md`, "Modules and mappings", one row per module or mapping program: name (raw), side or ICO, the recipe row and its status verbatim; `unknown` or no row is written "no recipe".

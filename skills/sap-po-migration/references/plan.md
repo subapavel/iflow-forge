@@ -14,6 +14,19 @@ What the plan writes into each of the template's sections. Sections 1–5 form o
 6. **Risks and assumptions** replaces the template's [page: knowledge/pipeline/migration/proposal-template.md#Open questions]: list unresolved facts and dependencies, explicitly accepted assumptions/risks with owner, approval locator, exact scope, limitations and verification/reopening conditions. Their `Q-<n>` sources must exist. Keep unknowns visible; assumptions never become answers. The always-asked human decisions still enter the inventory. [page: skills/sap-po-migration/references/readiness.md#Assumptions, bases and risks]
 7. **Approval** [page: knowledge/pipeline/migration/proposal-template.md#Approval]: see "Approval" below.
 
+## Contract bindings
+
+Use private `contracts.md` as supporting input ([contract workflow](contracts.md)). In Target artifacts
+and Conversions needed, pin its revision, artifact/contract IDs, classification evidence, ownership and
+the `preserved-external` / `proposed-internal` choice. In BPM Process data, bind the same revision to
+request/response/fault contracts, input/default/API-response producers and consumers, and structural
+before/after evidence. Keep source facts, supplied proposals and approved choices distinct.
+
+Record unresolved QNames, imports, identities and timing in the affected question inventory and
+Risks and assumptions. A source catalog or earlier proposal carries its provenance and status, never
+inherited approval. These bindings are part of the existing whole-round approval below; no separate
+catalog approval is introduced. A changed catalog basis requires a new round and approval before phase 5.
+
 ## BPM extensions
 
 For a BPM target (spec §7 item 4), placed in the round as "Iterations", step 2, says:

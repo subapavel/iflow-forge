@@ -9,7 +9,11 @@ commity a skončit. P5–P7, push, deployment a tenantové operace nejsou povole
 P4 je rozděleno na MIG-30 (zdrojová identita/resource), MIG-31 (katalog)
 a MIG-32 (skill návaznosti). MIG-30 dokončeno: code review PASS, nezávislý
 reactor635/0/0/26 a12 nových testů. MIG-31 katalog dokončen: code review PASS,
-nezávislý reactor659/0/0/26 a24 nových testů. Skill návaznosti MIG-32 ještě nejsou dokončené.
+nezávislý reactor659/0/0/26 a24 nových testů. MIG-32 dokončilo skill návaznosti:
+nezávislé dokumentační review PASS; finální reactor659/0/0/26, Budget2/Cites1/Mirror13 PASS.
+**P4 je dokončeno (2026-10-27); po lokálním dokumentačním commitu STOP. P5–P7 nezahájeny.**
+Celkem36nových syntetických testů;26původních skips a native executable zůstávají neověřené.
+Lokální code commity: `8f834dc` (MIG-30), `1053910` (MIG-31). Žádný push ani tenantové operace.
 
 **Historický stav:** Návrh schválen vlastníkem 2026-10-26; po dokončení P1 vlastník povolil
 průběžnou realizaci zbývajících P2–P7, dokud neřekne stop (D-048).
@@ -27,7 +31,7 @@ MIG-28 dokončilo fault deklarace v commitu `3e2b716`: code r2/docs PASS,
 nezávislý reactor569/0/0/26 a36 nových testů. MIG-29 dokončilo společný report,
 konfigurované ICO/kanálové kandidáty, CLI `behavior` a MCP `bpm_behavior`:
 code r2/finaldocs PASS, nezávislý reactor623/0/0/26,54 nových testů a čerstvé CLI8/8.
-**P3 je dokončeno a práce tímto končí (2026-10-27, D-053).** P4–P7 se neimplementovaly.
+**Historický konec předchozí session: P3 dokončeno (2026-10-27, D-053).** P4–P7 se tehdy neimplementovaly.
 26 stávajících vynechání zůstává neověřeno; report nedokazuje skutečný běh ani doručení.
 Přesná evidence a omezení jsou v PROGRESS.
 Historie: původně předloženo ke schválení; odpověď vlastníka „Schvaluji“ navazuje
