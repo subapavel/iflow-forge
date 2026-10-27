@@ -4,7 +4,10 @@
 > s rolemi a omezeními `docs/CODEX-WORKFLOW.md`. Realizace je omezena na výslovně
 > schválené části. Detailní task packety vznikají pouze pro ně.
 
-Aktuální navazující pokyn vlastníka 2026-10-27: „pokračuj dále dokud nenapíšu STOP“.
+Nejnovější pokyn vlastníka 2026-10-27 kvůli kreditům: dokončit rozpracované P6a/MIG-35,
+ověřit a lokálně commitnout, potom skončit a předat prompt. MIG-36/MIG-37/P7 nyní nezahajovat.
+
+Předchozí navazující pokyn vlastníka 2026-10-27: „pokračuj dále dokud nenapíšu STOP“.
 Po přijetí P4 pokračovat schváleným plánem P5 → P6 → P7; ostatní výluky platí.
 P5 dokončeno níže; P6–P7 zatím nejsou dokončené ani ověřené. Žádný push, deployment ani tenantové operace.
 
@@ -256,6 +259,11 @@ Focused syntetické testy, reactor verify, nezávislý review s chybně spárova
 sloučení procesů. Neprovádí změny cílového ani zdrojového procesu.
 
 ## P6 — Verze, důkazy a návrat výsledku PoC do návrhu
+
+MIG-35 (P6a) dokončeno 2026-10-27: dossier v3 evidence-register/evidence-use, lokální
+packety s měřeným SHA256, přiřazený nezávislý review a přesné scope guardy. Code review r1 FAIL
+(FAIL tvrzení B blokoval PASS tvrzení A) opraven; review r2 PASS, nezávislý reactor713/0/0/26.
+MIG-36 (export metadata) a MIG-37 (dokumentace) zůstávají nezahájené; P6 tedy není dokončeno.
 
 **Přínos:** Nová evidence může návrh zpřesnit bez předstírání podpory ve staré KB;
 úspěch jednoho testu nemění nesouvisející tvrzení na ověřená.

@@ -1159,3 +1159,83 @@ ToolArg.required defaulttrue confirmed from resolvedJAR; author access-denied li
 Limits:24missing-private+2unsetkb.forbidden skips unverified; native executable/fullforbidden NOT_RUN. No equivalence/approval/runtime proof.
 Preserve original CODEX-01/MIG-07/D-046/governance unstaged; verified local commit only, no push/deploy/tenant operation.
 Next P6 thenP7 under explicit owner confirmation until STOP; no unrelated backlog campaign.
+
+## MIG-35 / P6 selection · 2026-10-27 · uncommitted
+P5 saved3817886/657030c after independent precommit audits; original governance/pilot modifications remain unstaged.
+Selected P6a dossier evidence, thenP6b export metadata andP6c workflow/docs; detailed MIG-35 draft sent for preflight before tests.
+Ruling: explicit evidence-register/use and exact scope guard, no automatic evidence-answer workflow; existing question/decision/risk events remain authoritative.
+Reason: current file validity cannot prove historical admission; declared uses/bases retain honest current applicability without invented history.
+Packet covers scoped external-unavailability warnings, unchanged structural-error rules, explicit replacement and separated source/version kinds.
+Checks: NOT_RUN for P6; earlier685/0/0/26 is P5 only. Baselines target/mig-p6a-initial-*.md; no P6 source/tests yet.
+
+## MIG-35 preflight revision2 · 2026-10-27 · uncommitted
+Independent preflight FAIL4: mutable milestone-approval admission, replacement-chain ancestry, network/link boundaries and external-reference severity.
+Revision2 separates evidence-independent admission from final scoped guards; approvals remain attributed, not runtime proof.
+Replacement chains have immutable linear ancestry and current supported-node selection; unavailable files cannot create structural errors.
+UNC/device paths rejected before access; NOFOLLOW component checks, mounted-volume locality explicitly not authenticated.
+External document references resolve at registration prefix as warning/unavailability; dossier event references retain structural errors.
+Additional regression acceptance covers all4; no tests/source yet, independent recheck required.
+Second preflight FAIL found stale acceptance wording conflicting with new chain semantics; architecture otherwise accepted.
+Architect rewrote replacement acceptance contract as revision3: declared tails versus current supported node explicit; no third review of unchanged packet.
+Rewritten revision3 independent preflight PASS; separate test-author authorized. Implementation remains NOT_RUN.
+
+## MIG-35 test approval · 2026-10-27 · uncommitted
+Architect read all6files:27newtests (24core/2CLI/1native) and narrow old-v2 JSON-field assertion approved; hashes in packet/targetmanifest.
+Explicit amendment adds evidence property and empty packets/uses to existing DossierReadinessTest only; no weakened earlier assertions.
+Author core EXECUTED_FAIL25/22/0/0 exit1, target/mig-p6a-red-core-final-approved.log tail read; v3 unsupported and missing evidence shape.
+CLI EXECUTED_FAIL2/2/0/0, native1/1/0/0; separate logs target/mig-p6a-red-cli.log/-native.log; independent confirmation next.
+Initial fixtures had invalid P2 prerequisite ordering, corrected before approval; v2 approved-plan/PoC/risk sanity passes before v3 assertions.
+Junction initial ENVIRONMENT_BLOCKED; approved rerun setup exit0 directly observed in target/mig-p6a-red-link.log line33/finalcore line350.
+Link rejection remains assertion-red, not verified boundary success. No production edits; independent red required before implementation.
+Independent EXECUTED_FAIL core25/22/0/0,CLI2/2/0/0,native1/1/0/0 exit1 each; target/mig-p6a-independent-red-summary.log/tail read.
+Independent junction setup exit0 precedes feature assertion failure;6approvedhashes stable, production unchanged657030c. Implementation authorized.
+
+## MIG-35 partial implementation · 2026-10-27 · uncommitted
+Author EXECUTED_FAIL focused Dossier*105/1/0/0 after standard escalation, target/mig-p6a-implement-core-escalated.log counts read.
+Remaining test fixture declares same section/revision with different snapshot; P1 correctly rejects INVALID_SCOPE. No production relaxation allowed.
+Test-author correction authorized only for external-hash scope variant and v2 prerequisite checks; prior source frozen7files,6testhashes unchanged.
+Author boundary checks VERIFIED_PASS actual junction rejection and non-default filesystem under escalation; target/mig-p6a-implement-boundary-results.log read.
+Initial restricted run105/2/1/0 included fixture filesystem restrictions, not accepted green. CLI/native/finalreactor pending.
+Process deviation: Jackson Context7 lookup preceded code; Quarkus lookup followed native registry insertion. API verified afterward; order not misrepresented.
+Corrected method diff read/approved: wrong hash now external-only, valid event dependency, actual review binding and all7v2 prerequisite checks.
+Author VERIFIED_PASS correctedmethod1/0/0/0 exit0, target/mig-p6a-corrected-test.log tailread; newhashD44E43A2, other5tests unchanged.
+Independent isolated baseline red and current method verification next; worktree source stays frozen.
+
+## MIG-36 preflight preparation · 2026-10-27 · uncommitted
+Metadata draft reviewed read-only while MIG-35 runs; no metadata tests/source authorized.
+Preflight FAIL4: input/output alias protection, unsafe artifact classification, generation timestamp meaning, exact CLI diagnostics/exit contract.
+Revision2 adds opt-in destination preflight/shared ScaService planning, no link following for alias checks, only-new outputs when linked artifact identity is unresolved.
+Manifest timestamp is generation time; optional artifact gaps persist as issues with success, output/descriptor failures remain failures with visible partial paths.
+Independent recheck required before future MIG-36 execution; MIG-35 remains current implementation task.
+
+## Owner stopping boundary · 2026-10-27 · uncommitted
+Owner reports credits running low and requests completing work in progress plus a continuation prompt.
+Scope now finish current MIG-35 through independent verify/review and local commit, then stop; no MIG-36/MIG-37/P7 implementation.
+MIG-36 revision2 preflight interrupted to avoid spending on future work; draft preserved, not accepted or implemented.
+Independent correction check: currentmethod VERIFIED_PASS1/0/0/0; isolated657030c compile0/probe EXECUTED_FAIL1 unsupportedv3 after validv2 prerequisites.
+Observed target/mig-p6a-correction-independent-summary.log; baseline stops firstvariant, not all7.6test+7source hashes unchanged.
+Current method log access-denied line retained; final reactor must verify independently. Resume remaining CLI/native checks, then final review/reactor only.
+
+## MIG-35 final implementation freeze · 2026-10-27 · uncommitted
+Source7files unchanged from partialfreeze;6correctedtesthashes retained. No further implementation edits after fixture repair.
+Author VERIFIED_PASS CLI2/0/0/0 and native13/0/0/0 exit0; target/mig-p6a-implement-final-counts.log read.
+Both focused logs have leading access-denied line despite fresh passing reports; independent root owns final acceptance evidence.
+Independent code review/reactor next; native executable NOT_RUN. Stop after verified MIG-35 local commit per latest owner boundary.
+
+## MIG-35 code review r1 · 2026-10-27 · uncommitted
+Independent review FAIL1: FAIL verdict for claimB incorrectly blocks separate PASSclaimA through packet-wide reasons.
+Packet now distinguishes document integrity from per-claim support; mixed review preserves FAIL attribution, A remains usable.
+Single-claim FAIL remains unavailable; new two-scope regression must cover both uses and unusedB before correction.
+Reviewer found no second numeric-format defect; existing tests meaningful. Current reactor is pre-correction evidence, not acceptance.
+
+## MIG-35 acceptance · 2026-10-27 · committed locally
+Architect read/approved regression mixedReviewFailureBlocksOnlyItsUsedClaimAndScope; SHA256 8F040944 matches manifest.
+Independent EXECUTED_FAIL 1/1/0/0 (class 14/1/0/0) exit1, target/mig-p6a-r1-independent-red.log tail read; 6 test hashes stable.
+Fix limited to DossierEvidence.register: per-claim FAIL is no longer a packet integrity reason; all-FAIL review keeps one summary reason.
+Implementer focused Dossier* 65/0/0/0 exit0. No library API added; Context7 not needed. Test files unchanged by implementer.
+Code review r2 PASS; non-blocking: review-scope branch of use check untested, all-FAIL summary hidden by integrity reason, use reason generic, unavailable() rebuilds report.
+Independent `mvn -B -ntp clean verify` VERIFIED_PASS exit0 713/0/0/26 (core559/22,native13/0,cli53/1,mcp16/1,kb72/2); log tail read.
+Skips: 24 missing testdata + 2 unset kb.forbidden; not verified coverage. No Dossier*/Native skips. Native executable NOT_RUN.
+Deviation: the requested clean deleted earlier target/mig-p6a-* logs, baselines and mig-p5 patch; earlier PROGRESS results stand as recorded.
+Staging selective: MIG-35 source/tests/packet, P6 PROGRESS hunk, MIG-35..37 BACKLOG rows, plan, HANDOFF. CODEX-01/MIG-07/D-046/governance left unstaged.
+MIG-36 draft packet uncommitted, revision2 preflight unfinished; MIG-37 and P7 not started. No push.

@@ -423,7 +423,11 @@ class DossierReadinessTest {
                 coverage("C", List.of("a"), "Q"));
         DossierAssessment assessment = f.assess();
         JsonNode json = Json.mapper().readTree(Json.write(assessment));
-        assertThat(json.propertyNames()).containsExactly("dossier", "status", "questions", "assumptions", "risks", "scopeBases", "coverages", "milestones");
+        assertThat(json.propertyNames()).containsExactly("dossier", "status", "questions", "assumptions", "risks", "scopeBases", "coverages", "milestones", "evidence");
+        assertThat(json.path("evidence").path("packets").isArray()).isTrue();
+        assertThat(json.path("evidence").path("packets").size()).isZero();
+        assertThat(json.path("evidence").path("uses").isArray()).isTrue();
+        assertThat(json.path("evidence").path("uses").size()).isZero();
         assertThat(json.path("assumptions").isArray()).isTrue();
         assertThat(json.path("assumptions").size()).isZero();
         assertThat(json.path("questions").get(0).path("answerEventId").isNull()).isTrue();

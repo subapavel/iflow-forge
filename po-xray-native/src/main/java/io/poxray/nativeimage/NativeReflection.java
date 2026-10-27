@@ -7,6 +7,7 @@ import io.poxray.cpi.Participant;
 import io.poxray.cpi.Step;
 import io.poxray.migration.DossierReport;
 import io.poxray.migration.DossierAssessment;
+import io.poxray.migration.DossierEvidenceReport;
 import io.poxray.model.AttributesReport;
 import io.poxray.model.BpmComponent;
 import io.poxray.model.BpmDataReport;
@@ -51,6 +52,9 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
  */
 @RegisterForReflection(
         targets = {
+            DossierEvidenceReport.class, DossierEvidenceReport.Packet.class, DossierEvidenceReport.PacketDocument.class,
+            DossierEvidenceReport.Versions.class, DossierEvidenceReport.Claim.class, DossierEvidenceReport.ReviewDocument.class,
+            DossierEvidenceReport.ReviewClaim.class, DossierEvidenceReport.Use.class,
             BehaviorComparisonInput.class, BehaviorComparisonInput.Implementation.class,
             BehaviorComparisonInput.SnapshotSerializer.class,
             BehaviorComparisonInput.StepRef.class, BehaviorComparisonInput.Alignment.class, BehaviorComparisonInput.Evidence.class,

@@ -61,8 +61,8 @@ final class DossierReader {
             JsonNode format = root.get("formatVersion");
             require(format.isIntegralNumber() && format.canConvertToInt(), "formatVersion must be an integer");
             version = format.intValue();
-            if (version != 1 && version != 2) {
-                throw new InvalidInput("UNSUPPORTED_FORMAT", "Only dossier formatVersion 1 and 2 are supported");
+            if (version != 1 && version != 2 && version != 3) {
+                throw new InvalidInput("UNSUPPORTED_FORMAT", "Only dossier formatVersion 1, 2 and 3 are supported");
             }
             migrationId = string(root, "migrationId");
             require(migrationId.matches("M-[1-9][0-9]*"), "migrationId must be M- followed by a positive integer");
@@ -96,7 +96,11 @@ final class DossierReader {
 
     private static void event(JsonNode event, int version) {
         String type = string(event, "type");
-        if (version == 2 && DossierReadiness.isEvent(type)) {
+        if (version == 3 && DossierEvidence.isEvent(type)) {
+            DossierEvidence.validateEvent(event);
+            return;
+        }
+        if (version >= 2 && DossierReadiness.isEvent(type)) {
             DossierReadiness.validateEvent(event);
             return;
         }

@@ -28,6 +28,16 @@ import org.junit.jupiter.api.Test;
 class NativeReflectionTest {
 
     @Test
+    void dossierEvidenceProjectionRecordsAreRegistered() {
+        RegisterForReflection reg = NativeReflection.class.getAnnotation(RegisterForReflection.class);
+        Set<String> registered = Stream.concat(Arrays.stream(reg.targets()).map(Class::getName),
+                Arrays.stream(reg.classNames())).collect(Collectors.toSet());
+        for (String suffix : java.util.List.of("", "$Packet", "$PacketDocument", "$Versions", "$Claim", "$ReviewDocument", "$ReviewClaim", "$Use")) {
+            org.junit.jupiter.api.Assertions.assertTrue(registered.contains("io.poxray.migration.DossierEvidenceReport" + suffix), suffix);
+        }
+    }
+
+    @Test
     void behaviorComparisonInputAndReportRecordsAreRegistered() {
         RegisterForReflection reg = NativeReflection.class.getAnnotation(RegisterForReflection.class);
         Set<String> registered = Stream.concat(Arrays.stream(reg.targets()).map(Class::getName),

@@ -42,6 +42,9 @@ final class DossierReadiness {
     private final DossierReader.Document document;
     private final Path directory;
     private final DossierValidator.Projection p1;
+    private final DossierEvidence evidence;
+    private boolean evidenceGuards;
+    private Map<String, Milestone> evidenceIndependent = Map.of();
     private final Set<String> sections = new LinkedHashSet<>();
     private final Map<String, QuestionState> questions = new LinkedHashMap<>();
     private final Map<String, JsonNode> definitions = new LinkedHashMap<>();
@@ -56,6 +59,7 @@ final class DossierReadiness {
         this.document = document;
         this.directory = directory;
         this.p1 = p1;
+        this.evidence = new DossierEvidence(directory, p1);
     }
 
     static boolean isEvent(String type) { return FIELDS.containsKey(type); }
@@ -119,6 +123,7 @@ final class DossierReadiness {
     void apply(JsonNode event) {
         String id = string(event, "id");
         String type = string(event, "type");
+        if (DossierEvidence.isEvent(type)) { evidence.apply(event); return; }
         if (!isEvent(type)) {
             int before = p1.diagnostics.size();
             p1.apply(event);
@@ -347,16 +352,20 @@ final class DossierReadiness {
     }
 
     DossierAssessment report(DossierReport report) {
-        if (document.formatVersion() != 2) return new DossierAssessment(report, report.valid() ? "not-assessed" : "invalid",
+        if (document.formatVersion() < 2) return new DossierAssessment(report, report.valid() ? "not-assessed" : "invalid",
                 List.of(), List.of(), List.of(), List.of(), List.of(), List.of());
         Map<String, Milestone> evaluated = new LinkedHashMap<>();
+        definitions.keySet().forEach(id -> evaluate(id, evaluated));
+        evidenceIndependent = new LinkedHashMap<>(evaluated);
+        evidenceGuards = true;
+        evaluated.clear();
         definitions.keySet().forEach(id -> evaluate(id, evaluated));
         List<Milestone> milestones = definitions.keySet().stream().map(evaluated::get).map(m -> report.valid() ? m : invalid(m)).toList();
         return new DossierAssessment(report, report.valid() ? "assessed" : "invalid", questions.values().stream().map(QuestionState::report).toList(),
                 List.copyOf(assumptions.values()), List.copyOf(risks.values()), bases.values().stream().map(b -> new Basis(b.id(), b.scope(), b.answers(),
-                        basisCurrent(b.scope()) ? "current" : "stale", b.legacyApprovalEventId(), b.historicalEvidenceSource())).toList(),
+                        basisCurrent(b.scope()) && !evidence.unavailable(b.scope()) ? "current" : "stale", b.legacyApprovalEventId(), b.historicalEvidenceSource())).toList(),
                 coverages.values().stream().map(c -> new Coverage(c.sectionId(), c.eventId(), c.questions(), c.owner(), c.evidenceSource(),
-                        coverageCurrent(c) ? "current" : "stale")).toList(), milestones);
+                        coverageCurrent(c) ? "current" : "stale")).toList(), milestones, evidence.report());
     }
 
     private static Milestone invalid(Milestone m) {
@@ -463,6 +472,21 @@ final class DossierReadiness {
         JsonNode approval = approvals.get(id);
         boolean approved = complete && approval != null && string(approval, "definition").equals(string(definition, "id"))
                 && new HashSet<>(strings(approval.get("inputs"))).equals(inputs);
+        if (evidenceGuards) {
+            approved = evidenceIndependent.get(id).approved();
+            boolean evidenceClear = true;
+            for (String section : effective) if (evidence.hasSection(section)
+                    && consumed.stream().noneMatch(d -> d.sectionId().equals(section))) {
+                evidenceClear = false;
+                add(blockers, "EVIDENCE_SCOPE_UNRESOLVED", section, null, "Evidence requirements need an exact consumed scope");
+            }
+            for (Dependency scope : consumed) if (evidence.unavailable(scope)) {
+                evidenceClear = false;
+                add(blockers, "EVIDENCE_UNAVAILABLE", scope.sectionId(), null, "Required exact-scope evidence is unavailable");
+            }
+            complete &= evidenceClear;
+            canWork &= evidenceClear;
+        }
         if (approval != null && !approved) add(blockers, "FINAL_APPROVAL_REQUIRED", null, null, "Recorded milestone approval no longer binds current inputs");
         boolean ready = switch (kind) {
             case "design" -> canWork;

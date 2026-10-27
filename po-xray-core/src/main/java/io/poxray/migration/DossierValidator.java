@@ -76,7 +76,8 @@ public final class DossierValidator {
             diagnostics.add(new Diagnostic("error", "INVALID_BASELINE", null, "Baseline cannot be read as dossier JSON"));
             return "invalid-baseline";
         }
-        boolean upgrade = previous.formatVersion() == 1 && current.formatVersion() == 2;
+        boolean upgrade = previous.formatVersion() >= 1 && previous.formatVersion() < current.formatVersion()
+                && current.formatVersion() <= 3;
         if (!previous.diagnostics().isEmpty() || (!upgrade && previous.formatVersion() != current.formatVersion())
                 || !previous.migrationId().equals(current.migrationId())) {
             diagnostics.add(new Diagnostic("error", "INVALID_BASELINE", null, "Baseline schema or identity is invalid"));
@@ -95,7 +96,7 @@ public final class DossierValidator {
         }
         if (upgrade) {
             diagnostics.add(new Diagnostic("warning", "HISTORY_FORMAT_UPGRADED", null,
-                    "Unchanged version 1 history explicitly upgraded to version 2"));
+                    "Unchanged version " + previous.formatVersion() + " history explicitly upgraded to version " + current.formatVersion()));
         }
         return "verified";
     }
@@ -447,6 +448,31 @@ public final class DossierValidator {
                 dependencyText(m.requiredScopes()), dependencyText(m.connections()), m.connectionRationale(), String.join(", ", m.requires()));
         md.append("\n## Readiness blockers\n\n| Milestone | Code | Section | Question | Message |\n| --- | --- | --- | --- | --- |\n");
         for (DossierAssessment.Milestone m : assessment.milestones()) for (DossierAssessment.Blocker b : m.blockers()) row(md, m.id(), b.code(), b.sectionId(), b.questionId(), b.message());
+        md.append("\n## Local evidence\n\nFile digests and independent attribution do not authenticate sources or prove tenant execution. "
+                + "Mounted or mapped volume locality cannot be authenticated by portable Java.\n")
+                .append("\n| Registration | State | Packet path | Packet SHA256 | Review path | Review SHA256 | Reasons |\n| --- | --- | --- | --- | --- | --- | --- |\n");
+        for (DossierEvidenceReport.Packet p : assessment.evidence().packets()) {
+            row(md, p.eventId(), p.state(), p.packetPath(), p.packetSha256(), p.reviewPath(), p.reviewSha256(), String.join("; ", p.reasons()));
+            if (p.packet() != null) {
+                var d = p.packet(); var v = d.versions();
+                md.append("\n| Packet | Author | Source kind | Source locator | Source SHA256 | Observed at | Limitations | KB difference |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n");
+                row(md, d.id(), d.author(), d.sourceKind(), d.sourceLocator(), d.sourceSha256(), d.observedAt(), d.limitations(), d.kbDifference());
+                md.append("\n| Export label | Package release | Bundle version | Target version | Design-time version | Deployed version |\n| --- | --- | --- | --- | --- | --- |\n");
+                row(md, v.exportLabel(), v.packageRelease(), v.bundleVersion(), v.targetVersion(), v.designTimeVersion(), v.deployedVersion());
+                md.append("\n| Claim | Text | Scope | Limitations |\n| --- | --- | --- | --- |\n");
+                for (var c : d.claims()) row(md, c.id(), c.text(), dependencyText(c.scope()), c.limitations());
+            }
+            if (p.review() != null) {
+                var r = p.review();
+                md.append("\n| Reviewer | Reviewed at | Packet ID | Packet SHA256 |\n| --- | --- | --- | --- |\n");
+                row(md, r.reviewer(), r.reviewedAt(), r.packetId(), r.packetSha256());
+                md.append("\n| Reviewed claim | Scope | Verdict | Limitations |\n| --- | --- | --- | --- |\n");
+                for (var c : r.claims()) row(md, c.claimId(), dependencyText(c.scope()), c.verdict(), c.limitations());
+            }
+        }
+        md.append("\n| Use | Scope | Evidence | Claim | Text | Replaces | State | Reasons |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n");
+        for (var u : assessment.evidence().uses()) row(md, u.eventId(), dependencyText(List.of(u.scope())), u.evidenceEventId(),
+                u.claimId(), u.text(), u.replaces(), u.state(), String.join("; ", u.reasons()));
         // Preserve the P1 evidence/history rendering while removing its deliberately P1-only disclaimer.
         md.append('\n').append(markdown(assessment.dossier()).replace(
                 "Questions, milestone readiness, runtime evidence and authenticity of approval sources are not checked. ", ""));

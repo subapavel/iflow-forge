@@ -7,8 +7,14 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.ALWAYS)
 public record DossierAssessment(DossierReport dossier, String status, List<Question> questions,
         List<Assumption> assumptions, List<Risk> risks, List<Basis> scopeBases,
-        List<Coverage> coverages, List<Milestone> milestones) {
+        List<Coverage> coverages, List<Milestone> milestones, DossierEvidenceReport evidence) {
+    public DossierAssessment(DossierReport dossier, String status, List<Question> questions,
+            List<Assumption> assumptions, List<Risk> risks, List<Basis> scopeBases,
+            List<Coverage> coverages, List<Milestone> milestones) {
+        this(dossier, status, questions, assumptions, risks, scopeBases, coverages, milestones, null);
+    }
     public DossierAssessment {
+        if (evidence == null) evidence = new DossierEvidenceReport(null, null);
         questions = List.copyOf(questions);
         assumptions = List.copyOf(assumptions);
         risks = List.copyOf(risks);
