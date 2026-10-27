@@ -1,5 +1,9 @@
 # iflow-forge — rules for Claude
 
+**Codex sessions:** read [the Codex workflow override](docs/CODEX-WORKFLOW.md) first.
+Its local execution, delegation and evidence rules override conflicting clauses here and in
+the migration skill; the remaining design rules and the original Claude mode still apply.
+
 Read before any work: this file, `AGENTS.md`, `agent/HANDOFF.md` and the task's row in
 `agent/BACKLOG.md`. `docs/WORKFLOW.md` §1 is the loop. The binding design of the part being built is
 its spec under `docs/superpowers/specs/` and its plan under `docs/superpowers/plans/` — read by

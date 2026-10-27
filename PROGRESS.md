@@ -127,7 +127,6 @@ Decisions: D-023 (changelog cites, Version notes direction; for B2) — draft, r
 Issues: ISSUE-2 (CI runner) open; ISSUE-1 Phase B pending.
 Next: KB-10 B2 (versions/2026-09-current/changelog.md from target/kb-10 diffs + SAP CHANGELOGs; Version notes on 29 pages) — packet kb-10/page-packet-b2.md; then B3 (enrichment, pitfalls.md).
 
-
 ## KB-10 B2 · 2026-10-20 · 9aae29f (`kb: changelog 2026-09-current from artifact diff and SAP change logs; version notes on 29 pages (KB-10 B2)`) — context compacted during the review rounds
 Task: `versions/2026-09-current/changelog.md` (Scope, SAP's change log, generic-inbound/outbound artifact differences, New artifacts (3), Unchanged artifacts (18 templates, equal Bundle-Version)) and `changelog-generic-pipelines-step02.md` (Step02 inbound/async/sync), `changelog-generic-pipelines-step04-06.md` (Step04–06) built from the dump diff of both labels (target/kb-10/, 29 pairs, 11 changed, 847 changed dump lines, 26 changed scripts) plus the 26 new `CHANGELOG.txt` lines; D-023 cites; 120 `changelog` triage claims paired (R claims annotated on the pages; 33 C claims and R-113/114/130/169 not observable). `## Version notes` rewritten on all 29 fact-base pages (fallback bullets where no room: step01 xi/idoc, step02 inbound/async); script.collection difference as a Gotchas line on scripts/logMessage.md.
 Content task: no red test; acceptance = kb-reviewer PASS + green knowledge module.
@@ -299,7 +298,6 @@ Checks: mvn verify exit 0 (round 2 target/mig-02b-verify2.log, final verifier ru
 Review: reviewer r1 PASS, r2 PASS after the evidence files (status/stat/cli diff) — observations: S + receiver module + unresolved receiver → {post, pre+post}, not spelled out in OUTPUT-MODEL; IDOC/open sender type with S untested; unresolved sender + receiver module → all four and the three-part question untested, accepted); kb-reviewer r1 FAIL 2 (po-ico:44 did not exclude adapter beans; "receiver module → post" contradicts conversion/README.md "Rules" and variants.md:46) → D-033, second red/green round, page round 2 → kb-reviewer r2 FAIL 1 (po-ico:59 cut dropped the spec §8 condition "about the pipeline") → restored, r3 PASS. Decision in the task: an open attribute row is an open-list item of type blocking (attributes.md:53), not conversion.
 Ledger: MIG-03 hash 6218ac9, CI 39517967726 green.
 Next: MIG-04 (questions.md, plan.md, template question.md, Java cite check) ready; KB-11d ready.
-
 
 ## MIG-04 · 2026-10-21 · (hash in the next entry)
 Test first: CitesTest (real repository: every `[page: …#heading]` and `[pattern: <id>]` under skills/ and patterns/ resolves), ChecksTest +7 synthetic cases for `Checks.cites`, SkillMirrorTest +1 "canonical without frontmatter" (reviewer MIG-01 gap). Red observed: testCompile 10× "cannot find symbol cites" (target/mig-04-red.log); the SkillMirror case was already green (regression guard).
@@ -486,6 +484,17 @@ Next: MIG-21 CLI `discover` (every ICO of the system through PoService, report +
 
 ## HAND-OVER · 2026-10-21 · (hash in the next entry)
 Owner 2026-10-21: stop the cloud loop, continue locally this week. MIG-20 committed as 72d54e3 (CI run 39587302862 green). MIG-21 not started: its acceptance spec and the scout facts (CLI `discover`, systems-directory override, offline `--icos`, slice helper, test plan) are in agent/NOTES.md, last section, so the local session starts at the test-author. BACKLOG: MIG-20 done, MIG-21 ready, MIG-22 pending; no other ready row. Owner inputs still open: ISSUE-3/FIX-03, ISSUE-4, ISSUE-5, KB-12b, KB-00a, KB-09, MIG-07.
+
+## CODEX-01 / MIG-07 intake · 2026-10-21 · uncommitted
+Task: owner resumed local work; adapt Codex execution rules and import prior pilot evidence privately as M-1.
+Test first: none — workflow documentation and preparatory evidence import; no product code changed.
+Changed: Codex override and entry links; neutral ledgers; private migration register, profile, intake, continuation and question record.
+Checks: VERIFIED_PASS workflow links, whitespace, scope and privacy (target/codex-01-review.log); private dossier provenance, four source hashes and ignore coverage VERIFIED_PASS (M-1 review.log).
+Checks: Maven NOT_RUN — workflow-only documentation and private evidence import; migration helpers NOT_RUN — local runner unavailable.
+Review: PASS — independent workflow review and private dossier review; no blocking findings.
+Decisions: D-046; owner-selected pilot precedes unrelated ready tasks; new pilot answer retained privately with its unverified API follow-up.
+State: MIG-07 in-progress; formal intake incomplete; no approved plan, generated artifacts, commit or push claimed.
+Next: continue private open questions; complete profile and tool prerequisites. MIG-21 ready and MIG-22 pending remain unchanged.
 
 ## MIG-23 P1 preparation · 2026-10-26 · uncommitted
 Owner: approved retrospective design and implementation of P1 only; D-047. P2–P7 not authorized for execution.
@@ -1263,3 +1272,9 @@ Frozen docs (hashes target/mig-p6c-docs-hashes.log unchanged): knowledge module 
 Root `mvn -B -ntp verify` VERIFIED_PASS 729/0/0/26 (target/mig-p6c-final-reactor.log) ran during the last docs edit round; docs-only change.
 Skips: 24 missing testdata + 2 unset kb.forbidden; not verified coverage. Native executable and full forbidden-values NOT_RUN. No code changed.
 Gates unchanged: skill frontmatter, Phases list, seven profile H2s, §10 first sentence (target/mig-p6c-final-gates.diff). P6 complete; P7 not authorized. No push.
+
+## CODEX-01 commit · 2026-10-27 · committed locally
+Owner asked to commit the local workflow override as it stands, then rename it to an agent-neutral name (MIG-39).
+Committed unchanged: docs/CODEX-WORKFLOW.md, entry links in AGENTS.md/CLAUDE.md/docs/WORKFLOW.md, D-046, CODEX-01 row, its intake entry.
+The original review log target/codex-01-review.log was deleted by the MIG-35 clean; independent precommit audit re-run: AUDIT_PASS (paths, privacy grep, links, whitespace).
+MIG-07 row and MIG-07-only PROGRESS entries stay uncommitted (pilot in progress). No Maven run: documentation only. No push.

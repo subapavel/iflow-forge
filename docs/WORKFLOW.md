@@ -1,5 +1,9 @@
 # Workflow — autonomous execution protocol
 
+**Codex sessions:** [CODEX-WORKFLOW.md](CODEX-WORKFLOW.md) is the binding override for local,
+user-led work. It supersedes conflicting model, unattended-loop, field-only, git and evidence
+requirements below. This original protocol and its historical decisions remain intact for Claude.
+
 Agreed on 2026-10-19. Taken from `subapavel/flottila` `docs/WORKFLOW.md` (bounded tasks, evidence
 states, handoff, roles) and adapted to a repository where half of the work is content (knowledge
 pages) rather than code. This file is binding for every session working on iflow-forge;
