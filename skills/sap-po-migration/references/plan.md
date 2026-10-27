@@ -40,6 +40,10 @@ For a BPM target (spec §7 item 4), placed in the round as "Iterations", step 2,
 
 ## Cite rule
 
+For multiple implementations, link private [behavior comparisons](comparison.md) and supplied alignment
+evidence from the relevant sections. Differences and unknowns inform existing questions; confirmed
+alignment is no equivalence or approval verdict. Names alone do not reopen an approved choice.
+
 1. Every target statement, that is every statement about what the pipeline does or needs, cites `[page: knowledge/pipeline/<path>#<heading>]` or `[pattern: <id>]` (spec §12 P-3, D-030; SKILL.md, rule 1). A source statement cites its dump field or `analysis.md` row; a decision cites its `Q-<n>`.
 2. An uncited target statement opens a question (source `plan round <k>, <section>`). Resolve it before approving the affected content; independent drafting continues. No missing pipeline evidence is excused by changing a topic label.
 3. The knowledge module's cite check resolves every such cite in every markdown page under `skills/` and `patterns/` (D-034). The migrator's `plan.md` lies under `local/` and is checked by reading: before showing a round, open each cited page and confirm the exact H2 or H3 heading exists and states what the plan says.

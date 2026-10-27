@@ -16,6 +16,7 @@ The migration front end: from a customer's PO artifacts to an approved migration
 | to settle the open list with the migrator | phase 3, `references/questions.md` |
 | to write and iterate the migration plan | phase 4, `references/plan.md` |
 | to inventory contracts, XML imports, mapping placement and data producers | `references/contracts.md`, `templates/contracts.md` |
+| to compare implementation behavior with explicit step alignments | `references/comparison.md` (private analysis/plan evidence) |
 | to track exact approval revisions and project current decisions | optional `references/dossier.md`, `templates/dossier.json` |
 | to continue independent work while questions wait, or check a milestone | opt-in `references/readiness.md`, `templates/dossier-v2.json` |
 | to write the scenario specification per pipeline scenario | phase 5, `templates/scenario.md` |
@@ -50,9 +51,9 @@ Two named stops still apply:
 | Phase | Reference |
 |---|---|
 | 1 Intake | `references/intake.md`, `templates/profile.md` |
-| 2 Analysis | `references/intake.md`, `references/attributes.md`, `references/bpm.md`, `references/contracts.md` |
+| 2 Analysis | `references/intake.md`, `references/attributes.md`, `references/bpm.md`, `references/contracts.md`; `references/comparison.md` for multiple implementations |
 | 3 Question round | `references/questions.md`, `templates/question.md` |
-| 4 Plan | `references/plan.md`, `references/contracts.md` |
+| 4 Plan | `references/plan.md`, `references/contracts.md`, `references/comparison.md` for supporting comparison evidence |
 | Optional dossier alongside phases 3–5 | `references/dossier.md`; v1 history or opt-in v2 `references/readiness.md`; whole-plan approval remains |
 | 5 Scenario specification | `templates/scenario.md`, `references/contracts.md` (approved catalog bindings) |
 | 6 Artifacts | none yet (placeholder) |

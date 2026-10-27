@@ -100,6 +100,10 @@ owner and expected evidence. Scoped readiness follows [readiness](readiness.md);
 
 ## Plan and specification
 
+For multiple implementations, [compare embedded reports](comparison.md). Contract step claims require
+matching data ancestry; source-only catalogs remain implementation context, without invented step bindings.
+[page: docs/OUTPUT-MODEL.md#Behavior comparison facets and context]
+
 In phase 4, bind the catalog revision and selected artifact/contract IDs to target artifacts,
 conversions and BPM process data. State `preserved-external`, `proposed-internal` or `unknown` for each
 choice, with ownership, rationale and evidence. Source presence and supplied proposals confer no

@@ -6,7 +6,7 @@
 
 Aktuální navazující pokyn vlastníka 2026-10-27: „pokračuj dále dokud nenapíšu STOP“.
 Po přijetí P4 pokračovat schváleným plánem P5 → P6 → P7; ostatní výluky platí.
-P5–P7 zatím nejsou dokončené ani ověřené. Žádný push, deployment ani tenantové operace.
+P5 dokončeno níže; P6–P7 zatím nejsou dokončené ani ověřené. Žádný push, deployment ani tenantové operace.
 
 Předchozí pokyn vlastníka 2026-10-27: dokončit pouze P4, vytvořit ověřené lokální
 commity a skončit. P5–P7, push, deployment a tenantové operace nejsou povoleny.
@@ -232,7 +232,10 @@ univerzální povinnost sdílených mappingů. Katalog zaznamenává volbu a dů
 
 MIG-33 core dokončeno: explicitní alignment, osm facetů, unmatched kroky a kontext;
 code reviewr2 PASS, nezávislý reactor677/0/0/26,18nových testů včetně2review regresí.
-MIG-34 CLI/MCP a skill návaznosti zatím pending; samotné core neuzavírá P5.
+MIG-33 commit `3817886`. MIG-34 dokončilo CLI `compare-behavior`, MCP `behavior_comparison`
+a skill reference/routing: nezávislé code/docs review PASS, reactor685/0/0/26,
+čerstvé CLI6/6,8nových testů. **P5 dokončeno 2026-10-27**;26skips a native executable
+zůstávají neověřené. Srovnání není důkaz sémantické ekvivalence, schválení ani runtime.
 
 **Přínos:** Rozdíly jsou vidět po krocích, ne jen čtením několika dlouhých reportů.
 

@@ -32,6 +32,7 @@ Check every row of spec §5 at the profile's input paths and write the table int
 | Existing point-to-point iFlows | their dumps | `po-xray iflow <path>`; not needed until part 3 exists, or when the target has none |
 | Tenant profile | `local/<customer>/profile.md` | the previous section |
 | Contract evidence | inventory, XML resources, supplied catalog/proposal | [contracts](contracts.md); record gaps, no contract CLI |
+| Multiple implementations | embedded behavior/catalog reports | [comparison](comparison.md); explicit alignments |
 | Scenario library | `local/<customer>/scenarios/` | nothing to fill: an empty library is "not needed, because first migration of this customer" |
 | Pipeline knowledge | `knowledge/pipeline/SKILL.md` | part of the repository; read at the start of phase 2 |
 | Version gate | `knowledge/pipeline/versions/features.md` | part of the repository |

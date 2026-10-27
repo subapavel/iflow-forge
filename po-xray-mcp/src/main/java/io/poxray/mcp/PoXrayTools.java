@@ -7,6 +7,7 @@ import io.poxray.integration.BpmIntegration;
 import io.poxray.integration.ObjectCatalog;
 import io.poxray.json.Json;
 import io.poxray.migration.BehaviorAnalysis;
+import io.poxray.migration.BehaviorComparison;
 import io.poxray.model.IntegrationInventory;
 import io.poxray.model.ScaInventory;
 import io.quarkiverse.mcp.server.Tool;
@@ -51,6 +52,13 @@ public class PoXrayTools {
             @ToolArg(description = "Optional local ICO inventory JSON file", defaultValue = "") String icosPath) {
         return call(() -> json("bpm_behavior", BehaviorAnalysis.read(Path.of(exportPath),
                 icosPath == null || icosPath.isBlank() ? null : Path.of(icosPath))));
+    }
+
+    @Tool(name = "behavior_comparison", description = "Offline comparison of embedded source behavior reports using "
+            + "explicit alignments; not semantic equivalence or approval. Large results are written to a local JSON file.",
+            annotations = @Tool.Annotations(readOnlyHint = true, openWorldHint = false))
+    public String behavior_comparison(@ToolArg(description = "Local comparison JSON with embedded reports") String inputPath) {
+        return call(() -> json("behavior_comparison", BehaviorComparison.read(Path.of(inputPath))));
     }
 
     @Tool(name = "find_components", description = "Find communication components (business systems / business "

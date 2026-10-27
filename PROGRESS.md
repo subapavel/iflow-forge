@@ -1121,3 +1121,41 @@ All5approved test+5production hashes stable; scope/whitespace/privacy pass. P3/P
 Limits:24missing-private+2unsetkb.forbidden skips unverified; native executable/fullforbidden NOT_RUN; no delivery/ack/equivalence proof.
 Original CODEX-01/MIG-07/D-046/governance preserved; exact paths and selective ledgers only. No push/deploy/tenant operation.
 Next MIG-34 offline entrypoints and workflow reference; P5 still incomplete. Owner explicitly permits P5–P7 local work until STOP.
+
+## MIG-34 selection · 2026-10-27 · uncommitted
+MIG-33 committed3817886 after independent precommit PASS,15exactpaths; original governance/pilot changes preserved unstaged.
+MIG-34 packet preflight PASS; same core read/markdown and existing error/spill behavior, no duplicate semantics.
+Shared ledger baselines target/mig-p5b-initial-*.md. Separate CLI/MCP test author now selected, source/docs not yet authorized.
+
+## MIG-34 test approval · 2026-10-27 · uncommitted
+Architect read all3files and approved8tests:4CLI+4MCP with actual helpers/launcher/spill, errors, semantics, values and input hashes.
+Author fixture VERIFIED_PASS exit0, actual SCA/TPZ through P3/P4:1column60903chars/2columns122085, target/mig-p5b-red-fixture-probe.log read.
+Author CLI EXECUTED_FAIL4/4/0/0 missing registration; MCP compile-red missing behavior_comparison(String), no runtime assertions yet.
+Logs target/mig-p5b-red-cli.log and -mcp.log tails read; hashes in packet and target/mig-p5b-red-test-hashes.txt.
+Independent red next; production/doc implementation still NOT_RUN.
+Independent EXECUTED_FAIL CLI4/4/0/0 exit1, missingregistration; MCP missing-method compile-red exit1, no runtime counts.
+Observed target/mig-p5b-independent-red-summary.log and MCPtail;3approvedhashes stable, production unchanged3817886. Bounded wrappers authorized.
+
+## MIG-34 source freeze · 2026-10-27 · uncommitted
+Only CompareBehaviorCommand, command registration and MCP behavior_comparison added; shared core/error/spill helpers unchanged.
+Author focused VERIFIED_PASS CLI4/0/0/0 and MCP4/0/0/0 exit0; target/mig-p5b-implement-counts.log and both logtails read.
+MCP log contains access-denied line despite fresh passing Surefire; independent verifier must assess, no hidden success inference.
+All3approved test hashes retained; source frozen. Independent code review and bounded documentation follow; finalroot/smoke pending.
+
+## MIG-34 documentation freeze · 2026-10-27 · uncommitted
+Independent code review PASS: thin wrappers and8observabletests match packet; final verifier checks ToolArg.required default and flagged access log.
+Author completed8allowed docs: new comparison reference plus routing/intake/BPM/plan/contracts/outputmodel/README; source/frontmatter/mirrors unchanged.
+Author VERIFIED_PASS whitespace and pagewordcounts:comparison985,intake1489,BPM1490,plan1356,contracts1084; logs target/mig-p5b-docs-counts.log/whitespace.log read.
+Docs frozen target/mig-p5b-docs-hashes.log; independent docs review, finalreactor, citations/links and packagedCLI smoke pending.
+
+## MIG-34 / P5 acceptance · 2026-10-27 · ready to commit
+Delivered: compare-behavior CLI, behavior_comparison MCP and comparison skill/reference/routing/outputmodel; P5 complete with MIG-33.
+Independent code and documentation reviews PASS; exact8docs/API/routing/evidence limits checked.
+Final root VERIFIED_PASS685/0/0/26 exit0 BUILD SUCCESS,02:03; target/mig-p5b-final-independent-summary.log and reactor tail read.
+Modules core534/0/0/22,native12/0/0/0,CLI51/0/0/1,MCP16/0/0/1,knowledge72/0/0/2;8newtests pass.
+Fresh packaged CLI VERIFIED_PASS6/6 help/JSON/Markdown/missing/malformed/semantic-success; actualcontents/exits and unchanged inputs checked.
+Budget2/Cites1/Mirror13 pass;58links+77concretecitations resolve,4syntaxplaceholders excluded;3source+3test+8doc hashes stable.
+ToolArg.required defaulttrue confirmed from resolvedJAR; author access-denied line did not recur. Whitespace/privacy/headings/frontmatter pass.
+Limits:24missing-private+2unsetkb.forbidden skips unverified; native executable/fullforbidden NOT_RUN. No equivalence/approval/runtime proof.
+Preserve original CODEX-01/MIG-07/D-046/governance unstaged; verified local commit only, no push/deploy/tenant operation.
+Next P6 thenP7 under explicit owner confirmation until STOP; no unrelated backlog campaign.

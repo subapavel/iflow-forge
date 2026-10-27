@@ -1685,6 +1685,143 @@ interface/call candidates and diagnostics. Source-derived table cells escape pip
 coverage, reasons and explicit unknown acknowledgment/transaction. The report supplies analysis evidence,
 not owner approval, a target design, generated artifacts or runtime validation.
 
+### Behavior comparison API
+
+MIG-33/MIG-34 add an offline side-by-side projection of explicitly aligned source reports.
+Public static methods on `io.poxray.migration.BehaviorComparison` are
+`read(Path inputJson) throws IOException`, `of(BehaviorComparisonInput input)` (both returning
+`BehaviorComparisonReport`), and `markdown(BehaviorComparisonReport report)` returning `String`.
+`read` binds one local JSON document; malformed/incompatible input fails, while representable semantic
+problems become diagnostics. Embedded paths and evidence locators are never followed. There is no
+automatic equivalence analysis or input-builder command.
+
+Construct implementations with existing `BehaviorAnalysis.read`/`of` results and optional
+`ContractCatalog.of(inventory, behavior.data(), supplied)` results. Construct explicit alignment records
+and persist with `io.poxray.json.Json.write(input, path)`. Input/report records live in `io.poxray.model`.
+Component order and types:
+
+| Record | Components |
+|---|---|
+| `BehaviorComparisonInput` | `int formatVersion, List<Implementation> implementations, List<Alignment> alignments` |
+| `Implementation` | `String id, String label, BehaviorReport behavior, ContractCatalogReport contracts` |
+| `StepRef` | `String implementation, BpmPathReport.ProcessKey process, int step` |
+| `Alignment` | `String id, String label, String status, List<StepRef> steps, List<Evidence> evidence` |
+| `Evidence` | `String kind, String source, String locator, String status` |
+
+The latter four are nested in `BehaviorComparisonInput`. Its format version is `1`. StepRef.step is
+the original path Step.ordinal, copied as reported; ProcessKey has input/component/process components.
+An ordinal of 2 at list index 1 remains 2 in StepRef. Never convert source ordinals to list indices.
+Null top-level list fields normalize to immutable empty lists; nullable members remain diagnostic data.
+Nested records and embedded reports snapshot collections through their constructors.
+
+`Implementation` uses a comparison-local snapshot serializer for embedded behavior/contracts, retaining
+empty arrays and nulls distinctly. This preserves source report structure through the comparison envelope;
+it changes neither global `Json` behavior nor standalone P3/P4 serialization. Null reports express missing
+coverage, never an empty-system assertion.
+
+| Report record | Components |
+|---|---|
+| `BehaviorComparisonReport` | `int formatVersion, String analysisVersion, List<BehaviorComparisonInput.Implementation> implementations, List<Row> rows, List<Context> contexts, List<Issue> issues` |
+| `Row` | `String id, String alignment, String label, String status, List<BehaviorComparisonInput.Evidence> evidence, List<Cell> cells` |
+| `Cell` | `int implementation, BehaviorComparisonInput.StepRef step, String state, List<Facet> facets, List<String> reasons` |
+| `Facet` | `String kind, List<String> pointers, String state, List<String> reasons` |
+| `Context` | `int implementation, List<Facet> facets, List<String> reasons` |
+
+Row/Cell/Facet/Context are nested in the report. Output format is `1`, analysisVersion
+`behavior-comparison-v1`. Lists are immutable, null list inputs normalize empty, and new records serialize
+null scalars and empty arrays explicitly. Original implementations and column order remain in the report.
+Cell/Context implementation numbers are zero-based column indices, not implementation IDs.
+
+### Behavior comparison alignment
+
+Implementation and alignment IDs must be nonblank and unique, using exact case-sensitive comparison.
+Display labels/names never align steps. Each StepRef must resolve to one implementation, one exact
+ProcessKey and one occurrence of the original step ordinal. Each row may select at most one step per
+column; an empty member list is invalid. A step occurrence used by more than one row invalidates all
+affected rows before any consumption, even when one of those rows is otherwise invalid.
+
+Alignment status `candidate` needs at least one evidence record with nonblank kind/source/locator/status.
+`confirmed` additionally needs a qualifying record with status `confirmed`. This is attributed supplied
+confirmation, not authenticity checking, semantic equivalence, runtime proof or plan approval. Malformed
+supplemental evidence produces diagnostics while a separately qualifying evidence item can still support
+the row. Original evidence remains attached; unsupported status or missing qualifying proof invalidates it.
+
+Rows retain input alignment order and have IDs `alignment:<zero-based-list-index>`, original alignment
+ID/label, status `candidate`, `confirmed` or `invalid`, and all original columns. An unambiguous selected
+cell has state `source-step`; unselected columns have null step, `not-aligned` and empty facets/reasons.
+Selected cells in invalid rows carry `invalid-alignment`. Invalid rows consume no source occurrences.
+After alignment rows, all unconsumed supported path occurrences appear in source order, including
+disconnected steps, as `unmatched:<column>:<process-list-index>:<step-list-index>` with status `unmatched`.
+These ID suffixes are list positions, not reported process/step ordinals. Duplicate occurrences are retained.
+
+Missing input or unsupported comparison formatVersion yields an error diagnostic and no rows, while
+preserving implementation contexts. Unsupported source ancestors may prevent occurrence enumeration;
+an empty row list therefore never establishes absent behavior. Diagnostics for invalid input use
+`BEHAVIOR_COMPARISON_INPUT`; association problems use `BEHAVIOR_COMPARISON_ASSOCIATION`, with implementation
+column attribution. Upstream issues are propagated with their source pointer and column; original embedded
+reports remain available. Diagnostic severity does not itself turn the inspection into an exit-status gate.
+
+### Behavior comparison facets and context
+
+Each selected source-step cell carries these eight facets in order:
+
+| Kind | Selected source evidence |
+|---|---|
+| `presence` | Original path Step, including scope/location/connectivity/reasons |
+| `conditions` | Incident arcs whose endpoint candidates contain the step location; condition/default flags and endpoint uncertainty |
+| `data` | Exact data step, before/after candidates, referenced declarations, mappings and reads |
+| `loops` | Loops whose host locations contain the step location |
+| `faults` | Associated owner/event declarations |
+| `calls` | Exact call record for the step |
+| `channels` | Call/interface associations, ICO matches and channel-use/configuration candidates |
+| `contracts` | Contracts with attributed ports, producer or consumer StepRefs for this step |
+
+Pointers are JSON Pointers relative to the original Implementation object, such as
+`/behavior/data/paths/processes/0/steps/1`. Pointer/list positions are zero-based; source ordinal values
+inside those records are unchanged. Selected pointer order follows source order. `presence` is
+`available` for a retained step even if its source reasons remain; other facets are `candidate` only
+with evidence and no reasons, otherwise `unknown`. Valid pointers remain alongside defects. No associated
+evidence gives an explicit reason; it never proves runtime absence.
+
+Path occurrence enumeration requires formatVersion 1 on behavior, data and paths. Fault/catalog support
+is checked independently with formatVersion 1. Analysis-version strings remain in the embedded reports;
+they are not alternative matching keys. Unsupported facet evidence does not suppress supported siblings.
+Data and faults require unique process identity plus equal non-null `dc`, `id`, `source` ancestry fields.
+Fault input ordinal must uniquely identify equal path/fault input records. Data and call steps require
+exact ordinal and source location. Associated declarations, mappings, interfaces, ICOs and channels must
+resolve uniquely where followed; no name or first-match fallback is used.
+
+Contract step claims require the catalog's non-null data snapshot to equal behavior.data. Ports, producers
+and consumers match exact process key and reported step ordinal. A source-only catalog with no step
+claims remains contextual; it requires no invented ancestry association and produces no ancestry error
+merely for lacking one. Unbound catalog declarations do not attach to every step.
+
+Each original column also has Context facets `data-context`, `fault-context`, `configuration-context`,
+`wiring-context`, `contract-context`, pointing respectively to behavior data/faults/integration/processes
+and the contract catalog when present. Context is explicitly implementation-level, not step-bound.
+It retains evidence that cannot safely be associated, including unsupported raw reports. Source reasons
+and unknowns remain; global configuration is never broadcast to every step.
+
+Markdown renders the full matrix, supplied status/evidence, facet pointers and original JSON values,
+followed by contexts and diagnostics. Pipes, angle brackets, ampersands and line breaks are escaped.
+Conditions/defaults/scope/data are shown as evidence, not reduced to a list of differences. No runtime
+equivalence, approval, importability or deployment verdict is computed.
+
+### Behavior comparison delivery
+
+CLI: `po-xray compare-behavior <comparison.json> [--json]` reads the embedded local input. Default stdout
+is Markdown; `--json` returns the full report. Missing/unreadable/malformed JSON or incompatible embedded
+shapes fail with stderr and exit 1. Representable semantic diagnostics return the report with exit 0:
+inspect issues and unknowns rather than treating success as readiness.
+
+MCP: `behavior_comparison(inputPath)` uses the same reader, with readOnlyHint true and openWorldHint false.
+It returns compact JSON inline through 80,000 characters. Larger results use the existing `message`/`file`
+envelope pointing to complete indented `<temp>/po-xray/behavior_comparison-*.json`; nothing is truncated.
+Input/read/binding failures and spill failures become ToolCallException. The spill is the only output-file
+side effect; input JSON and referenced sources remain unchanged. Neither wrapper opens embedded evidence
+locators or calls remote systems. These APIs describe implemented offline delivery, not MCP-server reload,
+native executable verification or customer runtime validation.
+
 ### `po-xray dossier-check <dossier.json> [--baseline <previous.json>] [--json]` → `DossierReport`
 
 MIG-23/P1, extended compatibly by MIG-24/P2: `io.poxray.migration.DossierValidator` provides a read-only

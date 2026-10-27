@@ -74,7 +74,7 @@ A human task ends the migration as out of scope (spec §12 P-5; SKILL.md, "Human
 
 ## Orchestration outside the pipeline
 
-Link private `contracts.md` for request/response/fault, default/API producers and structural before/after evidence; follow [the contract handoff](contracts.md#data-and-producers).
+Link private `contracts.md` for request/response/fault, default/API producers and structural before/after evidence; follow [the contract handoff](contracts.md#data-and-producers). Compare implementations via [explicit alignment](comparison.md).
 
 What phase 2 records, per step classified as orchestration outside the pipeline, in `analysis.md`:
 

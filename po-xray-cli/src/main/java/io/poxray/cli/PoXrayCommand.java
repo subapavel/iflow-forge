@@ -15,7 +15,7 @@ import org.aesh.command.invocation.CommandInvocation;
         groupCommands = {JsonCommand.class, DocCommand.class, ExportCommand.class, ComponentsCommand.class,
             IcoCommand.class, SearchCommand.class, ShowCommand.class, WhereUsedCommand.class, IflowCommand.class,
             UnpackCommand.class, BpmFunctionsCommand.class, AttributesCommand.class, BpmInventoryCommand.class,
-            DossierCheckCommand.class, BehaviorCommand.class})
+            DossierCheckCommand.class, BehaviorCommand.class, CompareBehaviorCommand.class})
 public class PoXrayCommand implements Command<CommandInvocation> {
 
     @Override
