@@ -22,8 +22,12 @@ final class Reports {
     }
 
     static ScaInventory.Generator generator() {
-        return new ScaInventory.Generator(PoXray.NAME, PoXray.VERSION,
-                Instant.now().truncatedTo(ChronoUnit.SECONDS).toString());
+        return new ScaInventory.Generator(PoXray.NAME, PoXray.VERSION, timestamp());
+    }
+
+    /** The current instant, ISO-8601 UTC truncated to seconds (the format of {@link #generator()}'s time). */
+    static String timestamp() {
+        return Instant.now().truncatedTo(ChronoUnit.SECONDS).toString();
     }
 
     /** Reads {@code file} as {@code type}; a missing file or a parse error is an {@link IOException} naming it. */

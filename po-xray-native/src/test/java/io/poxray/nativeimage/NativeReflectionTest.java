@@ -62,6 +62,16 @@ class NativeReflectionTest {
     }
 
     @Test
+    void exportProvenanceInputAndManifestRecordsAreRegistered() {
+        RegisterForReflection reg = NativeReflection.class.getAnnotation(RegisterForReflection.class);
+        Set<String> registered = Stream.concat(Arrays.stream(reg.targets()).map(Class::getName),
+                Arrays.stream(reg.classNames())).collect(Collectors.toSet());
+        for (String name : java.util.List.of("ExportProvenanceInput", "ExportProvenanceInput$ArtifactInput",
+                "ExportProvenanceInput$VersionObservation", "ExportManifest", "ExportManifest$FileDigest"))
+            org.junit.jupiter.api.Assertions.assertTrue(registered.contains("io.poxray.model." + name), name);
+    }
+
+    @Test
     void allModelClassesAreRegistered() throws IOException, URISyntaxException {
         RegisterForReflection reg = NativeReflection.class.getAnnotation(RegisterForReflection.class);
         Set<String> registered = Arrays.stream(reg.targets()).map(Class::getName).collect(Collectors.toSet());

@@ -20,6 +20,8 @@ import io.poxray.model.BpmInventoryReport;
 import io.poxray.model.BpmPathReport;
 import io.poxray.model.BpmSourceEvidence;
 import io.poxray.model.ContractCatalogInput;
+import io.poxray.model.ExportManifest;
+import io.poxray.model.ExportProvenanceInput;
 import io.poxray.model.ContractCatalogReport;
 import io.poxray.model.BuiltinFunction;
 import io.poxray.model.DataType;
@@ -60,6 +62,8 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
             BehaviorComparisonInput.StepRef.class, BehaviorComparisonInput.Alignment.class, BehaviorComparisonInput.Evidence.class,
             BehaviorComparisonReport.class, BehaviorComparisonReport.Row.class, BehaviorComparisonReport.Cell.class,
             BehaviorComparisonReport.Facet.class, BehaviorComparisonReport.Context.class,
+            ExportProvenanceInput.class, ExportProvenanceInput.ArtifactInput.class,
+            ExportProvenanceInput.VersionObservation.class, ExportManifest.class, ExportManifest.FileDigest.class,
             ContractCatalogInput.class, ContractCatalogInput.Evidence.class, ContractCatalogInput.StepRef.class,
             ContractCatalogInput.ArtifactClaim.class, ContractCatalogInput.PortClaim.class,
             ContractCatalogInput.ValueClaim.class, ContractCatalogInput.ContractClaim.class,

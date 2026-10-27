@@ -62,15 +62,27 @@ public class ScaService {
 
     /** Renders the documentation in the requested formats into {@code dir}; returns the written files. */
     List<Path> documentation(ScaInventory inv, String sca, String format, String lang, Path dir) {
-        List<DocFormat> formats = switch (format) {
+        Locale locale = Locale.forLanguageTag(lang);
+        return formats(format).stream()
+                .map(f -> write(documentationPath(sca, f, dir), Documentation.render(inv, f, locale)))
+                .toList();
+    }
+
+    /** The files {@link #documentation} writes for {@code format}, in its order, without writing anything. */
+    List<Path> documentationPaths(String sca, String format, Path dir) {
+        return formats(format).stream().map(f -> documentationPath(sca, f, dir)).toList();
+    }
+
+    private static List<DocFormat> formats(String format) {
+        return switch (format) {
             case "markdown" -> List.of(DocFormat.MARKDOWN);
             case "jira" -> List.of(DocFormat.JIRA);
             default -> List.of(DocFormat.MARKDOWN, DocFormat.JIRA);
         };
-        Locale locale = Locale.forLanguageTag(lang);
-        return formats.stream()
-                .map(f -> write(dir.resolve(baseName(sca) + f.extension()), Documentation.render(inv, f, locale)))
-                .toList();
+    }
+
+    private static Path documentationPath(String sca, DocFormat format, Path dir) {
+        return dir.resolve(baseName(sca) + format.extension());
     }
 
     Path write(Path file, String content) {

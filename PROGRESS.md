@@ -1239,3 +1239,15 @@ Skips: 24 missing testdata + 2 unset kb.forbidden; not verified coverage. No Dos
 Deviation: the requested clean deleted earlier target/mig-p6a-* logs, baselines and mig-p5 patch; earlier PROGRESS results stand as recorded.
 Staging selective: MIG-35 source/tests/packet, P6 PROGRESS hunk, MIG-35..37 BACKLOG rows, plan, HANDOFF. CODEX-01/MIG-07/D-046/governance left unstaged.
 MIG-36 draft packet uncommitted, revision2 preflight unfinished; MIG-37 and P7 not started. No push.
+
+## MIG-36 acceptance · 2026-10-27 · committed locally
+Owner asked to continue MIG-36. Preflight r2 FAIL4 (preflight owner, collision scope, link/"exists", Issue codes); second FAIL → architect revision3 R1–R8; r3 PASS.
+Architect read/approved 15 red tests (core9/CLI5/native1); author + independent EXECUTED_FAIL compile red on new types; target/mig-p6b-independent-red-*.log.
+Deviation: test-author validated assertions with a throwaway scratch implementation and briefly overwrote ~/.m2 core SNAPSHOT jars (reinstalled from HEAD copy).
+Implementation: model ExportProvenanceInput/ExportManifest, migration ExportMetadata(+Descriptor/Paths), Reports.timestamp, ScaService.documentationPaths, ExportCommand --provenance-input, native registry.
+Context7 not exposed to implementer subagent (ENVIRONMENT_BLOCKED); javap fallback on ~/.m2 jars before code. Stricter path choices recorded in packet.
+Code review r1 FAIL1: preflight checked normalized paths, export used raw ones (POSIX `..`-after-link). Regression optInUsesOneNormalizedPathSet… independent red 6/1/0/0.
+Fix ExportCommand.withProvenance only; review r2 PASS. Non-blocking open: root-path NPE in create, colon-in-name rejection, trailing-dot aliasing, untested BLOCKED/FAILED branches.
+Independent `mvn -B -ntp verify` (no clean) VERIFIED_PASS exit0 729/0/0/26 (core568/22,native14/0,cli59/1,mcp16/1,kb72/2); target/mig-p6b-final-reactor.log tail read.
+Skips: 24 missing testdata + 2 unset kb.forbidden, grouped from XML; not verified coverage. Packaged CLI smoke VERIFIED_PASS 5/5, inputs unchanged; target/mig-p6b-final-smoke.log.
+Native executable and full forbidden-values NOT_RUN. Agent-memory edits (implementer/test-author) left unstaged: not in packet allowed paths. MIG-37/P7 not started; no push.
