@@ -36,8 +36,9 @@ rozšíření souhlasu z umístění validace na její pravidla.
 - Pozorováno `main`, HEAD `1a258867118d5418f334017114d279627c9e6a01`, jediný worktree.
 - Před auditem existovaly změny `AGENTS.md`, `CLAUDE.md`, `PROGRESS.md`,
   `agent/BACKLOG.md`, `agent/HANDOFF.md`, `docs/DECISIONS.md`, `docs/WORKFLOW.md`
-  a untracked `docs/CODEX-WORKFLOW.md`. Návrh je zachovává a používá skutečný
-  lokální override; samotný HEAD proto nepopisuje všechna platná pravidla.
+  a untracked `docs/CODEX-WORKFLOW.md` (now `docs/LOCAL-WORKFLOW.md`, D-057). Návrh je
+  zachovává a používá skutečný lokální override; samotný HEAD proto nepopisuje všechna
+  platná pravidla.
 - MIG-20 má core discovery; MIG-21 CLI je ready, MIG-22 intake pending.
   Jejich historické výsledky nejsou znovu spuštěné testy tohoto auditu.
 - Prohlédnuty canonical skill, reference a šablony, migrační spec, workflow,
@@ -57,7 +58,7 @@ Soukromý záznam rozhodnutí je důkazem zaznamenaného rozhodnutí, nikoli run
 | Problém a klasifikace | Konkrétní důkaz současného stavu | Dopad | Navržená změna a místo |
 |---|---|---|---|
 | Všechny otázky před celým plánem — R | `skills/sap-po-migration/SKILL.md:31–37`; `references/questions.md:22,52–60`; spec 2026-10-20 §7 a P-4: při čekání žádná analýza, neznámé se nikdy neodkládá | Lokální nejistota zastaví nezávislý návrh | P2: SKILL, questions/plan/intake/attributes/bpm reference, question template a původní spec; blokovat podle závislosti a milníku |
-| Automatický souhlas s předpokladem — A a rozpor R | `references/questions.md:47` už zakazuje zapsat návrh jako odpověď; `docs/CODEX-WORKFLOW.md:61–63` ponechává nejistoty otevřené, zatímco questions:52–55 vyžaduje předpoklad; M-1/E01 zachycuje opravu vlastníka | Domněnka může působit jako schválení či zjištěný fakt | P1/P2: souhlas vždy s lokátorem odpovědi a konkrétním rozsahem; neznámá skutečnost zůstává neznámá |
+| Automatický souhlas s předpokladem — A a rozpor R | `references/questions.md:47` už zakazuje zapsat návrh jako odpověď; `docs/LOCAL-WORKFLOW.md:66–68` ponechává nejistoty otevřené, zatímco questions:52–55 vyžaduje předpoklad; M-1/E01 zachycuje opravu vlastníka | Domněnka může působit jako schválení či zjištěný fakt | P1/P2: souhlas vždy s lokátorem odpovědi a konkrétním rozsahem; neznámá skutečnost zůstává neznámá |
 | Historie bez kontrolovaného aktuálního stavu — T/R; stale handoff — A | `references/questions.md:3` a `references/plan.md:36,44` chrání historii; žádný dossier validátor nebyl nalezen. M-1/E02: Q-23 nahrazuje pojmenování, continuation a shared design ještě nesou staré. Hlavička spec 2026-10-20 říká „nothing here is built yet“, přesto MIG-01–06 mají done | Agent může znovu použít nahrazenou volbu nebo znovu otevřít uzavřenou diskusi | P1: append-only události, explicitní nahrazení, revize sekcí, odvozený stav a hlášení stale podkladů |
 | Souhlas s celým kolem místo jednotlivé části — R | `references/plan.md:43–45`: souhlas platí pro všechny scénáře kola; `templates/scenario.md:76`: specifikace není schválena samostatně | Souhlas s umístěním validace nelze bezpečně přenášet na obsah pravidel | P1/P2: schválení seznamu částí/revizí; integrační milník zvlášť |
 | Inventář zaměněn za chování — T/A; část podkladů již V | `references/bpm.md:14,65–71` nařizuje číst uzly, podmínky a chyby; veřejný model obsahuje Flow, initialValue i assignments. Chybí souvislý report dosažitelnosti, původu hodnot a hranic chyb. M-1/E03 rozlišuje pre-process větev a procesní fault; runtime větve s optional boolean zůstává neznámý | Přítomný artefakt je zaměněn za zapojený; missing může být nepravdivě vyložen jako false | P3: `po-xray-core` bpm/model/integration/migration, výstupní model, CLI/MCP, syntetické testy; parsovat pouze prokázané mezery |
@@ -66,8 +67,8 @@ Soukromý záznam rozhodnutí je důkazem zaznamenaného rozhodnutí, nikoli run
 | Provenience a verze — V částečně, T/R pro jednotný model | `templates/profile.md:23–34`, `references/questions.md:29` už oddělují rozhodnutý update od pozorované instalace; D-029 rozlišuje artifact/external/owner. M-1/E05 správně uvádí export ≠ deployment a úspěšné volání ≠ cache | Volné texty nebrání záměně důkazních kategorií napříč dokumenty | P6: zdroj, verze, scope a omezení důkazu jako samostatná pole; schválení není technický důkaz |
 | Nový balíček není ve staré KB — R | `SKILL.md:8,25`, `references/questions.md:48`, `references/plan.md:30–31` dovolují pipeline tvrzení jen přes KB/pattern, jinak globálně znovu otázky | Doložená nová vlastnost nemá přímou lokální cestu do návrhu | P6: přezkoumaný soukromý evidence packet jako další citace; generalizaci do KB zvlášť a beze změny původní evidence |
 | Cílený PoC a strop složitosti — R/T; vlastní přijaté riziko již V | M-1/E06: doložený malý PoC, vlastník omezuje obnovování stavu a další blokující průzkum; systém nemá pole pro trigger znovuotevření rizika | Diskuse může znovu navrhovat již odmítnutou provozní odpovědnost | P2/P6: samostatná přijatá rizika, limit složitosti a karta experimentu |
-| Delegování každého zápisu — výklad A, výkon NEPROKÁZÁN | `docs/CODEX-WORKFLOW.md:14–20` dává architektovi ledgery/rozhodnutí/findings, autorovi migrační evidenci. M-1/E07 neobsahuje časové měření | Zbytečné předávky jsou plausibilní, audit neprokázal jejich cenu | P1/P7: vyjasnit hranici ledger versus odborný obsah; bez změny rolí pro kód, testy a KB |
-| Povinný cloud/field branch pro lokální opravu — V | `docs/CODEX-WORKFLOW.md:44–50,90–91`, D-046 | Toto není důvod pro další výjimku | Zachovat lokální override; neobnovovat již zrušenou překážku |
+| Delegování každého zápisu — výklad A, výkon NEPROKÁZÁN | `docs/LOCAL-WORKFLOW.md:18–24` dává architektovi ledgery/rozhodnutí/findings, autorovi migrační evidenci. M-1/E07 neobsahuje časové měření | Zbytečné předávky jsou plausibilní, audit neprokázal jejich cenu | P1/P7: vyjasnit hranici ledger versus odborný obsah; bez změny rolí pro kód, testy a KB |
+| Povinný cloud/field branch pro lokální opravu — V | `docs/LOCAL-WORKFLOW.md:49–55,95–96`, D-046 | Toto není důvod pro další výjimku | Zachovat lokální override; neobnovovat již zrušenou překážku |
 
 `references/…` a `templates/…` v tabulce jsou relativní ke `skills/sap-po-migration/`.
 Rozsah „nenalezeno“ je prohlédnutý checkout, ne tvrzení o všech externích nástrojích.

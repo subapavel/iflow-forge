@@ -2,7 +2,7 @@
 
 Status: prepared; start only after implementation writer releases ownership.
 Base cb81f95; canonical contract is mig-27-p3b-data-packet.md revision2 and approved43 tests.
-Read CODEX-WORKFLOW first; one writer, no nested delegation/private inputs/git/ledger edits.
+Read LOCAL-WORKFLOW first; one writer, no nested delegation/private inputs/git/ledger edits.
 
 Allowed edits: docs/OUTPUT-MODEL.md and skills/sap-po-migration/references/bpm.md only.
 Inputs: canonical packet, implemented BpmDataAnalysis/BpmDataReport/helpers and approved tests.

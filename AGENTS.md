@@ -1,8 +1,9 @@
 # iflow-forge — agents, ownership, evidence
 
-**Codex sessions:** read [the Codex workflow override](docs/CODEX-WORKFLOW.md) first.
-It takes precedence over conflicting Claude model, cloud-loop and local-field restrictions below;
-the original Claude protocol remains unchanged for Claude sessions.
+**Local, owner-led sessions (any agent):** read
+[the local workflow override](docs/LOCAL-WORKFLOW.md) first. It takes precedence over
+conflicting model, cloud-loop and local-field restrictions below; the unattended protocol in
+`docs/WORKFLOW.md` remains unchanged for unattended runs.
 
 Every agent and tool working in this repository (Claude Code, its subagents, any other) follows
 `CLAUDE.md`; this file adds who does what and what counts as evidence. The full protocol is

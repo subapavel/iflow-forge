@@ -1,7 +1,7 @@
 # MIG-28 — source event/fault report documentation
 
 Status: prepared; begin only after source implementation writer releases ownership.
-Read CODEX-WORKFLOW first. Canonical contract: mig-28-p3c-faults-packet.md revision2,
+Read LOCAL-WORKFLOW first. Canonical contract: mig-28-p3c-faults-packet.md revision2,
 independent preflight PASS; source/tests govern actual claims. Owner scope ends after P3.
 
 Allowed edits: docs/OUTPUT-MODEL.md and skills/sap-po-migration/references/bpm.md only;

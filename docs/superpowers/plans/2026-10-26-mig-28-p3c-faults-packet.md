@@ -5,7 +5,7 @@ Base: 0c5c6a0b422caa87b6c22c969d33cc5efe2614db (MIG-27 accepted data report).
 Owner narrowed execution to completing P3 and stopping; P4–P7 will not be implemented. This P3c1 slice precedes P3c2 configured
 integration/composite CLI/MCP delivery. It does not complete P3 or resume MIG-21/MIG-22.
 
-Read docs/CODEX-WORKFLOW.md first. Architect owns this packet/ledgers; separate test-author,
+Read docs/LOCAL-WORKFLOW.md first. Architect owns this packet/ledgers; separate test-author,
 implementer, verifier and reviewers. One writer, at most two subagents, no nested delegation.
 Use actual available model, inherited; record unknown if not known. No private fixtures/tenant
 operations/deployment/push. All parser tests use real synthetic MOIN/SCA input.

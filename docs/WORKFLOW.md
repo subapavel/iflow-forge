@@ -1,8 +1,10 @@
 # Workflow — autonomous execution protocol
 
-**Codex sessions:** [CODEX-WORKFLOW.md](CODEX-WORKFLOW.md) is the binding override for local,
-user-led work. It supersedes conflicting model, unattended-loop, field-only, git and evidence
-requirements below. This original protocol and its historical decisions remain intact for Claude.
+**Local, owner-led sessions (any agent):** read
+[the local workflow override](LOCAL-WORKFLOW.md) first.
+It is the binding override for local, owner-led work and supersedes conflicting model,
+unattended-loop, field-only, git and evidence requirements below. This original protocol and its
+historical decisions remain intact for unattended runs.
 
 Agreed on 2026-10-19. Taken from `subapavel/flottila` `docs/WORKFLOW.md` (bounded tasks, evidence
 states, handoff, roles) and adapted to a repository where half of the work is content (knowledge

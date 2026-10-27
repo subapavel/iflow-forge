@@ -10,7 +10,7 @@ Public report/types are draft for owner review at hand-over.
 
 ## Ownership, source boundaries and purpose
 
-Read CODEX-WORKFLOW first. Architect designs/approves separately authored tests; implementer
+Read LOCAL-WORKFLOW first. Architect designs/approves separately authored tests; implementer
 writes source; independent verifier and reviewer follow. At most two workers, exactly one writer.
 No private-input reads, tenant operations, deployment, push, new language or dependency.
 Context7 resolve/query precedes library-dependent code, with exact resolved-runtime evidence

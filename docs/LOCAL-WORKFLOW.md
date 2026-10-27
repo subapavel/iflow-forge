@@ -1,11 +1,15 @@
-# Codex workflow — local continuation and migration pilots
+# Local workflow override
 
-This override applies to Codex sessions. Read it before [CLAUDE.md](../CLAUDE.md),
+Formerly docs/CODEX-WORKFLOW.md (renamed 2026-10-27, D-057).
+
+This override applies to local, owner-led sessions run by any coding agent (Codex, Claude Code,
+Gemini CLI, Copilot or another). Read it before [CLAUDE.md](../CLAUDE.md),
 [AGENTS.md](../AGENTS.md) and [WORKFLOW.md](WORKFLOW.md). It supersedes only conflicting
 execution rules in those files, `.claude/agents/` and the
 [migration skill](../skills/sap-po-migration/SKILL.md), including its field-branch requirement.
-The original Claude mode and historical decisions remain preserved. User instructions govern
-the requested scope; all other design, privacy, phase-gate and evidence requirements still apply.
+The unattended protocol in docs/WORKFLOW.md and historical decisions remain preserved. User
+instructions govern the requested scope; all other design, privacy, phase-gate and evidence
+requirements still apply.
 
 ## Roles and bounded delegation
 
@@ -18,19 +22,20 @@ the requested scope; all other design, privacy, phase-gate and evidence requirem
   evidence to a migration author. Their packets explicitly name allowed paths, inputs,
   deliverables, acceptance criteria and checks. This does not grant source or knowledge-page
   ownership; those changes use the existing specialist roles.
-- Use at most two subagents beside the architect, exactly one writer at a time, no nested
-  delegation, agent teams or scheduled loops. During a writer's task nobody else edits files,
-  ledgers or git. Read-only verification may write only its designated evidence logs.
+- Use at most two subagents beside the architect (through the agent's subagent or delegation
+  mechanism), exactly one writer at a time, no nested delegation, agent teams or scheduled
+  loops. During a writer's task nobody else edits files, ledgers or git. Read-only
+  verification may write only its designated evidence logs.
 - Use the session's available model, inherited by default. Record the actual model when known;
-  otherwise record it as unknown. Never pass unavailable Claude model names to Codex calls,
-  claim Claude performed the work, or invent a model mapping.
+  otherwise record it as unknown. Never pass model names the agent cannot use to its delegation
+  calls, claim another model or product performed the work, or invent a model mapping.
 - Existing `.claude/agents/` role guidance applies subject to this override and each explicit
-  allowed-path packet; its Claude model and runtime declarations are descriptive in Codex.
+  allowed-path packet; its model and runtime declarations are descriptive in a local session.
   Resume the same author or reviewer for corrections when available.
   Handbacks stay within 40 lines; authors never edit ledgers or commit. Any durable memory
   update must be explicitly included in the packet's allowed paths.
 
-## User-led local work
+## Owner-led local work
 
 - Read HANDOFF and the relevant BACKLOG rows for context; inspect the actual checkout, branch,
   worktrees and uncommitted work before changing anything. Reuse a suitable existing worktree.
@@ -40,7 +45,7 @@ the requested scope; all other design, privacy, phase-gate and evidence requirem
   campaign or discard local changes because the old loop prescribes it.
 - Work through the authorized task, report results and ask one question at a time when an
   owner decision is needed. The unattended prohibition on asking and its two terminal states
-  do not govern a user-led session. A pilot request does not waive product phase gates.
+  do not govern an owner-led session. A pilot request does not waive product phase gates.
 - Product repairs needed within the requested scope may be implemented locally through normal
   acceptance specs, observed red tests, Context7 lookup before library-dependent code,
   bounded implementation, verification and independent review. Local execution is not restricted
@@ -85,7 +90,7 @@ the requested scope; all other design, privacy, phase-gate and evidence requirem
   retain their module checks, citations and independent kb-reviewer. Gate rows retain independent
   gate review. Applicable forbidden-values checks and approved skip restrictions still apply.
 - Commit only within the user's authorized scope after verification and review. Preserve
-  Conventional Commits, task references and truthful evidence; never add a false Claude
+  Conventional Commits, task references and truthful evidence; never add a false model or agent
   coauthor or change the owner's identity to imitate the cloud environment.
 - Do not automatically fetch, merge, push, create remote requests or perform other remote
   mutations because the old loop says to. Execute those only within explicit user authorization.

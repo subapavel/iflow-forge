@@ -3,7 +3,7 @@
 Status: ACCEPTED2026-10-27; code reviewr2/finaldocs PASS,54new tests pass. Independent root623/0/0/26,exit0; fresh packagedCLI8/8. P3 complete; stop perD053.
 Base: 3e2b716a5ca43a81a39b31ac234715c5c81fd55f (accepted MIG-28; independentroot569/0/0/26).
 Scope D-053: complete P3 and stop. No P4–P7, no MIG-21 discover command or MIG-22 campaign.
-Read docs/CODEX-WORKFLOW.md first. Separate test author, one writer, no nested delegation.
+Read docs/LOCAL-WORKFLOW.md first. Separate test author, one writer, no nested delegation.
 
 ## Purpose and sources
 Compose accepted source paths/data/fault declarations with existing ScenarioDiscovery and original

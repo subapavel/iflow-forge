@@ -2,7 +2,7 @@
 
 Status: accepted after implementation release; independent documentation review r1 PASS and final root checks passed.
 Base: 125865f; governing source contract is the sibling mig-25-p3a-packet.md, D-050.
-Read docs/CODEX-WORKFLOW.md first. One writer, no nested delegation, no git or ledger edits.
+Read docs/LOCAL-WORKFLOW.md first. One writer, no nested delegation, no git or ledger edits.
 
 ## Allowed paths and inputs
 

@@ -2,7 +2,7 @@
 
 Status: prepared; documentation author starts only after implementation writer releases ownership.
 Base c8b4f86; exact source contract is mig-26-p3b-paths-packet.md revision2 with approved tests.
-Read CODEX-WORKFLOW first; one writer, no nested delegation, private data, git or ledger edits.
+Read LOCAL-WORKFLOW first; one writer, no nested delegation, private data, git or ledger edits.
 
 Allowed edits: docs/OUTPUT-MODEL.md and skills/sap-po-migration/references/bpm.md only.
 Inputs: canonical packet, implemented BpmPathAnalysis/BpmPathReport and approved tests. No

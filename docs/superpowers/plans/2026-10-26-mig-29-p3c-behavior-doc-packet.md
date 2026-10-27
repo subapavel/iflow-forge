@@ -1,6 +1,6 @@
 # MIG-29 — final P3 behavior delivery documentation
 Status: ACCEPTED2026-10-27; final independent docs/source consistency PASS, root Budget/Cites/SkillMirror PASS; bpm1470/intake1459 words.
-Read CODEX-WORKFLOW first and MIG-29 behavior packet, final source/tests and MIG-28 output section.
+Read LOCAL-WORKFLOW first and MIG-29 behavior packet, final source/tests and MIG-28 output section.
 Allowed edits ONLY docs/OUTPUT-MODEL.md, skills/sap-po-migration/references/bpm.md,
 skills/sap-po-migration/references/intake.md and README.md. Logs target/mig-p3c-behavior-doc-*.
 No source/tests/ledger/git/privatefiles/skillfrontmatter/pointers/nestedagents; no Maven by author.

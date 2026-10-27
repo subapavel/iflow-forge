@@ -1,8 +1,10 @@
 # iflow-forge — rules for Claude
 
-**Codex sessions:** read [the Codex workflow override](docs/CODEX-WORKFLOW.md) first.
+**Local, owner-led sessions (any agent):** read
+[the local workflow override](docs/LOCAL-WORKFLOW.md) first.
 Its local execution, delegation and evidence rules override conflicting clauses here and in
-the migration skill; the remaining design rules and the original Claude mode still apply.
+the migration skill; the remaining design rules still apply, and the unattended protocol in
+`docs/WORKFLOW.md` stays intact for unattended runs.
 
 Read before any work: this file, `AGENTS.md`, `agent/HANDOFF.md` and the task's row in
 `agent/BACKLOG.md`. `docs/WORKFLOW.md` §1 is the loop. The binding design of the part being built is

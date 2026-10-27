@@ -1278,3 +1278,11 @@ Owner asked to commit the local workflow override as it stands, then rename it t
 Committed unchanged: docs/CODEX-WORKFLOW.md, entry links in AGENTS.md/CLAUDE.md/docs/WORKFLOW.md, D-046, CODEX-01 row, its intake entry.
 The original review log target/codex-01-review.log was deleted by the MIG-35 clean; independent precommit audit re-run: AUDIT_PASS (paths, privacy grep, links, whitespace).
 MIG-07 row and MIG-07-only PROGRESS entries stay uncommitted (pilot in progress). No Maven run: documentation only. No push.
+
+## MIG-39 acceptance · 2026-10-27 · committed locally
+Owner: the override must not be named after one product; it should work with any coding agent (Codex, Claude Code, Gemini, Copilot).
+Author (general-purpose, single writer): git mv docs/CODEX-WORKFLOW.md → docs/LOCAL-WORKFLOW.md, agent-neutral wording, "owner-led"
+throughout; entry notes in AGENTS.md/CLAUDE.md/docs/WORKFLOW.md; path references in plan packets and the retrospective spec.
+Architect: D-057 (scope widens to local, owner-led sessions of any agent; no rule text added/removed/changed), BACKLOG, plan status.
+Docs review r1 FAIL1 (path swap falsified three dated observations → old name kept with pointer), r2 PASS. Links resolve; ≤100 cols.
+PROGRESS/DECISIONS/CODEX-01 row keep the old name as history. Maven NOT_RUN: governance docs only, no skill/KB page changed. No push.

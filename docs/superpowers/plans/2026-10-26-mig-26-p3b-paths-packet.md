@@ -11,7 +11,7 @@ not a placeholder claiming producer or runtime analysis is implemented.
 
 ## Ownership and limits
 
-Read CODEX-WORKFLOW first. Architect owns design/packet and approves separate red tests;
+Read LOCAL-WORKFLOW first. Architect owns design/packet and approves separate red tests;
 implementer owns source; independent verifier/reviewer follow. Two workers, one writer.
 No private-input reads, tenant operations, deployment, push, new dependencies or languages.
 Context7 resolve/query before library-dependent code; exact resolved-JAR fallback as documented.

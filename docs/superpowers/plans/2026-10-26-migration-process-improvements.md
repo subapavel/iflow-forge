@@ -1,12 +1,12 @@
 # Zlepšení migračního procesu — fázový implementační plán
 
 > **For agentic workers:** Po schválení používat `superpowers:subagent-driven-development`
-> s rolemi a omezeními `docs/CODEX-WORKFLOW.md`. Realizace je omezena na výslovně
+> s rolemi a omezeními `docs/LOCAL-WORKFLOW.md`. Realizace je omezena na výslovně
 > schválené části. Detailní task packety vznikají pouze pro ně.
 
 Nejnovější pokyn vlastníka 2026-10-27 kvůli kreditům: dokončit rozpracované P6a/MIG-35,
 ověřit a lokálně commitnout, potom skončit a předat prompt. MIG-36/MIG-37/P7 nyní nezahajovat.
-Navazující pokyny vlastníka 2026-10-27: po MIG-35 pokračovat MIG-36, poté MIG-37 podle workflow; P7 zatím neschváleno.
+Navazující pokyny vlastníka 2026-10-27: po MIG-35 pokračovat MIG-36, poté MIG-37 podle workflow; poté vlastník schválil P7.
 
 Předchozí navazující pokyn vlastníka 2026-10-27: „pokračuj dále dokud nenapíšu STOP“.
 Po přijetí P4 pokračovat schváleným plánem P5 → P6 → P7; ostatní výluky platí.
@@ -97,9 +97,9 @@ použitelný krok, nezávislý na rozšíření BPM readeru.
 - `po-xray-native` registrace nových report records a její test (doplněno při
   přípravě P1 podle existujícího CLI/native kontraktu; bez nové funkčnosti).
 - Vyjasnit ledger ownership v nové dossier reference odkazem na existující
-  `AGENTS.md#Roles`; Codex override nepotřebuje další výjimku. Původní migrační spec
-  §7/P-8 změnit pouze v odsouhlaseném rozsahu, s changelogem; historická
-  D-034 se nemaže, nová decision row výslovně pojmenuje nahrazené části.
+  `AGENTS.md#Roles`; local workflow override nepotřebuje další výjimku.
+  Původní migrační spec §7/P-8 změnit pouze v odsouhlaseném rozsahu, s changelogem;
+  historická D-034 se nemaže, nová decision row výslovně pojmenuje nahrazené části.
 
 **Rozhraní:** Vstup je versioned ledger + lokální read-only podklady + volitelný
 baseline. Výstup je current state a diagnostiky v JSON/Markdown. CLI návrh je
@@ -267,7 +267,7 @@ packety s měřeným SHA256, přiřazený nezávislý review a přesné scope gu
 MIG-36 (P6b) dokončeno 2026-10-27: volitelný export provenance sidecar `--provenance-input`, preflight
 kolizí/linků před čtením i zápisem, měřené digesty; review r2 PASS po opravě r1, reactor729/0/0/26, CLI smoke5/5.
 MIG-37 (P6c) dokončeno 2026-10-27: references/evidence.md, templates/experiment.md, profil, citace `[evidence: <use-id>]`
-(D-056, draft), OUTPUT-MODEL a spec P-3/§7/§10; docs review r3 PASS. **P6 dokončeno 2026-10-27**; P7 neschváleno.
+(D-056, draft), OUTPUT-MODEL a spec P-3/§7/§10; docs review r3 PASS. **P6 dokončeno 2026-10-27**; P7 schváleno 2026-10-27.
 
 **Přínos:** Nová evidence může návrh zpřesnit bez předstírání podpory ve staré KB;
 úspěch jednoho testu nemění nesouvisející tvrzení na ověřená.
@@ -303,10 +303,14 @@ obnova stavu, nová živá PoC bez vlastního oprávnění, hromadný přepis KB
 
 ## P7 — Orchestrace a pilotní ověření postupu
 
+**Stav 2026-10-27:** MIG-39 (P7b) dokončeno — override přejmenován na `docs/LOCAL-WORKFLOW.md`,
+agentově neutrální (D-057), review r2 PASS. MIG-38 (P7a, soukromý audit M-1 a replay) má
+packet `2026-10-27-mig-38-p7a-packet.md` po preflightu r3b PASS; replay probíhá. P7 není dokončeno.
+
 **Přínos:** Ověřit změny spolu na skutečném dossieru, zachovat důkazy a získat
 pozorování o režii místo nepodložených odhadů.
 
-**Rozsah:** Vyjasnění `docs/CODEX-WORKFLOW.md`, odpovídajících role boundaries
+**Rozsah:** Vyjasnění `docs/LOCAL-WORKFLOW.md`, odpovídajících role boundaries
 a skill routing; oddělený soukromý auditní pohled M-1, ne editace originálů.
 Source behavior, contract/API a pipeline-version specialisté dostanou vždy
 jen potřebný packet. Významný návrh kontroluje jiný agent než jeho autor.
