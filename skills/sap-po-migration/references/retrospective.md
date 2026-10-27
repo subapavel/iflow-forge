@@ -8,7 +8,8 @@ Phase 7 of the flow (spec §7 item 7; [page: docs/superpowers/specs/2026-10-20-m
 2. Read the plan's "Risks and assumptions" of the approved round (`references/plan.md`, "Proposal sections", item 6).
 3. Read `analysis.md` and `intake.md` for the stops, the failed commands and the disagreements noted as lessons (`references/attributes.md`, "Attributes derived from the ICOs", step 3; `references/intake.md`, "Inputs present and missing"), and the missing pipeline facts the question round noted (`references/questions.md`, "Proposed answers and evidence", step 4).
 4. Add what a page, a reference, a template or the tool could not give while working.
-5. Write one line per lesson: the lesson, the phase it hit, its source (`Q-<n>`, a plan section, an `analysis.md` row) and the kind it will be filed as ("Requests by kind"), or "profile" when it only changes the tenant profile.
+5. With a v3 dossier, read the last `po-xray dossier-check <dossier.json> --readiness` output and record which `supported` uses back which plan and specification statements (use ID, section, revision), and which uses ended `unavailable` with their reasons (`references/evidence.md`, "Citing local evidence"). Each "KB difference" a supported use carried is a lesson of kind `kb`; the fact is never generalised locally.
+6. Write one line per lesson: the lesson, the phase it hit, its source (`Q-<n>`, a plan section, an `analysis.md` row) and the kind it will be filed as ("Requests by kind"), or "profile" when it only changes the tenant profile.
 
 ## Tenant profile amendments
 
@@ -16,11 +17,11 @@ The question round already amended the profile rows its answers settled, each wi
 
 1. **Input paths**: a path that changed or was `unknown` at intake and no answer wrote.
 2. **Runtime**: on the first migration, confirm the row written at intake, source `M-<n>, T-<n>` (D-041), or in the question round, source `M-<n>, Q-<n>` (D-037), or write it now if the answer came later.
-3. **Installed pipeline versions**: each version read during the migration, with "read from" and the date; an update available on the tenant with its version and changelog lines (spec §10). A decided update stays the Decisions line of its answer; the row changes only when the update is observed (D-037).
+3. **Installed pipeline versions**: each version read during the migration, with source kind, "read from", scope and the date; an update available on the tenant with its version and changelog lines (spec §10). A decided update stays the Decisions line of its answer; the row changes only when the update is observed (D-037).
 4. **Naming conventions**: for each naming answer (`references/questions.md`, "One question at a time", step 6), confirm the row written at intake, source `M-<n>, T-<n>` (D-041), or in the question round, source `M-<n>, Q-<n>` (D-037), or write it now if the answer came later.
 5. **Partner Directory conventions**: the partner ID form, alternative-partner use and keys the plan settled.
 6. **Decisions**: one line `<yyyy-mm-dd> — M-<n> — <decision>` per tenant-level decision of the migration not yet appended by the question round, appended.
-7. **Tool and skill versions**: the line `M-<n> — runner jar <git hash> — skills/sap-po-migration <git hash>`, the hashes of the commits used.
+7. **Tool and skill versions**: the line `M-<n> — runner jar <git hash> — skills/sap-po-migration <git hash> — <source kind>; <locator or sidecar path>`, the hashes of the commits used, as caller-supplied identity.
 
 Write into `retrospective.md` which profile sections changed.
 
@@ -35,7 +36,7 @@ Write into `retrospective.md` which profile sections changed.
 
 One request per lesson of "What was learned" that the cloud has to act on, filed as `requests/REQ-<n>.md` from `templates/request.md`; `REQ-<n>` is the next free number in the index of `requests/README.md`. The kinds [page: docs/superpowers/specs/2026-10-20-migration-front-end-design.md#8.4 What the retrospective writes]:
 
-- When a page of `knowledge/pipeline/` was wrong, silent or ambiguous, file a `kb` request. The page is not edited locally.
+- When a page of `knowledge/pipeline/` was wrong, silent or ambiguous, file a `kb` request. The page is not edited locally. A KB difference shown by a supported local evidence use is such a request: anonymised, without packet content, paths or event IDs; generalising it into the page is a separate cited, kb-reviewed change.
 - When a phase, reference or template of `sap-po-migration` misled or lacked something, file a `skill` request.
 - When the migration found a generalisable way that another migration can reuse, file a `pattern` request in the form of [page: docs/superpowers/specs/2026-10-20-migration-front-end-design.md#8.3 Pattern catalogue (committed, generic)], anonymised, drafted under `requests/`.
 - When po-xray or a helper could not read or derive something, file a `tool` request; its evidence is a synthetic fixture under `requests/REQ-<n>/`, never the customer's file.

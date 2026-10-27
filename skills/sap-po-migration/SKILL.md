@@ -19,6 +19,7 @@ The migration front end: from a customer's PO artifacts to an approved migration
 | to compare implementation behavior with explicit step alignments | `references/comparison.md` (private analysis/plan evidence) |
 | to track exact approval revisions and project current decisions | optional `references/dossier.md`, `templates/dossier.json` |
 | to continue independent work while questions wait, or check a milestone | opt-in `references/readiness.md`, `templates/dossier-v2.json` |
+| to package, review and cite local evidence, or plan a PoC | `references/evidence.md`, `templates/experiment.md` |
 | to write the scenario specification per pipeline scenario | phase 5, `templates/scenario.md` |
 | the generated package and converted code | phase 6 (placeholder) |
 | to close the migration and file what was learned | phase 7, `references/retrospective.md`, `references/requests.md` |
@@ -26,7 +27,7 @@ The migration front end: from a customer's PO artifacts to an approved migration
 
 ## Two rules
 
-1. **No pipeline claim without a cite.** Every statement about what the pipeline does or needs cites `[page: knowledge/pipeline/<path>#<heading>]` or `[pattern: <id>]`, or it is an item on the open list. A plan statement with neither reopens the question round.
+1. **No pipeline claim without a cite.** Every statement about what the pipeline does or needs cites `[page: knowledge/pipeline/<path>#<heading>]` or `[pattern: <id>]`, or it is an item on the open list. In private `plan.md` and `scenario-<k>.md` only, a statement of the exact section revision a use names may instead cite `[evidence: <use-id>]` when the opt-in v3 dossier check reports that use `supported` (draft, D-056; `references/evidence.md`, "Citing local evidence"); `questions.md` may list such a use only as option evidence, never as the answer. A plan statement with none of these reopens the question round.
 2. **Nothing customer-specific outside `local/` and `testdata/`.** Customer, tenant, system, host and person names, configured values and customer files stay in those two gitignored directories. A committed file names a migration only by its code `M-<n>`.
 
 ## Phases
@@ -50,12 +51,12 @@ Two named stops still apply:
 
 | Phase | Reference |
 |---|---|
-| 1 Intake | `references/intake.md`, `templates/profile.md` |
-| 2 Analysis | `references/intake.md`, `references/attributes.md`, `references/bpm.md`, `references/contracts.md`; `references/comparison.md` for multiple implementations |
-| 3 Question round | `references/questions.md`, `templates/question.md` |
-| 4 Plan | `references/plan.md`, `references/contracts.md`, `references/comparison.md` for supporting comparison evidence |
-| Optional dossier alongside phases 3–5 | `references/dossier.md`; v1 history or opt-in v2 `references/readiness.md`; whole-plan approval remains |
-| 5 Scenario specification | `templates/scenario.md`, `references/contracts.md` (approved catalog bindings) |
+| 1 Intake | `references/intake.md`, `templates/profile.md`, `templates/experiment.md` |
+| 2 Analysis | `references/intake.md`, `references/attributes.md`, `references/bpm.md`, `references/contracts.md`; `references/comparison.md` for multiple implementations; `references/evidence.md`, `templates/experiment.md` |
+| 3 Question round | `references/questions.md`, `templates/question.md`, `references/evidence.md` |
+| 4 Plan | `references/plan.md`, `references/contracts.md`, `references/comparison.md` for supporting comparison evidence, `references/evidence.md` |
+| Optional dossier alongside phases 3–5 | `references/dossier.md`; v1 history, opt-in v2 `references/readiness.md` or opt-in v3 `references/evidence.md`; whole-plan approval remains |
+| 5 Scenario specification | `templates/scenario.md`, `references/contracts.md` (approved catalog bindings), `references/evidence.md` |
 | 6 Artifacts | none yet (placeholder) |
 | 7 Retrospective | `references/retrospective.md`, `references/requests.md`, `templates/request.md` |
 
@@ -65,6 +66,7 @@ Two named stops still apply:
 - `local/<customer>/scenarios/M-<n>/`: the phase outputs of one migration, the scenario library searched at intake.
 - `contracts.md` beside those outputs: private revisioned contract evidence (`templates/contracts.md`), supporting analysis, plan and specification; no separate approval.
 - Optional `dossier.json`, immutable `snapshots/` and generated views stay in the private migration directory; `references/dossier.md` defines ownership, `references/readiness.md` the opt-in dependencies. Existing evidence may remain in the owner's designated external private directory.
+- Evidence packets, their reviews, experiment cards (`templates/experiment.md`) and export provenance sidecars stay private beside the migration's outputs or in that external directory (`references/evidence.md`).
 - `local/migrations.md`: the only map from a code `M-<n>` to customer and scenario.
 - `testdata/`: the customer's PO artifacts in the layout of `docs/inputs/README.md`; the profile records the input paths.
 - `local/` and `testdata/` are gitignored; nothing in them is ever copied into a committed file.
@@ -72,11 +74,11 @@ Two named stops still apply:
 ## Learning
 
 - The retrospective files each lesson as a request `requests/REQ-<n>.md` (`templates/request.md`) of one kind: `kb` (a page was wrong, silent or ambiguous), `skill` (a phase, reference or template of this skill misled or lacked), `pattern` (a generalisable way the migration found, anonymised), `tool` (po-xray or a helper could not read or derive something; evidence is a synthetic fixture, never the customer's file).
-- Pattern pages under `patterns/` cite migration evidence as `[migration M-<n>, <date>]` (D-030); plan and pattern statements cite `[page: knowledge/pipeline/<path>#<heading>]` or `[pattern: <id>]`.
+- Pattern pages under `patterns/` cite migration evidence as `[migration M-<n>, <date>]` (D-030); plan and pattern statements cite `[page: knowledge/pipeline/<path>#<heading>]` or `[pattern: <id>]`; private plan and specification statements may also cite `[evidence: <use-id>]` as rule 1 allows, never a committed page.
 - Requests are committed locally on a `field/<date>` branch and reviewed in the cloud, which commits the work on the designated branch and marks each request done with the hash; the local side never commits under `knowledge/pipeline/`, `patterns/` or `src/`. A pattern draft goes under `requests/`.
 - Before a push, run the knowledge module's forbidden-values check over `requests/`, `patterns/` and `skills/` (`requests/README.md`).
 
 ## Start here
 
 - Every migration starts at phase 1 with `references/intake.md`.
-- At the start of phase 2, read `knowledge/pipeline/SKILL.md` and its loaded set; every pipeline fact comes from there or from `patterns/`.
+- At the start of phase 2, read `knowledge/pipeline/SKILL.md` and its loaded set; every pipeline fact comes from there, from `patterns/`, or (in plan and specification statements) from a supported local evidence use cited as rule 1 allows.

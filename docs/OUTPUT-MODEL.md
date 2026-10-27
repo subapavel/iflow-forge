@@ -1339,7 +1339,7 @@ runtime proof, generator or approval engine. Native reflection registration is n
 Read-only migration helpers turn po-xray outputs into decision inputs. The attributes and BPM inventory CLI
 helpers write Markdown by default and JSON with `--json`. These reports and the core DiscoveryReport use
 `schemaVersion` "0.1", `generator` as in the other outputs, maps sorted by key, `issues` always written
-(`[]` = none found), other nulls and empty lists omitted. Behavior and dossier reports have separate contracts below.
+(`[]` = none found), other nulls and empty lists omitted. Behavior, dossier and export provenance records have separate contracts below.
 
 ### `po-xray attributes <ico.json>...` → `AttributesReport`
 
@@ -1834,7 +1834,7 @@ It is separate from `ScaInventory`; the omission rule in "Principles" above does
 
 | Field | Type and meaning |
 |---|---|
-| `formatVersion` | Integer input format version, `1` or `2`; malformed input may report `0`. |
+| `formatVersion` | Integer input format version, `1`, `2` or `3`; malformed input may report `0`. |
 | `migrationId` | Input `M-<n>` identity; may be null for invalid root input. |
 | `ledgerSha256` | SHA-256 of the raw current ledger bytes. |
 | `valid` | Boolean: no error diagnostics; warnings may remain. |
@@ -1871,8 +1871,8 @@ semantics are checked. Every ever-approved section snapshot is checked for exist
 including superseded scopes; a changed snapshot invalidates the report even if a derived dependency matches.
 
 The caller explicitly selects the baseline; it must share identity and contain an event array that
-is an unchanged structural prefix of the current ledger. Versions must match, except v1 baseline→v2 current
-upgrade, which emits `HISTORY_FORMAT_UPGRADED`. Downgrades and other changes fail. Object key order/whitespace do not matter; array
+is an unchanged structural prefix of the current ledger. Versions must match, except upgrades v1→v2, v1→v3 and v2→v3,
+which emit `HISTORY_FORMAT_UPGRADED`. Downgrades and other changes fail. Object key order/whitespace do not matter; array
 order/values do. `verified` means that comparison passed, not that the design or approvals are authentic.
 Without a baseline, `not-checked` and `HISTORY_NOT_CHECKED` are returned; the dossier can still be valid.
 Relative evidence paths resolve against the current dossier directory regardless of baseline location.
@@ -1881,7 +1881,7 @@ Diagnostic severity is `error` or `warning`. Codes: `INVALID_DOCUMENT`, `UNSUPPO
 `DUPLICATE_EVENT_ID`, `INVALID_REFERENCE`, `INVALID_TRANSITION`, `INVALID_SCOPE`, `APPROVAL_CONFLICT`,
 `SUPERSESSION_CYCLE`, `SNAPSHOT_MISSING`, `SNAPSHOT_CHANGED`, `DERIVED_MISSING`, `DERIVED_STALE`,
 `HISTORY_NOT_CHECKED`, `HISTORY_CHANGED`, `INVALID_BASELINE`; v2 adds warnings `HISTORY_FORMAT_UPGRADED`,
-`ANSWER_BASIS_CHANGED` and errors `MILESTONE_CYCLE`, `LEGACY_IMPORT_INVALID`. Messages exclude snapshot payloads.
+`ANSWER_BASIS_CHANGED` and errors `MILESTONE_CYCLE`, `LEGACY_IMPORT_INVALID`; v3 adds error `INVALID_EVIDENCE` and warning `EVIDENCE_UNAVAILABLE`. Messages exclude snapshot payloads.
 Unreadable or malformed main JSON, duplicate keys and trailing tokens fail before a report is emitted.
 
 Default stdout is Markdown: `# Dossier current design`, ledger digest, history status, `## Decisions`,
@@ -1920,7 +1920,7 @@ The wrapper and its nine nested public records have these exact component names,
 ```java
 DossierAssessment(DossierReport dossier, String status, List<Question> questions,
     List<Assumption> assumptions, List<Risk> risks, List<Basis> scopeBases,
-    List<Coverage> coverages, List<Milestone> milestones)
+    List<Coverage> coverages, List<Milestone> milestones, DossierEvidenceReport evidence)
 Block(String sectionId, String neededByMilestoneId)
 Question(String id, String text, String topic, String owner, String expectedEvidence,
     List<String> sections, String classification, String classificationSource,
@@ -1951,7 +1951,7 @@ record component. Native reflection registers the wrapper and all nine records a
 
 | Record | Status and scope |
 |---|---|
-| assessment | `assessed` for valid v2, `invalid` for invalid input, `not-assessed` for v1; v1 has empty new lists. |
+| assessment | `assessed` for valid v2 or v3, `invalid` for invalid input, `not-assessed` for v1; v1 has empty new lists. |
 | Question | `open`, `deferred`, `answered`; classification `scoped`, `nonblocking`, `unclassified` is independent of topic. |
 | Risk | `accepted`, `reopened`; only detailed risks appear here, bare P1 risks remain in `dossier.risks`. |
 | Basis | `current`, `stale`; exact scope and current resolutions determine usability. |
@@ -1988,3 +1988,90 @@ and verification debt. An explicit matching risk detail can waive that debt only
 milestone/scope, visibly; it neither transfers downstream nor becomes technical evidence. Readiness grants
 no authorization to deploy or operate a tenant. See the readiness reference for immutable answer bases,
 the evidence-bound legacy import exception and risk reopening.
+
+### Dossier v3 local evidence
+
+MIG-35/P6a adds opt-in dossier `formatVersion` 3: every v1 and v2 event plus `evidence-register`
+(`packetPath`, `packetSha256`, `reviewPath`, `reviewSha256`) and `evidence-use` (`scope`, one exact
+`Dependency`; `evidence`, an earlier registration ID; `claimId`; `text`; `replaces`, null or the tail of an
+earlier same-scope chain). Workflow and citation rules are in
+[`references/evidence.md`](../skills/sap-po-migration/references/evidence.md). The assessment component
+`evidence` is a `DossierEvidenceReport`; the 8-argument constructor and v1/v2 input give an empty one. All
+records serialize nulls and empty arrays explicitly; lists are immutable snapshots.
+
+```java
+DossierEvidenceReport(List<Packet> packets, List<Use> uses)
+Packet(String eventId, String packetPath, String packetSha256, String reviewPath, String reviewSha256,
+    PacketDocument packet, ReviewDocument review, String state, List<String> reasons)
+PacketDocument(int formatVersion, String id, String author, String sourceKind, String sourceLocator,
+    String sourceSha256, String observedAt, Versions versions, String limitations, String kbDifference,
+    List<Claim> claims)
+Versions(String exportLabel, String packageRelease, String bundleVersion, String targetVersion,
+    String designTimeVersion, String deployedVersion)
+Claim(String id, String text, List<DossierReport.Dependency> scope, String limitations)
+ReviewDocument(int formatVersion, String packetId, String packetSha256, String reviewer, String reviewedAt,
+    List<ReviewClaim> claims)
+ReviewClaim(String claimId, List<DossierReport.Dependency> scope, String verdict, String limitations)
+Use(String eventId, DossierReport.Dependency scope, String evidenceEventId, String claimId, String text,
+    String replaces, String state, List<String> reasons)
+```
+
+`sourceKind` is `export`, `documentation`, `derived`, `owner-confirmed` or `tenant-observed`; `verdict` is
+`PASS` or `FAIL`. Packet `state` is `valid-attribution` when the document checks pass (digests of the actual
+bytes, strict format version 1 documents, review naming the packet ID and digest, reviewer differing from
+author after trim and case-folding) and at least one review claim is `PASS`; otherwise `unavailable`. A
+per-claim `FAIL` blocks only uses of that claim. A use needs the exact claim text, the exact scope within the
+claim and a `PASS` review claim for that scope. Use `state` is `supported`, `superseded`, `unavailable` or
+`proposed-unavailable`: in one `replaces` chain the latest supported node is current, earlier nodes are
+superseded, later unsupported nodes proposed-unavailable; with none supported the root is unavailable.
+Independent roots are separate requirements; proposed-unavailable never blocks.
+
+Every packet or use reason is a warning `EVIDENCE_UNAVAILABLE` (missing file, digest, review identity, `FAIL`,
+text/scope mismatch, missing `PASS`). Shape errors in evidence events (unknown field, blank value, URI path,
+bad digest) are `INVALID_DOCUMENT`; out-of-order events (no earlier proposal for the scope, no earlier
+registration, forking `replaces`) and UNC, device or non-default-filesystem paths are `INVALID_EVIDENCE`
+errors. Milestone
+blockers: a section with any use, supported or not, gets `EVIDENCE_SCOPE_UNRESOLVED` unless the milestone
+consumes an exact dependency of that section; a consumed exact scope with any unavailable use gets
+`EVIDENCE_UNAVAILABLE`. Both set `complete` and `canWork` false; `approved` and the approval stay recorded and
+evidence IDs never enter `approvalInputs`. A basis whose scope has any unavailable use is reported `stale`,
+without a `STALE_BASIS` blocker or stale derived documents. Only sections and scopes with uses are blocked; a
+supported use lifts no other blocker. Assessment Markdown adds `## Local evidence`. Byte and attributed review
+checks do not authenticate sources or prove runtime behaviour; a path component Java reports as a symbolic
+link or other (reparse) entry makes a packet or review unavailable.
+
+### `po-xray export <sca> --provenance-input <descriptor.json>` → `ExportManifest`
+
+MIG-36/P6b adds the option to `export`. Without it the command is unchanged. With it the descriptor is read
+strictly and a preflight checks the planned destinations before the SCA is read; the JSON and documentation
+are written, then `<base>.provenance.json` last. A failure leaves files already written in place (no
+cleanup), prints `Error: …` and exits `1`. Public entry points are static `ExportMetadata.read(Path)`
+(→ `ExportMetadata.Loaded(String descriptorPath, String descriptorSha256, ExportProvenanceInput input)`),
+`preflight(Path source, Loaded descriptor, List<Path> destinations)` and
+`create(ScaInventory inventory, Loaded descriptor, List<Path> writtenOutputs)`, all declaring `IOException`.
+
+```java
+ExportProvenanceInput(int formatVersion, List<ArtifactInput> artifacts, List<VersionObservation> versions)
+ArtifactInput(String role, String label, String path)
+VersionObservation(String role, String subject, String value, String sourceKind, String locator,
+    String sourceSha256, String observedAt, String scope, String limitations)
+ExportManifest(int formatVersion, ScaInventory.Generator generator, String outputCreatedAt,
+    ScaInventory.ScaSource source, FileDigest descriptor, List<FileDigest> outputs,
+    List<FileDigest> suppliedArtifacts, List<ExportProvenanceInput.VersionObservation> versions,
+    List<Issue> issues)
+FileDigest(String role, String label, String path, String sha256, String state)
+```
+
+Both use format version 1 and serialize nulls and empty arrays explicitly. The descriptor rejects duplicate
+keys, trailing tokens, unknown or missing fields, null entries and values outside the vocabularies;
+`sourceSha256` and `observedAt` of an observation may be null. `ArtifactInput.role`
+is `build` or `skill`; `path` is relative to the descriptor or absolute. `VersionObservation.role` is
+`export-label`, `package-release`, `bundle-version`, `target`, `design-time`, `deployed` or
+`legacy-installed`; `sourceKind` as in the dossier packet; `locator` is inert text. Observations are copied
+verbatim, never inferred from one another; export and read times are not versions. `generator` and `source`
+are the inventory's own; `outputCreatedAt` is the manifest's creation time. `FileDigest.state` is `measured`
+(outputs and supplied artifacts, digest of the actual bytes), `read-time-snapshot` (the descriptor) or
+`unavailable` (`sha256` null). `issues` are `model.Issue` warnings `EXPORT_ARTIFACT_UNAVAILABLE` and
+`EXPORT_ROLE_MISSING`, in the sidecar only. The sidecar records caller-supplied identity, not a running build
+or loaded skill. A link or other (reparse) path component fails the source or descriptor and makes a supplied
+artifact unavailable; an alias-unresolved artifact plus any existing destination fails the whole preflight.

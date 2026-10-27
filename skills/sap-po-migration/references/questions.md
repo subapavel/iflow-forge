@@ -35,7 +35,7 @@ One record per question, the fields of `templates/question.md` (spec §7 item 3)
 
 - `# Q-<n>`; the open-list item it settles, copied verbatim, and its type;
 - why the analysis could not settle it: the report's question, the missing input, or the page that leaves it to a human;
-- the options, each with its evidence: a page cite `[page: knowledge/pipeline/<path>#<heading>]`, a dump field such as `icos[0].receivers[0].qualityOfService`, an `analysis.md` row, or "no evidence — migrator's call";
+- the options, each with its evidence: a page cite `[page: knowledge/pipeline/<path>#<heading>]`, a dump field such as `icos[0].receivers[0].qualityOfService`, an `analysis.md` row, a `supported` local evidence use `[evidence: <use-id>]` whose scope is the affected section's current proposed revision (`references/evidence.md`, "Citing local evidence"), or "no evidence — migrator's call";
 - affected sections, owner, expected evidence, classification with source/reason, and each section/needed-milestone dependency; v2 requires the current evidenced question inventory, including an explicit empty inventory where applicable;
 - factual answer and evidence locator, or open/deferred status; accepted assumptions and risks are separate records, never answers;
 - the consequence: the `analysis.md` row changed (section and row) and the profile row amended (step 6) — or, for a decided package update, the Decisions line — or "none";
@@ -46,7 +46,7 @@ One record per question, the fields of `templates/question.md` (spec §7 item 3)
 1. Propose an answer only when the evidence supports one, and say which evidence: e.g. a default the knowledge base states, such as the profile's runtime for EO [page: skills/sap-po-migration/templates/profile.md#Runtime], or `qos` EO for an ALO question in [page: knowledge/pipeline/migration/variants.md#qos: ALO].
 2. Mark the proposed option in the options table; with no supporting evidence, propose nothing and write "no evidence — migrator's call" (spec §7 item 3).
 3. The migrator decides. A proposal is never written as the answer before the migrator states it.
-4. Every statement about pipeline behaviour inside an option cites its page (SKILL.md, rule 1); one the knowledge base does not state is not offered as evidence. A pipeline fact found missing is a `kb` lesson for the retrospective (SKILL.md, "Learning").
+4. Every statement about pipeline behaviour inside an option cites its page (SKILL.md, rule 1); one the knowledge base does not state is not offered as evidence, except as a use listed in the options as "Question record" allows (draft, D-056). Such a use never answers the question; without a v3 dossier, or with any state but `supported`, the statement stays open as today. A pipeline fact found missing is a `kb` lesson for the retrospective (SKILL.md, "Learning").
 
 ## Assumptions
 

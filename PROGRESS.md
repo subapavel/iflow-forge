@@ -1251,3 +1251,15 @@ Fix ExportCommand.withProvenance only; review r2 PASS. Non-blocking open: root-p
 Independent `mvn -B -ntp verify` (no clean) VERIFIED_PASS exit0 729/0/0/26 (core568/22,native14/0,cli59/1,mcp16/1,kb72/2); target/mig-p6b-final-reactor.log tail read.
 Skips: 24 missing testdata + 2 unset kb.forbidden, grouped from XML; not verified coverage. Packaged CLI smoke VERIFIED_PASS 5/5, inputs unchanged; target/mig-p6b-final-smoke.log.
 Native executable and full forbidden-values NOT_RUN. Agent-memory edits (implementer/test-author) left unstaged: not in packet allowed paths. MIG-37/P7 not started; no push.
+
+## MIG-37 acceptance · 2026-10-27 · committed locally
+Context compacted during the task; re-read HANDOFF and re-verified with git status / git log -3 before ledgers.
+Owner asked to continue MIG-37 (P6c docs). Packet preflight r1 FAIL7, r2 FAIL3 → architect revision3; r3 FAIL1 wording fix, then PASS.
+Author (general-purpose, single writer): references/evidence.md, templates/experiment.md, profile, retrospective, SKILL, questions, plan, dossier,
+OUTPUT-MODEL migration helpers, spec P-3/§7 item 4/§10. Architect: D-056 (private-only `[evidence: <use-id>]` cite, draft) and spec changelog line.
+Docs review r1 FAIL2 (PoC return path lacked new revision + approval), r2 FAIL1 (packet "none" clause wrong → packet revision4), r3 PASS.
+Non-blocking open: experiment.md "none" case should name the affected revision's Dependency. Packet error code corrected to INVALID_DOCUMENT for shape.
+Frozen docs (hashes target/mig-p6c-docs-hashes.log unchanged): knowledge module VERIFIED_PASS 72/0/0/2 (2 = kb.forbidden unset); links 0 unresolved.
+Root `mvn -B -ntp verify` VERIFIED_PASS 729/0/0/26 (target/mig-p6c-final-reactor.log) ran during the last docs edit round; docs-only change.
+Skips: 24 missing testdata + 2 unset kb.forbidden; not verified coverage. Native executable and full forbidden-values NOT_RUN. No code changed.
+Gates unchanged: skill frontmatter, Phases list, seven profile H2s, §10 first sentence (target/mig-p6c-final-gates.diff). P6 complete; P7 not authorized. No push.

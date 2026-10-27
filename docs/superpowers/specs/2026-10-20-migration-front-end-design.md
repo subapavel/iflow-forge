@@ -13,6 +13,8 @@ only in the retrospective, so the §7 item 5 exit (every placeholder resolves ag
 Changelog: 2026-10-21 F-11 — §7 item 2 lists only the version-gated features the tenant lacks or cannot judge ("absent",
 "unknown"), as §10 intends; a feature present at the installed version raises no question (D-041 c).
 
+Changelog: 2026-10-27 MIG-37 — P-3, §7 item 4 and §10: private-only local evidence cite `[evidence: <use-id>]` for supported dossier v3 uses (D-056, draft); a newer downloaded release never overwrites the installed row by itself.
+
 **Changelog:** 2026-10-20 · MIG-01 preparation · §6.1, §13: Gemini CLI reads `.agents/skills/` as an alias of `.gemini/skills/` and agent skills are enabled by default, so one `.agents/skills/` pointer serves Codex and Gemini; the `.gemini/skills/` pointer and the experimental-flag question are dropped [external: github.com/openai/codex codex-rs/ext/skills/src/host_roots.rs] [external: github.com/google-gemini/gemini-cli docs/cli/using-agent-skills.md].
 
 Changelog: 2026-10-21 F-13 — §5 the ICO row is derived by `po-xray discover` from the BPM exports and the system's ICOs, §6.3
@@ -228,7 +230,10 @@ phase 6 is a **placeholder** until part 4 exists — the skill writes "not avail
    invented). Every target statement cites a page or a pattern in the form
    `[page: knowledge/pipeline/<path>#<heading>]` or `[pattern: <id>]` (P-3; MIG-04 adds a Java check
    that each such cite in the templates and references resolves to an existing file and heading); a
-   statement with neither opens a question blocking the affected approval. Independent drafting may
+   statement with neither opens a question blocking the affected approval. A private `plan.md` or
+   `scenario-<k>.md` statement may instead cite a local evidence use `[evidence: <use-id>]` of its exact
+   section revision when the opt-in v3 dossier check reports that use `supported` (P-3, D-056, draft;
+   `references/evidence.md`); otherwise it opens the question as above. Independent drafting may
    continue. The plan is iterated with the migrator; each
    round is a dated section, never an overwrite. Exit: the migrator writes `approved <date>` in the
    approval section.
@@ -332,7 +337,10 @@ The profile's installed versions (§8.1) are compared in phase 2 with `versions/
 a feature the plan relies on that the tenant's version lacks becomes a blocking question ("update the
 pipeline packages to ≥ vX, or plan without the feature"); an update available on the tenant (BACKLOG
 row KB-00a, `[owner, 2026-10-20]`) is recorded in the profile with its version and the changelog lines
-it brings. The skill never assumes the newest version; it asks.
+it brings. A newer downloaded release is recorded as an available update and never overwrites the
+installed row by itself; after an actual installation the row is amended as `templates/profile.md` and
+D-037 describe, and version roles stay separate (`references/evidence.md`). The skill never assumes the
+newest version; it asks.
 
 ## 11. Pilot and done criteria
 
@@ -371,7 +379,10 @@ it brings. The skill never assumes the newest version; it asks.
 - P-3 New cite forms: `[migration M-<n>, <date>]` for pattern pages, `[page: knowledge/pipeline/<path>#<heading>]`
   and `[pattern: <id>]` for plan and pattern statements; a page using them is reviewed like any
   knowledge page; D-029's limit of two external cites per section does not apply to them. (Public
-  cite forms → D-030, draft.)
+  cite forms → D-030, draft.) A private-only local evidence cite `[evidence: <use-id>]` (a dossier v3
+  `evidence-use` ID) is admitted in private `plan.md` and `scenario-<k>.md` statements of the exact
+  section revision the use names, only while the readiness check reports it `supported`; committed pages
+  show it only with `<…>` and the public cite checker never reads private packets (D-056, draft).
 - P-4 Ask one human question at a time, prioritizing relevant dependencies, then topic/found order.
   Deferral preserves dependencies; unknowns are never automatically closed by assumptions. Opt-in v2
   uses explicit scoped classification, evidenced inventories and separate owner-accepted assumptions/

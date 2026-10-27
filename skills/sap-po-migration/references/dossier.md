@@ -1,6 +1,6 @@
 # Migration dossier
 
-Optional sidecar for exact approval scope and append-only history (MIG-23/P1). It supplements dated plan rounds and preserves explicit whole-plan approval. Opt-in v2 adds scoped questions and milestone readiness; partial approval never starts phase 5. [page: skills/sap-po-migration/references/plan.md#Approval] [page: skills/sap-po-migration/references/readiness.md#Readiness and approval]
+Optional sidecar for exact approval scope and append-only history (MIG-23/P1). It supplements dated plan rounds and preserves explicit whole-plan approval. Opt-in v2 adds scoped questions and milestone readiness; partial approval never starts phase 5. Opt-in v3 (`formatVersion` 3) accepts every v1 and v2 event plus `evidence-register` and `evidence-use` for reviewed local evidence packets ([local evidence](evidence.md)); the readiness rules apply unchanged in v3. [page: skills/sap-po-migration/references/plan.md#Approval] [page: skills/sap-po-migration/references/readiness.md#Readiness and approval]
 
 ## Files and ownership
 
@@ -51,7 +51,7 @@ po-xray dossier-check dossier.json --baseline snapshots/dossier-r1.json --json
 
 The command reads inputs without modifying them. Markdown is the default stdout; `--json` emits `DossierReport`. Summary/errors go to stderr. Exit `0` means valid, including warnings; `1` means invalid or an input/parse error, without a stack trace. Save output only to a separate private file. Snapshot creation and baseline selection remain the coordinator's responsibility; the checker never picks the newest file.
 
-The baseline must share identity and its entire event array must be an unchanged structural prefix. Versions must match, except explicit v1 baseline→v2 current upgrade, which emits `HISTORY_FORMAT_UPGRADED`; downgrade fails. Identical histories pass. Object key order/whitespace do not matter; array order/values do. All evidence resolves from the current dossier, regardless of baseline location. The checker never upgrades a file itself.
+The baseline must share identity and its entire event array must be an unchanged structural prefix. Versions must match, except an explicit upgrade v1→v2, v1→v3 or v2→v3 with an unchanged event prefix, which emits `HISTORY_FORMAT_UPGRADED`; downgrade fails. Identical histories pass. Object key order/whitespace do not matter; array order/values do. All evidence resolves from the current dossier, regardless of baseline location. The checker never upgrades a file itself.
 
 `historyStatus` is `verified`, `changed`, `invalid-baseline`, or `not-checked`. Omitting `--baseline` produces `HISTORY_NOT_CHECKED`; a valid report then has no verified history. `verified` proves only prefix preservation against that chosen baseline, not correctness or authenticity of earlier approvals.
 
@@ -69,7 +69,8 @@ Diagnostics have `severity` (`error`/`warning`), `code`, and `message`. JSON inc
 | `SNAPSHOT_MISSING`, `SNAPSHOT_CHANGED` | Approved evidence unavailable or changed. |
 | `DERIVED_MISSING`, `DERIVED_STALE` | Derived file absent or dependencies outdated. |
 | `HISTORY_NOT_CHECKED`, `HISTORY_CHANGED`, `INVALID_BASELINE` | Baseline absent, prefix changed, or unusable baseline. |
-| `HISTORY_FORMAT_UPGRADED`, `ANSWER_BASIS_CHANGED` | Warnings: preserved v1→v2 prefix; consumed resolution changed. |
+| `HISTORY_FORMAT_UPGRADED`, `ANSWER_BASIS_CHANGED` | Warnings: preserved prefix of an upgrade; consumed resolution changed. |
+| `INVALID_EVIDENCE`, `EVIDENCE_UNAVAILABLE` | v3 errors: out-of-order evidence event (no earlier proposal or registration, forking `replaces`), UNC, device or non-default-filesystem path; shape errors stay `INVALID_DOCUMENT`. Warning: packet or use unavailable. |
 | `MILESTONE_CYCLE`, `LEGACY_IMPORT_INVALID` | Invalid prerequisite graph or historical basis import evidence. |
 
 Malformed/unreadable main JSON, duplicate JSON keys and trailing JSON tokens fail before a report is produced. Diagnostics do not reproduce snapshot payloads.

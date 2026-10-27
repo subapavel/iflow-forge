@@ -6,7 +6,7 @@
 
 Nejnovější pokyn vlastníka 2026-10-27 kvůli kreditům: dokončit rozpracované P6a/MIG-35,
 ověřit a lokálně commitnout, potom skončit a předat prompt. MIG-36/MIG-37/P7 nyní nezahajovat.
-Navazující pokyn vlastníka 2026-10-27: po MIG-35 pokračovat MIG-36 podle workflow; MIG-37 a P7 zatím neschváleny.
+Navazující pokyny vlastníka 2026-10-27: po MIG-35 pokračovat MIG-36, poté MIG-37 podle workflow; P7 zatím neschváleno.
 
 Předchozí navazující pokyn vlastníka 2026-10-27: „pokračuj dále dokud nenapíšu STOP“.
 Po přijetí P4 pokračovat schváleným plánem P5 → P6 → P7; ostatní výluky platí.
@@ -266,7 +266,8 @@ packety s měřeným SHA256, přiřazený nezávislý review a přesné scope gu
 (FAIL tvrzení B blokoval PASS tvrzení A) opraven; review r2 PASS, nezávislý reactor713/0/0/26.
 MIG-36 (P6b) dokončeno 2026-10-27: volitelný export provenance sidecar `--provenance-input`, preflight
 kolizí/linků před čtením i zápisem, měřené digesty; review r2 PASS po opravě r1, reactor729/0/0/26, CLI smoke5/5.
-MIG-37 (dokumentace) zůstává nezahájené; P6 tedy není dokončeno.
+MIG-37 (P6c) dokončeno 2026-10-27: references/evidence.md, templates/experiment.md, profil, citace `[evidence: <use-id>]`
+(D-056, draft), OUTPUT-MODEL a spec P-3/§7/§10; docs review r3 PASS. **P6 dokončeno 2026-10-27**; P7 neschváleno.
 
 **Přínos:** Nová evidence může návrh zpřesnit bez předstírání podpory ve staré KB;
 úspěch jednoho testu nemění nesouvisející tvrzení na ověřená.

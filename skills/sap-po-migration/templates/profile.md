@@ -20,14 +20,14 @@ Values: `runtime` of [page: knowledge/pipeline/scenario-contribution.md#Scenario
 
 ## Installed pipeline versions
 
-| package | version | read from | read on |
-|---|---|---|---|
-| Generic Inbound | `{{tenant.pipeline.version.generic_inbound}}`: `<version>` | `<source>` | `<date>` |
-| Generic Outbound | `{{tenant.pipeline.version.generic_outbound}}`: `<version>` | `<source>` | `<date>` |
-| Generic Pipelines | `{{tenant.pipeline.version.generic_pipelines}}`: `<version>` | `<source>` | `<date>` |
-| Templates | `{{tenant.pipeline.version.templates}}`: `<version>` | `<source>` | `<date>` |
+| package | version | source kind | read from (locator) | scope | read on |
+|---|---|---|---|---|---|
+| Generic Inbound | `{{tenant.pipeline.version.generic_inbound}}`: `<version>` | `<kind>` | `<source>` | `<scope>` | `<date>` |
+| Generic Outbound | `{{tenant.pipeline.version.generic_outbound}}`: `<version>` | `<kind>` | `<source>` | `<scope>` | `<date>` |
+| Generic Pipelines | `{{tenant.pipeline.version.generic_pipelines}}`: `<version>` | `<kind>` | `<source>` | `<scope>` | `<date>` |
+| Templates | `{{tenant.pipeline.version.templates}}`: `<version>` | `<kind>` | `<source>` | `<scope>` | `<date>` |
 
-A value is a version or `unknown`; packages and versions as [page: knowledge/pipeline/versions/features.md#The tenant's installed version] defines them; an artifact's MANIFEST Bundle-Version is its own number, so "read from" names the file. Update available on the tenant: `<package> <version> — <changelog lines it brings>` (spec §10). A decided update is a Decisions line `<yyyy-mm-dd> — M-<n> — update <package> <installed> → <version> decided (Q-<n>)` (D-037); this table shows what the tenant has.
+A value is a version or `unknown`; packages and versions as [page: knowledge/pipeline/versions/features.md#The tenant's installed version] defines them; an artifact's MANIFEST Bundle-Version is its own number, so "read from" names the file. Source kind is a `sourceKind` value of `references/evidence.md`, "Source kinds and versions", never a certainty level; scope says what the observation covers. A row written before these columns keeps its value: an `installed` value without locator stays `installed`, never re-labelled deployed. Update available on the tenant: `<package> <version> — <changelog lines it brings>` (spec §10); a newer downloaded release stays this line and never overwrites the installed row, which keeps the version read until the update is observed (D-037). A decided update is a Decisions line `<yyyy-mm-dd> — M-<n> — update <package> <installed> → <version> decided (Q-<n>)` (D-037); this table shows what the tenant has.
 
 ## Naming conventions
 
@@ -58,4 +58,6 @@ Appended when an answer settles a profile value (`references/questions.md`, "One
 
 One line per migration, appended by the retrospective, and after a field request changed the tool (spec §9):
 
-`M-<n> — runner jar <git hash> — skills/sap-po-migration <git hash>`
+`M-<n> — runner jar <git hash> — skills/sap-po-migration <git hash> — <source kind>; <locator or sidecar path>`
+
+The identity is caller-supplied: an export provenance sidecar records the files the caller names, not a running build or loaded skill (`references/evidence.md`, "Export provenance").
