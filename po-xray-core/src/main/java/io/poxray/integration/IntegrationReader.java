@@ -119,8 +119,7 @@ public final class IntegrationReader {
                 yield dataTypes.get(k);
             }
             case "ifmextdef" -> {
-                externalDefinition(ref);
-                yield externalDefinitions.get(k);
+                yield externalDefinition(ref);
             }
             case "FUNC_LIB" -> functionLibrary(ref);
             case "TRAFO_JAR" -> {
@@ -644,22 +643,28 @@ public final class IntegrationReader {
     }
 
     /** External message {@code defName|defNs|message|messageNs} → external definition {@code defName|defNs}. */
-    private void externalDefinition(XiRef message) {
-        XiRef def = new XiRef(message.vcType(), message.swcGuid(), message.swcCaption(), "ifmextdef", null,
+    private ExternalDefinition externalDefinition(XiRef message) {
+        XiRef def = "ifmextdef".equals(message.typeId()) ? message
+                : new XiRef(message.vcType(), message.swcGuid(), message.swcCaption(), "ifmextdef", null,
                 List.of(message.key(0), message.key(1)));
-        if (!visited.add(key(def))) {
-            return;
+        Optional<XiObject> resolved = resolve(def);
+        if (resolved.isEmpty()) {
+            return null;
         }
-        resolve(def).ifPresent(o -> {
+        XiObject o = resolved.get();
+        // Canonical identity is independent of whether a message link or direct OID read arrived first.
+        return externalDefinitions.computeIfAbsent(key(o.id()), ignored -> {
             List<String> messages = new ArrayList<>();
+            List<ObjRef> references = new ArrayList<>();
             for (XiObject inner : o.inner()) {
                 if ("ifmextmes".equals(inner.typeId())) {
                     messages.add(inner.id().key(2));
+                    references.add(objRef(inner.id()));
                 }
             }
-            if (firstRead(o)) {
-                externalDefinitions.put(key(def), new ExternalDefinition(objRef(o.id()), messages, o.description()));
-            }
+            String content = o.content() == null ? null : ContractResources.serialize(o.content());
+            return new ExternalDefinition(objRef(o.id()), messages, o.description(), content, references,
+                    ContractResources.read(null, content));
         });
     }
 
@@ -692,7 +697,7 @@ public final class IntegrationReader {
             program = "class".equals(r.key(2)) ? r.key(3).replace('/', '.') : r.key(3);
         }
         return new ObjRef(r.typeId(), blank(r.key(0)), blank(r.key(1)), r.swcCaption(), r.swcGuid(), r.oid(),
-                program);
+                program, r.key());
     }
 
     /**

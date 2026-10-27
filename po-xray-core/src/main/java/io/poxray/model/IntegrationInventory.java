@@ -57,7 +57,16 @@ public record IntegrationInventory(
      * {@code cz.acme.OrderMapping} or {@code xsl/Strip.xsl}; null otherwise.
      */
     public record ObjRef(String type, String name, String namespace, String swc, String swcGuid, String oid,
-            String program) {
+            String program, List<String> key) {
+
+        public ObjRef {
+            key = key == null ? List.of() : List.copyOf(key);
+        }
+
+        public ObjRef(String type, String name, String namespace, String swc, String swcGuid, String oid,
+                String program) {
+            this(type, name, namespace, swc, swcGuid, oid, program, List.of());
+        }
 
         public ObjRef(String type, String name, String namespace, String swc, String swcGuid, String oid) {
             this(type, name, namespace, swc, swcGuid, oid, null);
@@ -284,6 +293,34 @@ public record IntegrationInventory(
     }
 
     /** Imported WSDL / XSD with the messages it defines. */
-    public record ExternalDefinition(ObjRef id, List<String> messages, String description) {
+    public record ExternalDefinition(ObjRef id, List<String> messages, String description, String content,
+            List<ObjRef> messageReferences, List<ContractResource> resources) {
+        public ExternalDefinition {
+            messages = messages == null ? List.of() : List.copyOf(messages);
+            messageReferences = messageReferences == null ? List.of() : List.copyOf(messageReferences);
+            resources = resources == null ? List.of() : List.copyOf(resources);
+        }
+
+        public ExternalDefinition(ObjRef id, List<String> messages, String description) {
+            this(id, messages, description, null, List.of(), List.of());
+        }
+    }
+
+    public record XmlName(String namespace, String localName) {
+    }
+
+    public record ContractDeclaration(String kind, XmlName name, String locator) {
+    }
+
+    public record ContractDependency(String kind, String namespace, String location, String locator) {
+    }
+
+    /** A source XML subtree; dependencies are evidence only and have not been resolved. */
+    public record ContractResource(String sourcePath, String locator, String kind, String content,
+            List<ContractDeclaration> declarations, List<ContractDependency> dependencies) {
+        public ContractResource {
+            declarations = declarations == null ? List.of() : List.copyOf(declarations);
+            dependencies = dependencies == null ? List.of() : List.copyOf(dependencies);
+        }
     }
 }

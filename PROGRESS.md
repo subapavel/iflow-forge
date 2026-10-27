@@ -958,3 +958,37 @@ Limits:24 absent private-input and2 unsetkb.forbidden skips remain unverified; n
 Verifier harness correction: first malformed-ICO fixture was not created; exact single retry observed a real parse diagnostic. Accidental own file removed, original logs retained; no source/test changes or Maven rerun.
 P3 accepted; original plan updated to STOP underD053. P4–P7/MIG21/MIG22 campaign, tenant operations and push were not performed.
 Next: selective localcommit32 ownedpaths after independentprecommit audit; preserve unrelatedCODEX01/MIG07/D046/governance. No further implementation after this commit.
+
+## P4 preparation · 2026-10-27 · uncommitted
+Owner authorizes only P4, followed by verified local commits and stop; P5–P7 and remote/tenant work excluded.
+Observed main HEAD c840a66961ada1446af156a0767e42e33fba559d; one worktree. Initial diff saved target/mig-p4-initial-uncommitted.patch.
+Preserve unrelated CODEX-01/MIG-07/D-046 and governance changes; never stage whole shared ledgers.
+Selected MIG-30 reader evidence, then MIG-31 catalog and MIG-32 skill integration. Model inherited; actual model unknown.
+Checks: NOT_RUN — preparation only. Prior 623/0/0/26 remains historical P3 evidence.
+Preflight: P4a supplies resource identity to P4b; P4b supplies catalog semantics to P4c; sequential writers avoid overlapping model/docs edits.
+Ruling: P3 data remains structural candidates; P4 must not relabel them runtime availability. Legacy unknown metadata cannot establish QName.
+Next: bounded MIG-30 packet, separate red tests, architect approval, independent verification and review.
+
+## MIG-30 red test approval · 2026-10-27 · uncommitted
+Independent design preflight PASS. Architect read all four test files and final foreign-schema delta;12 new tests approved, hashes in packet.
+Test first: ExternalContractsTest8, ContractResourcesTest3, additive NativeReflectionTest1; synthetic TPZ/XML and legacy JSON only.
+Author EXECUTED_FAIL compile-red exit1 for new types/accessors, no runtime tests; target/mig-p4a-red.log tail read.
+Author native-only attempt ENVIRONMENT_BLOCKED by stale installed core; not counted as acceptance red.
+Next: independent red confirmation, bounded implementation. Source/P3/governance untouched.
+Checks: independent EXECUTED_FAIL compile-red exit1 before Surefire; target/mig-p4a-independent-red.log and summary/tail read. Frozen4/4 match; production unchanged.
+Bounded MIG-30 implementation authorized; no completion claim.
+
+## MIG-30 implementation and review · 2026-10-27 · uncommitted
+Source: full ESR keys, compatible ExternalDefinition resource evidence, secure standard XML parsing, canonical OID lookup, native registration.
+Author focused VERIFIED_PASS21/0/0/0; root VERIFIED_PASS635/0/0/26 exit0,01:57; target/mig-p4a-implement-verify-unsandboxed.log tail read.
+Earlier sandbox root ENVIRONMENT_BLOCKED by14 existing localhost connection errors; same unchanged build passed with approved permission.
+Independent code review PASS: all12 new tests sensitive, frozen4/4 unchanged, source identities and ancestor namespace bindings retained.
+Native executable NOT_RUN; external-message QName remains unresolved without binding evidence.24 missing-private and2 unsetkb.forbidden skips remain unverified.
+Next: independent root verification and selective MIG-30 local commit. MIG-31 packet revision2 addresses preflight identity/reference ambiguities.
+
+## MIG-30 acceptance · 2026-10-27 · ready to commit
+Independent VERIFIED_PASS root635/0/0/26 exit0,01:39; target/mig-p4a-independent-verify.log and summary/tail read.
+All12 new tests pass; core494/0/0/22,native10/0/0/0,CLI47/0/0/1,MCP12/0/0/1,knowledge72/0/0/2.
+Independent code review PASS; approved4/4 hashes retained; scope/whitespace/privacy checks pass.
+Limits:24 absent private-input and2 unsetkb.forbidden skips; native executable/full forbidden-values NOT_RUN.
+P4a accepted; next MIG-31 catalog, then MIG-32 docs and stop. No P5–P7, tenant, deployment or push.

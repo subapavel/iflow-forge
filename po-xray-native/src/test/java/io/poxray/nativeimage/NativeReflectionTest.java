@@ -42,6 +42,17 @@ class NativeReflectionTest {
     }
 
     @Test
+    void externalContractRecordsAreRegistered() {
+        RegisterForReflection reg = NativeReflection.class.getAnnotation(RegisterForReflection.class);
+        Set<String> registered = Stream.concat(Arrays.stream(reg.targets()).map(Class::getName),
+                Arrays.stream(reg.classNames())).collect(Collectors.toSet());
+        for (String nested : java.util.List.of("XmlName", "ContractDeclaration", "ContractDependency", "ContractResource")) {
+            org.junit.jupiter.api.Assertions.assertTrue(
+                    registered.contains("io.poxray.model.IntegrationInventory$" + nested), nested);
+        }
+    }
+
+    @Test
     void dossierReportAndAllSixNestedRecordsAreRegistered() {
         RegisterForReflection reg = NativeReflection.class.getAnnotation(RegisterForReflection.class);
         Set<String> registered = Stream.concat(Arrays.stream(reg.targets()).map(Class::getName),

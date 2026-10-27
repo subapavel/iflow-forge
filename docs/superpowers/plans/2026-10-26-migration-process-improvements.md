@@ -4,7 +4,13 @@
 > s rolemi a omezeními `docs/CODEX-WORKFLOW.md`. Realizace je omezena na výslovně
 > schválené části. Detailní task packety vznikají pouze pro ně.
 
-**Stav:** Návrh schválen vlastníkem 2026-10-26; po dokončení P1 vlastník povolil
+Aktuální pokyn vlastníka 2026-10-27: dokončit pouze P4, vytvořit ověřené lokální
+commity a skončit. P5–P7, push, deployment a tenantové operace nejsou povoleny.
+P4 je rozděleno na MIG-30 (zdrojová identita/resource), MIG-31 (katalog)
+a MIG-32 (skill návaznosti). MIG-30 dokončeno: code review PASS, nezávislý
+reactor635/0/0/26 a12 nových testů. Katalog a skill návaznosti zatím nejsou dokončené.
+
+**Historický stav:** Návrh schválen vlastníkem 2026-10-26; po dokončení P1 vlastník povolil
 průběžnou realizaci zbývajících P2–P7, dokud neřekne stop (D-048).
 Následně rozsah omezil na dokončení P3 a ukončení práce (D-053); P4–P7 se
 v tomto běhu neimplementují. Dosavadní souhlas a historie zůstávají zachované.
