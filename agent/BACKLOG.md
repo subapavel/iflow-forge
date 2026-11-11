@@ -33,6 +33,18 @@ Task detail (files, interfaces, steps, tests) lives in the plan:
 | MIG-28 | P3c1: occurrence-qualified BPM event/fault declarations, scope and retained uncertainty | migration-process-improvements.md P3; mig-28-p3c-faults-packet.md; D-053/D-054 | MIG-27 | code+docs | done | real synthetic source/report/native tests, contextual fault evidence, independent review and root verify | code r2/docs PASS; independentroot569/0/0/26 exit0,36newtests;14approvedhashes retained; configured integration/CLI/MCP follow before stop |
 | MIG-29 | P3c2: compose source behavior with configured ICO/channel candidates and offline CLI/MCP delivery | migration-process-improvements.md P3; mig-29-p3c-behavior-packet.md; D-053/D-055 | MIG-28 | code+docs | done | real SCA/TPZ composition, immutable report, actual CLI/MCP output, independent review/root verify/fresh CLI smoke | code r2/finaldocs PASS; independentroot623/0/0/26 exit0;54newtests; fresh CLI8/8; P3complete, STOP perD053 |
 
+## Phase MON — po-xray message monitoring (spec: `docs/superpowers/specs/2026-11-11-message-monitoring-design.md`; plan: `docs/superpowers/plans/2026-11-11-message-monitoring.md`; D-059)
+
+| Id | Title | Plan | Depends on | Kind | Status | Done when | Evidence |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| MON-01 | Probe the AdapterMessageMonitoring contract on QA (anonymous WSDL), finding F-17 | message-monitoring.md MON-01 | D-059; owner 2026-11-11 | docs | done | F-17 with namespace map, type child order, faults, QA/PROD operation diff; docs review PASS; privacy grep clean | F-17; review r2 PASS (target/mon-01/review-r2.md); Maven NOT_RUN (docs only) |
+| MON-02 | SOAP transport, error mapping, `PoHttp` extraction and `getMessageList` | message-monitoring.md MON-02 | MON-01 | code | ready | red tests observed then green; root verify green; review PASS | |
+| MON-03 | By-id lookups, audit log, payload with MIME parts, ID→key resolution | message-monitoring.md MON-03 | MON-02 | code | pending | red tests observed then green; root verify green; review PASS | |
+| MON-04 | User-defined search, lookups, read-only surface guard (21 operations) | message-monitoring.md MON-04 | MON-03 | code | pending | red tests observed then green; root verify green; review PASS | |
+| MON-05 | CLI `messages` group, default system, save target and archive | message-monitoring.md MON-05 | MON-04 | code | pending | red tests observed then green; root verify green; CLI smoke; review PASS | |
+| MON-06 | MCP `message_*` tools, size budget, native registration | message-monitoring.md MON-06 | MON-05 | code | pending | red tests observed then green; root verify green; review PASS | |
+| MON-07 | Live read-only acceptance on QA, finding F-18 | message-monitoring.md MON-07 | MON-06 | docs | pending | F-18; spec §9 settled; docs review PASS; private evidence only under `local/` | |
+
 ## Phase KB — part 1, pipeline knowledge base (spec: `docs/superpowers/specs/2026-10-19-pipeline-knowledge-base-design.md`)
 
 | Id | Title | Plan | Depends on | Kind | Status | Done when | Evidence |

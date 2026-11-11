@@ -1309,3 +1309,12 @@ VERIFIED_PASS knowledge 72/0/0/2 (target/mig-40/knowledge.log, exit 0); VERIFIED
 verify.log ends with an "UncheckedIOException: Cannot write …provenance.json" line at exit 0 — origin not traced. Status vs baseline: allowed paths only.
 Review r1 PASS (target/mig-40/review-r1.md). Note for MIG-41: two explicit approvals of a decision and its successor conflict until supersede.
 Limits: the 26 skips are not verified coverage; native executable not verified; rules not yet exercised on a pilot (MIG-41). No push.
+
+## MON-01 acceptance · 2026-11-11 · committed locally
+Task: owner-approved po-xray message monitoring (D-059 draft); spec 2026-11-11-message-monitoring-design.md, plan and MON-01 packet written by the architect.
+Owner decisions 2026-11-11: 21 read operations incl. user-defined search, no write operations, PROD normal read-only, save only on request, agent live calls on QA only.
+Writer (general-purpose): anonymous WSDL GETs QA + PROD (6× HTTP 200, no credentials, no operation call); private copies under local/<customer>/monitoring-probe/.
+F-17 (major): §4 data-type namespaces and fault child order corrected; AdapterFilter order confirmed; 8 required filter fields → architect's call: always sent, defaults false/0, checked in MON-07.
+Deviation: F-17. Review r1 FAIL5 (spec/plan inconsistencies, PROD WSDL read vs "no PROD calls") → fixed; r2 PASS (target/mon-01/review-r2.md).
+Clarification for hand-over: anonymous WSDL reads are not operation calls (spec §9, D-059). Maven NOT_RUN: docs only. Privacy grep clean. No push.
+Next: MON-02 (SOAP transport and getMessageList) — test-author first.
