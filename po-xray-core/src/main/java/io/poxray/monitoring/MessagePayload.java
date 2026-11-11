@@ -16,6 +16,19 @@ public record MessagePayload(String system, String messageKey, String source, by
         parts = parts == null ? List.of() : List.copyOf(parts);
     }
 
+    /**
+     * The part shown when none is asked for (F-18): the index of the first part that is not an XI header
+     * ({@link PayloadPart#isXiHeader()}), {@code 0} when every part is one, {@code -1} when there are no parts.
+     */
+    public int defaultPart() {
+        for (int i = 0; i < parts.size(); i++) {
+            if (!parts.get(i).isXiHeader()) {
+                return i;
+            }
+        }
+        return parts.isEmpty() ? -1 : 0;
+    }
+
     /** A copy of the payload bytes, null when there are none. */
     @Override
     public byte[] bytes() {

@@ -1375,3 +1375,11 @@ Open (owner hand-over): payload version meaning, dateType, timesFailed/retries/a
 Contradiction: default payload part by position (parts>1 → 1) assumes an XI header part; QA returned none in 40 messages → row MON-08 (red test first).
 No SOAP fault or authorisation error on the intended calls. Docs review r1 FAIL (status values vs status details, open points dropped, XI header, getInterfaces nil unsupported); fixed with probes; r2 PASS.
 Evidence private under local/<customer>/monitoring-acceptance/; tracked files neutral. No PROD/DEV call by an agent; Maven NOT_RUN (docs only). No push.
+
+## MON-08 acceptance · 2026-11-11 · committed locally
+Task: default payload part chosen by content, not position (packet 2026-11-11-mon-08-packet.md; F-18).
+Test first: PayloadPartTest (6), MessagePayloadTest (8), MessagesCommandTest.payloadDefaultIsTheFirstPartThatIsNotAnXiHeader, MessageToolsTest.defaultPartIsTheFirstThatIsNotAnXiHeader; red observed (target/mon-08/red.log core compile; red-downstream.log CLI/MCP picked the attachment).
+Architect call: one core rule — PayloadPart.isXiHeader() (SOAP 1.1 Envelope root, DOM with DOCTYPE disallowed, never throws), MessagePayload.defaultPart(); CLI and MCP use it; wording updated.
+1 test added after green: jsonShapeHasNoDerivedProperties (isXiHeader @JsonIgnore). No existing test changed.
+Review r1 FAIL only for no root verify of the final tree; r2 PASS. VERIFIED_PASS reactor 1000/0/0/26 (target/mon-08/verify-v.log, exit 0). No live call. No push.
+Note: DOM parses the whole part to read its root (MCP repeats per page); StAX peek would be cheaper if large parts matter.

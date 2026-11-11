@@ -260,8 +260,8 @@ public class MessageTools {
     }
 
     @Tool(name = "message_payload", description = "Payload of one message: the selected MIME part (default: the "
-            + "first part after the XI header part) as text in its charset or base64, one page of maxChars "
-            + "characters from offset; totalChars and truncated tell whether to call again with the next offset; "
+            + "first part that is not an XI header (SOAP envelope)) as text in its charset or base64, one page of "
+            + "maxChars characters from offset; totalChars and truncated tell whether to call again with the next offset; "
             + "version or logged select another version (getMessageBytes..., getLoggedMessageBytes)." + SAVES,
             annotations = @Tool.Annotations(readOnlyHint = false, destructiveHint = false, openWorldHint = true))
     String messagePayload(@ToolArg(description = SYSTEM, required = false) String system,
@@ -272,8 +272,8 @@ public class MessageTools {
             @ToolArg(description = "Version of the message", required = false) Integer version,
             @ToolArg(description = "Logged version, e.g. a log location such as BI or AM", required = false)
             String logged,
-            @ToolArg(description = "Index of the part, from 0 (empty = the first part after the XI header part)",
-                    required = false) Integer part,
+            @ToolArg(description = "Index of the part, from 0 (empty = the first part that is not an XI header "
+                    + "(SOAP envelope))", required = false) Integer part,
             @ToolArg(description = "First character of the page", defaultValue = "0") int offset,
             @ToolArg(description = "Characters per page", defaultValue = "20000") int maxChars,
             @ToolArg(description = SAVE_DIR, required = false) String saveDir,
@@ -456,7 +456,7 @@ public class MessageTools {
             content = bytes == null ? "" : text != null ? text : Base64.getEncoder().encodeToString(bytes);
             encoding = bytes == null || text != null ? "text" : "base64";
         } else {
-            int index = part != null ? part : p.parts().size() > 1 ? 1 : 0;
+            int index = part != null ? part : p.defaultPart();
             if (index < 0 || index >= p.parts().size()) {
                 throw new IllegalArgumentException("No part " + index + ": the payload has " + p.parts().size()
                         + " part(s), 0.." + (p.parts().size() - 1));

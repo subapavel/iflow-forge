@@ -1178,6 +1178,33 @@ class MessageToolsTest {
         assertThat(one.path("parts")).hasSize(1);
     }
 
+    /** A multipart message without an XI header part: each given part as application/xml. */
+    private static byte[] withoutHeader(String... parts) {
+        StringBuilder b = new StringBuilder("Content-Type: multipart/related; boundary=" + BOUNDARY + "\r\n\r\n");
+        for (int i = 0; i < parts.length; i++) {
+            b.append("--").append(BOUNDARY).append("\r\ncontent-id:<part-").append(i + 1)
+                    .append("@test>\r\ncontent-type:application/xml\r\n\r\n").append(parts[i]).append("\r\n");
+        }
+        b.append("--").append(BOUNDARY).append("--\r\n");
+        return b.toString().getBytes(StandardCharsets.UTF_8);
+    }
+
+    @Test
+    void defaultPartIsTheFirstThatIsNotAnXiHeader() {
+        MessageTools tools = tools();
+        servePayload(withoutHeader("<order><no>A-1</no></order>", "<attachment><no>B-2</no></attachment>"));
+        JsonNode main = json(call(tools, "message_payload", "system", "QA1", "key", KEY));
+        servePayload(multipart("<order><no>A-1</no></order>"));
+        JsonNode afterHeader = json(call(tools, "message_payload", "system", "QA1", "key", KEY));
+
+        assertThat(main.path("parts")).hasSize(2);
+        assertThat(main.path("part").asInt(-1)).isEqualTo(0);
+        assertThat(main.path("content").asString()).isEqualTo("<order><no>A-1</no></order>");
+        assertThat(afterHeader.path("parts")).hasSize(2);
+        assertThat(afterHeader.path("part").asInt(-1)).isEqualTo(1);
+        assertThat(afterHeader.path("content").asString()).isEqualTo("<order><no>A-1</no></order>");
+    }
+
     @Test
     void nonMultipartPayloadIsTextOrBase64() {
         MessageTools tools = tools();

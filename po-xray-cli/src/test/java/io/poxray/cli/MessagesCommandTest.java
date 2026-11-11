@@ -585,6 +585,31 @@ class MessagesCommandTest {
         assertThat(r.getOutput()).contains(PAYLOAD).doesNotContain("B-2").doesNotContain("SOAP:Header");
     }
 
+    /** A multipart message without an XI header part: each given part as application/xml. */
+    private static byte[] withoutHeader(String... parts) {
+        StringBuilder b = new StringBuilder("Content-Type: multipart/related; boundary=" + BOUNDARY + "\r\n\r\n");
+        for (int i = 0; i < parts.length; i++) {
+            b.append("--").append(BOUNDARY).append("\r\ncontent-id:<part-").append(i + 1)
+                    .append("@test>\r\ncontent-type:application/xml\r\n\r\n").append(parts[i]).append("\r\n");
+        }
+        b.append("--").append(BOUNDARY).append("--\r\n");
+        return b.toString().getBytes(StandardCharsets.UTF_8);
+    }
+
+    @Test
+    void payloadDefaultIsTheFirstPartThatIsNotAnXiHeader(QuarkusMainLauncher launcher) {
+        String attachment = "<attachment><no>B-2</no></attachment>";
+        servePayload(withoutHeader(PAYLOAD, attachment));
+        LaunchResult main = launcher.launch("messages", "payload", "-s", "QA1", KEY);
+        servePayload(multipart(PAYLOAD));
+        LaunchResult afterHeader = launcher.launch("messages", "payload", "-s", "QA1", KEY);
+
+        assertThat(main.exitCode()).as(all(main)).isZero();
+        assertThat(main.getOutput()).contains(PAYLOAD).doesNotContain("B-2");
+        assertThat(afterHeader.exitCode()).as(all(afterHeader)).isZero();
+        assertThat(afterHeader.getOutput()).contains(PAYLOAD).doesNotContain("SOAP:Header");
+    }
+
     @Test
     void payloadPartOutOfRangeExits1(QuarkusMainLauncher launcher) {
         servePayload(multipart(PAYLOAD));

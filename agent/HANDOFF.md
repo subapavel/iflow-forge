@@ -1,10 +1,10 @@
 # Handoff
 
-state: STOPPED — MON-07 committed locally (QA acceptance, F-18); MON-08 ready (default payload part by content), needs go-ahead.
-checkout: main; MON-07 local commit on top of MON-06 (8b1b71f); no push.
-prior: MON-06 8b1b71f (MCP tools); MON-05 91bab42; MON-04 7ed7a83; MON-03 4e82724; MON-02 84642fa; MON-01 8bd25c0.
-current: CLI + MCP message reads verified live on QA; F-18 settled §9 points; reactor 983/0/0/26.
-next: MON-08 — core rule picks the payload part by content (skip a SOAP/XI header part), CLI and MCP use it; red test first.
+state: STOPPED — MON-08 committed locally (default payload part by content); phase MON complete; awaiting owner hand-over review.
+checkout: main; MON-08 local commit on top of MON-07 (d078555); no push.
+prior: MON-07 d078555 (F-18); MON-06 8b1b71f; MON-05 91bab42; MON-04 7ed7a83; MON-03 4e82724; MON-02 84642fa; MON-01 8bd25c0.
+current: CLI messages + MCP message_* tools, verified live on QA; reactor 1000/0/0/26.
+next: owner hand-over — D-059 draft, spec §9 open points (F-18), optional owner PROD search; then push on request.
 watch: open (F-18): payload version meaning, dateType, filter defaults timesFailed/retries/archive/nodeId/retryInterval, windowless search.
 hand-over: D-059 draft; anonymous WSDL reads ≠ operation calls (spec §9) needs owner acceptance; agents call SOAP ops on QA only.
 open: MIG-41 owner L4 confirmation file; F-16 (reviewer hashing); MIG-36 notes; D-056 draft; "unattended" undefined.

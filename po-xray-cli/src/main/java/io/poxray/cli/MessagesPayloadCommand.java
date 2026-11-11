@@ -23,8 +23,8 @@ public class MessagesPayloadCommand extends MessagesKeySubcommand {
     @Option(name = "logged", description = "Logged version, e.g. a log location such as BI or AM (getLoggedMessageBytes)")
     String logged;
 
-    @Option(name = "part", description = "Index of the part printed, from 0 (default: the first part after the XI "
-            + "header part, or the only part)")
+    @Option(name = "part", description = "Index of the part printed, from 0 (default: the first part that is not an XI "
+            + "header (SOAP envelope))")
     Integer part;
 
     @Override
@@ -50,7 +50,7 @@ public class MessagesPayloadCommand extends MessagesKeySubcommand {
             }
             return;
         }
-        int selected = part != null ? part : p.parts().size() > 1 ? 1 : 0;
+        int selected = part != null ? part : p.defaultPart();
         if (selected < 0 || selected >= p.parts().size()) {
             throw new IllegalArgumentException("No part " + selected + ": the payload has " + p.parts().size()
                     + " part(s), 0.." + (p.parts().size() - 1));
