@@ -638,4 +638,48 @@ class MonitoringClientSearchTest {
         assertThat(m.messageId()).isEqualTo("msg-0001");
         assertThat(m.otherFields()).containsExactly(entry("futureField", "(nil)"));
     }
+
+    // ------------------------------------------------------------------------------------------ MON-04 D2
+
+    @Test
+    void nilOrMissingWarningFlagsAreRecorded() {
+        MonitoringClient client = new MonitoringClient(po.system);
+        po.respondSoap("<m:getMessageListResponse xmlns:m=\"" + OP + "\" xmlns:w=\"" + WS + "\""
+                + " xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><m:Response>"
+                + "<w:list/><w:number>0</w:number><w:warning xsi:nil=\"true\"/>"
+                + "</m:Response></m:getMessageListResponse>");
+
+        SearchResult nilWarning = client.getMessageList(MessageFilter.builder().build(), 10);
+
+        assertThat(nilWarning.moreAvailable()).isFalse();
+        assertThat(nilWarning.displayPermissionWarning()).isFalse();
+        assertThat(nilWarning.otherFields()).contains(
+                entry("warning", "(nil)"), entry("displayPermissionWarning", "(missing)"));
+
+        po.respondSoap("<m:getMessageListResponse xmlns:m=\"" + OP + "\" xmlns:w=\"" + WS + "\""
+                + " xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><m:Response>"
+                + "<w:list/><w:number>0</w:number>"
+                + "<w:displayPermissionWarning xsi:nil=\"true\"/></m:Response></m:getMessageListResponse>");
+
+        SearchResult missingWarning = client.getMessageList(MessageFilter.builder().build(), 10);
+
+        assertThat(missingWarning.otherFields()).contains(
+                entry("warning", "(missing)"), entry("displayPermissionWarning", "(nil)"));
+    }
+
+    @Test
+    void nilMessageItemIsKept() {
+        po.respondSoap("<m:getMessageListResponse xmlns:m=\"" + OP + "\" xmlns:w=\"" + WS + "\""
+                + " xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><m:Response><w:list>"
+                + "<w:AdapterFrameworkData xsi:nil=\"true\"/>"
+                + "<w:AdapterFrameworkData><w:messageID>msg-0001</w:messageID></w:AdapterFrameworkData>"
+                + "</w:list><w:number>1</w:number><w:warning>false</w:warning>"
+                + "<w:displayPermissionWarning>false</w:displayPermissionWarning></m:Response>"
+                + "</m:getMessageListResponse>");
+
+        SearchResult r = new MonitoringClient(po.system).getMessageList(MessageFilter.builder().build(), 10);
+
+        assertThat(r.messages()).extracting(Message::messageId).containsExactly("msg-0001");
+        assertThat(r.otherFields()).containsExactly(entry("list/AdapterFrameworkData", "(nil)"));
+    }
 }

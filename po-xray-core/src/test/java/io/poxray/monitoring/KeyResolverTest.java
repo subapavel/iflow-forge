@@ -105,7 +105,8 @@ class KeyResolverTest {
 
         Resolution r = KeyResolver.resolve(client, "msg-9999", null, false);
 
-        assertThat(r).isEqualTo(new Resolution.NotFound("msg-9999"));
+        assertThat(r).isInstanceOfSatisfying(Resolution.NotFound.class,
+                n -> assertThat(n.idOrKey()).isEqualTo("msg-9999"));
         assertLookedUp("msg-9999", false);
     }
 
@@ -115,7 +116,7 @@ class KeyResolverTest {
 
         Resolution r = KeyResolver.resolve(client, ID, "INBOUND", false);
 
-        assertThat(r).isEqualTo(new Resolution.NotFound(ID));
+        assertThat(r).isInstanceOfSatisfying(Resolution.NotFound.class, n -> assertThat(n.idOrKey()).isEqualTo(ID));
     }
 
     @Test
@@ -135,5 +136,52 @@ class KeyResolverTest {
         Resolution r = KeyResolver.resolve(client, ID, "inbound", false);
 
         assertThat(r).isEqualTo(new Resolution.Key(RECEIVER_KEY));
+    }
+
+    // ------------------------------------------------------------------------------------------ MON-04 D1
+
+    /** One AdapterFrameworkData with an ID and a direction but no messageKey. */
+    private static String messageWithoutKey(String id, String direction) {
+        return "<w:AdapterFrameworkData><w:direction>" + direction + "</w:direction><w:messageID>" + id
+                + "</w:messageID><w:status>success</w:status></w:AdapterFrameworkData>";
+    }
+
+    @Test
+    void foundMessageWithoutKeyIsNotFoundWithAReason() {
+        po.respondSoap(searchResponse("getMessagesByIDs", 1, false, messageWithoutKey(ID, "OUTBOUND")));
+
+        Resolution r = KeyResolver.resolve(client, ID, null, false);
+
+        assertThat(r).isInstanceOfSatisfying(Resolution.NotFound.class, n -> {
+            assertThat(n.idOrKey()).isEqualTo(ID);
+            assertThat(n.reason()).contains("no key");
+        });
+    }
+
+    @Test
+    void unknownIdIsNotFoundWithADifferentReason() {
+        po.respondSoap(searchResponse("getMessagesByIDs", 0, false));
+
+        Resolution r = KeyResolver.resolve(client, "msg-9999", null, false);
+
+        assertThat(r).isInstanceOfSatisfying(Resolution.NotFound.class, n -> {
+            assertThat(n.idOrKey()).isEqualTo("msg-9999");
+            assertThat(n.reason()).isNotBlank().doesNotContain("no key");
+        });
+    }
+
+    @Test
+    void keyedAndKeylessMessagesAreAmbiguousWithTheKeyedFirst() {
+        po.respondSoap(searchResponse("getMessagesByIDs", 2, false,
+                messageWithoutKey(ID, "INBOUND"), message(ID, SENDER_KEY, "OUTBOUND", "success")));
+
+        Resolution r = KeyResolver.resolve(client, ID, null, false);
+
+        assertThat(r).isInstanceOfSatisfying(Resolution.Ambiguous.class, a -> {
+            assertThat(a.candidates()).hasSize(2);
+            assertThat(a.candidates().get(0).messageKey()).isEqualTo(SENDER_KEY);
+            assertThat(a.candidates().get(1).messageKey()).isNull();
+            assertThat(a.candidates().get(1).direction()).isEqualTo("INBOUND");
+        });
     }
 }

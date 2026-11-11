@@ -83,8 +83,32 @@ public final class FakeMonitoringPo implements AutoCloseable {
         return "http://127.0.0.1:" + server.getAddress().getPort();
     }
 
+    /** When set, the SOAP body content of the answer to each request, by the local name of its operation element. */
+    private volatile java.util.function.Function<String, String> perOperation;
+
+    /**
+     * Answers every following request with HTTP 200, {@code text/xml; charset=utf-8} and an envelope around
+     * {@code bodyContent.apply(<operation name>)}, the operation name being the local name of the request's only
+     * SOAP body child.
+     */
+    public FakeMonitoringPo respondPerOperation(java.util.function.Function<String, String> bodyContent) {
+        perOperation = bodyContent;
+        return this;
+    }
+
+    /** The local name of the only SOAP body child of a request body. */
+    public static String operationName(String requestBody) {
+        Element body = child(parse(requestBody).getDocumentElement(), SOAP_ENV, "Body");
+        List<Element> ops = children(body);
+        if (ops.size() != 1) {
+            throw new AssertionError("expected one operation element in the SOAP body, found " + childNames(body));
+        }
+        return ops.getFirst().getLocalName();
+    }
+
     /** Answers every following request with this status, headers and body. */
     public FakeMonitoringPo respond(int status, Map<String, String> headers, byte[] body) {
+        perOperation = null;
         response = new Response(status, Map.copyOf(headers), body.clone());
         return this;
     }
@@ -118,7 +142,9 @@ public final class FakeMonitoringPo implements AutoCloseable {
         String body = new String(ex.getRequestBody().readAllBytes(), StandardCharsets.UTF_8);
         requests.add(new Request(ex.getRequestMethod(), ex.getRequestURI().toString(),
                 Collections.unmodifiableMap(headers), body));
-        Response r = response;
+        java.util.function.Function<String, String> perOp = perOperation;
+        Response r = perOp == null ? response : new Response(200, Map.of("Content-Type", "text/xml; charset=utf-8"),
+                envelope(perOp.apply(operationName(body))).getBytes(StandardCharsets.UTF_8));
         r.headers().forEach((k, v) -> ex.getResponseHeaders().add(k, v));
         ex.sendResponseHeaders(r.status(), r.body().length == 0 ? -1 : r.body().length);
         if (r.body().length > 0) {

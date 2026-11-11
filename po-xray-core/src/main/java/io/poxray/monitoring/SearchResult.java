@@ -16,11 +16,15 @@ import org.w3c.dom.Element;
  * {@code warning}: more messages match than were returned), {@code displayPermissionWarning}, {@code date}, the SOAP
  * answer as received, and {@code otherFields} (never null): by element name in document order, every value the reader
  * cannot read as its type (number, date-time, boolean; the component is then null or false), every unknown or
- * repeated child ({@code name#2}, ...; complex ones as XML, nil ones as {@code "(nil)"}) and every item of
- * {@code list} that is not an {@code AdapterFrameworkData} (as {@code list/<name>}).
+ * repeated child ({@code name#2}, ...; complex ones as XML, nil ones as {@code "(nil)"}), every item of {@code list}
+ * that is nil or not an {@code AdapterFrameworkData} (as {@code list/<name>}), and the required {@code warning} and
+ * {@code displayPermissionWarning} when they are nil ({@code "(nil)"}) or absent ({@code "(missing)"}).
  */
 public record SearchResult(String system, List<Message> messages, Integer number, boolean moreAvailable,
         boolean displayPermissionWarning, OffsetDateTime date, String rawResponse, Map<String, String> otherFields) {
+
+    /** The value kept in {@code otherFields} for a required child that is absent. */
+    static final String MISSING = "(missing)";
 
     public SearchResult {
         messages = messages == null ? List.of() : List.copyOf(messages);
@@ -46,10 +50,15 @@ public record SearchResult(String system, List<Message> messages, Integer number
             switch (e.getLocalName()) {
                 case "list" -> list(e, messages, other);
                 case "number" -> number = Soap.nil(e) ? null : keepUnless(integer(text), e, other);
-                case "warning" -> warning = !Soap.nil(e) && flag(bool(text), e, other);
-                case "displayPermissionWarning" -> permission = !Soap.nil(e) && flag(bool(text), e, other);
+                case "warning" -> warning = flag(text, e, other);
+                case "displayPermissionWarning" -> permission = flag(text, e, other);
                 case "date" -> date = Soap.nil(e) ? null : keepUnless(dateTime(text), e, other);
                 default -> Soap.keep(other, e, occurrence);
+            }
+        }
+        for (String required : List.of("warning", "displayPermissionWarning")) {
+            if (!seen.containsKey(Soap.WS + " " + required)) {
+                Soap.put(other, required, MISSING); // required by the WSDL; read as false
             }
         }
         return new SearchResult(system, messages, number, warning, permission, date, rawResponse, other);
@@ -57,16 +66,10 @@ public record SearchResult(String system, List<Message> messages, Integer number
 
     private static void list(Element list, List<Message> messages, Map<String, String> other) {
         for (Element data : Soap.children(list)) {
-            if (Soap.is(data, Soap.WS, "AdapterFrameworkData")) {
-                if (!Soap.nil(data)) {
-                    messages.add(Message.read(data));
-                }
+            if (Soap.is(data, Soap.WS, "AdapterFrameworkData") && !Soap.nil(data)) {
+                messages.add(Message.read(data));
             } else {
-                String key = "list/" + data.getLocalName();
-                for (int n = 2; other.containsKey(key); n++) {
-                    key = "list/" + data.getLocalName() + "#" + n;
-                }
-                other.put(key, Soap.nil(data) ? Soap.NIL : Soap.complex(data) ? Soap.xml(data) : data.getTextContent());
+                Soap.keepAt(other, "list/" + data.getLocalName(), data); // a nil item is kept as (nil)
             }
         }
     }
@@ -79,7 +82,9 @@ public record SearchResult(String system, List<Message> messages, Integer number
         return value;
     }
 
-    private static boolean flag(Boolean value, Element e, Map<String, String> other) {
+    /** A required boolean: false and kept in {@code other} when it is nil or does not parse. */
+    private static boolean flag(String text, Element e, Map<String, String> other) {
+        Boolean value = Soap.nil(e) ? null : bool(text);
         if (value == null) {
             Soap.keep(other, e, 1);
             return false;

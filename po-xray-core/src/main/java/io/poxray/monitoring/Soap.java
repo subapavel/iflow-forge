@@ -12,6 +12,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.xml.XMLConstants;
@@ -48,6 +49,14 @@ final class Soap {
     private static final String XSI = XMLConstants.W3C_XML_SCHEMA_INSTANCE_NS_URI;
     /** Characters of an unexpected body quoted in the error message. */
     private static final int EXCERPT = 200;
+    /** The only operations a request may name: the 21 read operations of F-17 Appendix B (the allow-list). */
+    static final Set<String> READ_OPERATIONS = Set.of(
+            "getMessageList", "getUserDefinedSearchMessages", "getMessagesByIDs", "getMessagesByKeys",
+            "getMessagesWithSuccessors", "getPredecessorMessageId", "getLogEntries",
+            "getMessageBytesJavaLangStringBoolean", "getMessageBytesJavaLangStringIntBoolean", "getLoggedMessageBytes",
+            "getUserDefinedSearchFilters", "getUserDefinedSearchExtractors", "getUserDefinedSearchAttributes",
+            "getInterfaces", "getParties", "getServices", "getConnections", "getIntegrationFlows", "getErrorCodes",
+            "getStatusDetails", "getAllAvailableStatusDetails");
     /** The value kept in an {@code otherFields} map for a child marked {@code xsi:nil="true"}. */
     static final String NIL = "(nil)";
     /** A {@code charset} parameter in a content type (same test as {@link PoHttp#charset}). */
@@ -65,9 +74,14 @@ final class Soap {
 
     /**
      * The request envelope of an operation: {@code bodyXml} is the content of the operation element and may use the
-     * prefixes {@code op} (OP), {@code ws} (WS), {@code d} (DATA) and {@code jl} (JL) declared on the envelope.
+     * prefixes {@code op} (OP), {@code ws} (WS), {@code d} (DATA) and {@code jl} (JL) declared on the envelope. An
+     * operation outside {@link #READ_OPERATIONS} is a {@link MonitoringException}, so it is never sent.
      */
     static String envelope(String operation, String bodyXml) {
+        if (!READ_OPERATIONS.contains(operation)) {
+            throw new MonitoringException("Operation " + operation + " is not one of the " + READ_OPERATIONS.size()
+                    + " read operations of the monitoring service; nothing was sent");
+        }
         return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
                 + "<soapenv:Envelope xmlns:soapenv=\"" + ENV + "\" xmlns:op=\"" + OP + "\" xmlns:ws=\"" + WS
                 + "\" xmlns:d=\"" + DATA + "\" xmlns:jl=\"" + JL + "\">"
@@ -392,6 +406,23 @@ final class Soap {
             key = name + "#" + n;
         }
         fields.put(key, nil(e) ? NIL : complex(e) ? xml(e) : e.getTextContent());
+    }
+
+    /**
+     * Keeps an element in an {@code otherFields} map under {@code key} ({@link #NIL} if it is nil, its XML string if
+     * it is complex, its text otherwise); a key already taken becomes {@code key#2}, {@code key#3}, ...
+     */
+    static void keepAt(Map<String, String> fields, String key, Element e) {
+        put(fields, key, nil(e) ? NIL : complex(e) ? xml(e) : e.getTextContent());
+    }
+
+    /** Puts {@code value} under {@code key}, or under {@code key#2}, {@code key#3}, ... when the key is taken. */
+    static void put(Map<String, String> fields, String key, String value) {
+        String k = key;
+        for (int n = 2; fields.containsKey(k); n++) {
+            k = key + "#" + n;
+        }
+        fields.put(k, value);
     }
 
     /** An element as an XML string without declaration (namespace declarations added as needed). */

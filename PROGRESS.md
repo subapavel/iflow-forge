@@ -1336,3 +1336,13 @@ Implementer (no deviation): 8 read methods, Mime, KeyResolver, SearchResult/LogE
 Tests added after green (red not observed, read by review): 9 for implementer-reported gaps; review r1 FAIL (xml/json → text untested) → 7 MimeTest methods; r2 PASS.
 VERIFIED_PASS reactor 802/0/0/26 (target/mon-03/verifier-verify-r2.log, exit 0); write-operation grep 0. No live call. No push.
 Carry: KeyResolver drops a message without key silently; nil/missing warning → false not kept; LogResult drops non-AuditLogEntryData items; Locale empty children to check in MON-07.
+
+## MON-04 acceptance · 2026-11-11 · committed locally
+Task: user-defined search, 11 lookups, read-only surface guard, MON-03 carry-over (packet 2026-11-11-mon-04-packet.md).
+Test first: MonitoringClientLookupTest, ReadOnlySurfaceTest, new KeyResolver/Search/Detail methods; red observed — test-compile failure (target/mon-04/red.log).
+Implementer: Lookup<T> with otherFields, AttributeMetadata, IntegrationFlow, StatusDetail, 12 methods; KeyResolver NotFound(idOrKey, reason); nil/missing flags and non-entry log items kept.
+Deviation: nil message and log items are now kept as "(nil)" instead of skipped (changes MON-03 behaviour; honesty rule; pinned by tests). Two KeyResolverTest checks adapted to the 2-field NotFound (packet D1).
+11 tests added after green to pin implementer behaviour (red not observed; read by review). Review r1 PASS with gap: call/envelope accepted any operation name.
+Architect closed it: red test callRefusesAnOperationOutsideTheReadSet observed (target/mon-04/red-r2.log) → Soap.READ_OPERATIONS allow-list of 21; r2 PASS.
+VERIFIED_PASS reactor 840/0/0/26 (target/mon-04/verify-r2.log, exit 0); write-operation grep 0. No live call. No push.
+Carry to MON-05/06: an Ambiguous candidate may have no key — show it, never offer it as a key; Locale 3 empty children to check in MON-07.

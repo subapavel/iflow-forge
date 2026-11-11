@@ -394,4 +394,52 @@ class MonitoringClientDetailTest {
         assertThat(p.messageKey()).isEqualTo(KEY);
         assertThat(p.source()).isEqualTo("current");
     }
+
+    // ------------------------------------------------------------------------------------------ MON-04 D3
+
+    @Test
+    void logItemsThatAreNotEntriesAreKept() {
+        po.respondSoap(valueResponse("getLogEntries", "<d:AuditLogEntryData>"
+                + "<d:timeStamp>2026-11-10T08:15:30.100+01:00</d:timeStamp><d:textKey>MP_ENTER</d:textKey>"
+                + "<d:status>success</d:status><d:localizedText>Entered</d:localizedText></d:AuditLogEntryData>"
+                + "<d:FutureNote>first</d:FutureNote><d:FutureNote>second</d:FutureNote>"));
+
+        LogResult r = client.getLogEntries(KEY, false, 100, null, OLDER_THAN);
+
+        assertThat(r.entries()).extracting(LogEntry::textKey).containsExactly("MP_ENTER");
+        assertThat(r.otherFields()).containsExactly(
+                entry("Response/FutureNote", "first"), entry("Response/FutureNote#2", "second"));
+    }
+
+    @Test
+    void logResultWithOnlyEntriesHasNoOtherFields() {
+        po.respondSoap(valueResponse("getLogEntries", LOG_ENTRIES));
+
+        LogResult r = client.getLogEntries(KEY, false, 100, null, OLDER_THAN);
+
+        assertThat(r.otherFields()).isNotNull().isEmpty();
+    }
+
+    // ------------------------------------------------------------------------------------------ MON-04 review round 2
+
+    @Test
+    void nilLogResponseIsEmptyWithTheNilRecorded() {
+        po.respondSoap(MonitoringClientLookupTest.nilResponse("getLogEntries"));
+
+        LogResult r = client.getLogEntries(KEY, false, 100, null, OLDER_THAN);
+
+        assertThat(r.entries()).isNotNull().isEmpty();
+        assertThat(r.otherFields()).containsExactly(entry("Response", "(nil)"));
+    }
+
+    @Test
+    void nilLogEntryIsKept() {
+        po.respondSoap(valueResponse("getLogEntries", "<d:AuditLogEntryData xsi:nil=\"true\"/>"
+                + "<d:AuditLogEntryData><d:textKey>MP_ENTER</d:textKey></d:AuditLogEntryData>"));
+
+        LogResult r = client.getLogEntries(KEY, false, 100, null, OLDER_THAN);
+
+        assertThat(r.entries()).extracting(LogEntry::textKey).containsExactly("MP_ENTER");
+        assertThat(r.otherFields()).containsExactly(entry("Response/AuditLogEntryData", "(nil)"));
+    }
 }
