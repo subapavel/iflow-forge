@@ -1318,3 +1318,12 @@ F-17 (major): §4 data-type namespaces and fault child order corrected; AdapterF
 Deviation: F-17. Review r1 FAIL5 (spec/plan inconsistencies, PROD WSDL read vs "no PROD calls") → fixed; r2 PASS (target/mon-01/review-r2.md).
 Clarification for hand-over: anonymous WSDL reads are not operation calls (spec §9, D-059). Maven NOT_RUN: docs only. Privacy grep clean. No push.
 Next: MON-02 (SOAP transport and getMessageList) — test-author first.
+
+## MON-02 acceptance · 2026-11-11 · committed locally
+Task: SOAP transport, error mapping, PoHttp extraction and getMessageList (packet 2026-11-11-mon-02-packet.md).
+Test first: MonitoringClientSearchTest (13), PoHttpTest (6) by the test-author; red observed — compilation failure (target/mon-02/red.log).
+Implementer: PoHttp (client, authorization + moved describe/charset/isLogonPage/errorText), io.poxray.monitoring (client, Soap, MessageFilter 43 fields, records); JDK only.
+Deviation (accepted by review): Soap.parse(response, operation, system); PoHttp exposes the moved helpers publicly; logon-page check after the SOAP-envelope check.
+Review r1 FAIL: filter order tested for 14 of 43 fields → test-author added everyFilterFieldIsSentInOrderWithItsValue (passes unchanged code); r2 PASS.
+VERIFIED_PASS reactor 749/0/0/26 (target/mon-02/verifier-verify-r2.log, exit 0); write-operation grep in src/main 0. No live call. No push.
+Carry to MON-03: SearchResult honesty on unparseable values; repeated/nil children; tests for SOAP 200 with j_username, missing Response, non-200 without fault, InvalidKeyException, XML-declared encoding, control characters in escape.

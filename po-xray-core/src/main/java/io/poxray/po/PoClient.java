@@ -11,7 +11,6 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
-import java.util.Base64;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -25,51 +24,22 @@ import java.util.stream.Collectors;
  */
 public final class PoClient implements PoGateway {
 
-    private static final Pattern CHARSET = Pattern.compile("(?i)charset=([^;]+)");
     private static final Pattern RESPONSE_TEXTAREA =
             Pattern.compile("<textarea[^>]*name=\"response\"[^>]*>(.*?)</textarea>", Pattern.DOTALL | Pattern.CASE_INSENSITIVE);
     private static final Duration TIMEOUT = Duration.ofMinutes(2);
-    /** First {@code some.package.SomeException: message} of a stack trace (up to the first frame). */
-    private static final Pattern EXCEPTION =
-            Pattern.compile("\\b(?:[a-z][\\w$]*\\.)+[A-Z][\\w$]*(?:Exception|Error)\\b:?[^\\n]*?(?=\\s+at\\s+[\\w$.]+\\(|$)");
 
     private final PoSystem system;
     private final HttpClient http;
     private final String authorization;
 
     public PoClient(PoSystem system) {
-        this(system, httpClient(system));
-    }
-
-    private static HttpClient httpClient(PoSystem system) {
-        if (system.url() == null) {
-            throw new PoException("System '" + system.name() + "' is a directory of TPZ exports (tpz=...),"
-                    + " it has no online connection");
-        }
-        HttpClient.Builder b = HttpClient.newBuilder()
-                .version(HttpClient.Version.HTTP_1_1) // no h2c upgrade attempt: SAP AS Java answers it with 403
-                .connectTimeout(Duration.ofSeconds(30))
-                .followRedirects(HttpClient.Redirect.NEVER); // a redirect means: logon page
-        if ("https".equalsIgnoreCase(system.url().getScheme())) {
-            b.sslContext(TrustStores.sslContext(system.trustStore(), system.trustStorePassword()));
-        }
-        if (system.proxy() != null) {
-            String p = system.proxy();
-            int colon = p.lastIndexOf(':');
-            if (colon < 0) {
-                throw new PoException("proxy must be host:port, not '" + p + "'");
-            }
-            b.proxy(java.net.ProxySelector.of(new java.net.InetSocketAddress(p.substring(0, colon),
-                    Integer.parseInt(p.substring(colon + 1)))));
-        }
-        return b.build();
+        this(system, PoHttp.client(system));
     }
 
     PoClient(PoSystem system, HttpClient http) {
         this.system = system;
         this.http = http;
-        this.authorization = "Basic " + Base64.getEncoder().encodeToString(
-                (system.user() + ":" + system.password()).getBytes(StandardCharsets.UTF_8));
+        this.authorization = PoHttp.authorization(system);
     }
 
     public PoSystem system() {
@@ -155,30 +125,7 @@ public final class PoClient implements PoGateway {
 
     /** First non-empty message in the cause chain with its exception type (some I/O errors have no message). */
     static String describe(Throwable e) {
-        for (Throwable t = e; t != null; t = t.getCause()) {
-            if (t.getMessage() != null && !t.getMessage().isBlank()) {
-                return t.getClass().getSimpleName() + ": " + t.getMessage();
-            }
-        }
-        Throwable root = e;
-        while (root.getCause() != null && root.getCause() != root) {
-            root = root.getCause();
-        }
-        return root == e || root.getClass() == e.getClass() ? e.getClass().getSimpleName()
-                : e.getClass().getSimpleName() + " / " + root.getClass().getSimpleName();
-    }
-
-    /** Charset of a response: the {@code charset} parameter of its content type, UTF-8 if absent or unknown. */
-    static java.nio.charset.Charset charset(String contentType) {
-        Matcher m = CHARSET.matcher(contentType);
-        if (m.find()) {
-            try {
-                return java.nio.charset.Charset.forName(m.group(1).replace("\"", "").strip());
-            } catch (IllegalArgumentException e) {
-                return StandardCharsets.UTF_8;
-            }
-        }
-        return StandardCharsets.UTF_8;
+        return PoHttp.describe(e);
     }
 
     public XiObject read(XiRef ref) {
@@ -199,8 +146,8 @@ public final class PoClient implements PoGateway {
             throw new PoException(what + " interrupted", e);
         }
         int status = resp.statusCode();
-        String body = new String(resp.body(), charset(resp.headers().firstValue("Content-Type").orElse("")));
-        if (status == 401 || (status / 100 == 3) || isLogonPage(body)) {
+        String body = new String(resp.body(), PoHttp.charset(resp.headers().firstValue("Content-Type").orElse("")));
+        if (status == 401 || (status / 100 == 3) || PoHttp.isLogonPage(body)) {
             throw new PoException(what + ": authentication failed for " + system + " (HTTP " + status + ")");
         }
         if (status == 403) {
@@ -213,27 +160,12 @@ public final class PoClient implements PoGateway {
         return body;
     }
 
-    private static boolean isLogonPage(String html) {
-        return html.contains("j_username") && html.contains("j_password");
+    private static String errorText(String html) {
+        return PoHttp.errorText(html);
     }
 
-    /** A short plain-text excerpt of an HTML error page; for Java stack traces the first exception and message. */
-    static String errorText(String html) {
-        String text = unescapeHtml(html.replaceAll("(?is)<(script|style)\\b.*?</\\1>", " ").replaceAll("<[^>]+>", " "))
-                .replaceAll("\\s+", " ").strip();
-        Matcher ex = EXCEPTION.matcher(text);
-        if (ex.find()) {
-            String message = ex.group(0).replaceAll("\\s+at\\s+[\\w$.]+\\(.*$", "").strip();
-            return message.length() > 400 ? message.substring(0, 400) + "…" : message;
-        }
-        int i = text.toLowerCase(java.util.Locale.ROOT).indexOf("exception");
-        String excerpt = i >= 0 ? text.substring(Math.max(0, i - 80)) : text;
-        return excerpt.length() > 400 ? excerpt.substring(0, 400) + "…" : excerpt;
-    }
-
-    static String unescapeHtml(String s) {
-        return s.replace("&lt;", "<").replace("&gt;", ">").replace("&quot;", "\"").replace("&#39;", "'")
-                .replace("&#034;", "\"").replace("&#039;", "'").replace("&amp;", "&");
+    private static String unescapeHtml(String s) {
+        return PoHttp.unescapeHtml(s);
     }
 
     private static String encode(String s) {
