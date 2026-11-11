@@ -73,7 +73,7 @@ public final class PoSystem {
         return load(name, defaultDirectory(), System.getenv());
     }
 
-    static PoSystem load(String name, Path directory, Map<String, String> env) {
+    public static PoSystem load(String name, Path directory, Map<String, String> env) {
         Path file = directory.resolve(name + ".properties");
         if (!Files.isRegularFile(file)) {
             throw new PoException("System '" + name + "' is not configured: create " + file

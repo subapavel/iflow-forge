@@ -1346,3 +1346,13 @@ Deviation: nil message and log items are now kept as "(nil)" instead of skipped 
 Architect closed it: red test callRefusesAnOperationOutsideTheReadSet observed (target/mon-04/red-r2.log) → Soap.READ_OPERATIONS allow-list of 21; r2 PASS.
 VERIFIED_PASS reactor 840/0/0/26 (target/mon-04/verify-r2.log, exit 0); write-operation grep 0. No live call. No push.
 Carry to MON-05/06: an Ambiguous candidate may have no key — show it, never offer it as a key; Locale 3 empty children to check in MON-07.
+
+## MON-05 acceptance · 2026-11-11 · committed locally
+Task: CLI `messages` group (11 subcommands), default system, save target and archive (packet 2026-11-11-mon-05-packet.md).
+Test first: MonitoringSystemsTest, SaveTargetTest, MessageArchiveTest, TimeArgTest, MessagesCommandTest; red observed — core test-compile (target/mon-05/red.log), CLI red in a stub run.
+Architect calls: env only through MonitoringEnvironment bean (@Mock in tests, no assumeTrue); archive dir name sanitised, dots-only refused; --key takes a value without lookup.
+Deviation: --save / saveDir only on log, payload, uds-attributes (a search is not one message); spec §7 and plan MON-05/06 edited with changelog.
+26 tests added after green to pin implementer behaviour (incl. repeated --attr/--status). Review r1 FAIL: PoSystem.load(name) let the machine's POXRAY_*_PASSWORD reach the test fake; filter options not checked per field.
+Fix: PoSystem.load(name, dir, env) public, CLI loads with the bean env; red observed (target/mon-05/red-r2.log, red-r2-cli.log); per-field filter test; r2 PASS.
+VERIFIED_PASS reactor 919/0/0/26 (target/mon-05/verify-r2.log, exit 0); CLI smoke lists 11 subcommands. Javap on aesh-3.18.2 (Context7 unavailable to agents). No live call. No push.
+Limits: no symlink test for SaveTarget/MessageArchive (Windows, no skips). Carry to MON-06: MCP must load systems through an env seam, not PoSystem.load(name).

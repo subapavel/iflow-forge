@@ -264,7 +264,7 @@ Kind: docs (finding). Live read access to QA is authorised by the owner (§9).
   - `TimeArg.parse(String, Clock) : OffsetDateTime` — `2026-11-10T08:00` (local zone),
     ISO with offset, `-2h`, `-30m`, `-1d`.
   - CLI: `po-xray messages <sub>`; common options `-s/--system` (optional), `--json`,
-    `-l/--limit` (200), `--archive`, `--save <dir>`; `search`/`uds-search`: `--interface`,
+    `-l/--limit` (200), `--archive`; `--save <dir>` on `log`, `payload`, `uds-attributes` only; `search`/`uds-search`: `--interface`,
     `--interface-ns`, `--sender`, `--receiver`, `--status` (repeatable), `--faulty`, `--from`
     (default `-24h`), `--to` (default now); `uds-search` adds `--attr name=value` (repeatable),
     `--operator AND|OR` (AND); `log`/`payload`/`uds-attributes` take `<id-or-key>` plus `--key`,
@@ -298,8 +298,8 @@ Kind: docs (finding). Live read access to QA is authorised by the owner (§9).
 **Interfaces:**
 - Consumes: MON-02..05 (`MonitoringSystems`, `MessageArchive`, `KeyResolver`).
 - Produces: 11 tools, all `readOnlyHint=true, openWorldHint=true` except that `saveDir` makes a
-  call write — so tools with `saveDir` set `readOnlyHint=false` (`message_search`,
-  `message_uds_search`, `message_get`, `message_log`, `message_payload`) following the
+  call write — so tools with `saveDir` set `readOnlyHint=false` (`message_log`,
+  `message_payload`, `message_uds_attributes`; spec §7 after MON-05) following the
   `write_integration_documentation` precedent: `message_search`, `message_uds_search`,
   `message_get`, `message_successors`, `message_predecessor`, `message_log`, `message_payload`,
   `message_uds_attributes`, `message_uds_filters`, `message_uds_extractors`, `message_lookup(kind)`.

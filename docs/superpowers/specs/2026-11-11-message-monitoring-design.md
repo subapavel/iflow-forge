@@ -7,7 +7,8 @@ is a default the owner has not decided and may overrule while reading.
 Changelog: 2026-11-11 F-17 — §4 namespace of each data type corrected from the served WSDL; response
 wrapper, array, flag and fault shapes added; fault child order corrected to args, code
 (InvalidKeyException adds messageKey). 2026-11-11 review r1 — §8 `readOnlyHint` aligned with §6;
-§9 states that anonymous WSDL reads are not operation calls.
+§9 states that anonymous WSDL reads are not operation calls. 2026-11-11 MON-05 — §7 `--save` /
+`saveDir` only on the one-message reads.
 
 ## 1. Intent
 
@@ -172,7 +173,8 @@ from. Other po-xray commands are not changed.
 Owner: payloads and logs may be saved, "ale jenom v případě, že to bude vyžadovat scenář". So:
 
 - Nothing is written to disk unless the caller asks. CLI: `--save <dir>`; MCP: a `saveDir`
-  parameter. With it, the tool writes the raw SOAP response, the decoded payload bytes and the JSON
+  parameter — both only on the reads of one message (`log`, `payload`, `uds-attributes`), since a
+  search answer is not one message *(architect's call, MON-05)*. With it, the tool writes the raw SOAP response, the decoded payload bytes and the JSON
   model under `<dir>/<message-id>/`. The documented place is `local/<customer>/messages/` (gitignored);
   the tool refuses a `<dir>` inside the repository that is not under `local/` or `testdata/`
   *(architect's call)*.

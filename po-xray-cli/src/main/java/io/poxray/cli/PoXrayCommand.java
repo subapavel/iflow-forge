@@ -15,7 +15,7 @@ import org.aesh.command.invocation.CommandInvocation;
         groupCommands = {JsonCommand.class, DocCommand.class, ExportCommand.class, ComponentsCommand.class,
             IcoCommand.class, SearchCommand.class, ShowCommand.class, WhereUsedCommand.class, IflowCommand.class,
             UnpackCommand.class, BpmFunctionsCommand.class, AttributesCommand.class, BpmInventoryCommand.class,
-            DossierCheckCommand.class, BehaviorCommand.class, CompareBehaviorCommand.class})
+            DossierCheckCommand.class, BehaviorCommand.class, CompareBehaviorCommand.class, MessagesCommand.class})
 public class PoXrayCommand implements Command<CommandInvocation> {
 
     @Override
@@ -25,6 +25,7 @@ public class PoXrayCommand implements Command<CommandInvocation> {
                 + "  |  po-xray bpm-inventory <export-dir> [--json]"
                 + "  |  po-xray behavior <export-dir-or-file> [--icos <inventory.json>] [--json]"
                 + "  |  po-xray dossier-check <dossier.json> [--baseline <previous.json>] [--json]"
+                + "  |  po-xray messages <search|get|log|payload|...> [-s <system>]"
                 + "   (po-xray --help, po-xray <command> --help)");
         return CommandResult.USAGE_ERROR;
     }
