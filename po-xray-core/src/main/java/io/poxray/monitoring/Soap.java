@@ -5,10 +5,15 @@ import io.poxray.po.PoSystem;
 import java.io.IOException;
 import java.io.StringReader;
 import java.net.http.HttpResponse;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -43,6 +48,15 @@ final class Soap {
     private static final String XSI = XMLConstants.W3C_XML_SCHEMA_INSTANCE_NS_URI;
     /** Characters of an unexpected body quoted in the error message. */
     private static final int EXCERPT = 200;
+    /** The value kept in an {@code otherFields} map for a child marked {@code xsi:nil="true"}. */
+    static final String NIL = "(nil)";
+    /** A {@code charset} parameter in a content type (same test as {@link PoHttp#charset}). */
+    private static final Pattern CHARSET_PARAM = Pattern.compile("(?i)charset=");
+    /** The encoding of an XML declaration at the very start of a body read as ISO-8859-1. */
+    private static final Pattern XML_ENCODING =
+            Pattern.compile("^<\\?xml\\s[^>]*?encoding\\s*=\\s*[\"']([A-Za-z][A-Za-z0-9._-]*)[\"']");
+    /** Bytes of a body searched for the XML declaration. */
+    private static final int DECLARATION = 200;
 
     private Soap() {
     }
@@ -61,33 +75,86 @@ final class Soap {
                 + "</soapenv:Envelope>";
     }
 
-    /** Appends {@code <prefix:name>value</prefix:name>}; nothing for a null value. */
+    /**
+     * Appends {@code <prefix:name>value</prefix:name>}; nothing for a null value. A text with a character XML 1.0 does
+     * not allow is a {@link MonitoringException} naming {@code name}.
+     */
     static void element(StringBuilder out, String prefix, String name, Object value) {
-        if (value == null) {
-            return;
+        if (value != null) {
+            text(out, prefix, name, name, value);
         }
-        String text = value instanceof OffsetDateTime t ? DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(t)
-                : value.toString();
-        out.append('<').append(prefix).append(':').append(name).append('>').append(escape(text))
-                .append("</").append(prefix).append(':').append(name).append('>');
+    }
+
+    /**
+     * Appends a required but nillable element: {@code <prefix:name>value</prefix:name>}, or for a null value the
+     * element with {@code xsi:nil="true"} (F-17 Appendix B, mark {@code N}).
+     */
+    static void nillable(StringBuilder out, String prefix, String name, Object value) {
+        if (value == null) {
+            nil(out, prefix, name);
+        } else {
+            text(out, prefix, name, name, value);
+        }
     }
 
     /** Appends a {@code JL:ArrayOfString} element with one {@code jl:String} per item; nothing for a null list. */
     static void strings(StringBuilder out, String prefix, String name, List<String> items) {
-        if (items == null) {
-            return;
+        if (items != null) {
+            array(out, prefix, name, items);
         }
+    }
+
+    /** Appends a required but nillable {@code JL:ArrayOfString}: a null list is the element with {@code xsi:nil}. */
+    static void nillableStrings(StringBuilder out, String prefix, String name, List<String> items) {
+        if (items == null) {
+            nil(out, prefix, name);
+        } else {
+            array(out, prefix, name, items);
+        }
+    }
+
+    private static void array(StringBuilder out, String prefix, String name, List<String> items) {
         out.append('<').append(prefix).append(':').append(name).append('>');
         for (String item : items) {
-            element(out, "jl", "String", item);
+            if (item == null) {
+                nil(out, "jl", "String");
+            } else {
+                text(out, "jl", "String", name, item);
+            }
         }
         out.append("</").append(prefix).append(':').append(name).append('>');
     }
 
-    static String escape(String s) {
+    private static void nil(StringBuilder out, String prefix, String name) {
+        out.append('<').append(prefix).append(':').append(name).append(" xmlns:xsi=\"").append(XSI)
+                .append("\" xsi:nil=\"true\"/>");
+    }
+
+    private static void text(StringBuilder out, String prefix, String name, String field, Object value) {
+        String text = value instanceof OffsetDateTime t ? DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(t)
+                : value.toString();
+        out.append('<').append(prefix).append(':').append(name).append('>').append(escape(field, text))
+                .append("</").append(prefix).append(':').append(name).append('>');
+    }
+
+    /**
+     * The text escaped for element content; a character outside the XML 1.0 {@code Char} production (a control
+     * character other than tab, line feed and carriage return, an unpaired surrogate, U+FFFE, U+FFFF) is a
+     * {@link MonitoringException} naming the request field, so the request is never sent.
+     */
+    static String escape(String field, String s) {
         StringBuilder b = new StringBuilder(s.length());
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
+            if (Character.isHighSurrogate(c) && i + 1 < s.length() && Character.isLowSurrogate(s.charAt(i + 1))) {
+                b.append(c).append(s.charAt(++i));
+                continue;
+            }
+            if (c < 0x20 && c != '\t' && c != '\n' && c != '\r' || Character.isSurrogate(c) || c == 0xFFFE
+                    || c == 0xFFFF) {
+                throw new MonitoringException(String.format("Request field %s contains a character XML 1.0 does not"
+                        + " allow (U+%04X at index %d); nothing was sent", field, (int) c, i));
+            }
             switch (c) {
                 case '&' -> b.append("&amp;");
                 case '<' -> b.append("&lt;");
@@ -101,9 +168,29 @@ final class Soap {
 
     // ------------------------------------------------------------------------------------------ response
 
-    /** The body of an answer decoded with the charset of its content type (UTF-8 if absent or unknown). */
+    /**
+     * The body of an answer decoded with the charset of its content type (UTF-8 if unknown); without a charset
+     * parameter, with the encoding of the body's XML declaration (UTF-8 if there is none or it is unknown).
+     */
     static String text(HttpResponse<byte[]> response) {
-        return new String(response.body(), PoHttp.charset(response.headers().firstValue("Content-Type").orElse("")));
+        String contentType = response.headers().firstValue("Content-Type").orElse("");
+        byte[] body = response.body();
+        Charset charset = CHARSET_PARAM.matcher(contentType).find() ? PoHttp.charset(contentType) : declared(body);
+        return new String(body, charset);
+    }
+
+    /** The encoding of the XML declaration that starts {@code body}, UTF-8 if there is none or it is unknown. */
+    private static Charset declared(byte[] body) {
+        Matcher m = XML_ENCODING.matcher(
+                new String(body, 0, Math.min(body.length, DECLARATION), StandardCharsets.ISO_8859_1));
+        if (m.find()) {
+            try {
+                return Charset.forName(m.group(1));
+            } catch (IllegalArgumentException e) {
+                return StandardCharsets.UTF_8;
+            }
+        }
+        return StandardCharsets.UTF_8;
     }
 
     /**
@@ -291,6 +378,20 @@ final class Soap {
     /** True when an element has element children. */
     static boolean complex(Element e) {
         return !children(e).isEmpty();
+    }
+
+    /**
+     * Keeps a child in an {@code otherFields} map under its local name: {@link #NIL} if it is nil, its XML string if
+     * it is complex, its text otherwise. The {@code occurrence}-th child of a name (counted from 1) is kept as
+     * {@code name#occurrence} from the second on; a key already taken gets the next free number.
+     */
+    static void keep(Map<String, String> fields, Element e, int occurrence) {
+        String name = e.getLocalName();
+        String key = occurrence <= 1 ? name : name + "#" + occurrence;
+        for (int n = Math.max(occurrence, 1) + 1; fields.containsKey(key); n++) {
+            key = name + "#" + n;
+        }
+        fields.put(key, nil(e) ? NIL : complex(e) ? xml(e) : e.getTextContent());
     }
 
     /** An element as an XML string without declaration (namespace declarations added as needed). */

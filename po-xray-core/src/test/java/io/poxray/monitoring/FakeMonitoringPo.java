@@ -164,6 +164,73 @@ public final class FakeMonitoringPo implements AutoCloseable {
                 + "</detail></S:Fault>");
     }
 
+    /**
+     * A SOAP 1.1 fault envelope with the F-17 Appendix D {@code InvalidKeyException} detail:
+     * {@code FLT:<operation>_com.sap.aii.mdt.server.adapterframework.ws.InvalidKeyException} with children
+     * {@code WS:args} (items {@code JL:String}), {@code WS:code} and {@code WS:messageKey}.
+     */
+    public static String invalidKeyFault(String operation, String faultString, int code, String messageKey,
+            String... args) {
+        StringBuilder items = new StringBuilder();
+        for (String a : args) {
+            items.append("<j:String>").append(a).append("</j:String>");
+        }
+        String detail = operation + "_com.sap.aii.mdt.server.adapterframework.ws.InvalidKeyException";
+        return envelope("<S:Fault><faultcode>S:Server</faultcode><faultstring>" + faultString + "</faultstring>"
+                + "<detail><f:" + detail + " xmlns:f=\"" + FLT + "\" xmlns:w=\"" + WS + "\" xmlns:j=\"" + JL + "\">"
+                + "<w:args>" + items + "</w:args><w:code>" + code + "</w:code>"
+                + "<w:messageKey>" + messageKey + "</w:messageKey>"
+                + "</f:" + detail + ">"
+                + "</detail></S:Fault>");
+    }
+
+    /**
+     * The SOAP body content of a search answer ({@code OP:<operation>Response/OP:Response} of type
+     * {@code MessageSearchReturnValue}) with these {@code AdapterFrameworkData} items (prefixes {@code m} OP, {@code w}
+     * WS, {@code d} DATA, {@code j} JL declared on the wrapper).
+     */
+    public static String searchResponse(String operation, int number, boolean warning, String... messagesXml) {
+        return "<m:" + operation + "Response xmlns:m=\"" + OP + "\" xmlns:w=\"" + WS + "\" xmlns:d=\"" + DATA
+                + "\" xmlns:j=\"" + JL + "\"><m:Response><w:list>" + String.join("", messagesXml) + "</w:list>"
+                + "<w:number>" + number + "</w:number><w:warning>" + warning + "</w:warning>"
+                + "<w:displayPermissionWarning>false</w:displayPermissionWarning></m:Response></m:"
+                + operation + "Response>";
+    }
+
+    /** One {@code WS:AdapterFrameworkData} item with messageID, messageKey, direction and status (prefix {@code w}). */
+    public static String message(String messageId, String messageKey, String direction, String status) {
+        return "<w:AdapterFrameworkData><w:direction>" + direction + "</w:direction><w:messageID>" + messageId
+                + "</w:messageID><w:messageKey>" + messageKey + "</w:messageKey><w:status>" + status
+                + "</w:status></w:AdapterFrameworkData>";
+    }
+
+    /**
+     * The SOAP body content {@code OP:<operation>Response/OP:Response} with this content (prefixes {@code m} OP,
+     * {@code w} WS, {@code d} DATA, {@code j} JL, {@code xsi} declared on the wrapper).
+     */
+    public static String valueResponse(String operation, String responseContentXml) {
+        return "<m:" + operation + "Response xmlns:m=\"" + OP + "\" xmlns:w=\"" + WS + "\" xmlns:d=\"" + DATA
+                + "\" xmlns:j=\"" + JL + "\" xmlns:xsi=\"" + XMLConstants.W3C_XML_SCHEMA_INSTANCE_NS_URI + "\">"
+                + "<m:Response>" + responseContentXml + "</m:Response></m:" + operation + "Response>";
+    }
+
+    /**
+     * The operation element of a recorded request: the envelope is SOAP 1.1 and its body holds exactly one element,
+     * {@code OP:<operation>}; fails otherwise.
+     */
+    public static Element operation(Request request, String operation) {
+        Element envelope = request.document().getDocumentElement();
+        if (!(SOAP_ENV + " Envelope").equals(qname(envelope))) {
+            throw new AssertionError("not a SOAP 1.1 envelope: " + qname(envelope));
+        }
+        Element body = child(envelope, SOAP_ENV, "Body");
+        List<String> names = childNames(body);
+        if (!names.equals(List.of(OP + " " + operation))) {
+            throw new AssertionError("expected the body to hold only {" + OP + "}" + operation + ", found " + names);
+        }
+        return children(body).getFirst();
+    }
+
     // ------------------------------------------------------------------------------------------ DOM helpers
 
     /** Namespace-aware parse with secure processing on and DOCTYPE disallowed. */

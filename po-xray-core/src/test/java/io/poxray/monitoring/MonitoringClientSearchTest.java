@@ -587,4 +587,55 @@ class MonitoringClientSearchTest {
                 .hasMessageContaining("System 'exports' is a directory of TPZ exports")
                 .hasMessageContaining("monitoring needs an online system");
     }
+
+    // ------------------------------------------------------------------------------------------ honesty (MON-03)
+
+    @Test
+    void unparseableSearchResultValuesAreKept() {
+        MonitoringClient client = new MonitoringClient(po.system);
+        po.respondSoap("<m:getMessageListResponse xmlns:m=\"" + OP + "\" xmlns:w=\"" + WS + "\"><m:Response>"
+                + "<w:date>yesterday</w:date><w:list/><w:number>abc</w:number><w:warning>maybe</w:warning>"
+                + "<w:displayPermissionWarning>false</w:displayPermissionWarning>"
+                + "</m:Response></m:getMessageListResponse>");
+
+        SearchResult r = client.getMessageList(MessageFilter.builder().build(), 10);
+
+        assertThat(r.date()).isNull();
+        assertThat(r.number()).isNull();
+        // the raw values the parser cannot read, by element name, in document order
+        assertThat(r.otherFields()).containsExactly(
+                entry("date", "yesterday"), entry("number", "abc"), entry("warning", "maybe"));
+
+        po.respondSoap(TWO_MESSAGES);
+        assertThat(client.getMessageList(MessageFilter.builder().build(), 10).otherFields()).isNotNull().isEmpty();
+    }
+
+    @Test
+    void repeatedMappedChildIsKept() {
+        po.respondSoap(result("<w:list><w:AdapterFrameworkData>"
+                + "<w:messageID>msg-0001</w:messageID><w:status>holding</w:status>"
+                + "<w:messageKey>key-0001</w:messageKey><w:status>delivering</w:status>"
+                + "<w:status>success</w:status></w:AdapterFrameworkData></w:list>", false, false, 1));
+
+        Message m = new MonitoringClient(po.system).getMessageList(MessageFilter.builder().build(), 10)
+                .messages().getFirst();
+
+        assertThat(m.status()).isEqualTo("holding"); // the first one is mapped
+        assertThat(m.messageKey()).isEqualTo("key-0001");
+        assertThat(m.otherFields()).containsExactly(entry("status#2", "delivering"), entry("status#3", "success"));
+    }
+
+    @Test
+    void nilUnknownChildIsKept() {
+        po.respondSoap(result("<w:list><w:AdapterFrameworkData"
+                + " xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">"
+                + "<w:messageID>msg-0001</w:messageID><w:futureField xsi:nil=\"true\"/>"
+                + "</w:AdapterFrameworkData></w:list>", false, false, 1));
+
+        Message m = new MonitoringClient(po.system).getMessageList(MessageFilter.builder().build(), 10)
+                .messages().getFirst();
+
+        assertThat(m.messageId()).isEqualTo("msg-0001");
+        assertThat(m.otherFields()).containsExactly(entry("futureField", "(nil)"));
+    }
 }

@@ -4,6 +4,8 @@ import java.time.OffsetDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,8 +17,10 @@ import org.w3c.dom.Element;
  * {@code businessAttributes}, {@code logLocations}, {@code flags} and {@code otherFields} are never null.
  * {@code flags} are the {@code BooleanAttribute} children by element name in document order;
  * {@code durationMillis} is {@code duration/duration}. {@code otherFields} holds every other child by element name in
- * document order: a simple child as its text, a complex child as its XML string, and a mapped child whose text does
- * not parse as its type (date-time, number, boolean) as its text, so nothing is dropped.
+ * document order: a simple child as its text, a complex child as its XML string, a nil unknown child as
+ * {@code "(nil)"}, a mapped child whose text does not parse as its type (date-time, number, boolean) as its text, and
+ * every repetition of a mapped child (the first one is mapped) as {@code name#2}, {@code name#3}, ..., so nothing is
+ * dropped. A nil mapped child is null.
  */
 public record Message(
         String messageId,
@@ -50,6 +54,18 @@ public record Message(
     /** The {@code BooleanAttribute} children of {@code AdapterFrameworkData}. */
     private static final Set<String> FLAGS =
             Set.of("businessMessage", "cancelable", "editable", "restartable", "wasEdited", "payloadPermissionWarning");
+    /** The children mapped to a component (the cases of {@code Reader.field} and {@link #FLAGS}). */
+    private static final Set<String> MAPPED = union(FLAGS, Set.of("messageID", "messageKey", "status", "errorCode",
+            "errorCategory", "errorLabel", "startTime", "endTime", "senderParty", "senderName", "senderInterface",
+            "receiverParty", "receiverName", "receiverInterface", "interface", "direction", "qualityOfService",
+            "connectionName", "sequenceID", "rootID", "parentID", "size", "businessAttributes", "logLocations",
+            "duration"));
+
+    private static Set<String> union(Set<String> a, Set<String> b) {
+        Set<String> all = new HashSet<>(a);
+        all.addAll(b);
+        return Set.copyOf(all);
+    }
 
     public Message {
         businessAttributes = businessAttributes == null ? List.of() : List.copyOf(businessAttributes);
@@ -92,13 +108,19 @@ public record Message(
         private final Map<String, Boolean> flags = new LinkedHashMap<>();
         private Long durationMillis;
         private final Map<String, String> other = new LinkedHashMap<>();
+        /** Occurrence (from 1) of the child being read among the children of its name. */
+        private int occurrence;
 
         Message read(Element data) {
+            Map<String, Integer> seen = new HashMap<>();
             for (Element e : Soap.children(data)) {
-                if (!Soap.WS.equals(e.getNamespaceURI())) {
-                    other(e);
+                occurrence = seen.merge(e.getNamespaceURI() + " " + e.getLocalName(), 1, Integer::sum);
+                if (!Soap.WS.equals(e.getNamespaceURI()) || occurrence > 1) {
+                    other(e); // foreign, or a repeated child: the first one is mapped, later ones are kept
                 } else if (!Soap.nil(e)) {
                     field(e);
+                } else if (!MAPPED.contains(e.getLocalName())) {
+                    other(e); // a nil mapped child is null; a nil unknown child is kept as (nil)
                 }
             }
             return new Message(messageId, messageKey, status, errorCode, errorCategory, errorLabel, startTime, endTime,
@@ -214,14 +236,9 @@ public record Message(
             }
         }
 
-        /** Keeps a child by element name: simple as text, complex as XML; a repeated name gets {@code #2}, ... */
+        /** Keeps the current child by element name ({@link Soap#keep}): the n-th of a name is {@code name#n}. */
         private void other(Element e) {
-            String value = Soap.complex(e) ? Soap.xml(e) : e.getTextContent();
-            String key = e.getLocalName();
-            for (int n = 2; other.containsKey(key); n++) {
-                key = e.getLocalName() + "#" + n;
-            }
-            other.put(key, value);
+            Soap.keep(other, e, occurrence);
         }
     }
 }

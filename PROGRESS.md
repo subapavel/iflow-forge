@@ -1327,3 +1327,12 @@ Deviation (accepted by review): Soap.parse(response, operation, system); PoHttp 
 Review r1 FAIL: filter order tested for 14 of 43 fields → test-author added everyFilterFieldIsSentInOrderWithItsValue (passes unchanged code); r2 PASS.
 VERIFIED_PASS reactor 749/0/0/26 (target/mon-02/verifier-verify-r2.log, exit 0); write-operation grep in src/main 0. No live call. No push.
 Carry to MON-03: SearchResult honesty on unparseable values; repeated/nil children; tests for SOAP 200 with j_username, missing Response, non-200 without fault, InvalidKeyException, XML-declared encoding, control characters in escape.
+
+## MON-03 acceptance · 2026-11-11 · committed locally
+Task: by-id lookups, audit log, payload with MIME parts, ID→key resolution, plus the MON-02 review carry-over (packet 2026-11-11-mon-03-packet.md).
+Test first: MonitoringClientDetailTest, MimeTest, KeyResolverTest, SoapEdgeCasesTest, 3 MonitoringClientSearchTest methods; red observed — test-compile failure (target/mon-03/red.log).
+Architect calls: null required-nillable params → xsi:nil; PayloadPart index from 0, contentId without <>; text for text/*, */xml, */json, +xml, +json when strictly decodable, else base64.
+Implementer (no deviation): 8 read methods, Mime, KeyResolver, SearchResult/LogEntry otherFields, repeated/nil children kept, XML-declared encoding, XML 1.0 char check. Beyond packet: Locale always sends 3 children; +json as text.
+Tests added after green (red not observed, read by review): 9 for implementer-reported gaps; review r1 FAIL (xml/json → text untested) → 7 MimeTest methods; r2 PASS.
+VERIFIED_PASS reactor 802/0/0/26 (target/mon-03/verifier-verify-r2.log, exit 0); write-operation grep 0. No live call. No push.
+Carry: KeyResolver drops a message without key silently; nil/missing warning → false not kept; LogResult drops non-AuditLogEntryData items; Locale empty children to check in MON-07.
