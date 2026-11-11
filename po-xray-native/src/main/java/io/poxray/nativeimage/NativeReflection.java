@@ -45,6 +45,22 @@ import io.poxray.model.Ref;
 import io.poxray.model.ScaInventory;
 import io.poxray.model.ServiceReference;
 import io.poxray.model.UnmappedElement;
+import io.poxray.monitoring.AttributeMetadata;
+import io.poxray.monitoring.BusinessAttribute;
+import io.poxray.monitoring.IntegrationFlow;
+import io.poxray.monitoring.KeyResolver;
+import io.poxray.monitoring.LogEntry;
+import io.poxray.monitoring.LogResult;
+import io.poxray.monitoring.Lookup;
+import io.poxray.monitoring.Message;
+import io.poxray.monitoring.MessageFilter;
+import io.poxray.monitoring.MessageInterface;
+import io.poxray.monitoring.MessagePayload;
+import io.poxray.monitoring.Party;
+import io.poxray.monitoring.PayloadPart;
+import io.poxray.monitoring.SearchResult;
+import io.poxray.monitoring.StatusDetail;
+import io.poxray.monitoring.ValueResult;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 
 /**
@@ -144,7 +160,13 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
             DossierAssessment.Assumption.class, DossierAssessment.Risk.class, DossierAssessment.BasisInput.class,
             DossierAssessment.Basis.class, DossierAssessment.Coverage.class, DossierAssessment.Blocker.class,
             DossierAssessment.Milestone.class,
-            IFlow.class, Participant.class, Step.class, Param.class, PackageExport.class, PackageExport.Entry.class
+            IFlow.class, Participant.class, Step.class, Param.class, PackageExport.class, PackageExport.Entry.class,
+            // message monitoring (po-xray messages, MCP message_* tools)
+            SearchResult.class, Message.class, MessageInterface.class, Party.class, BusinessAttribute.class,
+            MessageFilter.class, ValueResult.class, LogResult.class, LogEntry.class, MessagePayload.class,
+            PayloadPart.class, Lookup.class, AttributeMetadata.class, IntegrationFlow.class, StatusDetail.class,
+            KeyResolver.Resolution.Key.class, KeyResolver.Resolution.Ambiguous.class,
+            KeyResolver.Resolution.NotFound.class
         },
         classNames = {
             "io.poxray.bpm.BuiltinFunctionCatalog$Data",

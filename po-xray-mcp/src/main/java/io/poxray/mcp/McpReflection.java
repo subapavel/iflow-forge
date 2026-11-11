@@ -9,7 +9,10 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
     Views.CatalogOverview.class, Views.InterfaceSummary.class, Views.FunctionSummary.class,
     Views.DataTypeSummary.class, Views.DataTypeView.class,
     Inventories.Components.class, PoXrayTools.Ambiguous.class, PoXrayTools.WithIssues.class,
-    PoXrayTools.ResultFile.class
+    PoXrayTools.ResultFile.class,
+    MessageTools.SearchView.class, MessageTools.Candidate.class, MessageTools.AmbiguousId.class,
+    MessageTools.NotFoundId.class, MessageTools.LogView.class, MessageTools.PartInfo.class,
+    MessageTools.PayloadView.class, MessageTools.ValueView.class, MessageTools.ValuesView.class
 })
 final class McpReflection {
 

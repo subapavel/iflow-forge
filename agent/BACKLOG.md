@@ -42,8 +42,8 @@ Task detail (files, interfaces, steps, tests) lives in the plan:
 | MON-03 | By-id lookups, audit log, payload with MIME parts, ID→key resolution | message-monitoring.md MON-03 | MON-02 | code | done | red tests observed then green; root verify green; review PASS | red observed (target/mon-03/red.log); verify 802/0/0/26 (target/mon-03/verifier-verify-r2.log); review r2 PASS |
 | MON-04 | User-defined search, lookups, read-only surface guard (21 operations) | message-monitoring.md MON-04 | MON-03 | code | done | red tests observed then green; root verify green; review PASS | red observed (target/mon-04/red.log, red-r2.log); verify 840/0/0/26 (target/mon-04/verify-r2.log); review r2 PASS |
 | MON-05 | CLI `messages` group, default system, save target and archive | message-monitoring.md MON-05 | MON-04 | code | done | red tests observed then green; root verify green; CLI smoke; review PASS | red observed (target/mon-05/red.log, red-r2*.log); verify 919/0/0/26 (target/mon-05/verify-r2.log); CLI smoke; review r2 PASS |
-| MON-06 | MCP `message_*` tools, size budget, native registration | message-monitoring.md MON-06 | MON-05 | code | ready | red tests observed then green; root verify green; review PASS | |
-| MON-07 | Live read-only acceptance on QA, finding F-18 | message-monitoring.md MON-07 | MON-06 | docs | pending | F-18; spec §9 settled; docs review PASS; private evidence only under `local/` | |
+| MON-06 | MCP `message_*` tools, size budget, native registration | message-monitoring.md MON-06 | MON-05 | code | done | red tests observed then green; root verify green; review PASS | red observed (target/mon-06/red.log, r3-red.log); verify 983/0/0/26 (target/mon-06/verify-r2.log); native NOT_RUN; review r2 PASS |
+| MON-07 | Live read-only acceptance on QA, finding F-18 | message-monitoring.md MON-07 | MON-06 | docs | ready | F-18; spec §9 settled; docs review PASS; private evidence only under `local/` | |
 
 ## Phase KB — part 1, pipeline knowledge base (spec: `docs/superpowers/specs/2026-10-19-pipeline-knowledge-base-design.md`)
 

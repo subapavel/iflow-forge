@@ -204,6 +204,48 @@ class NativeReflectionTest {
         }
     }
 
+    @Test
+    void allPublicMonitoringRecordsAreRegistered() throws IOException, URISyntaxException {
+        RegisterForReflection reg = NativeReflection.class.getAnnotation(RegisterForReflection.class);
+        Set<String> registered = Stream.concat(Arrays.stream(reg.targets()).map(Class::getName),
+                Arrays.stream(reg.classNames())).collect(Collectors.toSet());
+        Path location = Path.of(io.poxray.monitoring.Message.class.getProtectionDomain().getCodeSource().getLocation()
+                .toURI());
+        Set<String> names;
+        if (Files.isDirectory(location)) {
+            names = classNames(location.resolve("io/poxray/monitoring"), "io.poxray.monitoring.");
+        } else {
+            try (FileSystem jar = FileSystems.newFileSystem(location, Map.of())) {
+                names = classNames(jar.getPath("io/poxray/monitoring"), "io.poxray.monitoring.");
+            }
+        }
+        Set<String> records = names.stream().map(NativeReflectionTest::load)
+                .filter(c -> c.isRecord() && java.lang.reflect.Modifier.isPublic(c.getModifiers()))
+                .map(Class::getName).collect(Collectors.toSet());
+
+        assertThat(records).contains("io.poxray.monitoring.Message", "io.poxray.monitoring.SearchResult",
+                "io.poxray.monitoring.LogEntry", "io.poxray.monitoring.PayloadPart",
+                "io.poxray.monitoring.KeyResolver$Resolution$Key");
+        assertThat(records).allSatisfy(c -> assertThat(registered).as("registered").contains(c));
+    }
+
+    private static Set<String> classNames(Path dir, String packagePrefix) throws IOException {
+        try (Stream<Path> files = Files.list(dir)) {
+            return files.map(p -> p.getFileName().toString())
+                    .filter(n -> n.endsWith(".class"))
+                    .map(n -> packagePrefix + n.substring(0, n.length() - ".class".length()))
+                    .collect(Collectors.toSet());
+        }
+    }
+
+    private static Class<?> load(String name) {
+        try {
+            return Class.forName(name, false, NativeReflectionTest.class.getClassLoader());
+        } catch (ClassNotFoundException e) {
+            throw new AssertionError("listed but not loadable: " + name, e);
+        }
+    }
+
     private static boolean classExists(String name) {
         try {
             Class.forName(name, false, NativeReflectionTest.class.getClassLoader());

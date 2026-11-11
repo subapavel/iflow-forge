@@ -1356,3 +1356,13 @@ Deviation: --save / saveDir only on log, payload, uds-attributes (a search is no
 Fix: PoSystem.load(name, dir, env) public, CLI loads with the bean env; red observed (target/mon-05/red-r2.log, red-r2-cli.log); per-field filter test; r2 PASS.
 VERIFIED_PASS reactor 919/0/0/26 (target/mon-05/verify-r2.log, exit 0); CLI smoke lists 11 subcommands. Javap on aesh-3.18.2 (Context7 unavailable to agents). No live call. No push.
 Limits: no symlink test for SaveTarget/MessageArchive (Windows, no skips). Carry to MON-06: MCP must load systems through an env seam, not PoSystem.load(name).
+
+## MON-06 acceptance · 2026-11-11 · committed locally
+Task: MCP `message_*` tools (11), size budget, native registration (packet 2026-11-11-mon-06-packet.md).
+Test first: MessageToolsTest, McpBudgetTest, NativeReflectionTest.allPublicMonitoringRecordsAreRegistered; red observed (target/mon-06/red.log, red-mcp.log).
+Architect calls: MessageTimes copies the CLI TimeArg forms (MCP does not depend on CLI); a payload page at a surrogate pair takes the whole pair (maxChars+1) so paging always advances — red observed (target/mon-06/r3-red.log).
+Deviation: env seam is a reflection-injected TestMonitoringEnvironment subclass, not an @Mock (the module has no Quarkus test runtime); 9 result records registered in the existing McpReflection.
+23 tests added after green to pin implementer behaviour (red not observed; read by review). Review r1 FAIL: payload cap above 80,000, saveDir refusal on uds_attributes, MessageTimes untested.
+Fix: tests only (payload shrink, uds_attributes refusal, MessageTimesTest, McpReflectionTest); no code defect found; r2 PASS.
+VERIFIED_PASS reactor 983/0/0/26 (target/mon-06/verify-r2.log, exit 0). Javap decided the MCP API (Context7 unavailable to agents). Native build NOT_RUN (native profile). No live call. No push.
+Carry to MON-07: smoke the MCP server — a JSON array binds to List<String> (statuses, attributes, ids, codes).
