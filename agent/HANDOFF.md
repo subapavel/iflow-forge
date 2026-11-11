@@ -1,11 +1,11 @@
 # Handoff
 
-state: STOPPED — MON-06 committed locally (MCP message_* tools, budget, native registration); MON-07 ready, needs owner go-ahead.
-checkout: main; MON-06 local commit on top of MON-05 (91bab42); no push.
-prior: MON-05 91bab42 (CLI messages); MON-04 7ed7a83; MON-03 4e82724; MON-02 84642fa; MON-01 8bd25c0 (spec, plan, F-17).
-current: 11 MCP message_* tools; review r2 PASS; reactor 983/0/0/26.
-next: MON-07 — live read-only acceptance on QA with the built CLI and MCP; finding F-18; private evidence under local/<customer>/.
-watch: MON-07 checks required AdapterFilter defaults, Locale 3 children, key format, XI header part, MCP JSON array → List<String>.
+state: STOPPED — MON-07 committed locally (QA acceptance, F-18); MON-08 ready (default payload part by content), needs go-ahead.
+checkout: main; MON-07 local commit on top of MON-06 (8b1b71f); no push.
+prior: MON-06 8b1b71f (MCP tools); MON-05 91bab42; MON-04 7ed7a83; MON-03 4e82724; MON-02 84642fa; MON-01 8bd25c0.
+current: CLI + MCP message reads verified live on QA; F-18 settled §9 points; reactor 983/0/0/26.
+next: MON-08 — core rule picks the payload part by content (skip a SOAP/XI header part), CLI and MCP use it; red test first.
+watch: open (F-18): payload version meaning, dateType, filter defaults timesFailed/retries/archive/nodeId/retryInterval, windowless search.
 hand-over: D-059 draft; anonymous WSDL reads ≠ operation calls (spec §9) needs owner acceptance; agents call SOAP ops on QA only.
 open: MIG-41 owner L4 confirmation file; F-16 (reviewer hashing); MIG-36 notes; D-056 draft; "unattended" undefined.
 observed: MIG-40 verify.log ends with "Cannot write …provenance.json" at exit 0; origin not traced.

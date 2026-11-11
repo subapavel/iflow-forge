@@ -8,7 +8,8 @@ Changelog: 2026-11-11 F-17 — §4 namespace of each data type corrected from th
 wrapper, array, flag and fault shapes added; fault child order corrected to args, code
 (InvalidKeyException adds messageKey). 2026-11-11 review r1 — §8 `readOnlyHint` aligned with §6;
 §9 states that anonymous WSDL reads are not operation calls. 2026-11-11 MON-05 — §7 `--save` /
-`saveDir` only on the one-message reads.
+`saveDir` only on the one-message reads. 2026-11-11 F-18 — §9 settled points from the QA
+acceptance.
 
 ## 1. Intent
 
@@ -237,6 +238,18 @@ Points the probe settles:
 - Whether `getMessageList` without `fromTime`/`toTime` is accepted; *(architect's call)* the CLI
   requires a time window for `search` and `uds-search` (default: last 24 h) to keep PROD queries
   bounded.
+
+Settled by the QA acceptance (MON-07, `docs/findings/F-18.md`): message status values
+(`canceled`, `delivering`, `success`, `systemError`, …) are validated by the server — an unknown
+value is a SOAP fault — and passed through; `getAllAvailableStatusDetails` lists status-detail
+codes, not message statuses; the `wasEdited=false` default does not narrow; `--from` without `--to`
+is accepted; the message key is used as given; the audit log carries no `version`/`logLocations`;
+`logLocations` `AM`/`MS`/`BI` are accepted and differ in content; `getMessageBytes` returned no XI
+header part (40 one-part messages), so the default payload part is to be chosen by content (MON-08);
+the three-child Locale is accepted; MCP binds a JSON array to a list argument. Still open: the
+meaning of payload `version` (0–3 accepted, identical content on the message probed); `dateType`;
+whether the `timesFailed`, `retries`, `archive`, `nodeId`, `retryInterval` defaults narrow; whether
+a search without a time window is accepted.
 
 ## 10. Native builds
 

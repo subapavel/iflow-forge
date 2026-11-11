@@ -1366,3 +1366,12 @@ Deviation: env seam is a reflection-injected TestMonitoringEnvironment subclass,
 Fix: tests only (payload shrink, uds_attributes refusal, MessageTimesTest, McpReflectionTest); no code defect found; r2 PASS.
 VERIFIED_PASS reactor 983/0/0/26 (target/mon-06/verify-r2.log, exit 0). Javap decided the MCP API (Context7 unavailable to agents). Native build NOT_RUN (native profile). No live call. No push.
 Carry to MON-07: smoke the MCP server — a JSON array binds to List<String> (statuses, attributes, ids, codes).
+
+## MON-07 acceptance · 2026-11-11 · committed locally
+Task: live read-only acceptance on QA with the built CLI and MCP (packet 2026-11-11-mon-07-packet.md); deviation: F-18.
+Verifier ran checks 1–7 on QA only; architect added uds-search variants, lookup interfaces --json, an invented status and 40 payload reads (target/mon-07/run.log c8–c10).
+Settled: message statuses server-validated (unknown → SOAP fault); wasEdited=false does not narrow; --from alone accepted; key 6 parts usable as given; Locale accepted; logLocations AM/MS/BI; MCP JSON array binds and applies.
+Open (owner hand-over): payload version meaning, dateType, timesFailed/retries/archive/nodeId/retryInterval defaults, search without a window.
+Contradiction: default payload part by position (parts>1 → 1) assumes an XI header part; QA returned none in 40 messages → row MON-08 (red test first).
+No SOAP fault or authorisation error on the intended calls. Docs review r1 FAIL (status values vs status details, open points dropped, XI header, getInterfaces nil unsupported); fixed with probes; r2 PASS.
+Evidence private under local/<customer>/monitoring-acceptance/; tracked files neutral. No PROD/DEV call by an agent; Maven NOT_RUN (docs only). No push.
