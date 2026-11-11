@@ -1383,3 +1383,10 @@ Architect call: one core rule — PayloadPart.isXiHeader() (SOAP 1.1 Envelope ro
 1 test added after green: jsonShapeHasNoDerivedProperties (isXiHeader @JsonIgnore). No existing test changed.
 Review r1 FAIL only for no root verify of the final tree; r2 PASS. VERIFIED_PASS reactor 1000/0/0/26 (target/mon-08/verify-v.log, exit 0). No live call. No push.
 Note: DOM parses the whole part to read its root (MCP repeats per page); StAX peek would be cheaper if large parts matter.
+
+## MON-09 acceptance · 2026-11-12 · committed locally
+Task: XI header check reads only the start of a part (packet 2026-11-12-mon-09-packet.md; owner request 2026-11-12).
+Test first: PayloadPartTest.onlyTheRootIsRead, startsWithSoapEnvelopeReadsOnlyTheStart, startsWithSoapEnvelopeReadsOnlyTheStartOfANonEnvelope; red observed (target/mon-09/red.log, compile on the missing seam).
+Architect call (B): root-only rule — a truncated envelope or a second root after it counts as a header; malformedXmlIsNotAnXiHeader changed accordingly (unclosed/two roots moved, garbage case added).
+Code: PayloadPart uses JDK StAX (newDefaultFactory, DTD off, external entities off), stops at the first start element, closes the reader; DOM removed.
+Review r1 PASS. VERIFIED_PASS reactor 1003/0/0/26 (target/mon-09/verify.log, exit 0). No live call. No push.

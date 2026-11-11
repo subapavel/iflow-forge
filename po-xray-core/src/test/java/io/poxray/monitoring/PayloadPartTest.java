@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.sun.net.httpserver.HttpServer;
 import java.io.IOException;
+import java.io.Reader;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.nio.charset.StandardCharsets;
@@ -76,11 +77,78 @@ class PayloadPartTest {
 
     @Test
     void malformedXmlIsNotAnXiHeader() {
-        assertThat(text(0, "<SOAP:Envelope xmlns:SOAP=\"" + SOAP_ENV + "\"><SOAP:Header>").isXiHeader())
-                .as("unclosed").isFalse();
         assertThat(text(0, "<SOAP:Envelope><SOAP:Body/></SOAP:Envelope>").isXiHeader()).as("unbound prefix")
                 .isFalse();
-        assertThat(text(0, XI_HEADER + "<trailing/>").isXiHeader()).as("two roots").isFalse();
+        assertThat(text(0, "not xml <a/>").isXiHeader()).as("garbage before any element").isFalse();
+    }
+
+    /** MON-09 (packet, B): the decision is taken at the root start tag; what follows it is never read. */
+    @Test
+    void onlyTheRootIsRead() {
+        assertThat(text(0, "<SOAP:Envelope xmlns:SOAP=\"" + SOAP_ENV + "\"><SOAP:Header>").isXiHeader())
+                .as("unclosed").isTrue();
+        assertThat(text(0, XI_HEADER + "<trailing/>").isXiHeader()).as("two roots").isTrue();
+    }
+
+    @Test
+    void startsWithSoapEnvelopeReadsOnlyTheStart() {
+        CountingReader reader = new CountingReader("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+                + "<SOAP:Envelope xmlns:SOAP=\"" + SOAP_ENV + "\"><SOAP:Body>" + oneMebibyteOfElements()
+                + "</SOAP:Body></SOAP:Envelope>");
+
+        assertThat(PayloadPart.startsWithSoapEnvelope(reader)).isTrue();
+        assertThat(reader.read).as("characters read").isLessThan(64 * 1024);
+        assertThat(reader.closed).as("reader closed").isTrue();
+    }
+
+    @Test
+    void startsWithSoapEnvelopeReadsOnlyTheStartOfANonEnvelope() {
+        CountingReader reader = new CountingReader("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+                + "<ns0:Order xmlns:ns0=\"urn:test:a\">" + oneMebibyteOfElements() + "</ns0:Order>");
+
+        assertThat(PayloadPart.startsWithSoapEnvelope(reader)).isFalse();
+        assertThat(reader.read).as("characters read").isLessThan(64 * 1024);
+        assertThat(reader.closed).as("reader closed").isTrue();
+    }
+
+    /** At least 1 MiB of well-formed child elements. */
+    static String oneMebibyteOfElements() {
+        String line = "<Line><No>000001</No><Text>lorem ipsum dolor sit amet</Text></Line>";
+        String body = line.repeat(1024 * 1024 / line.length() + 1);
+        assertThat(body.length()).isGreaterThanOrEqualTo(1024 * 1024);
+        return body;
+    }
+
+    /** A reader over a string that counts the characters handed out and records {@link #close()}. */
+    static final class CountingReader extends Reader {
+        private final String source;
+        private int position;
+        int read;
+        boolean closed;
+
+        CountingReader(String source) {
+            this.source = source;
+        }
+
+        @Override
+        public int read(char[] buffer, int offset, int length) {
+            if (length == 0) {
+                return 0;
+            }
+            if (position >= source.length()) {
+                return -1;
+            }
+            int n = Math.min(length, source.length() - position);
+            source.getChars(position, position + n, buffer, offset);
+            position += n;
+            read += n;
+            return n;
+        }
+
+        @Override
+        public void close() {
+            closed = true;
+        }
     }
 
     @Test

@@ -2,16 +2,13 @@ package io.poxray.monitoring;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.IOException;
+import java.io.Reader;
 import java.io.StringReader;
 import javax.xml.XMLConstants;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import org.w3c.dom.Element;
-import org.xml.sax.ErrorHandler;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamConstants;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
 
 /**
  * One MIME part of a message payload: {@code index} from 0 in the order of the message, {@code contentId} without
@@ -32,50 +29,69 @@ public record PayloadPart(int index, String contentId, String contentType, long 
 
     /**
      * True when this is an XI message header part: a text part whose document element is the SOAP 1.1
-     * {@code Envelope} (F-18). Parsed namespace-aware with DOCTYPE disallowed and external entities off; a base64
-     * part, text that is not well-formed XML, a DOCTYPE or another document element is false. Never throws.
+     * {@code Envelope} (F-18). Only the start of the text is read, up to the first start tag (see
+     * {@link #startsWithSoapEnvelope(Reader)}): what follows the root start tag is not checked, so a truncated
+     * envelope still counts. A base64 or blank part is false. Never throws.
      */
     @JsonIgnore
     public boolean isXiHeader() {
         if (text == null || text.isBlank()) {
             return false;
         }
+        return startsWithSoapEnvelope(new StringReader(text));
+    }
+
+    /**
+     * True when the first start element read from {@code source} is {@code Envelope} in the SOAP 1.1 namespace.
+     * Read with StAX, namespace-aware, and stopped at that first start element. A DOCTYPE before it, a malformed
+     * prolog, an unbound prefix on the root or text that is not XML is false; DTDs and external entities are off,
+     * nothing is fetched. Never throws; {@code source} is closed.
+     */
+    static boolean startsWithSoapEnvelope(Reader source) {
+        XMLStreamReader xml = null;
         try {
-            Element root = builder().parse(new InputSource(new StringReader(text))).getDocumentElement();
-            return SOAP_ENV.equals(root.getNamespaceURI()) && "Envelope".equals(root.getLocalName());
-        } catch (SAXException | IOException | ParserConfigurationException | RuntimeException e) {
+            xml = factory().createXMLStreamReader(source);
+            while (xml.hasNext()) {
+                int event = xml.next();
+                if (event == XMLStreamConstants.DTD) {
+                    return false;
+                }
+                if (event == XMLStreamConstants.START_ELEMENT) {
+                    return SOAP_ENV.equals(xml.getNamespaceURI()) && "Envelope".equals(xml.getLocalName());
+                }
+            }
             return false;
+        } catch (XMLStreamException | RuntimeException e) {
+            return false;
+        } finally {
+            close(xml, source);
         }
     }
 
-    private static DocumentBuilder builder() throws ParserConfigurationException {
-        DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
-        f.setNamespaceAware(true);
-        f.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
-        f.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
-        f.setFeature("http://xml.org/sax/features/external-general-entities", false);
-        f.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
-        f.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
-        f.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
-        f.setAttribute(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
-        f.setXIncludeAware(false);
-        f.setExpandEntityReferences(false);
-        DocumentBuilder b = f.newDocumentBuilder();
-        b.setErrorHandler(new ErrorHandler() { // no "[Fatal Error]" on stderr: the exception carries it
-            @Override
-            public void warning(SAXParseException e) {
-            }
+    /** The JDK's own StAX factory (not a provider found on the class path), with DTDs and external access off. */
+    private static XMLInputFactory factory() {
+        XMLInputFactory f = XMLInputFactory.newDefaultFactory();
+        f.setProperty(XMLInputFactory.IS_NAMESPACE_AWARE, true);
+        f.setProperty(XMLInputFactory.SUPPORT_DTD, false);
+        f.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
+        f.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+        f.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
+        return f;
+    }
 
-            @Override
-            public void error(SAXParseException e) throws SAXException {
-                throw e;
+    /** Closes both: {@link XMLStreamReader#close()} does not close the underlying reader. */
+    private static void close(XMLStreamReader xml, Reader source) {
+        if (xml != null) {
+            try {
+                xml.close();
+            } catch (XMLStreamException | RuntimeException e) {
+                // nothing to report: the answer is already decided
             }
-
-            @Override
-            public void fatalError(SAXParseException e) throws SAXException {
-                throw e;
-            }
-        });
-        return b;
+        }
+        try {
+            source.close();
+        } catch (IOException | RuntimeException e) {
+            // nothing to report: the answer is already decided
+        }
     }
 }
